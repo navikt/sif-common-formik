@@ -141,12 +141,13 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/navikt/sif-common-formik.git"
+        "url": "git+https://github.com/navikt/sif-common-formik.git"
     },
-    "author": "",
-    "license": "ISC",
+    "author": "navikt",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/navikt/sif-common-formik/issues"
     },
-    "homepage": "https://navikt.github.io/sif-common-formik"
+    "homepage": "https://navikt.github.io/sif-common-formik",
+    "main": "./src/index.tsx"
 }
