@@ -13,15 +13,7 @@ interface FormikInputGroupProps<FieldName> extends SkjemaGruppeProps {
 
 type Props<FieldName> = FormikInputGroupProps<FieldName> & FormikInputCommonProps;
 
-function FormikInputGroup<FieldName>({
-    name,
-    legend,
-    feil,
-    children,
-    helperText,
-    validate,
-    ...restProps
-}: Props<FieldName>) {
+function FormikInputGroup<FieldName>({ name, legend, feil, children, info, validate, ...restProps }: Props<FieldName>) {
     const context = React.useContext(FormikFormContext);
     return (
         <Field validate={validate} name={name}>
@@ -29,7 +21,7 @@ function FormikInputGroup<FieldName>({
                 return (
                     <SkjemaGruppe
                         {...restProps}
-                        legend={<LabelWithInfo helperText={helperText}>{legend}</LabelWithInfo>}
+                        legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
                         feil={context ? context.renderFieldError(field, form, context) : feil}>
                         {children}
                     </SkjemaGruppe>

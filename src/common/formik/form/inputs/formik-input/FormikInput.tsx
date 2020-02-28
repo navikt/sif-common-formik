@@ -11,14 +11,7 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name'> {
 
 export type FormikInputProps<FieldName> = OwnProps<FieldName> & FormikInputCommonProps;
 
-function FormikInput<FieldName>({
-    label,
-    name,
-    helperText,
-    feil,
-    validate,
-    ...restProps
-}: FormikInputProps<FieldName>) {
+function FormikInput<FieldName>({ label, name, info, feil, validate, ...restProps }: FormikInputProps<FieldName>) {
     const context = React.useContext(FormikFormContext);
     return (
         <Field validate={validate} name={name}>
@@ -27,7 +20,7 @@ function FormikInput<FieldName>({
                     <Input
                         {...restProps}
                         {...field}
-                        label={<LabelWithInfo helperText={helperText}>{label}</LabelWithInfo>}
+                        label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         feil={context ? context.renderFieldError(field, form, context) : feil}
                         value={field.value === undefined ? '' : field.value}
                     />

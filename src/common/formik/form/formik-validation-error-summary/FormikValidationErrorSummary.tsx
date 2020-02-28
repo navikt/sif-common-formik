@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
-import { connect } from 'formik';
+import { connect, FormikProps } from 'formik';
+import { getValidationSummaryErrors } from '../../../validation/formikErrorUtils';
 import ValidationSummary from '../../components/validation-summary/ValidationSummary';
-import { ConnectedFormikProps } from '../../types/ConnectedFormikProps';
-import { getValidationSummaryErrors } from '../../utils/formikErrorUtils';
 
-type Props<FormValues> = ConnectedFormikProps<FormValues>;
+interface Props<FormValues> {
+    formik: FormikProps<FormValues>;
+}
 
 function FormikValidationErrorSummary<FormValues>({ formik }: Props<FormValues>) {
     const intl = useIntl();

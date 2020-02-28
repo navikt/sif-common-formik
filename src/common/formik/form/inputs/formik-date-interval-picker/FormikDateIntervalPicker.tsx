@@ -9,7 +9,7 @@ interface DateIntervalPickerProps<FieldName> {
     legend: string;
     fromDatepickerProps: FormikDatepickerProps<FieldName>;
     toDatepickerProps: FormikDatepickerProps<FieldName>;
-    helperText?: string;
+    info?: string;
 }
 
 const bem = bemUtils('dateIntervalPicker');
@@ -18,10 +18,10 @@ function FormikDateIntervalPicker<FieldName>({
     legend,
     fromDatepickerProps,
     toDatepickerProps,
-    helperText
+    info
 }: DateIntervalPickerProps<FieldName>) {
     return (
-        <SkjemaGruppe legend={<LabelWithInfo helperText={helperText}>{legend}</LabelWithInfo>} className={bem.block}>
+        <SkjemaGruppe legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>} className={bem.block}>
             <div className={bem.element('flexContainer')}>
                 <FormikDatepicker<FieldName> {...fromDatepickerProps} />
                 <FormikDatepicker<FieldName> {...toDatepickerProps} />

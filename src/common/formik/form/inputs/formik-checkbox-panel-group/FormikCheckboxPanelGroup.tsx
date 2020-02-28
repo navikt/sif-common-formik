@@ -26,7 +26,7 @@ function FormikCheckboxPanelGroup<FieldName>({
     legend,
     feil,
     checkboxes,
-    helperText,
+    info,
     ...restProps
 }: Props<FieldName>) {
     const context = React.useContext(FormikFormContext);
@@ -37,7 +37,7 @@ function FormikCheckboxPanelGroup<FieldName>({
                     <CheckboksPanelGruppe
                         {...restProps}
                         {...field}
-                        legend={<LabelWithInfo helperText={helperText}>{legend}</LabelWithInfo>}
+                        legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
                         checkboxes={checkboxes.map((cb) => ({
                             ...cb,
                             checked: isCheckboxChecked(field.value, cb.value)

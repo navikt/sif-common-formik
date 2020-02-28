@@ -6,22 +6,22 @@ import './labelWithInfo.less';
 
 interface LabelWithHelperText {
     children: React.ReactNode;
-    helperText?: React.ReactNode;
+    info?: React.ReactNode;
 }
 
 const bem = bemUtils('labelWithInfo');
 
-const LabelWithInfo: React.FunctionComponent<LabelWithHelperText> = ({ children, helperText }) => {
+const LabelWithInfo: React.FunctionComponent<LabelWithHelperText> = ({ children, info }) => {
     if (!children) {
         return null;
     }
-    if (helperText === undefined) {
+    if (info === undefined) {
         return <Element tag="span">{children}</Element>;
     }
     return (
         <Element tag="span" className={bem.block}>
             {children}
-            {helperText && <Hjelpetekst className={bem.element('info')}>{helperText}</Hjelpetekst>}
+            {info && <Hjelpetekst className={bem.element('info')}>{info}</Hjelpetekst>}
         </Element>
     );
 };

@@ -11,14 +11,14 @@ interface FormikTextareaProps<FieldName> extends Omit<TextareaControlledProps, '
 
 type Props<FieldName> = FormikTextareaProps<FieldName> & FormikInputCommonProps;
 
-function FormikTextarea<FieldName>({ label, name, validate, helperText, feil, ...restProps }: Props<FieldName>) {
+function FormikTextarea<FieldName>({ label, name, validate, info, feil, ...restProps }: Props<FieldName>) {
     const context = React.useContext(FormikFormContext);
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <Textarea
-                        label={<LabelWithInfo helperText={helperText}>{label}</LabelWithInfo>}
+                        label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         {...restProps}
                         {...field}
                         feil={context ? context.renderFieldError(field, form, context) : feil}

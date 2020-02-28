@@ -45,7 +45,7 @@ function FormikDatepicker<FieldName>({
     dateLimitations,
     name,
     id,
-    helperText,
+    info,
     showYearSelector,
     fullscreenOverlay,
     fullScreenOnMobile,
@@ -64,7 +64,7 @@ function FormikDatepicker<FieldName>({
                 return (
                     <SkjemaGruppeSingleElement feil={context ? context.renderFieldError(field, form, context) : feil}>
                         <Label htmlFor={field.name}>
-                            <LabelWithInfo helperText={helperText}>{label}</LabelWithInfo>
+                            <LabelWithInfo info={info}>{label}</LabelWithInfo>
                         </Label>
                         <Datovelger
                             id={elementId}

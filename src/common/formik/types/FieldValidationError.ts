@@ -1,1 +1,1 @@
-export type FieldValidationError = React.ReactNode;
+export type FieldValidationError = React.ReactNode | boolean;

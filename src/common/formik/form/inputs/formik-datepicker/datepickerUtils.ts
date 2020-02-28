@@ -1,7 +1,11 @@
 import moment from 'moment';
 import { DatovelgerAvgrensninger } from 'nav-datovelger';
-import { dateToISOFormattedDateString } from '../../../utils/dateUtils';
 import { DateLimitiations } from './FormikDatepicker';
+
+const apiDateFormat = 'YYYY-MM-DD';
+
+export const dateToISOFormattedDateString = (date?: Date) =>
+    date ? moment.utc(date).format(apiDateFormat) : undefined;
 
 const parseDateLimitations = (dateLimitations: DateLimitiations): DatovelgerAvgrensninger => {
     return {

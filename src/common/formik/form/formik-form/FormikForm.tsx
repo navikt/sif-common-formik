@@ -2,11 +2,11 @@ import React, { createContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { FieldInputProps, FormikErrors, FormikProps } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
-import ButtonRow from '../../components/button-row/ButtonRow';
-import ValidationSummary from '../../components/validation-summary/ValidationSummary';
 import {
     getFieldValidationErrors, getValidationSummaryErrors, isValidationErrorsVisible
-} from '../../utils/formikErrorUtils';
+} from '../../../validation/formikErrorUtils';
+import ButtonRow from '../../components/button-row/ButtonRow';
+import ValidationSummary from '../../components/validation-summary/ValidationSummary';
 
 export type FormikErrorRender<FormValues, ErrorFormat = {}> = (
     error: ErrorFormat | FormikErrors<FormValues>

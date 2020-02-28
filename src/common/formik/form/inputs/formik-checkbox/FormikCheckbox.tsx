@@ -17,7 +17,7 @@ function FormikCheckbox<FieldName>({
     label,
     validate,
     afterOnChange,
-    helperText,
+    info,
     feil,
     ...restProps
 }: Props<FieldName>) {
@@ -29,7 +29,7 @@ function FormikCheckbox<FieldName>({
                     <Checkbox
                         {...restProps}
                         {...field}
-                        label={<LabelWithInfo helperText={helperText}>{label}</LabelWithInfo>}
+                        label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         feil={context ? context.renderFieldError(field, form, context) : feil}
                         checked={field.value === true}
                         onChange={(evt) => {

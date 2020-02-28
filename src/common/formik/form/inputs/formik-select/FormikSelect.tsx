@@ -16,7 +16,7 @@ function FormikSelect<FieldName>({
     name,
     children,
     validate,
-    helperText,
+    info,
     feil,
     ...restProps
 }: Props & FormikSelectProps<FieldName>) {
@@ -26,7 +26,7 @@ function FormikSelect<FieldName>({
             {({ field, form }: FieldProps) => {
                 return (
                     <Select
-                        label={<LabelWithInfo helperText={helperText}>{label}</LabelWithInfo>}
+                        label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         {...field}
                         {...restProps}
                         feil={context ? context.renderFieldError(field, form, context) : feil}

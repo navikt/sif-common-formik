@@ -18,7 +18,7 @@ function FormikCountrySelect<FieldName>({
     name,
     feil,
     validate,
-    helperText,
+    info,
     showOnlyEuAndEftaCountries
 }: FormikCountrySelectProps<FieldName>) {
     const context = React.useContext(FormikFormContext);
@@ -27,7 +27,7 @@ function FormikCountrySelect<FieldName>({
             {({ field, form }: FieldProps) => {
                 return (
                     <CountrySelect
-                        label={<LabelWithInfo helperText={helperText}>{label}</LabelWithInfo>}
+                        label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         {...field}
                         feil={context ? context.renderFieldError(field, form, context) : feil}
                         onChange={(value) => form.setFieldValue(field.name, value)}

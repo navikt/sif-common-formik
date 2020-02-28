@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { validateYesOrNoIsAnswered } from '../../../../../dev/validation/fieldValidations';
 import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { YesOrNo } from '../../../types/YesOrNo';
@@ -14,7 +13,7 @@ interface YesOrNoQuestionProps<FieldName> {
         [YesOrNo.NO]?: string;
         [YesOrNo.DO_NOT_KNOW]?: string;
     };
-    helperText?: React.ReactNode;
+    info?: React.ReactNode;
 }
 
 function FormikYesOrNoQuestion<FieldName>({
@@ -22,13 +21,13 @@ function FormikYesOrNoQuestion<FieldName>({
     name,
     includeDoNotKnowOption,
     labels,
-    helperText,
+    info,
     ...restProps
 }: YesOrNoQuestionProps<FieldName> & FormikInputCommonProps) {
     const { yes: yesLabel = 'Ja', no: noLabel = 'Nei', doNotKnow: doNotKnowLabel = 'Vet ikke' } = labels || {};
     return (
         <FormikRadioPanelGroup<FieldName>
-            legend={<LabelWithInfo helperText={helperText}>{legend}</LabelWithInfo>}
+            legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
             name={name}
             className={'twoColumnPanelGruppe'}
             radios={[

@@ -2,10 +2,16 @@ import { IntlShape } from 'react-intl';
 import flatten from 'flat';
 import { FieldInputProps, FormikErrors, FormikProps, getIn } from 'formik';
 import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
-import {
-    isFieldValidationError, renderFieldValidationError
-} from '../validation/fieldValidationRenderUtils';
+import { isFieldValidationError, renderFieldValidationError } from './fieldValidationRenderUtils';
 import { getValidationErrorWithIntl } from './validationIntlUtils';
+
+interface ErrorNodeInObject {
+    field: string;
+    error: {
+        key: string;
+        values: object;
+    };
+}
 
 export const getFieldValidationErrors = <FormValues>(
     elementName: string,
@@ -72,14 +78,6 @@ export function flattenFieldArrayErrors<FormValues>(errors: FormValues): FormVal
         }
     });
     return allErrors;
-}
-
-interface ErrorNodeInObject {
-    field: string;
-    error: {
-        key: string;
-        values: object;
-    };
 }
 
 const findErrorNodeInObject = (key: string, error: object): undefined | ErrorNodeInObject => {

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { FormikProps } from 'formik';
-import { getTypedFormComponents } from '../../../common/formik/form/typing/typeFormComponents';
+import { getTypedFormComponents } from '../../../common/formik/form/typing/getTypedFormComponents';
 import {
     isFieldValidationError, renderFieldValidationError
-} from '../../../common/formik/validation/fieldValidationRenderUtils';
+} from '../../../common/validation/fieldValidationRenderUtils';
 import { QuestionVisibilityContext } from '../../../common/visibility/QuestionVisibilityContext';
 import QuestionWrapper from '../../../common/visibility/QuestionWrapper';
 import VisibilityBlock from '../../../common/visibility/VisibilityBlock';

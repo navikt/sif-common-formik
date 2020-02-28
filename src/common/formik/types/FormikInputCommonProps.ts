@@ -1,6 +1,6 @@
-import { FieldValidationResult } from '../validation/types';
+// import { FieldValidationResult } from '../../validation/types';
 
-export interface FormikInputCommonProps {
-    validate?: (value: any) => FieldValidationResult | string | Promise<void> | undefined;
-    helperText?: React.ReactNode;
+export interface FormikInputCommonProps<ErrorType = any> {
+    validate?: (value: any) => ErrorType; // FieldValidationResult | string | Promise<void> | undefined;
+    info?: React.ReactNode;
 }

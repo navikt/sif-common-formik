@@ -16,7 +16,7 @@ function FormikRadioPanelGroup<FieldName>({
     validate,
     legend,
     radios,
-    helperText,
+    info,
     feil,
     ...restProps
 }: Props<FieldName>) {
@@ -29,7 +29,7 @@ function FormikRadioPanelGroup<FieldName>({
                         {...restProps}
                         name={field.name}
                         checked={field.value}
-                        legend={<LabelWithInfo helperText={helperText}>{legend}</LabelWithInfo>}
+                        legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
                         feil={context ? context.renderFieldError(field, form, context) : feil}
                         onChange={(evt, value) => form.setFieldValue(field.name, value)}
                         radios={radios.map((rb) => ({

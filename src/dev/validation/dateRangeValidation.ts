@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { prettifyDateExtended } from '../../common/formik/utils/dateUtils';
+import { prettifyDateExtended } from '../utils/dateUtils';
 
 const dateIsWithinRange = (date: Date, minDate: Date, maxDate: Date) => {
     return moment(date).isBetween(minDate, maxDate, 'day', '[]');

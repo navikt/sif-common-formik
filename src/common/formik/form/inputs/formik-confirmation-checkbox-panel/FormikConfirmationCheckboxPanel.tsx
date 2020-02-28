@@ -9,7 +9,7 @@ interface FormikConfirmationCheckboxPanelProps<FieldName>
     name: FieldName;
 }
 
-type Props<FieldName> = FormikConfirmationCheckboxPanelProps<FieldName> & Omit<FormikInputCommonProps, 'helperText'>;
+type Props<FieldName> = FormikConfirmationCheckboxPanelProps<FieldName> & Omit<FormikInputCommonProps, 'info'>;
 
 function FormikConfirmationCheckboxPanel<FieldName>({
     children,
