@@ -7,6 +7,10 @@ export const FormConfig: QuestionConfig<FormValues, FormFields> = {
     [FormFields.birthdate]: {
         isAnswered: ({ birthdate }) => hasValue(birthdate)
     },
+    [FormFields.birthCountry]: {
+        parentQuestion: FormFields.birthdate,
+        isAnswered: ({ birthCountry }) => hasValue(birthCountry)
+    },
     [FormFields.firstname]: {
         parentQuestion: FormFields.birthdate,
         isAnswered: ({ firstname }) => hasValue(firstname)

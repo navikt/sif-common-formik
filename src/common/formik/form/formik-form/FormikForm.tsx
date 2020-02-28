@@ -12,7 +12,7 @@ export type FormikErrorRender<FormValues, ErrorFormat = {}> = (
     error: ErrorFormat | FormikErrors<FormValues>
 ) => React.ReactNode | string;
 
-interface Props<FormValues, ErrorFormat> {
+export interface FormikFormProps<FormValues, ErrorFormat = FormikErrors<FormValues>> {
     formik: FormikProps<FormValues>;
     children: React.ReactNode;
     className?: string;
@@ -24,7 +24,6 @@ interface Props<FormValues, ErrorFormat> {
         submitButton?: string;
         cancelButton?: string;
     };
-    onValidSubmit?: () => void;
     onCancel?: () => void;
 }
 
@@ -49,9 +48,8 @@ function FormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
     includeValidationSummary,
     labels,
     errorRender,
-    onValidSubmit,
     includeButtons = true
-}: Props<FormValues, ErrorFormat>) {
+}: FormikFormProps<FormValues, ErrorFormat>) {
     const { handleSubmit, submitCount, setStatus, resetForm } = formik;
     const [formSubmitCount] = useState(submitCount);
     const intl = useIntl();

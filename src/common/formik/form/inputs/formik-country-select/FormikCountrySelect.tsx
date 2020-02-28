@@ -6,9 +6,9 @@ import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { FormikFormContext } from '../../formik-form/FormikForm';
 
-interface OwnProps<FieldName> extends Omit<SelectProps, 'name'> {
+interface OwnProps<FieldName> extends Omit<SelectProps, 'name' | 'children'> {
     name: FieldName;
-    showOnlyEuAndEftaCountries: boolean;
+    showOnlyEuAndEftaCountries?: boolean;
 }
 
 export type FormikCountrySelectProps<FieldName> = OwnProps<FieldName> & FormikInputCommonProps;

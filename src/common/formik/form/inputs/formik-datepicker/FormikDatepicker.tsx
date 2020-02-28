@@ -22,7 +22,7 @@ export interface DateLimitiations {
     ugyldigeTidsperioder?: DateRange[];
     helgedagerIkkeTillatt?: boolean;
 }
-export interface FormikDatepickerProps<FieldName> {
+interface OwnProps<FieldName> {
     id?: string;
     name: FieldName;
     label: string;
@@ -35,7 +35,7 @@ export interface FormikDatepickerProps<FieldName> {
     onChange?: (date: Date | undefined) => void;
 }
 
-type Props<FieldName> = FormikDatepickerProps<FieldName> & FormikInputCommonProps;
+export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> & FormikInputCommonProps;
 
 const placeholder = 'dd.mm.åååå';
 
@@ -52,7 +52,7 @@ function FormikDatepicker<FieldName>({
     feil,
     onChange,
     ...restProps
-}: Props<FieldName>) {
+}: FormikDatepickerProps<FieldName>) {
     const context = React.useContext(FormikFormContext);
     const isWide = useMedia({ minWidth: 736 });
     const elementId = id || guid();

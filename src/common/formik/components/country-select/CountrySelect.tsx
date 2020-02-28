@@ -1,22 +1,20 @@
 import * as React from 'react';
-import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import * as countries from 'i18n-iso-countries';
 import { Select, SelectProps } from 'nav-frontend-skjema';
 
 countries.registerLocale(require('i18n-iso-countries/langs/nb.json'));
 countries.registerLocale(require('i18n-iso-countries/langs/nn.json'));
 
-interface OwnProps extends Omit<SelectProps, 'onChange' | 'children'> {
+interface Props extends Omit<SelectProps, 'onChange' | 'children'> {
     label: React.ReactNode;
     name: string;
     defaultValue?: string;
+    locale?: string;
     onChange: (countryCode: string) => void;
     showOnlyEuAndEftaCountries?: boolean;
 }
 
 export type ChangeEvent = React.ChangeEvent<HTMLSelectElement>;
-
-type Props = OwnProps & WrappedComponentProps;
 
 interface CountryOptionsCache {
     locale: string;
@@ -34,29 +32,29 @@ class CountrySelect extends React.Component<Props> {
         this.updateCache = this.updateCache.bind(this);
     }
 
-    updateCache(intl: IntlShape) {
+    updateCache(locale: string) {
         this.countryOptionsCache = {
-            locale: intl.locale,
+            locale,
             options: createCountryOptions(
                 this.props.showOnlyEuAndEftaCountries ? this.props.showOnlyEuAndEftaCountries : false,
-                intl
+                locale
             )
         };
     }
 
-    getCountryOptions(intl: IntlShape): React.ReactNode[] {
-        if (!this.countryOptionsCache || intl.locale !== this.countryOptionsCache.locale) {
-            this.updateCache(intl);
+    getCountryOptions(locale): React.ReactNode[] {
+        if (!this.countryOptionsCache || locale !== this.countryOptionsCache.locale) {
+            this.updateCache(locale);
         }
         return this.countryOptionsCache && this.countryOptionsCache.options ? this.countryOptionsCache.options : [];
     }
 
     render() {
-        const { onChange, name, showOnlyEuAndEftaCountries, intl, ...restProps } = this.props;
+        const { onChange, name, showOnlyEuAndEftaCountries, locale, ...restProps } = this.props;
         return (
             <Select name={name} {...restProps} onChange={(e) => onChange(e.target.value)}>
                 <option value="" />
-                {this.getCountryOptions(intl)}
+                {this.getCountryOptions(locale)}
             </Select>
         );
     }
@@ -106,10 +104,10 @@ const filteredListEØSCountries = (countryOptionValue: string, shouldFilter?: bo
     }
 };
 
-const createCountryOptions = (onluEuAndEftaCountries: boolean, intl: IntlShape): React.ReactNode[] => {
-    const locale = intl.locale === 'en' ? 'nn' : 'nb';
-    return Object.entries(countries.getNames(locale))
-        .sort((a: string[], b: string[]) => a[1].localeCompare(b[1], locale))
+const createCountryOptions = (onluEuAndEftaCountries: boolean, locale: string): React.ReactNode[] => {
+    const localeToUse = locale === 'en' ? 'nn' : 'nb';
+    return Object.entries(countries.getNames(localeToUse))
+        .sort((a: string[], b: string[]) => a[1].localeCompare(b[1], localeToUse))
         .filter((countryOptionValue: string[]) =>
             filteredListEØSCountries(countryOptionValue[isoCodeIndex], onluEuAndEftaCountries)
         )
@@ -125,4 +123,4 @@ export const getCountryName = (isoCode: string, locale: string): string => {
     return names[isoCode];
 };
 
-export default injectIntl(CountrySelect);
+export default CountrySelect;
