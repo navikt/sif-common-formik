@@ -10,7 +10,7 @@ interface ErrorNodeInObject {
     };
 }
 
-export const getFieldValidationErrors = <FormValues>(
+export const getErrorsForField = <FormValues>(
     elementName: string,
     errors: FormikErrors<FormValues>
 ): FormikErrors<FormValues> | undefined => {

@@ -26,7 +26,6 @@ const FormWithConfig: React.FunctionComponent<Props> = ({ formik }) => {
     return (
         <QuestionVisibilityContext.Provider value={{ visibility: exampleFormQuestions.getVisbility(formik.values) }}>
             <Form
-                formik={formik}
                 errorRender={(errors) => {
                     if (isFieldValidationError(errors)) {
                         return renderFieldValidationError(intl, errors);

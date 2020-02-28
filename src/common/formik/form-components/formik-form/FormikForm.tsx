@@ -1,10 +1,10 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { FieldInputProps, FormikErrors, FormikProps } from 'formik';
+import { FieldInputProps, FormikErrors, FormikProps, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import ButtonRow from '../../components/button-row/ButtonRow';
 import ValidationSummary from '../../components/validation-summary/ValidationSummary';
 import {
-    getFieldValidationErrors, getValidationSummaryErrors, isValidationErrorsVisible
+    getErrorsForField, getValidationSummaryErrors, isValidationErrorsVisible
 } from '../../utils/formikErrorUtils';
 
 export type FormikErrorRender<FormValues, ErrorFormat = {}> = (
@@ -12,7 +12,6 @@ export type FormikErrorRender<FormValues, ErrorFormat = {}> = (
 ) => React.ReactNode | string;
 
 export interface FormikFormProps<FormValues, ErrorFormat = FormikErrors<FormValues>> {
-    formik: FormikProps<FormValues>;
     children: React.ReactNode;
     className?: string;
     includeValidationSummary?: boolean;
@@ -39,7 +38,6 @@ interface FormikFormContextType {
 export const FormikFormContext = createContext<FormikFormContextType | undefined>(undefined);
 
 function FormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
-    formik,
     children,
     onCancel,
     resetFormOnCancel,
@@ -49,6 +47,7 @@ function FormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
     errorRender,
     includeButtons = true
 }: FormikFormProps<FormValues, ErrorFormat>) {
+    const formik = useFormikContext<FormValues>();
     const { handleSubmit, submitCount, setStatus, resetForm } = formik;
     const [formSubmitCount] = useState(submitCount);
 
@@ -66,22 +65,26 @@ function FormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
 
     const errorMessages = includeValidationSummary ? getValidationSummaryErrors(formik) : undefined;
 
+    const createFormikFormContext = () => {
+        const showErrors = isValidationErrorsVisible(formik);
+        return {
+            errorRender,
+            showErrors,
+            renderFieldError: (field, form) => {
+                if (showErrors) {
+                    const errors = getErrorsForField(field.name, form.errors);
+                    if (errors) {
+                        return errorRender ? errorRender(errors) : true;
+                    }
+                }
+                return undefined;
+            }
+        };
+    };
+
     return (
         <form onSubmit={onSubmit} noValidate={true} className={className}>
-            <FormikFormContext.Provider
-                value={{
-                    errorRender,
-                    showErrors: isValidationErrorsVisible(formik),
-                    renderFieldError: (field, form, context) => {
-                        if (context && context.showErrors) {
-                            const errors = getFieldValidationErrors(field.name, form.errors);
-                            if (errors) {
-                                return context.errorRender ? context.errorRender(errors) : true;
-                            }
-                        }
-                        return undefined;
-                    }
-                }}>
+            <FormikFormContext.Provider value={createFormikFormContext()}>
                 {children}
                 {errorMessages && (
                     <div style={{ marginTop: '2rem' }}>

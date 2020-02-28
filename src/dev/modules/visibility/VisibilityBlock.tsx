@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { QuestionVisibilityContext } from './QuestionVisibilityContext';
 
 interface Props<FormFields> {
@@ -7,11 +7,8 @@ interface Props<FormFields> {
 }
 
 function VisibilityBlock<FormFields>({ fieldName, children }: Props<FormFields>) {
-    return (
-        <QuestionVisibilityContext.Consumer>
-            {(value) => <>{value?.visibility.isVisible(fieldName) && <>{children}</>}</>}
-        </QuestionVisibilityContext.Consumer>
-    );
+    const { visibility } = useContext(QuestionVisibilityContext) || {};
+    return visibility && visibility.isVisible(fieldName) ? <>{children}</> : null;
 }
 
 export default VisibilityBlock;

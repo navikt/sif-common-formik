@@ -9,6 +9,7 @@ import Code from '../../components/code/Code';
 import Comp from '../../components/code/Comp';
 import PageIntro from '../../components/page-intro/PageIntro';
 import FormWithConfig from './FormWithConfig';
+import FormWithTypedFormElements from './FormWithTypedFormElements';
 import { FormValues } from './types';
 
 interface Props {}
@@ -24,7 +25,7 @@ const FormikExample: React.FunctionComponent<Props> = (props) => {
                 hvordan det settes opp.
             </PageIntro>
             <Comp title="<FormikWrapper>" isFormik={true}>
-                <FormikWrapper<Partial<FormValues>>
+                <FormikWrapper<FormValues>
                     initialValues={initialValues}
                     onSubmit={(values) => {
                         console.log('FormikWrapperSubmit', values);
@@ -62,7 +63,8 @@ const FormikExample: React.FunctionComponent<Props> = (props) => {
                                     <Code>AvbrytOgSlett</Code>
                                 </Comp>
                             )}
-                            {view === 1 && <FormWithConfig formik={formik} />}
+                            {view === 1 && <FormWithTypedFormElements />}
+                            {view === 2 && <FormWithConfig formik={formik} />}
                         </>
                     )}
                 />
