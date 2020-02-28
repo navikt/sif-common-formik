@@ -1,0 +1,20 @@
+.inputPanelGruppe.twoColumnPanelGruppe {
+    .inputPanelGruppe__inner {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-items: stretch;
+
+        .inputPanel {
+            margin-bottom: 0;
+            max-width: 50%;
+            flex: 1 1 0;
+            &:first-child {
+                margin-right: 0.25rem;
+            }
+            &:last-child {
+                margin-left: 0.25rem;
+            }
+        }
+    }
+}
