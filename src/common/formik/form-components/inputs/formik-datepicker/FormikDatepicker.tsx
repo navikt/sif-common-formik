@@ -8,7 +8,7 @@ import CustomInput from '../../../components/custom-input/CustomInput';
 import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import { FieldValidationError } from '../../../types/FieldValidationError';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
-import { FormikFormContext } from '../../formik-form/FormikForm';
+import { TypedFormikFormContext } from '../../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
 
 interface DateRange {
@@ -53,7 +53,7 @@ function FormikDatepicker<FieldName>({
     onChange,
     ...restProps
 }: FormikDatepickerProps<FieldName>) {
-    const context = React.useContext(FormikFormContext);
+    const context = React.useContext(TypedFormikFormContext);
     const isWide = useMedia({ minWidth: 736 });
     const elementId = id || guid();
     const plassering = fullscreenOverlay || (fullScreenOnMobile && isWide === false) ? 'fullskjerm' : undefined;

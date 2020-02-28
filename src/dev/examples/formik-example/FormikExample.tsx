@@ -4,7 +4,7 @@ import { Panel } from 'nav-frontend-paneler';
 import Tabs from 'nav-frontend-tabs';
 import 'nav-frontend-tabs-style';
 import { Undertittel } from 'nav-frontend-typografi';
-import FormikWrapper from '../../../common/formik/form-components/formik-wrapper/FormikWrapper';
+import TypedFormikWrapper from '../../../common/formik/form-components/typed-formik-wrapper/TypedFormikWrapper';
 import Code from '../../components/code/Code';
 import Comp from '../../components/code/Comp';
 import PageIntro from '../../components/page-intro/PageIntro';
@@ -25,7 +25,7 @@ const FormikExample: React.FunctionComponent<Props> = (props) => {
                 hvordan det settes opp.
             </PageIntro>
             <Comp title="<FormikWrapper>" isFormik={true}>
-                <FormikWrapper<FormValues>
+                <TypedFormikWrapper<FormValues>
                     initialValues={initialValues}
                     onSubmit={(values) => {
                         console.log('FormikWrapperSubmit', values);

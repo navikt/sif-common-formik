@@ -4,7 +4,7 @@ import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
 import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import { FieldValidationError } from '../../../types/FieldValidationError';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
-import { FormikFormContext } from '../../formik-form/FormikForm';
+import { TypedFormikFormContext } from '../../typed-formik-form/TypedFormikForm';
 
 interface OwnProps<FieldName> extends SkjemaGruppeProps {
     name: FieldName;
@@ -22,7 +22,7 @@ function FormikInputGroup<FieldName>({
     validate,
     ...restProps
 }: FormikInputGroupProps<FieldName>) {
-    const context = React.useContext(FormikFormContext);
+    const context = React.useContext(TypedFormikFormContext);
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {

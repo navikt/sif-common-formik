@@ -3,7 +3,7 @@ import { ArrayHelpers, Field, FieldArray, FieldProps } from 'formik';
 import FileInput from '../../../components/file-input/FileInput';
 import { FieldValidationError } from '../../../types/FieldValidationError';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
-import { FormikFormContext } from '../../formik-form/FormikForm';
+import { TypedFormikFormContext } from '../../typed-formik-form/TypedFormikForm';
 
 export interface FormikFileInputProps<FieldName> {
     name: FieldName;
@@ -23,7 +23,7 @@ function FormikFileInput<FieldName>({
     feil,
     onClick
 }: FormikFileInputProps<FieldName> & FormikInputCommonProps) {
-    const context = React.useContext(FormikFormContext);
+    const context = React.useContext(TypedFormikFormContext);
     return (
         <FieldArray
             name={`${name}`}

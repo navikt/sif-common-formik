@@ -1,7 +1,5 @@
 import React from 'react';
 import { FormikErrors } from 'formik';
-import FormikForm, { FormikFormProps } from './formik-form/FormikForm';
-import FormikWrapper, { FormikWrapperProps } from './formik-wrapper/FormikWrapper';
 import FormikCheckboxPanelGroup, {
     FormikCheckboxPanelGroupProps
 } from './inputs/formik-checkbox-panel-group/FormikCheckboxPanelGroup';
@@ -31,6 +29,10 @@ import FormikTextarea, { FormikTextareaProps } from './inputs/formik-textarea/Fo
 import FormikYesOrNoQuestion, {
     FormikYesOrNoQuestionProps
 } from './inputs/formik-yes-or-no-question/FormikYesOrNoQuestion';
+import TypedFormikForm, { TypedFormikFormProps } from './typed-formik-form/TypedFormikForm';
+import TypedFormikWrapper, {
+    TypedFormikWrapperProps
+} from './typed-formik-wrapper/TypedFormikWrapper';
 
 export function getTypedFormComponents<FieldNames, FormValues, FieldValidationError = FormikErrors<FormValues>>() {
     return {
@@ -47,8 +49,8 @@ export function getTypedFormComponents<FieldNames, FormValues, FieldValidationEr
             <FormikDateIntervalPicker<FieldNames> {...props} />
         ),
         FileInput: (props: FormikFileInputProps<FieldNames>) => <FormikFileInput<FieldNames> {...props} />,
-        Form: (props: FormikFormProps<FormValues, FieldValidationError>) => <FormikForm {...props} />,
-        FormikWrapper: (props: FormikWrapperProps<FormValues>) => <FormikWrapper {...props} />,
+        Form: (props: TypedFormikFormProps<FormValues, FieldValidationError>) => <TypedFormikForm {...props} />,
+        FormikWrapper: (props: TypedFormikWrapperProps<FormValues>) => <TypedFormikWrapper {...props} />,
         Input: (props: FormikInputProps<FieldNames>) => <FormikInput<FieldNames> {...props} />,
         InputGroup: (props: FormikInputGroupProps<FieldNames>) => <FormikInputGroup<FieldNames> {...props} />,
         RadioPanelGroup: (props: FormikRadioPanelGroupProps<FieldNames>) => (

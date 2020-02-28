@@ -3,7 +3,7 @@ import { Field, FieldProps } from 'formik';
 import { Select, SelectProps } from 'nav-frontend-skjema';
 import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
-import { FormikFormContext } from '../../formik-form/FormikForm';
+import { TypedFormikFormContext } from '../../typed-formik-form/TypedFormikForm';
 
 interface OwnProps<FieldName> extends Omit<SelectProps, 'name'> {
     name: FieldName;
@@ -20,7 +20,7 @@ function FormikSelect<FieldName>({
     feil,
     ...restProps
 }: FormikSelectProps<FieldName>) {
-    const context = React.useContext(FormikFormContext);
+    const context = React.useContext(TypedFormikFormContext);
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
