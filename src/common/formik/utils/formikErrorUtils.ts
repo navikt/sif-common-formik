@@ -1,9 +1,6 @@
-import { IntlShape } from 'react-intl';
 import flatten from 'flat';
-import { FieldInputProps, FormikErrors, FormikProps, getIn } from 'formik';
+import { FormikErrors, FormikProps, getIn } from 'formik';
 import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
-import { isFieldValidationError, renderFieldValidationError } from './fieldValidationRenderUtils';
-import { getValidationErrorWithIntl } from './validationIntlUtils';
 
 interface ErrorNodeInObject {
     field: string;
@@ -20,16 +17,16 @@ export const getFieldValidationErrors = <FormValues>(
     return getIn(errors, elementName);
 };
 
-export const getFieldErrorMessage = (
-    field: FieldInputProps<any>,
-    form: FormikProps<any>,
-    intl: IntlShape
-): React.ReactNode | undefined => {
-    if (isValidationErrorsVisible(form)) {
-        return getValidationErrorWithIntl(intl, form.errors, field.name);
-    }
-    return undefined;
-};
+// export const getFieldErrorMessage = (
+//     field: FieldInputProps<any>,
+//     form: FormikProps<any>,
+//     intl: IntlShape
+// ): React.ReactNode | undefined => {
+//     if (isValidationErrorsVisible(form)) {
+//         return getValidationErrorWithIntl(intl, form.errors, field.name);
+//     }
+//     return undefined;
+// };
 
 export const isValidationErrorsVisible = (form: FormikProps<any>): boolean => {
     if (form) {
@@ -111,9 +108,38 @@ function getErrorsFromFieldArrayErrors<FieldName>(field: FieldName, fieldArrayKe
     return errors;
 }
 
+// export function getValidationSummaryErrorsWithIntl<FormValues>(
+//     formik: FormikProps<FormValues>,
+//     intl: IntlShape
+// ): FeiloppsummeringFeil[] | undefined {
+//     const { errors } = formik;
+//     if (errors) {
+//         const numberOfErrors = Object.keys(errors).length;
+//         const errorMessages: FeiloppsummeringFeil[] = [];
+
+//         if (numberOfErrors > 0 && isValidationErrorsVisible(formik)) {
+//             const allErrors = flattenFieldArrayErrors(errors);
+//             Object.keys(allErrors).forEach((key) => {
+//                 const error = allErrors[key];
+//                 const message = isFieldValidationError(error) ? renderFieldValidationError(intl, error) : error;
+//                 if (message && typeof message === 'string') {
+//                     errorMessages.push({
+//                         skjemaelementId: key,
+//                         feilmelding: message
+//                     });
+//                 }
+//             });
+
+//             if (errorMessages.length > 0) {
+//                 return errorMessages;
+//             }
+//         }
+//     }
+//     return undefined;
+// }
+
 export function getValidationSummaryErrors<FormValues>(
-    formik: FormikProps<FormValues>,
-    intl: IntlShape
+    formik: FormikProps<FormValues>
 ): FeiloppsummeringFeil[] | undefined {
     const { errors } = formik;
     if (errors) {
@@ -123,8 +149,7 @@ export function getValidationSummaryErrors<FormValues>(
         if (numberOfErrors > 0 && isValidationErrorsVisible(formik)) {
             const allErrors = flattenFieldArrayErrors(errors);
             Object.keys(allErrors).forEach((key) => {
-                const error = allErrors[key];
-                const message = isFieldValidationError(error) ? renderFieldValidationError(intl, error) : error;
+                const message = allErrors[key];
                 if (message && typeof message === 'string') {
                     errorMessages.push({
                         skjemaelementId: key,
@@ -132,7 +157,6 @@ export function getValidationSummaryErrors<FormValues>(
                     });
                 }
             });
-
             if (errorMessages.length > 0) {
                 return errorMessages;
             }

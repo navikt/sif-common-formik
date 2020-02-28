@@ -1,12 +1,11 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
 import { FieldInputProps, FormikErrors, FormikProps } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
-import {
-    getFieldValidationErrors, getValidationSummaryErrors, isValidationErrorsVisible
-} from '../../../../dev/modules/validation/formikErrorUtils';
 import ButtonRow from '../../components/button-row/ButtonRow';
 import ValidationSummary from '../../components/validation-summary/ValidationSummary';
+import {
+    getFieldValidationErrors, getValidationSummaryErrors, isValidationErrorsVisible
+} from '../../utils/formikErrorUtils';
 
 export type FormikErrorRender<FormValues, ErrorFormat = {}> = (
     error: ErrorFormat | FormikErrors<FormValues>
@@ -52,7 +51,6 @@ function FormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
 }: FormikFormProps<FormValues, ErrorFormat>) {
     const { handleSubmit, submitCount, setStatus, resetForm } = formik;
     const [formSubmitCount] = useState(submitCount);
-    const intl = useIntl();
 
     useEffect(() => {
         if (submitCount > formSubmitCount) {
@@ -66,7 +64,7 @@ function FormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
         handleSubmit(evt);
     };
 
-    const errorMessages = includeValidationSummary ? getValidationSummaryErrors(formik, intl) : undefined;
+    const errorMessages = includeValidationSummary ? getValidationSummaryErrors(formik) : undefined;
 
     return (
         <form onSubmit={onSubmit} noValidate={true} className={className}>
