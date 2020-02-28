@@ -4,7 +4,7 @@ import { FieldInputProps, FormikErrors, FormikProps } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import {
     getFieldValidationErrors, getValidationSummaryErrors, isValidationErrorsVisible
-} from '../../../validation/formikErrorUtils';
+} from '../../../../dev/modules/validation/formikErrorUtils';
 import ButtonRow from '../../components/button-row/ButtonRow';
 import ValidationSummary from '../../components/validation-summary/ValidationSummary';
 

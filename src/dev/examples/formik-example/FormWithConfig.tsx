@@ -4,13 +4,13 @@ import { FormikProps } from 'formik';
 import {
     getTypedFormComponents
 } from '../../../common/formik/form-components/getTypedFormComponents';
+import Tiles from '../../components/tiles/Tiles';
 import {
     isFieldValidationError, renderFieldValidationError
-} from '../../../common/validation/fieldValidationRenderUtils';
-import { QuestionVisibilityContext } from '../../../common/visibility/QuestionVisibilityContext';
-import QuestionWrapper from '../../../common/visibility/QuestionWrapper';
-import VisibilityBlock from '../../../common/visibility/VisibilityBlock';
-import Tiles from '../../components/tiles/Tiles';
+} from '../../modules/validation/fieldValidationRenderUtils';
+import { QuestionVisibilityContext } from '../../modules/visibility/QuestionVisibilityContext';
+import QuestionWrapper from '../../modules/visibility/QuestionWrapper';
+import VisibilityBlock from '../../modules/visibility/VisibilityBlock';
 import { validateRequiredField } from '../../validation/fieldValidations';
 import { exampleFormQuestions } from './config';
 import { FormFields, FormValues } from './types';

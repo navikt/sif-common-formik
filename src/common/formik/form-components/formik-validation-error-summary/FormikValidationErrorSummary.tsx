@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { connect, FormikProps } from 'formik';
-import { getValidationSummaryErrors } from '../../../validation/formikErrorUtils';
+import { getValidationSummaryErrors } from '../../../../dev/modules/validation/formikErrorUtils';
 import ValidationSummary from '../../components/validation-summary/ValidationSummary';
 
 interface Props<FormValues> {

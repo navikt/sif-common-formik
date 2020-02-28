@@ -1,5 +1,5 @@
 import { YesOrNo } from '../../common/formik/types/YesOrNo';
-import { FieldValidationResult } from '../../common/validation/types';
+import { FieldValidationResult } from '../modules/validation/types';
 import { erGyldigNorskOrgnummer } from './erGyldigNorskOrgnummer';
 import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
 import { hasValue } from './hasValue';
