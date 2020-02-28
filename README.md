@@ -1,25 +1,14 @@
-# sif-common
+# sif-common-formik
 
-Felleskomponenter for sykdom i familien søknadsskjema
+Formik-wrapped skjemakomponenter fra nav-frontend-moduler
 
 # Release ny versjon til npmjs
 
-krav: git working directory må være clean. Kode som er endret må være commitet og ligge på master på github.
-
-```
-npm run build-lib
-
-VELG EN AV DISSE:
-- npm version patch -m "Upgrade to %s"
-- npm version minor -m "Upgrade to %s"
-- npm version major -m "Upgrade to %s"
-
-npm publish
-```
+Ikke releaset enda.
 
 # Kjøre SIF-common guide
 
-Starter guiden som viser noen av komponentene som er i biblioteket
+Starter app som viser noen av komponentene
 
 ```
 npm run dev
