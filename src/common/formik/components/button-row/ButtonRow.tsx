@@ -1,5 +1,4 @@
 import * as React from 'react';
-import bemUtils from '../../../../dev/utils/bemUtils';
 import './buttonRow.less';
 
 export interface Props {
@@ -7,14 +6,13 @@ export interface Props {
     align?: 'left' | 'right' | 'center';
     layout?: 'normal' | 'mobile-50-50' | 'stretch';
 }
-const bem = bemUtils('buttonRow');
 
 const ButtonRow: React.StatelessComponent<Props> = ({ children, align = 'center', layout = 'normal' }) => {
-    const cls = bem.classNames(bem.block, `${bem.modifier(align)}`, `${bem.modifier(layout)}`);
+    const cls = `buttonRow buttonRow--${align} buttonRow--${layout}`;
     return (
         <div className={cls}>
             {React.Children.map(children, (knapp, index) => (
-                <span key={index} className={bem.element('button')}>
+                <span key={index} className="buttonRow__button">
                     {knapp}
                 </span>
             ))}

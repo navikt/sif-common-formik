@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import bemUtils from '../../../../../dev/utils/bemUtils';
 import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import FormikDatepicker, { FormikDatepickerProps } from '../formik-datepicker/FormikDatepicker';
 import './dateIntervalPicker.less';
@@ -12,8 +11,6 @@ interface DateIntervalPickerProps<FieldName> {
     info?: string;
 }
 
-const bem = bemUtils('dateIntervalPicker');
-
 function FormikDateIntervalPicker<FieldName>({
     legend,
     fromDatepickerProps,
@@ -21,8 +18,8 @@ function FormikDateIntervalPicker<FieldName>({
     info
 }: DateIntervalPickerProps<FieldName>) {
     return (
-        <SkjemaGruppe legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>} className={bem.block}>
-            <div className={bem.element('flexContainer')}>
+        <SkjemaGruppe legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>} className="dateIntervalPicker">
+            <div className="dateIntervalPicker__flexContainer">
                 <FormikDatepicker<FieldName> {...fromDatepickerProps} />
                 <FormikDatepicker<FieldName> {...toDatepickerProps} />
             </div>

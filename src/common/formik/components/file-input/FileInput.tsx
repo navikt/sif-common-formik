@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Element } from 'nav-frontend-typografi';
-import bemUtils from '../../../../dev/utils/bemUtils';
 import { FieldValidationError } from '../../types/FieldValidationError';
 import CustomInput from '../custom-input/CustomInput';
 import UploadSvg from './UploadSvg';
@@ -59,7 +58,7 @@ export default class FileInput extends React.Component<FileInputProps> {
 
     render() {
         const { id, name, label, feil, multiple, onClick, acceptedExtensions } = this.props;
-        const bem = bemUtils('attachmentButton');
+        // const bem = bemUtils('attachmentButton');
         const inputId = `${id}-input`;
         return (
             <CustomInput feil={feil}>
@@ -68,15 +67,15 @@ export default class FileInput extends React.Component<FileInputProps> {
                     id={id}
                     tabIndex={0}
                     htmlFor={inputId}
-                    className={bem.block}
+                    className="attachmentButton"
                     onDragOver={this.onFileDragOverHandler}
                     onDrop={this.onFileDropHandler}
                     onKeyPress={this.onKeyPress}
                     onClick={onClick}>
-                    <div className={bem.element('icon')}>
+                    <div className="attachmentButton__icon">
                         <UploadSvg />>
                     </div>
-                    <Element className={bem.element('label')}>{label}</Element>
+                    <Element className="attachmentButton__label">{label}</Element>
                     <input
                         id={inputId}
                         name={name}
