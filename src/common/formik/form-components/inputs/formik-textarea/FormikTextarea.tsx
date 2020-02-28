@@ -5,13 +5,20 @@ import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { FormikFormContext } from '../../formik-form/FormikForm';
 
-interface FormikTextareaProps<FieldName> extends Omit<TextareaControlledProps, 'name' | 'defaultValue'> {
+interface OwnProps<FieldName> extends Omit<TextareaControlledProps, 'name' | 'defaultValue'> {
     name: FieldName;
 }
 
-type Props<FieldName> = FormikTextareaProps<FieldName> & FormikInputCommonProps;
+export type FormikTextareaProps<FieldName> = OwnProps<FieldName> & FormikInputCommonProps;
 
-function FormikTextarea<FieldName>({ label, name, validate, info, feil, ...restProps }: Props<FieldName>) {
+function FormikTextarea<FieldName>({
+    label,
+    name,
+    validate,
+    info,
+    feil,
+    ...restProps
+}: FormikTextareaProps<FieldName>) {
     const context = React.useContext(FormikFormContext);
     return (
         <Field validate={validate} name={name}>

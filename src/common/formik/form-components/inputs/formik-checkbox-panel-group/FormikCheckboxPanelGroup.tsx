@@ -5,11 +5,11 @@ import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { FormikFormContext } from '../../formik-form/FormikForm';
 
-interface FormikCheckboxPanelGroupProps<FieldName> extends Omit<CheckboksPanelGruppeProps, 'onChange'> {
+interface OwnProps<FieldName> extends Omit<CheckboksPanelGruppeProps, 'onChange'> {
     name: FieldName;
 }
 
-type Props<FieldName> = FormikCheckboxPanelGroupProps<FieldName> & FormikInputCommonProps;
+export type FormikCheckboxPanelGroupProps<FieldName> = OwnProps<FieldName> & FormikInputCommonProps;
 
 const removeElementFromArray = (element: any, array: any[], keyProp?: string) =>
     array.filter((el) => {
@@ -28,7 +28,7 @@ function FormikCheckboxPanelGroup<FieldName>({
     checkboxes,
     info,
     ...restProps
-}: Props<FieldName>) {
+}: FormikCheckboxPanelGroupProps<FieldName>) {
     const context = React.useContext(FormikFormContext);
     return (
         <Field validate={validate} name={name}>

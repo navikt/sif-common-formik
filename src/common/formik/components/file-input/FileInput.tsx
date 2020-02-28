@@ -3,7 +3,7 @@ import { Element } from 'nav-frontend-typografi';
 import { FieldValidationError } from '../../types/FieldValidationError';
 import CustomInput from '../custom-input/CustomInput';
 import UploadSvg from './UploadSvg';
-import './fileInputBase.less';
+import './fileInput.less';
 
 interface FileInputProps {
     id: string;

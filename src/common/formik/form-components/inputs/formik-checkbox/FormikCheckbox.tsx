@@ -5,12 +5,12 @@ import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { FormikFormContext } from '../../formik-form/FormikForm';
 
-interface FormikCheckboxProps<FieldName> extends Omit<CheckboxProps, 'name'> {
+interface OwnProps<FieldName> extends Omit<CheckboxProps, 'name'> {
     name: FieldName;
     afterOnChange?: (newValue: boolean) => void;
 }
 
-type Props<FieldName> = FormikCheckboxProps<FieldName> & FormikInputCommonProps;
+export type FormikCheckboxProps<FieldName> = OwnProps<FieldName> & FormikInputCommonProps;
 
 function FormikCheckbox<FieldName>({
     name,
@@ -20,7 +20,7 @@ function FormikCheckbox<FieldName>({
     info,
     feil,
     ...restProps
-}: Props<FieldName>) {
+}: FormikCheckboxProps<FieldName>) {
     const context = React.useContext(FormikFormContext);
     return (
         <Field validate={validate} name={name}>

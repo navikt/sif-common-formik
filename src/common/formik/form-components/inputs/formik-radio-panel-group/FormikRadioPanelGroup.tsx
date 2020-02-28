@@ -5,11 +5,11 @@ import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { FormikFormContext } from '../../formik-form/FormikForm';
 
-interface FormikRadioPanelGroupProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onChange'> {
+interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onChange'> {
     name: FieldName;
 }
 
-type Props<FieldName> = FormikRadioPanelGroupProps<FieldName> & FormikInputCommonProps;
+export type FormikRadioPanelGroupProps<FieldName> = OwnProps<FieldName> & FormikInputCommonProps;
 
 function FormikRadioPanelGroup<FieldName>({
     name,
@@ -19,7 +19,7 @@ function FormikRadioPanelGroup<FieldName>({
     info,
     feil,
     ...restProps
-}: Props<FieldName>) {
+}: FormikRadioPanelGroupProps<FieldName>) {
     const context = React.useContext(FormikFormContext);
     return (
         <Field validate={validate} name={name}>

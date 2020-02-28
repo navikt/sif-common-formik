@@ -6,14 +6,22 @@ import { FieldValidationError } from '../../../types/FieldValidationError';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { FormikFormContext } from '../../formik-form/FormikForm';
 
-interface FormikInputGroupProps<FieldName> extends SkjemaGruppeProps {
+interface OwnProps<FieldName> extends SkjemaGruppeProps {
     name: FieldName;
     feil?: FieldValidationError;
 }
 
-type Props<FieldName> = FormikInputGroupProps<FieldName> & FormikInputCommonProps;
+export type FormikInputGroupProps<FieldName> = OwnProps<FieldName> & FormikInputCommonProps;
 
-function FormikInputGroup<FieldName>({ name, legend, feil, children, info, validate, ...restProps }: Props<FieldName>) {
+function FormikInputGroup<FieldName>({
+    name,
+    legend,
+    feil,
+    children,
+    info,
+    validate,
+    ...restProps
+}: FormikInputGroupProps<FieldName>) {
     const context = React.useContext(FormikFormContext);
     return (
         <Field validate={validate} name={name}>

@@ -4,7 +4,7 @@ import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import FormikDatepicker, { FormikDatepickerProps } from '../formik-datepicker/FormikDatepicker';
 import './dateIntervalPicker.less';
 
-interface DateIntervalPickerProps<FieldName> {
+export interface DateIntervalPickerProps<FieldName> {
     legend: string;
     fromDatepickerProps: FormikDatepickerProps<FieldName>;
     toDatepickerProps: FormikDatepickerProps<FieldName>;

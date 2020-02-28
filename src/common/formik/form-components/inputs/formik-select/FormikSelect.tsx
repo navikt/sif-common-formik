@@ -5,11 +5,11 @@ import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { FormikFormContext } from '../../formik-form/FormikForm';
 
-interface FormikSelectProps<FieldName> extends Omit<SelectProps, 'name'> {
+interface OwnProps<FieldName> extends Omit<SelectProps, 'name'> {
     name: FieldName;
 }
 
-type Props = SelectProps & FormikInputCommonProps;
+export type FormikSelectProps<FieldName> = OwnProps<FieldName> & FormikInputCommonProps;
 
 function FormikSelect<FieldName>({
     label,
@@ -19,7 +19,7 @@ function FormikSelect<FieldName>({
     info,
     feil,
     ...restProps
-}: Props & FormikSelectProps<FieldName>) {
+}: FormikSelectProps<FieldName>) {
     const context = React.useContext(FormikFormContext);
     return (
         <Field validate={validate} name={name}>

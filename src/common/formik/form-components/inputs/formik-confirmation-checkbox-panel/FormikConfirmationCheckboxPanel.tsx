@@ -4,12 +4,12 @@ import { BekreftCheckboksPanel, BekreftCheckboksPanelProps } from 'nav-frontend-
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { FormikFormContext } from '../../formik-form/FormikForm';
 
-interface FormikConfirmationCheckboxPanelProps<FieldName>
-    extends Omit<BekreftCheckboksPanelProps, 'onChange' | 'checked'> {
+interface OwnProps<FieldName> extends Omit<BekreftCheckboksPanelProps, 'onChange' | 'checked'> {
     name: FieldName;
 }
 
-type Props<FieldName> = FormikConfirmationCheckboxPanelProps<FieldName> & Omit<FormikInputCommonProps, 'info'>;
+export type FormikConfirmationCheckboxPanelProps<FieldName> = OwnProps<FieldName> &
+    Omit<FormikInputCommonProps, 'info'>;
 
 function FormikConfirmationCheckboxPanel<FieldName>({
     children,
@@ -17,7 +17,7 @@ function FormikConfirmationCheckboxPanel<FieldName>({
     feil,
     validate,
     ...restProps
-}: Props<FieldName>) {
+}: FormikConfirmationCheckboxPanelProps<FieldName>) {
     const context = React.useContext(FormikFormContext);
     return (
         <Field validate={validate} name={name}>
