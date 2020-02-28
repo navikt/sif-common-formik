@@ -16,7 +16,7 @@ export interface FormikFormProps<FormValues, ErrorFormat = FormikErrors<FormValu
     className?: string;
     includeValidationSummary?: boolean;
     includeButtons?: boolean;
-    errorRender?: FormikErrorRender<FormValues, ErrorFormat>;
+    fieldErrorRender?: FormikErrorRender<FormValues, ErrorFormat>;
     resetFormOnCancel?: boolean;
     labels?: {
         submitButton?: string;
@@ -44,7 +44,7 @@ function FormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
     className,
     includeValidationSummary,
     labels,
-    errorRender,
+    fieldErrorRender,
     includeButtons = true
 }: FormikFormProps<FormValues, ErrorFormat>) {
     const formik = useFormikContext<FormValues>();
@@ -68,13 +68,13 @@ function FormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
     const createFormikFormContext = () => {
         const showErrors = isValidationErrorsVisible(formik);
         return {
-            errorRender,
+            fieldErrorRender,
             showErrors,
             renderFieldError: (field, form) => {
                 if (showErrors) {
                     const errors = getErrorsForField(field.name, form.errors);
                     if (errors) {
-                        return errorRender ? errorRender(errors) : true;
+                        return fieldErrorRender ? fieldErrorRender(errors) : true;
                     }
                 }
                 return undefined;

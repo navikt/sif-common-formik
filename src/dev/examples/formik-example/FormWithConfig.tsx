@@ -8,8 +8,8 @@ import Tiles from '../../components/tiles/Tiles';
 import {
     isFieldValidationError, renderFieldValidationError
 } from '../../modules/validation/fieldValidationRenderUtils';
+import ConditionalQuestion from '../../modules/visibility/ConditionalQuestion';
 import { QuestionVisibilityContext } from '../../modules/visibility/QuestionVisibilityContext';
-import QuestionWrapper from '../../modules/visibility/QuestionWrapper';
 import VisibilityBlock from '../../modules/visibility/VisibilityBlock';
 import { validateRequiredField } from '../../validation/fieldValidations';
 import { exampleFormQuestions } from './config';
@@ -26,29 +26,29 @@ const FormWithConfig: React.FunctionComponent<Props> = ({ formik }) => {
     return (
         <QuestionVisibilityContext.Provider value={{ visibility: exampleFormQuestions.getVisbility(formik.values) }}>
             <Form
-                errorRender={(errors) => {
+                fieldErrorRender={(errors) => {
                     if (isFieldValidationError(errors)) {
                         return renderFieldValidationError(intl, errors);
                     } else {
                         return errors;
                     }
                 }}>
-                <QuestionWrapper fieldName={FormFields.birthdate}>
+                <ConditionalQuestion forField={FormFields.birthdate}>
                     <DatePicker name={FormFields.birthdate} label="Fødselsdato" validate={validateRequiredField} />
-                </QuestionWrapper>
+                </ConditionalQuestion>
 
-                <QuestionWrapper fieldName={FormFields.birthCountry}>
+                <ConditionalQuestion forField={FormFields.birthCountry}>
                     <CountrySelect name={FormFields.birthCountry} label="Fødselsland" />
-                </QuestionWrapper>
+                </ConditionalQuestion>
 
                 <VisibilityBlock<FormFields> fieldName={FormFields.firstname}>
                     <Tiles columns={2}>
-                        <QuestionWrapper fieldName={FormFields.firstname}>
+                        <ConditionalQuestion forField={FormFields.firstname}>
                             <Input name={FormFields.firstname} label="Fornavn" validate={validateRequiredField} />
-                        </QuestionWrapper>
-                        <QuestionWrapper fieldName={FormFields.lastname}>
+                        </ConditionalQuestion>
+                        <ConditionalQuestion forField={FormFields.lastname}>
                             <Input name={FormFields.lastname} label="Etternavn" validate={validateRequiredField} />
-                        </QuestionWrapper>
+                        </ConditionalQuestion>
                     </Tiles>
                 </VisibilityBlock>
             </Form>
