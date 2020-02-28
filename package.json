@@ -135,18 +135,18 @@
         "package.json",
         "/lib"
     ],
-    "description": "Felleskomponenter for sykdom i familien søknadsskjema",
+    "description": "Formikwrapper for nav-frontend-skjema",
     "directories": {
         "lib": "lib"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/navikt/sif-common.git"
+        "url": "https://github.com/navikt/sif-common-formik.git"
     },
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/navikt/sif-common/issues"
+        "url": "https://github.com/navikt/sif-common-formik/issues"
     },
-    "homepage": "https://navikt.github.io/sif-common"
+    "homepage": "https://navikt.github.io/sif-common-formik"
 }
