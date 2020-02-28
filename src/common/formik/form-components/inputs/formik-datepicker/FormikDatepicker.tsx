@@ -4,8 +4,8 @@ import Datovelger from 'nav-datovelger/dist/datovelger/Datovelger';
 import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
+import CustomInput from '../../../components/custom-input/CustomInput';
 import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
-import SkjemaGruppeSingleElement from '../../../components/skjemagruppe-single-element/SkjemaGruppeSingleElement';
 import { FieldValidationError } from '../../../types/FieldValidationError';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { FormikFormContext } from '../../formik-form/FormikForm';
@@ -62,7 +62,7 @@ function FormikDatepicker<FieldName>({
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
-                    <SkjemaGruppeSingleElement feil={context ? context.renderFieldError(field, form, context) : feil}>
+                    <CustomInput feil={context ? context.renderFieldError(field, form, context) : feil}>
                         <Label htmlFor={field.name}>
                             <LabelWithInfo info={info}>{label}</LabelWithInfo>
                         </Label>
@@ -88,7 +88,7 @@ function FormikDatepicker<FieldName>({
                                 }
                             }}
                         />
-                    </SkjemaGruppeSingleElement>
+                    </CustomInput>
                 );
             }}
         </Field>

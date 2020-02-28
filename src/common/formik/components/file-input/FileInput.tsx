@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Element } from 'nav-frontend-typografi';
 import bemUtils from '../../../../dev/utils/bemUtils';
 import { FieldValidationError } from '../../types/FieldValidationError';
-import SkjemaGruppeSingleElement from '../skjemagruppe-single-element/SkjemaGruppeSingleElement';
+import CustomInput from '../custom-input/CustomInput';
 import UploadSvg from './UploadSvg';
 import './fileInputBase.less';
 
@@ -17,7 +17,7 @@ interface FileInputProps {
     onClick?: () => void;
 }
 
-export default class FileInputBase extends React.Component<FileInputProps> {
+export default class FileInput extends React.Component<FileInputProps> {
     constructor(props: FileInputProps) {
         super(props);
         this.fileSelectHandler = this.fileSelectHandler.bind(this);
@@ -62,7 +62,7 @@ export default class FileInputBase extends React.Component<FileInputProps> {
         const bem = bemUtils('attachmentButton');
         const inputId = `${id}-input`;
         return (
-            <SkjemaGruppeSingleElement feil={feil}>
+            <CustomInput feil={feil}>
                 <label
                     role="button"
                     id={id}
@@ -86,7 +86,7 @@ export default class FileInputBase extends React.Component<FileInputProps> {
                         multiple={multiple === true}
                     />
                 </label>
-            </SkjemaGruppeSingleElement>
+            </CustomInput>
         );
     }
 }

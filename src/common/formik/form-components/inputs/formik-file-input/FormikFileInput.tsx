@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ArrayHelpers, Field, FieldArray, FieldProps } from 'formik';
-import FileInputBase from '../../../components/file-input-base/FileInputBase';
+import FileInput from '../../../components/file-input/FileInput';
 import { FieldValidationError } from '../../../types/FieldValidationError';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { FormikFormContext } from '../../formik-form/FormikForm';
@@ -31,7 +31,7 @@ function FormikFileInput<FieldName>({
                 <Field validate={validate} name={name}>
                     {({ field, form }: FieldProps) => {
                         return (
-                            <FileInputBase
+                            <FileInput
                                 id={field.name}
                                 name={field.name}
                                 label={label}

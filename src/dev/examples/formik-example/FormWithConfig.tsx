@@ -1,7 +1,9 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { FormikProps } from 'formik';
-import { getTypedFormComponents } from '../../../common/formik/form/typing/getTypedFormComponents';
+import {
+    getTypedFormComponents
+} from '../../../common/formik/form-components/getTypedFormComponents';
 import {
     isFieldValidationError, renderFieldValidationError
 } from '../../../common/validation/fieldValidationRenderUtils';
