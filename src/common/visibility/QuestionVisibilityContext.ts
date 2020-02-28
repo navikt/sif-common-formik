@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { QuestionVisibility } from '../../utils/questions/Question';
+import { QuestionVisibility } from './questions/Questions';
 
 interface VisibilityContext<FieldName> {
     visibility: QuestionVisibility<FieldName>;

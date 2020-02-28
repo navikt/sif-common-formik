@@ -1,4 +1,4 @@
-import { QuestionConfig, Questions, questionValueIsOk, QuestionVisibility } from './Question';
+import { QuestionConfig, Questions, questionValueIsOk, QuestionVisibility } from './Questions';
 
 enum TestKeys {
     parent = 'parent',

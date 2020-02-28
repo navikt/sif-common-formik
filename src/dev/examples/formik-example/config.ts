@@ -1,4 +1,4 @@
-import { QuestionConfig, Questions } from '../../../common/formik/utils/questions/Question';
+import { QuestionConfig, Questions } from '../../../common/visibility/questions/Questions';
 import { hasValue } from '../../validation/hasValue';
 import { yesOrNoIsAnswered } from '../../validation/yesOrNoIsAnswered';
 import { FormFields, FormValues } from './types';

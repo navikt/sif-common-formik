@@ -3,13 +3,11 @@ import { useIntl } from 'react-intl';
 import { FormikProps } from 'formik';
 import { getTypedFormComponents } from '../../../common/formik/form/typing/typeFormComponents';
 import {
-    QuestionVisibilityContext
-} from '../../../common/formik/form/visibility/QuestionVisibilityContext';
-import QuestionWrapper from '../../../common/formik/form/visibility/QuestionWrapper';
-import VisibilityBlock from '../../../common/formik/form/visibility/VisibilityBlock';
-import {
     isFieldValidationError, renderFieldValidationError
 } from '../../../common/formik/validation/fieldValidationRenderUtils';
+import { QuestionVisibilityContext } from '../../../common/visibility/QuestionVisibilityContext';
+import QuestionWrapper from '../../../common/visibility/QuestionWrapper';
+import VisibilityBlock from '../../../common/visibility/VisibilityBlock';
 import Tiles from '../../components/tiles/Tiles';
 import { validateRequiredField } from '../../validation/fieldValidations';
 import { exampleFormQuestions } from './config';
