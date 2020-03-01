@@ -150,5 +150,5 @@
         "url": "https://github.com/navikt/sif-common-formik/issues"
     },
     "homepage": "https://navikt.github.io/sif-common-formik",
-    "main": "./src/index.tsx"
+    "main": "./src/components/formik/index.ts"
 }

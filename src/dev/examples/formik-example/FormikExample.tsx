@@ -40,8 +40,12 @@ const FormikExample: React.FunctionComponent<Props> = (props) => {
                                         aktiv: view === 0
                                     },
                                     {
-                                        label: 'Skjema med config',
+                                        label: 'Typed form components',
                                         aktiv: view === 1
+                                    },
+                                    {
+                                        label: 'Skjema med config',
+                                        aktiv: view === 2
                                     }
                                 ]}
                             />
