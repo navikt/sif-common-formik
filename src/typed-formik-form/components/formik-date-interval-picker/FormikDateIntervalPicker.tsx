@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import FormikDatepicker, { FormikDatepickerProps } from '../formik-datepicker/FormikDatepicker';
-import LabelWithInfo from '../label-with-info/LabelWithInfo';
+import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import './dateIntervalPicker.less';
 
 export interface DateIntervalPickerProps<FieldName> {

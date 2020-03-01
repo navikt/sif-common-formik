@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Element } from 'nav-frontend-typografi';
 import { FieldValidationError } from '../../../types/FieldValidationError';
-import CustomInput from '../../custom-input/CustomInput';
+import CustomInput from '../../helpers/custom-input/CustomInput';
 import UploadSvg from './UploadSvg';
 import './fileInput.less';
 

@@ -3,7 +3,7 @@ import { Field, FieldProps } from 'formik';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
 import { FieldValidationError } from '../../types/FieldValidationError';
 import { TypedFormInputCommonProps } from '../../types/TypedFormInputCommonProps';
-import LabelWithInfo from '../label-with-info/LabelWithInfo';
+import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
 interface OwnProps<FieldName> extends SkjemaGruppeProps {

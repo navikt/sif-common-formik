@@ -4,8 +4,8 @@ import { Knapp } from 'nav-frontend-knapper';
 import {
     getAllErrors, getErrorsForField, isValidationErrorsVisible
 } from '../../utils/typedFormErrorUtils';
-import ButtonRow from '../button-row/ButtonRow';
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
+import ButtonRow from '../helpers/button-row/ButtonRow';
 
 export type FormikErrorRender<FormValues> = (error: FormikErrors<FormValues>) => React.ReactNode | string;
 

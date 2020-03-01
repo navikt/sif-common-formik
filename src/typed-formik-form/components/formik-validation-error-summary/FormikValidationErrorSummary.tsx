@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useFormikContext } from 'formik';
 import { getAllErrors } from '../../utils/typedFormErrorUtils';
+import ValidationSummary from '../helpers/ValidationSummary';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
-import ValidationSummary from '../validation-summary/ValidationSummary';
 
 function FormikValidationErrorSummary<FormValues>() {
     const context = React.useContext(TypedFormikFormContext);

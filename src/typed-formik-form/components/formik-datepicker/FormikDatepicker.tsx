@@ -6,8 +6,8 @@ import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
 import { FieldValidationError } from '../../types/FieldValidationError';
 import { TypedFormInputCommonProps } from '../../types/TypedFormInputCommonProps';
-import CustomInput from '../custom-input/CustomInput';
-import LabelWithInfo from '../label-with-info/LabelWithInfo';
+import CustomInput from '../helpers/custom-input/CustomInput';
+import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
 

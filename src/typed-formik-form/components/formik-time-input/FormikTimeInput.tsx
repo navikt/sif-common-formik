@@ -3,8 +3,8 @@ import { Field, FieldProps } from 'formik';
 import { InputProps, Label } from 'nav-frontend-skjema';
 import { Time } from '../../types/Time';
 import { TypedFormInputCommonProps } from '../../types/TypedFormInputCommonProps';
-import CustomInput from '../custom-input/CustomInput';
-import LabelWithInfo from '../label-with-info/LabelWithInfo';
+import CustomInput from '../helpers/custom-input/CustomInput';
+import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import TimeInput from './TimeInput';
 

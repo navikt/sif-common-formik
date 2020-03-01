@@ -4,7 +4,7 @@ import { YesOrNo } from '../../types/YesOrNo';
 import FormikRadioPanelGroup, {
     FormikRadioPanelGroupProps
 } from '../formik-radio-panel-group/FormikRadioPanelGroup';
-import LabelWithInfo from '../label-with-info/LabelWithInfo';
+import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 
 export interface FormikYesOrNoQuestionProps<FieldName> extends Omit<FormikRadioPanelGroupProps<FieldName>, 'radios'> {
     includeDoNotKnowOption?: boolean;
