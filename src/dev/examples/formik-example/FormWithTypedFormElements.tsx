@@ -46,11 +46,13 @@ const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
                 legend="Tidsrom"
                 fromDatepickerProps={{
                     name: FormFields.daterange_from,
-                    label: 'Fra'
+                    label: 'Fra',
+                    validate: validateRequiredField
                 }}
                 toDatepickerProps={{
                     name: FormFields.daterange_to,
-                    label: 'Til'
+                    label: 'Til',
+                    validate: validateRequiredField
                 }}
             />
         </Form>

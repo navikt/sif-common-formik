@@ -8,7 +8,7 @@ function FormikValidationErrorSummary<FormValues>() {
     const context = React.useContext(TypedFormikFormContext);
     const formik = useFormikContext();
     if (formik && context && context.showErrors) {
-        const errorMessages = getAllErrors(formik, context ? context.fieldErrorRender : undefined);
+        const errorMessages = !formik.isValid && getAllErrors(formik, context ? context.fieldErrorRender : undefined);
         if (errorMessages) {
             return <ValidationSummary errorMessages={errorMessages} />;
         }

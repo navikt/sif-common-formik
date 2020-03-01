@@ -1,9 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { FieldInputProps, FormikErrors, FormikProps, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
-import {
-    getAllErrors, getErrorsForField, isValidationErrorsVisible
-} from '../../utils/typedFormErrorUtils';
+import { getErrorsForField, isValidationErrorsVisible } from '../../utils/typedFormErrorUtils';
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 import ButtonRow from '../helpers/button-row/ButtonRow';
 
@@ -57,8 +55,6 @@ function TypedFormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
         handleSubmit(evt);
     };
 
-    const errorMessages = includeValidationSummary ? getAllErrors(formik, fieldErrorRender) : undefined;
-
     const createTypedFormikFormContext = (): TypedFormikFormContextType => {
         const showErrors = isValidationErrorsVisible(formik);
         return {
@@ -81,7 +77,7 @@ function TypedFormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
         <form onSubmit={onSubmit} noValidate={true} className={className}>
             <TypedFormikFormContext.Provider value={createTypedFormikFormContext()}>
                 {children}
-                {errorMessages && (
+                {!formik.isValid && (
                     <div style={{ marginTop: '2rem' }}>
                         <FormikValidationErrorSummary />
                     </div>
