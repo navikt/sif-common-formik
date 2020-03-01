@@ -6,7 +6,7 @@ import FormikRadioPanelGroup, {
     FormikRadioPanelGroupProps
 } from '../formik-radio-panel-group/FormikRadioPanelGroup';
 
-export interface FormikYesOrNoQuestionProps<FieldName> extends FormikRadioPanelGroupProps<FieldName> {
+export interface FormikYesOrNoQuestionProps<FieldName> extends Omit<FormikRadioPanelGroupProps<FieldName>, 'radios'> {
     includeDoNotKnowOption?: boolean;
     labels?: {
         [YesOrNo.YES]?: string;

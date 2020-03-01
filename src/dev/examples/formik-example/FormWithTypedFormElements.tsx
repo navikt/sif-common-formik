@@ -13,7 +13,7 @@ import { FormFields, FormValues } from './types';
 
 interface Props {}
 
-const { Input, DatePicker, CountrySelect, Form } = getTypedFormComponents<FormFields, FormValues>();
+const { Input, DatePicker, CountrySelect, Form, YesOrNoQuestion } = getTypedFormComponents<FormFields, FormValues>();
 
 const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
     const intl = useIntl();
@@ -37,6 +37,9 @@ const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
                     <Input name={FormFields.firstname} label="Fornavn" validate={validateRequiredField} />
                     <Input name={FormFields.lastname} label="Etternavn" validate={validateRequiredField} />
                 </Tiles>
+            </Question>
+            <Question>
+                <YesOrNoQuestion legend="Har du barn?" name={FormFields.hasKids} />
             </Question>
         </Form>
     );
