@@ -1,6 +1,6 @@
-// import { FieldValidationResult } from '../../validation/types';
+import { FormikValidateFunction } from './FormikValidateFunction';
 
 export interface TypedFormInputCommonProps {
-    validate?: (value: any) => any; // FieldValidationResult | string | Promise<void> | undefined;
+    validate?: FormikValidateFunction; // FieldValidationResult | string | Promise<void> | undefined;
     info?: React.ReactNode;
 }
