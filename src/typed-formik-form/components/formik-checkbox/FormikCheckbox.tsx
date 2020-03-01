@@ -30,7 +30,7 @@ function FormikCheckbox<FieldName>({
                         {...restProps}
                         {...field}
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
-                        feil={context ? context.renderFieldError(field, form, context) : feil}
+                        feil={context ? context.renderFieldError(field, form) : feil}
                         checked={field.value === true}
                         onChange={(evt) => {
                             const newValue = evt.target.checked;

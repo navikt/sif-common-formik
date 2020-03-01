@@ -21,7 +21,7 @@ function FormikInput<FieldName>({ label, name, info, feil, validate, ...restProp
                         {...restProps}
                         {...field}
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
-                        feil={context ? context.renderFieldError(field, form, context) : feil}
+                        feil={context ? context.renderFieldError(field, form) : feil}
                         value={field.value === undefined ? '' : field.value}
                     />
                 );

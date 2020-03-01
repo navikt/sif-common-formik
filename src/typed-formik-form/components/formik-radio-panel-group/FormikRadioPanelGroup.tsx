@@ -34,7 +34,7 @@ function FormikRadioPanelGroup<FieldName>({
                         className={useTwoColumns ? 'twoColumnPanelGruppe' : undefined}
                         checked={field.value}
                         legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
-                        feil={context ? context.renderFieldError(field, form, context) : feil}
+                        feil={context ? context.renderFieldError(field, form) : feil}
                         onChange={(evt, value) => form.setFieldValue(field.name, value)}
                         radios={radios.map((rb) => ({
                             name: `${name}`,

@@ -30,7 +30,7 @@ function FormikInputGroup<FieldName>({
                     <SkjemaGruppe
                         {...restProps}
                         legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
-                        feil={context ? context.renderFieldError(field, form, context) : feil}>
+                        feil={context ? context.renderFieldError(field, form) : feil}>
                         {children}
                     </SkjemaGruppe>
                 );

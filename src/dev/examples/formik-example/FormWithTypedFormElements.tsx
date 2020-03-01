@@ -1,4 +1,5 @@
 import React from 'react';
+import FormikTimeInput from '../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import {
     getTypedFormComponents
 } from '../../../typed-formik-form/components/getTypedFormComponents';
@@ -39,6 +40,7 @@ const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
             <Question>
                 <YesOrNoQuestion legend="Har du barn?" name={FormFields.hasKids} />
             </Question>
+            <FormikTimeInput name={FormFields.time} label="Tidspunkt" />
         </Form>
     );
 };

@@ -5,7 +5,7 @@ import {
     getAllErrors, getErrorsForField, isValidationErrorsVisible
 } from '../../utils/typedFormErrorUtils';
 import ButtonRow from '../button-row/ButtonRow';
-import ValidationSummary from '../validation-summary/ValidationSummary';
+import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 
 export type FormikErrorRender<FormValues> = (error: FormikErrors<FormValues>) => React.ReactNode | string;
 
@@ -24,13 +24,9 @@ export interface TypedFormikFormProps<FormValues> {
 }
 
 interface TypedFormikFormContextType {
-    errorRender?: FormikErrorRender<any>;
+    fieldErrorRender?: FormikErrorRender<any>;
     showErrors: boolean;
-    renderFieldError: (
-        field: FieldInputProps<any>,
-        form: FormikProps<any>,
-        context?: TypedFormikFormContextType
-    ) => React.ReactNode | boolean | undefined;
+    renderFieldError: (field: FieldInputProps<any>, form: FormikProps<any>) => React.ReactNode | boolean | undefined;
 }
 
 export const TypedFormikFormContext = createContext<TypedFormikFormContextType | undefined>(undefined);
@@ -59,13 +55,11 @@ function TypedFormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
 
     const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         handleSubmit(evt);
-        // setFormSubmitCount(formSubmitCount + 1);
     };
 
     const errorMessages = includeValidationSummary ? getAllErrors(formik, fieldErrorRender) : undefined;
-    console.log(includeValidationSummary, errorMessages);
 
-    const createTypedFormikFormContext = () => {
+    const createTypedFormikFormContext = (): TypedFormikFormContextType => {
         const showErrors = isValidationErrorsVisible(formik);
         return {
             fieldErrorRender,
@@ -74,7 +68,8 @@ function TypedFormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
                 if (showErrors) {
                     const errors = getErrorsForField(field.name, form.errors);
                     if (errors) {
-                        return fieldErrorRender ? fieldErrorRender(errors) : true;
+                        const errorString = fieldErrorRender ? fieldErrorRender(errors) : true;
+                        return errorString;
                     }
                 }
                 return undefined;
@@ -88,7 +83,7 @@ function TypedFormikForm<FormValues, ErrorFormat = FormikErrors<FormValues>>({
                 {children}
                 {errorMessages && (
                     <div style={{ marginTop: '2rem' }}>
-                        <ValidationSummary errorMessages={errorMessages} />
+                        <FormikValidationErrorSummary />
                     </div>
                 )}
                 {includeButtons && (

@@ -58,7 +58,7 @@ function FormikCheckboxPanelGroup<FieldName>({
                                 form.setFieldValue(`${name}`, field.value);
                             }
                         }}
-                        feil={context ? context.renderFieldError(field, form, context) : feil}
+                        feil={context ? context.renderFieldError(field, form) : feil}
                     />
                 );
             }}

@@ -29,7 +29,7 @@ function FormikCountrySelect<FieldName>({
                     <CountrySelect
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         {...field}
-                        feil={context ? context.renderFieldError(field, form, context) : feil}
+                        feil={context ? context.renderFieldError(field, form) : feil}
                         onChange={(value) => form.setFieldValue(field.name, value)}
                         showOnlyEuAndEftaCountries={showOnlyEuAndEftaCountries}
                     />

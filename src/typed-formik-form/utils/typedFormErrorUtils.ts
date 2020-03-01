@@ -96,12 +96,14 @@ export function getAllErrors<FormValues>(
             Object.keys(allErrors).forEach((key) => {
                 const err = allErrors[key];
                 const message = errorRender ? errorRender(err) : err;
-                // if (message && typeof message === 'string') {
-                errorMessages.push({
-                    skjemaelementId: key,
-                    feilmelding: message
-                });
-                // }
+                if (message && typeof message === 'string') {
+                    errorMessages.push({
+                        skjemaelementId: key,
+                        feilmelding: message
+                    });
+                } else {
+                    console.log('invalid error format', key, message, errorRender);
+                }
             });
             if (errorMessages.length > 0) {
                 return errorMessages;
