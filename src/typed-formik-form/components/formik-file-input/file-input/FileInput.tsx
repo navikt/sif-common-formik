@@ -58,7 +58,6 @@ export default class FileInput extends React.Component<FileInputProps> {
 
     render() {
         const { id, name, label, feil, multiple, onClick, acceptedExtensions } = this.props;
-        // const bem = bemUtils('attachmentButton');
         const inputId = `${id}-input`;
         return (
             <CustomInput feil={feil}>

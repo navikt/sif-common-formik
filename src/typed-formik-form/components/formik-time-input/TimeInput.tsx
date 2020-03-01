@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { guid } from 'nav-frontend-js-utils';
-import bemUtils from '../../../dev/utils/bemUtils';
 import { Time } from '../../types/Time';
+import bemUtils from '../../utils/bemUtils';
 import './timeInput.less';
 
 const MAX_HOURS = 23;
