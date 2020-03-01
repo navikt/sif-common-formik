@@ -4,6 +4,7 @@ import { RadioPanelGruppe, RadioPanelGruppeProps } from 'nav-frontend-skjema';
 import LabelWithInfo from '../../../components/label-with-info/LabelWithInfo';
 import { FormikInputCommonProps } from '../../../types/FormikInputCommonProps';
 import { TypedFormikFormContext } from '../../typed-formik-form/TypedFormikForm';
+import '../../../styles/nav-frontend-skjema-extension.less';
 
 interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onChange'> {
     name: FieldName;
