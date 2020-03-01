@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormikDateIntervalPicker } from '../../../typed-formik-form';
 import FormikTimeInput from '../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import {
     getTypedFormComponents
@@ -41,6 +42,17 @@ const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
                 <YesOrNoQuestion legend="Har du barn?" name={FormFields.hasKids} />
             </Question>
             <FormikTimeInput name={FormFields.time} label="Tidspunkt" />
+            <FormikDateIntervalPicker
+                legend="Tidsrom"
+                fromDatepickerProps={{
+                    name: FormFields.daterange_from,
+                    label: 'Fra'
+                }}
+                toDatepickerProps={{
+                    name: FormFields.daterange_to,
+                    label: 'Til'
+                }}
+            />
         </Form>
     );
 };

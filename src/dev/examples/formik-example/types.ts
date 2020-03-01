@@ -10,7 +10,9 @@ export enum FormFields {
     'numberOfKids' = 'numberOfKids',
     'hasBeenAbroadWithKids' = 'hasBeenAbroadWithKids',
     'countries' = 'countries',
-    'time' = 'time'
+    'time' = 'time',
+    'daterange_from' = 'daterange_from',
+    'daterange_to' = 'daterange_to'
 }
 
 export interface CompletedFormValues {
@@ -23,5 +25,7 @@ export interface CompletedFormValues {
     [FormFields.hasBeenAbroadWithKids]?: YesOrNo;
     [FormFields.countries]: string[];
     [FormFields.time]?: Time;
+    [FormFields.daterange_from]?: Date;
+    [FormFields.daterange_to]?: Date;
 }
 export type FormValues = Partial<CompletedFormValues>;
