@@ -10,7 +10,7 @@ interface Props extends SkjemaGruppeProps {
 const CustomInput: React.FunctionComponent<Props> = ({ legend, feil, info, children }) => (
     <SkjemaGruppe
         className="singleInputWrapper"
-        tag="div"
+        tag={legend ? 'fieldset' : 'div'}
         feil={feil}
         legend={legend ? <LabelWithInfo info={info}>{legend}</LabelWithInfo> : undefined}>
         {children}

@@ -9,7 +9,7 @@
         "build-lib": "npm-run-all clean-lib compile-lib-script copy-files-to-lib",
         "clean-lib": "rimraf ./lib",
         "compile-lib-script": "tsc -p tsconfig-build-lib.json",
-        "copy-files-to-lib": "copyfiles -u 3 \"src/common/formik/**/*.less\" lib",
+        "copy-files-to-lib": "copyfiles -u 2 \"src/typed-formik-form/**/*.less\" lib",
         "build-dev-app": "craco build",
         "predeploy": "npm run build-dev-app",
         "deploy": "gh-pages -d build"
