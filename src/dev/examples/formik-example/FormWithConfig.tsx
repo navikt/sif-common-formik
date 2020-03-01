@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { FormikProps } from 'formik';
 import {
     getTypedFormComponents
-} from '../../../common/formik/form-components/getTypedFormComponents';
+} from '../../../typed-formik-form/components/getTypedFormComponents';
 import Tiles from '../../components/tiles/Tiles';
 import {
     isFieldValidationError, renderFieldValidationError

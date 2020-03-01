@@ -4,7 +4,7 @@ import { Panel } from 'nav-frontend-paneler';
 import Tabs from 'nav-frontend-tabs';
 import 'nav-frontend-tabs-style';
 import { Undertittel } from 'nav-frontend-typografi';
-import TypedFormikWrapper from '../../../common/formik/form-components/typed-formik-wrapper/TypedFormikWrapper';
+import TypedFormikWrapper from '../../../typed-formik-form/components/typed-formik-wrapper/TypedFormikWrapper';
 import Code from '../../components/code/Code';
 import Comp from '../../components/code/Comp';
 import PageIntro from '../../components/page-intro/PageIntro';

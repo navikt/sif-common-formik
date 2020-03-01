@@ -1,4 +1,4 @@
-import { YesOrNo } from '../../../common/formik/types/YesOrNo';
+import { YesOrNo } from '../../../typed-formik-form/types/YesOrNo';
 
 export enum FormFields {
     'firstname' = 'firstname',

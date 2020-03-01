@@ -1,7 +1,7 @@
 import { IntlShape } from 'react-intl';
 import { FormikErrors, getIn } from 'formik';
 import { isArray } from 'util';
-import { FieldValidationError } from '../../../common/formik/types/FieldValidationError';
+import { FieldValidationError } from '../../../typed-formik-form/types/FieldValidationError';
 import { isFieldValidationError, renderFieldValidationError } from './fieldValidationRenderUtils';
 
 const isNotEmpty = (obj: any): boolean => {
