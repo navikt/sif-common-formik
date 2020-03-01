@@ -2,6 +2,7 @@ export { default as TypedFormikForm, TypedFormikFormContext } from './components
 export { default as TypedFormikWrapper } from './components/typed-formik-wrapper/TypedFormikWrapper';
 export { default as FormikValidationErrorSummary } from './components/formik-validation-error-summary/FormikValidationErrorSummary';
 export { default as FormikCheckbox } from './components/formik-checkbox/FormikCheckbox';
+export { default as FormikCustomInputWrapper } from './components/formik-custom-input-wrapper/FormikCustomInputWrapper';
 export { default as TypedFormikCheckbox } from './components/formik-checkbox/FormikCheckbox';
 export { default as FormikCheckboxPanelGroup } from './components/formik-checkbox-panel-group/FormikCheckboxPanelGroup';
 export { default as FormikConfirmationCheckboxPanel } from './components/formik-confirmation-checkbox-panel/FormikConfirmationCheckboxPanel';
@@ -15,7 +16,6 @@ export { default as FormikRadioPanelGroup } from './components/formik-radio-pane
 export { default as FormikSelect } from './components/formik-select/FormikSelect';
 export { default as FormikTextarea } from './components/formik-textarea/FormikTextarea';
 export { default as FormikYesOrNoQuestion } from './components/formik-yes-or-no-question/FormikYesOrNoQuestion';
-export { default as CustomInput } from './components/helpers/custom-input/CustomInput';
 export * from './types/FieldValidationError';
 export * from './types/TypedFormInputCommonProps';
 export * from './types/YesOrNo';
