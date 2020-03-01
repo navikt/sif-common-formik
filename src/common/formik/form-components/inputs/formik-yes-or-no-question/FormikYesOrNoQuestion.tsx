@@ -28,7 +28,7 @@ function FormikYesOrNoQuestion<FieldName>({
         <FormikRadioPanelGroup<FieldName>
             legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
             name={name}
-            className={'twoColumnPanelGruppe'}
+            useTwoColumns={true}
             radios={[
                 { label: yesLabel, value: YesOrNo.YES },
                 { label: noLabel, value: YesOrNo.NO },

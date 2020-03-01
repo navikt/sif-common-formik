@@ -8,6 +8,7 @@ import '../../../styles/nav-frontend-skjema-extension.less';
 
 interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onChange'> {
     name: FieldName;
+    useTwoColumns?: boolean;
 }
 
 export type FormikRadioPanelGroupProps<FieldName> = OwnProps<FieldName> & FormikInputCommonProps;
@@ -19,6 +20,7 @@ function FormikRadioPanelGroup<FieldName>({
     radios,
     info,
     feil,
+    useTwoColumns,
     ...restProps
 }: FormikRadioPanelGroupProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -29,6 +31,7 @@ function FormikRadioPanelGroup<FieldName>({
                     <RadioPanelGruppe
                         {...restProps}
                         name={field.name}
+                        className={useTwoColumns ? 'twoColumnPanelGruppe' : undefined}
                         checked={field.value}
                         legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
                         feil={context ? context.renderFieldError(field, form, context) : feil}

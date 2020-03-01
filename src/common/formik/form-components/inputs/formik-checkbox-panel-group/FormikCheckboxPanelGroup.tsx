@@ -8,6 +8,7 @@ import '../../../styles/nav-frontend-skjema-extension.less';
 
 interface OwnProps<FieldName> extends Omit<CheckboksPanelGruppeProps, 'onChange'> {
     name: FieldName;
+    useTwoColumns?: boolean;
 }
 
 export type FormikCheckboxPanelGroupProps<FieldName> = OwnProps<FieldName> & FormikInputCommonProps;
@@ -28,6 +29,7 @@ function FormikCheckboxPanelGroup<FieldName>({
     feil,
     checkboxes,
     info,
+    useTwoColumns,
     ...restProps
 }: FormikCheckboxPanelGroupProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -43,6 +45,7 @@ function FormikCheckboxPanelGroup<FieldName>({
                             ...cb,
                             checked: isCheckboxChecked(field.value, cb.value)
                         }))}
+                        className={useTwoColumns ? 'twoColumnPanelGruppe' : undefined}
                         onChange={(evt, value) => {
                             if (isCheckboxChecked(field.value, value)) {
                                 form.setFieldValue(`${name}`, removeElementFromArray(value, field.value));
