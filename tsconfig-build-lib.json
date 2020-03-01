@@ -19,8 +19,8 @@
         "declaration": true,
         "moduleResolution": "node",
         "noEmit": false,
-        "baseUrl": "./src/common/formik"
+        "baseUrl": "./src/typed-formik-form"
     },
-    "include": ["src/common/formik"],
+    "include": ["src/typed-formik-form"],
     "exclude": ["node_modules", "src/dev"]
 }
