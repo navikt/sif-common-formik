@@ -5,9 +5,7 @@ import { getErrorsForField, isValidationErrorsVisible } from '../../utils/typedF
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 import ButtonRow from '../helpers/button-row/ButtonRow';
 
-export type FormikErrorRender<FormValues, ErrorFormat = FormikErrors<FormValues>> = (
-    error: ErrorFormat
-) => React.ReactNode;
+export type FormikErrorRender<FormValues, ErrorFormat = FormikErrors<FormValues>> = (error: ErrorFormat) => string;
 
 export interface TypedFormikFormProps<FormValues, ErrorFormat> {
     children: React.ReactNode;
