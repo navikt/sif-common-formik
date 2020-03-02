@@ -18,7 +18,7 @@ export { default as FormikSelect } from './components/formik-select/FormikSelect
 export { default as FormikTextarea } from './components/formik-textarea/FormikTextarea';
 export { default as FormikYesOrNoQuestion } from './components/formik-yes-or-no-question/FormikYesOrNoQuestion';
 
-export * from './types/FieldValidationError';
+export * from './types/NavFrontendSkjemaFeil';
 export * from './types/TypedFormInputCommonProps';
 export * from './types/FormikValidateFunction';
 export * from './types/TypedFormInputCommonProps';

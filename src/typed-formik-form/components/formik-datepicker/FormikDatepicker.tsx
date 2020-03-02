@@ -4,7 +4,7 @@ import Datovelger from 'nav-datovelger/dist/datovelger/Datovelger';
 import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
-import { FieldValidationError } from '../../types/FieldValidationError';
+import { NavFrontendSkjemaFeil } from '../../types/NavFrontendSkjemaFeil';
 import { TypedFormInputCommonProps } from '../../types/TypedFormInputCommonProps';
 import CustomInput from '../helpers/custom-input/CustomInput';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
@@ -31,7 +31,7 @@ interface OwnProps<FieldName> {
     fullScreenOnMobile?: boolean;
     disabled?: boolean;
     showYearSelector?: boolean;
-    feil?: FieldValidationError;
+    feil?: NavFrontendSkjemaFeil;
     onChange?: (date: Date | undefined) => void;
 }
 

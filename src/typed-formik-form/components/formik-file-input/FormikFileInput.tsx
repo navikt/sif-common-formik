@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ArrayHelpers, Field, FieldArray, FieldProps } from 'formik';
-import { FieldValidationError } from '../../types/FieldValidationError';
+import { NavFrontendSkjemaFeil } from '../../types/NavFrontendSkjemaFeil';
 import { TypedFormInputCommonProps } from '../../types/TypedFormInputCommonProps';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import FileInput from './file-input/FileInput';
@@ -9,7 +9,7 @@ export interface FormikFileInputProps<FieldName> {
     name: FieldName;
     label: string;
     acceptedExtensions: string;
-    feil?: FieldValidationError;
+    feil?: NavFrontendSkjemaFeil;
     onFilesSelect: (files: File[], arrayHelpers: ArrayHelpers) => void;
     onClick?: () => void;
 }

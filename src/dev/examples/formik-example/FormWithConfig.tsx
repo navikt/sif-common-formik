@@ -6,7 +6,7 @@ import {
 } from '../../../typed-formik-form/components/getTypedFormComponents';
 import Tiles from '../../components/tiles/Tiles';
 import {
-    isFieldValidationError, renderFieldValidationError
+    isIntlFieldValidationErrorType, renderIntlFieldValidationError
 } from '../../modules/validation/fieldValidationRenderUtils';
 import ConditionalQuestion from '../../modules/visibility/ConditionalQuestion';
 import { QuestionVisibilityContext } from '../../modules/visibility/QuestionVisibilityContext';
@@ -27,8 +27,8 @@ const FormWithConfig: React.FunctionComponent<Props> = ({ formik }) => {
         <QuestionVisibilityContext.Provider value={{ visibility: exampleFormQuestions.getVisbility(formik.values) }}>
             <Form
                 fieldErrorRender={(errors) => {
-                    if (isFieldValidationError(errors)) {
-                        return renderFieldValidationError(intl, errors);
+                    if (isIntlFieldValidationErrorType(errors)) {
+                        return renderIntlFieldValidationError(intl, errors);
                     } else {
                         return true;
                     }

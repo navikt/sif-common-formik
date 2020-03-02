@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
-import { FieldValidationError } from '../../types/FieldValidationError';
+import { NavFrontendSkjemaFeil } from '../../types/NavFrontendSkjemaFeil';
 import { TypedFormInputCommonProps } from '../../types/TypedFormInputCommonProps';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
 interface OwnProps<FieldName> extends SkjemaGruppeProps {
     name: FieldName;
-    feil?: FieldValidationError;
+    feil?: NavFrontendSkjemaFeil;
 }
 
 export type FormikInputGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;

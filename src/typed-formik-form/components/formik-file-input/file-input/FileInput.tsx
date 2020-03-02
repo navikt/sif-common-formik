@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Element } from 'nav-frontend-typografi';
-import { FieldValidationError } from '../../../types/FieldValidationError';
+import { NavFrontendSkjemaFeil } from '../../../types/NavFrontendSkjemaFeil';
 import CustomInput from '../../helpers/custom-input/CustomInput';
 import UploadSvg from './UploadSvg';
 import './fileInput.less';
@@ -12,7 +12,7 @@ interface FileInputProps {
     onFilesSelect: (files: File[]) => void;
     multiple?: boolean;
     acceptedExtensions: string;
-    feil?: FieldValidationError;
+    feil?: NavFrontendSkjemaFeil;
     onClick?: () => void;
 }
 
