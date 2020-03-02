@@ -6,9 +6,9 @@ export interface FieldValidationResultValues {
     [key: string]: string | number | Date | valueFunction | undefined;
 }
 
-export interface FieldValidationError {
+export interface IntlFieldValidationError {
     key: string;
     values?: FieldValidationResultValues;
 }
 
-export type FieldValidationResult = FieldValidationError | undefined | void;
+export type FieldValidationResult = IntlFieldValidationError | undefined | void;

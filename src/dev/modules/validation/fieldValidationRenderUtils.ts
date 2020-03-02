@@ -1,7 +1,7 @@
 import { IntlShape } from 'react-intl';
-import { FieldValidationError, FieldValidationResultValues } from './types';
+import { FieldValidationResultValues, IntlFieldValidationError } from './types';
 
-export const isFieldValidationError = (error: any): error is FieldValidationError =>
+export const isFieldValidationError = (error: any): error is IntlFieldValidationError =>
     typeof error === 'object' && error.key !== undefined;
 
 export const renderFieldValidationValues = (
@@ -21,6 +21,6 @@ export const renderFieldValidationValues = (
     return parsedValues;
 };
 
-export const renderFieldValidationError = (intl: IntlShape, error: FieldValidationError): string => {
+export const renderFieldValidationError = (intl: IntlShape, error: IntlFieldValidationError): string => {
     return intl.formatMessage({ id: error.key }, renderFieldValidationValues(intl, error.values));
 };

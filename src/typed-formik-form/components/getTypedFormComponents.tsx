@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormikErrors } from 'formik';
 import FormikCheckboxPanelGroup, {
     FormikCheckboxPanelGroupProps
 } from './formik-checkbox-panel-group/FormikCheckboxPanelGroup';
@@ -29,7 +30,7 @@ import TypedFormikWrapper, {
     TypedFormikWrapperProps
 } from './typed-formik-wrapper/TypedFormikWrapper';
 
-export function getTypedFormComponents<FieldNames, FormValues>() {
+export function getTypedFormComponents<FieldNames, FormValues, ErrorFormat = FormikErrors<any>>() {
     return {
         Checkbox: (props: FormikCheckboxProps<FieldNames>) => <FormikCheckbox<FieldNames> {...props} />,
         CheckboxPanelGroup: (props: FormikCheckboxPanelGroupProps<FieldNames>) => (
@@ -44,7 +45,7 @@ export function getTypedFormComponents<FieldNames, FormValues>() {
             <FormikDateIntervalPicker<FieldNames> {...props} />
         ),
         FileInput: (props: FormikFileInputProps<FieldNames>) => <FormikFileInput<FieldNames> {...props} />,
-        Form: (props: TypedFormikFormProps<FormValues>) => <TypedFormikForm {...props} />,
+        Form: (props: TypedFormikFormProps<FormValues, ErrorFormat>) => <TypedFormikForm {...props} />,
         FormikWrapper: (props: TypedFormikWrapperProps<FormValues>) => <TypedFormikWrapper {...props} />,
         Input: (props: FormikInputProps<FieldNames>) => <FormikInput<FieldNames> {...props} />,
         InputGroup: (props: FormikInputGroupProps<FieldNames>) => <FormikInputGroup<FieldNames> {...props} />,
