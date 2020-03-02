@@ -30,7 +30,7 @@ const FormWithConfig: React.FunctionComponent<Props> = ({ formik }) => {
                     if (isFieldValidationError(errors)) {
                         return renderFieldValidationError(intl, errors);
                     } else {
-                        return errors;
+                        return true;
                     }
                 }}>
                 <ConditionalQuestion forField={FormFields.birthdate}>
