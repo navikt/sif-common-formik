@@ -10,7 +10,7 @@ export type FormikErrorRender<FormValues, ErrorFormat = FormikErrors<FormValues>
     error: ErrorFormat
 ) => NavFrontendSkjemaFeil;
 
-export interface TypedFormikFormProps<FormValues, ErrorFormat> {
+export interface TypedFormikFormProps<FormValues, ErrorFormat = any> {
     children: React.ReactNode;
     className?: string;
     includeValidationSummary?: boolean;
