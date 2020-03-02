@@ -7,6 +7,7 @@ import DialogFormWrapper, {
     DialogFormWrapperWidths
 } from '../dialog-form-wrapper/DialogFormWrapper';
 import Modal from '../modal/Modal';
+import { ModalFormAndListLabels, ModalFormAndListListItemBase } from '../types';
 
 type ModalFormRenderer<ItemType> = (props: {
     item?: ItemType;
@@ -20,19 +21,7 @@ type ListRenderer<ItemType> = (props: {
     onDelete: (item: ItemType) => void;
 }) => React.ReactNode;
 
-export interface ListItemBase {
-    id?: string;
-}
-
-export interface ModalFormAndListLabels {
-    modalTitle: string;
-    listTitle: string;
-    emptyListText?: string;
-    addLabel: string;
-    info?: string;
-}
-
-export interface ModalFormAndListProps<ItemType extends ListItemBase> {
+export interface ModalFormAndListProps<ItemType extends ModalFormAndListListItemBase> {
     labels: ModalFormAndListLabels;
     listRenderer: ListRenderer<ItemType>;
     formRenderer: ModalFormRenderer<ItemType>;
@@ -46,7 +35,7 @@ interface PrivateProps<ItemType> {
 
 type Props<ItemType> = ModalFormAndListProps<ItemType> & PrivateProps<ItemType>;
 
-function ModalFormAndList<ItemType extends ListItemBase>({
+function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
     items = [],
     listRenderer,
     formRenderer,

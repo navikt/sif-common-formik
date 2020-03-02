@@ -20,6 +20,9 @@ export { default as FormikYesOrNoQuestion } from './components/formik-yes-or-no-
 
 export * from './types/FieldValidationError';
 export * from './types/TypedFormInputCommonProps';
+export * from './types/FormikValidateFunction';
+export * from './types/TypedFormInputCommonProps';
 export * from './types/YesOrNo';
 export * from './utils/typedFormErrorUtils';
 export * from './components/getTypedFormComponents';
+export * from './components/formik-modal-form-and-list/types';
