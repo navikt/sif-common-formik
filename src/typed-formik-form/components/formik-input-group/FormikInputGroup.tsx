@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
-import { NavFrontendSkjemaFeil } from '../../types/NavFrontendSkjemaFeil';
-import { TypedFormInputCommonProps } from '../../types/TypedFormInputCommonProps';
+import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 

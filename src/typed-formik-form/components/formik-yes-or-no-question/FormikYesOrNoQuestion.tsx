@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { TypedFormInputCommonProps } from '../../types/TypedFormInputCommonProps';
-import { YesOrNo } from '../../types/YesOrNo';
+import { TypedFormInputCommonProps, YesOrNo } from '../../types';
 import FormikRadioPanelGroup, {
     FormikRadioPanelGroupProps
 } from '../formik-radio-panel-group/FormikRadioPanelGroup';

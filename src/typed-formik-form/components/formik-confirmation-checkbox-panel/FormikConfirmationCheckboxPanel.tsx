@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { BekreftCheckboksPanel, BekreftCheckboksPanelProps } from 'nav-frontend-skjema';
-import { TypedFormInputCommonProps } from '../../types/TypedFormInputCommonProps';
+import { TypedFormInputCommonProps } from '../../types';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
 interface OwnProps<FieldName> extends Omit<BekreftCheckboksPanelProps, 'onChange' | 'checked'> {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Element } from 'nav-frontend-typografi';
-import { NavFrontendSkjemaFeil } from '../../../types/NavFrontendSkjemaFeil';
+import { NavFrontendSkjemaFeil } from '../../../types';
 import CustomInput from '../../helpers/custom-input/CustomInput';
 import UploadSvg from './UploadSvg';
 import './fileInput.less';

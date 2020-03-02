@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { ApiStringDate } from '../types/ApiStringDate';
+import { ApiStringDate } from '../types';
 
 const apiDateFormat = 'YYYY-MM-DD';
 const prettyDateFormat = 'DD.MM.YYYY';

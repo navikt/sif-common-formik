@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { CheckboksPanelGruppe, CheckboksPanelGruppeProps } from 'nav-frontend-skjema';
-import { TypedFormInputCommonProps } from '../../types/TypedFormInputCommonProps';
+import { TypedFormInputCommonProps } from '../../types';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import '../../styles/nav-frontend-skjema-extension.less';

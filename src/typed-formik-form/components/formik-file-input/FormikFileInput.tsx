@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ArrayHelpers, Field, FieldArray, FieldProps } from 'formik';
-import { NavFrontendSkjemaFeil } from '../../types/NavFrontendSkjemaFeil';
-import { TypedFormInputCommonProps } from '../../types/TypedFormInputCommonProps';
+import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import FileInput from './file-input/FileInput';
 

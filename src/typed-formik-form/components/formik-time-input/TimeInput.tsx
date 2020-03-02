@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { guid } from 'nav-frontend-js-utils';
-import { Time } from '../../types/Time';
+import { Time } from '../../types';
 import bemUtils from '../../utils/bemUtils';
 import './timeInput.less';
 
