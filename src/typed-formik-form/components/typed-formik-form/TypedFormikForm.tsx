@@ -19,6 +19,7 @@ export interface TypedFormikFormProps<FormValues> {
         submitButton?: string;
         cancelButton?: string;
     };
+    onValidSubmit?: () => void;
     onCancel?: () => void;
 }
 
@@ -38,6 +39,7 @@ function TypedFormikForm<FormValues>({
     includeValidationSummary,
     labels,
     fieldErrorRenderer,
+    onValidSubmit,
     includeButtons = true
 }: TypedFormikFormProps<FormValues>) {
     const formik = useFormikContext<FormValues>();
@@ -53,7 +55,11 @@ function TypedFormikForm<FormValues>({
     }, [submitCount, setStatus, formSubmitCount]);
 
     const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-        handleSubmit(evt);
+        if (onValidSubmit) {
+            onValidSubmit();
+        } else {
+            handleSubmit(evt);
+        }
     };
 
     const createTypedFormikFormContext = (): TypedFormikFormContextType => {
