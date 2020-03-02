@@ -1,9 +1,5 @@
 import * as React from 'react';
-
 import { default as NFModal } from 'nav-frontend-modal';
-
-import bemUtils from '../../utils/bemUtils';
-
 import './modal.less';
 
 export interface ModalProps {
@@ -13,14 +9,13 @@ export interface ModalProps {
     contentLabel: string;
 }
 
-const bem = bemUtils('modal');
 const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, onRequestClose, contentLabel, className, children }) => (
     <NFModal
-        className={`${bem.block} ${className}`}
+        className={`modal ${className ? className : ''}`}
         isOpen={isOpen}
         contentLabel={contentLabel}
         onRequestClose={onRequestClose}>
-        <article className={bem.element('content')}>{children}</article>
+        <article className="modal__content">{children}</article>
     </NFModal>
 );
 
