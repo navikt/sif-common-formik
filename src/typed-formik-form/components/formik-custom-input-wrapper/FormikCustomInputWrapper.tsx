@@ -27,7 +27,7 @@ function FormikCustomInputWrapper<FieldName>({
                 return (
                     <CustomInput
                         legend={(label = <LabelWithInfo info={info}>{label}</LabelWithInfo>)}
-                        feil={context ? context.renderFieldError(field, form) : undefined}>
+                        feil={context ? context.getAndRenderFieldErrorMessage(field, form) : undefined}>
                         {children}
                     </CustomInput>
                 );

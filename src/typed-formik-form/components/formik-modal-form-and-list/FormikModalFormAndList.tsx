@@ -28,7 +28,7 @@ function FormikModalFormAndList<FieldsType, ItemType>({
                     <ModalFormAndList<ItemType>
                         labels={labels}
                         items={field.value}
-                        error={context ? context.renderFieldError(field, form) : undefined}
+                        error={context ? context.getAndRenderFieldErrorMessage(field, form) : undefined}
                         onChange={(values) => {
                             const updatedValues = sortFunc ? values.sort(sortFunc) : values;
                             form.setFieldValue(field.name, updatedValues);

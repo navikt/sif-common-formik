@@ -27,7 +27,7 @@ function FormikConfirmationCheckboxPanel<FieldName>({
                         {...restProps}
                         {...field}
                         checked={field.value === true}
-                        feil={context ? context.renderFieldError(field, form) : feil}
+                        feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}
                         onChange={(evt) => {
                             form.setFieldValue(`${name}`, (evt as React.ChangeEvent<HTMLInputElement>).target.checked);
                         }}

@@ -39,7 +39,7 @@ function FormikFileInput<FieldName>({
                                 onFilesSelect={(files) => onFilesSelect(files, arrayHelpers)}
                                 multiple={true}
                                 acceptedExtensions={acceptedExtensions}
-                                feil={context ? context.renderFieldError(field, form) : feil}
+                                feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}
                             />
                         );
                     }}

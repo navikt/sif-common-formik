@@ -28,7 +28,7 @@ function FormikTextarea<FieldName>({
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         {...restProps}
                         {...field}
-                        feil={context ? context.renderFieldError(field, form) : feil}
+                        feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}
                         onChange={(evt) => {
                             form.setFieldValue(field.name, evt.target.value);
                         }}

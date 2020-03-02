@@ -1,7 +1,8 @@
 import flatten from 'flat';
 import { FormikErrors, FormikProps, getIn } from 'formik';
-import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
-import { FormikErrorRender } from '../components/typed-formik-form/TypedFormikForm';
+
+// import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
+// import { FormikErrorRender } from '../components/typed-formik-form/TypedFormikForm';
 
 interface ErrorNodeInObject {
     field: string;
@@ -82,32 +83,12 @@ function getErrorsFromFieldArrayErrors<FieldName>(field: FieldName, fieldArrayKe
     return errors;
 }
 
-export function getAllErrors<FormValues>(
-    formik: FormikProps<FormValues>,
-    errorRender?: FormikErrorRender<FormValues>
-): FeiloppsummeringFeil[] | undefined {
+export function getAllErrors<FormValues>(formik: FormikProps<FormValues>): FormikErrors<FormValues> | undefined {
     const { errors } = formik;
     if (errors) {
         const numberOfErrors = Object.keys(errors).length;
-        const errorMessages: FeiloppsummeringFeil[] = [];
-
-        if (numberOfErrors > 0) {
-            const allErrors = flattenFieldArrayErrors(errors);
-            Object.keys(allErrors).forEach((key) => {
-                const err = allErrors[key];
-                const message = errorRender ? errorRender(err) : err;
-                if (message && typeof message === 'string') {
-                    errorMessages.push({
-                        skjemaelementId: key,
-                        feilmelding: message
-                    });
-                } else {
-                    console.log('invalid error format', key, message, errorRender);
-                }
-            });
-            if (errorMessages.length > 0) {
-                return errorMessages;
-            }
+        if (numberOfErrors > 0 && isValidationErrorsVisible(formik)) {
+            return flattenFieldArrayErrors(errors);
         }
     }
     return undefined;

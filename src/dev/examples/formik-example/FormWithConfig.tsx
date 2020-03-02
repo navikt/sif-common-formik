@@ -26,7 +26,7 @@ const FormWithConfig: React.FunctionComponent<Props> = ({ formik }) => {
     return (
         <QuestionVisibilityContext.Provider value={{ visibility: exampleFormQuestions.getVisbility(formik.values) }}>
             <Form
-                fieldErrorRender={(errors) => {
+                fieldErrorRenderer={(errors) => {
                     if (isIntlFieldValidationErrorType(errors)) {
                         return renderIntlFieldValidationError(intl, errors);
                     } else {

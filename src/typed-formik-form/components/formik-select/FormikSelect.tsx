@@ -29,7 +29,7 @@ function FormikSelect<FieldName>({
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         {...field}
                         {...restProps}
-                        feil={context ? context.renderFieldError(field, form) : feil}
+                        feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}
                         value={field.value === undefined ? '' : field.value}>
                         {children}
                     </Select>

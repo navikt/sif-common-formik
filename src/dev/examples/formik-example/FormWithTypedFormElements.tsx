@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import { FormikDateIntervalPicker } from '../../../typed-formik-form';
 import FormikTimeInput from '../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import {
@@ -6,20 +7,26 @@ import {
 } from '../../../typed-formik-form/components/getTypedFormComponents';
 import Question from '../../components/question/Question';
 import Tiles from '../../components/tiles/Tiles';
-import { IntlFieldValidationError } from '../../modules/validation/types';
+import {
+    isIntlFieldValidationErrorType, renderIntlFieldValidationError
+} from '../../modules/validation/fieldValidationRenderUtils';
 import { validateRequiredField } from '../../validation/fieldValidations';
 import { FormFields, FormValues } from './types';
 
 interface Props {}
 
-const Form = getTypedFormComponents<FormFields, FormValues, IntlFieldValidationError>();
+const Form = getTypedFormComponents<FormFields, FormValues>();
 
 const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
+    const intl = useIntl();
     return (
         <Form.Form
             includeValidationSummary={true}
-            fieldErrorRender={(error) => {
-                return error.key;
+            fieldErrorRenderer={(error) => {
+                if (isIntlFieldValidationErrorType(error)) {
+                    return renderIntlFieldValidationError(intl, error);
+                }
+                return error;
             }}>
             <Question>
                 <Form.DatePicker name={FormFields.birthdate} label="Fødselsdato" validate={validateRequiredField} />

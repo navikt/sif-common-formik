@@ -29,7 +29,7 @@ function FormikTimeInput<FieldName>({
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
-                    <CustomInput feil={context ? context.renderFieldError(field, form) : feil}>
+                    <CustomInput feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}>
                         <Label htmlFor={field.name}>
                             <LabelWithInfo info={info}>{label}</LabelWithInfo>
                         </Label>
