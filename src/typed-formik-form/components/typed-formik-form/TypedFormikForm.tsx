@@ -1,13 +1,14 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { FieldInputProps, FormikErrors, FormikProps, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
+import { NavFrontendSkjemaFeil } from '../../types/NavFrontendSkjemaFeil';
 import { getErrorsForField, isValidationErrorsVisible } from '../../utils/typedFormErrorUtils';
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 import ButtonRow from '../helpers/button-row/ButtonRow';
 
 export type FormikErrorRender<FormValues, ErrorFormat = FormikErrors<FormValues>> = (
     error: ErrorFormat
-) => string | boolean;
+) => NavFrontendSkjemaFeil;
 
 export interface TypedFormikFormProps<FormValues, ErrorFormat> {
     children: React.ReactNode;
