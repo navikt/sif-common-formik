@@ -12,10 +12,12 @@ export { default as FormikDatepicker } from './components/formik-datepicker/Form
 export { default as FormikFileInput } from './components/formik-file-input/FormikFileInput';
 export { default as FormikInput } from './components/formik-input/FormikInput';
 export { default as FormikInputGroup } from './components/formik-input-group/FormikInputGroup';
+export { default as FormikModalFormAndList } from './components/formik-modal-form-and-list/FormikModalFormAndList';
 export { default as FormikRadioPanelGroup } from './components/formik-radio-panel-group/FormikRadioPanelGroup';
 export { default as FormikSelect } from './components/formik-select/FormikSelect';
 export { default as FormikTextarea } from './components/formik-textarea/FormikTextarea';
 export { default as FormikYesOrNoQuestion } from './components/formik-yes-or-no-question/FormikYesOrNoQuestion';
+
 export * from './types/FieldValidationError';
 export * from './types/TypedFormInputCommonProps';
 export * from './types/YesOrNo';
