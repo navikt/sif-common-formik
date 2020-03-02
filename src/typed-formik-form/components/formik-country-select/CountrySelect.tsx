@@ -1,9 +1,6 @@
 import * as React from 'react';
-import * as countries from 'i18n-iso-countries';
 import { Select, SelectProps } from 'nav-frontend-skjema';
-
-countries.registerLocale(require('i18n-iso-countries/langs/nb.json'));
-countries.registerLocale(require('i18n-iso-countries/langs/nn.json'));
+import { getCountries } from '../../utils/countryUtils';
 
 interface Props extends Omit<SelectProps, 'onChange' | 'children'> {
     label: React.ReactNode;
@@ -106,6 +103,7 @@ const filteredListEØSCountries = (countryOptionValue: string, shouldFilter?: bo
 
 const createCountryOptions = (onluEuAndEftaCountries: boolean, locale: string): React.ReactNode[] => {
     const localeToUse = locale === 'en' ? 'nn' : 'nb';
+    const countries = getCountries();
     return Object.entries(countries.getNames(localeToUse))
         .sort((a: string[], b: string[]) => a[1].localeCompare(b[1], localeToUse))
         .filter((countryOptionValue: string[]) =>
@@ -116,11 +114,6 @@ const createCountryOptions = (onluEuAndEftaCountries: boolean, locale: string): 
                 {countryOptionValue[countryNameIndex]}
             </option>
         ));
-};
-
-export const getCountryName = (isoCode: string, locale: string): string => {
-    const names = countries.getNames(locale);
-    return names[isoCode];
 };
 
 export default CountrySelect;

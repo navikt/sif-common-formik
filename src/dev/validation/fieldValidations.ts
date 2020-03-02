@@ -1,4 +1,4 @@
-import { YesOrNo } from '../../typed-formik-form/types/YesOrNo';
+import { YesOrNo } from '../../typed-formik-form';
 import { FieldValidationResult } from '../modules/validation/types';
 import { erGyldigNorskOrgnummer } from './erGyldigNorskOrgnummer';
 import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';

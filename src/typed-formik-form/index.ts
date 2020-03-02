@@ -19,6 +19,7 @@ export { default as FormikTextarea } from './components/formik-textarea/FormikTe
 export { default as FormikYesOrNoQuestion } from './components/formik-yes-or-no-question/FormikYesOrNoQuestion';
 
 export * from './types';
+export * from './utils/countryUtils';
 export * from './utils/formikUtils';
 export * from './utils/typedFormErrorUtils';
 export * from './components/getTypedFormComponents';

@@ -1,5 +1,4 @@
-import { Time } from '../../../typed-formik-form/types/Time';
-import { YesOrNo } from '../../../typed-formik-form/types/YesOrNo';
+import { Time, YesOrNo } from '../../../typed-formik-form/types';
 
 export enum FormFields {
     'firstname' = 'firstname',

@@ -1,7 +1,7 @@
 import { IntlShape } from 'react-intl';
 import { FormikErrors, getIn } from 'formik';
 import { isArray } from 'util';
-import { NavFrontendSkjemaFeil } from '../../../typed-formik-form/types/NavFrontendSkjemaFeil';
+import { NavFrontendSkjemaFeil } from '../../../typed-formik-form/types';
 import {
     isIntlFieldValidationErrorType, renderIntlFieldValidationError
 } from './fieldValidationRenderUtils';
