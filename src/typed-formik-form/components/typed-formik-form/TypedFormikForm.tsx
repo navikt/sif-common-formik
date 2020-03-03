@@ -60,10 +60,12 @@ function TypedFormikForm<FormValues>({
             isSubmitting,
             isValid
         };
-        if (submitCount > formSubmitCount) {
-            setStatus({ showErrors: true });
-        } else {
-            setStatus({ showErrors: false });
+        if (!isSubmitting) {
+            if (submitCount > formSubmitCount) {
+                setStatus({ showErrors: true });
+            } else {
+                setStatus({ showErrors: false });
+            }
         }
     }, [submitCount, setStatus, formSubmitCount, isSubmitting, isValid, isValidating]);
 
