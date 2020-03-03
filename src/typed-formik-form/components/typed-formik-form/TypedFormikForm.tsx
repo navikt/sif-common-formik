@@ -15,10 +15,8 @@ export interface TypedFormikFormProps<FormValues> {
     includeButtons?: boolean;
     fieldErrorRenderer?: FormikErrorRender<FormValues>;
     resetFormOnCancel?: boolean;
-    labels?: {
-        submitButton?: string;
-        cancelButton?: string;
-    };
+    submitButtonLabel?: string;
+    cancelButtonLabel?: string;
     onValidSubmit?: () => void;
     onCancel?: () => void;
 }
@@ -44,7 +42,8 @@ function TypedFormikForm<FormValues>({
     resetFormOnCancel,
     className,
     includeValidationSummary,
-    labels,
+    submitButtonLabel,
+    cancelButtonLabel,
     fieldErrorRenderer,
     onValidSubmit,
     includeButtons = true
@@ -109,7 +108,7 @@ function TypedFormikForm<FormValues>({
                     <div style={{ marginTop: '2rem' }}>
                         <ButtonRow layout={onCancel ? 'stretch' : 'normal'}>
                             <Knapp type="hoved" htmlType="submit">
-                                {labels?.submitButton || 'Submit'}
+                                {submitButtonLabel || 'Ok'}
                             </Knapp>
                             {onCancel && (
                                 <Knapp
@@ -121,7 +120,7 @@ function TypedFormikForm<FormValues>({
                                         }
                                         onCancel();
                                     }}>
-                                    {labels?.cancelButton || 'Avbryt'}
+                                    {cancelButtonLabel || 'Avbryt'}
                                 </Knapp>
                             )}
                         </ButtonRow>

@@ -21,6 +21,7 @@ const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
     const intl = useIntl();
     return (
         <Form.Form
+            submitButtonLabel="Ok"
             includeValidationSummary={true}
             fieldErrorRenderer={(error) => {
                 if (isIntlFieldValidationErrorType(error)) {
