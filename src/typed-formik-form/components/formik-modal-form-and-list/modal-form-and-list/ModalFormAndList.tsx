@@ -2,7 +2,7 @@ import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { guid } from 'nav-frontend-js-utils';
 import { Knapp } from 'nav-frontend-knapper';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
+import CustomInput from '../../helpers/custom-input/CustomInput';
 import DialogFormWrapper, {
     DialogFormWrapperWidths
 } from '../dialog-form-wrapper/DialogFormWrapper';
@@ -76,7 +76,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
                     {formRenderer({ onSubmit: handleOnSubmit, onCancel: resetModal, item: modalState.selectedItem })}
                 </DialogFormWrapper>
             </Modal>
-            <SkjemaGruppe legend={labels.listTitle} feil={error}>
+            <CustomInput legend={labels.listTitle} feil={error} tag="div">
                 {items.length > 0 && listRenderer({ items, onEdit: handleEdit, onDelete: handleDelete })}
                 {items.length === 0 && labels.emptyListText && (
                     <div style={{ paddingBottom: '2rem' }}>
@@ -88,7 +88,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
                         {labels.addLabel}
                     </Knapp>
                 </div>
-            </SkjemaGruppe>
+            </CustomInput>
         </>
     );
 }
