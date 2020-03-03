@@ -25,15 +25,15 @@ function FormikYesOrNoQuestion<FieldName>({
     const { yes: yesLabel = 'Ja', no: noLabel = 'Nei', doNotKnow: doNotKnowLabel = 'Vet ikke' } = labels || {};
     return (
         <FormikRadioPanelGroup<FieldName>
-            legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
-            name={name}
-            useTwoColumns={true}
             radios={[
                 { label: yesLabel, value: YesOrNo.YES },
                 { label: noLabel, value: YesOrNo.NO },
                 ...(includeDoNotKnowOption ? [{ label: doNotKnowLabel, value: YesOrNo.DO_NOT_KNOW }] : [])
             ]}
             {...restProps}
+            legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
+            name={name}
+            useTwoColumns={true}
         />
     );
 }

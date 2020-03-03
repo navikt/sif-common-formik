@@ -105,7 +105,7 @@ function TypedFormikForm<FormValues>({
                 )}
                 {includeButtons && (
                     <div style={{ marginTop: '2rem' }}>
-                        <ButtonRow layout="stretch">
+                        <ButtonRow layout={onCancel ? 'stretch' : 'normal'}>
                             <Knapp type="hoved" htmlType="submit">
                                 {labels?.submitButton || 'Submit'}
                             </Knapp>
