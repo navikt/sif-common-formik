@@ -10,7 +10,14 @@ export interface TypedFormikWrapperProps<FormValues> extends Omit<Partial<Formik
 function TypedFormikWrapper<FormValues>(props: TypedFormikWrapperProps<FormValues>) {
     const { onSubmit, initialValues, renderForm: renderFormContent, ...restProps } = props;
     return (
-        <Formik<Partial<FormValues>> initialValues={initialValues} onSubmit={onSubmit} {...restProps}>
+        <Formik<Partial<FormValues>>
+            initialValues={initialValues}
+            onSubmit={(values, { setSubmitting, setTouched }) => {
+                onSubmit(values);
+                setSubmitting(false);
+                setTouched({});
+            }}
+            {...restProps}>
             {(formik: FormikProps<FormValues>) => renderFormContent(formik)}
         </Formik>
     );

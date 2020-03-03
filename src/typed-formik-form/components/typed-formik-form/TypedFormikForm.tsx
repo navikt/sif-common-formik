@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useRef, useState } from 'react';
 import { FieldInputProps, FormikErrors, FormikProps, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import { NavFrontendSkjemaFeil } from '../../types';
@@ -29,6 +29,13 @@ interface TypedFormikFormContextType {
     fieldErrorRenderer?: FormikErrorRender<any>;
 }
 
+interface SubmitProps {
+    isSubmitting: boolean;
+    isValid: boolean;
+}
+export const userHasSubmittedValidForm = (oldProps: SubmitProps, currentProps: SubmitProps) =>
+    oldProps.isSubmitting === true && currentProps.isSubmitting === false && currentProps.isValid === true;
+
 export const TypedFormikFormContext = createContext<TypedFormikFormContextType | undefined>(undefined);
 
 function TypedFormikForm<FormValues>({
@@ -43,23 +50,31 @@ function TypedFormikForm<FormValues>({
     includeButtons = true
 }: TypedFormikFormProps<FormValues>) {
     const formik = useFormikContext<FormValues>();
-    const { handleSubmit, submitCount, setStatus, resetForm } = formik;
+    const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid, isValidating } = formik;
     const [formSubmitCount] = useState(submitCount);
 
+    const ref = useRef<any>({ isSubmitting, isValid });
+
     useEffect(() => {
+        ref.current = {
+            isSubmitting,
+            isValid
+        };
         if (submitCount > formSubmitCount) {
             setStatus({ showErrors: true });
         } else {
             setStatus({ showErrors: false });
         }
-    }, [submitCount, setStatus, formSubmitCount]);
+    }, [submitCount, setStatus, formSubmitCount, isSubmitting, isValid, isValidating]);
 
-    const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+    if (userHasSubmittedValidForm(ref.current, { isValid, isSubmitting })) {
         if (onValidSubmit) {
             onValidSubmit();
-        } else {
-            handleSubmit(evt);
         }
+    }
+
+    const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+        handleSubmit(evt);
     };
 
     const createTypedFormikFormContext = (): TypedFormikFormContextType => {

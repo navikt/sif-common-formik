@@ -17,7 +17,7 @@ interface Props {}
 const initialValues: FormValues = {};
 
 const FormikExample: React.FunctionComponent<Props> = (props) => {
-    const [view, setView] = useState(1);
+    const [view, setView] = useState(2);
     return (
         <>
             <PageIntro title="Skjemaeksempel">
