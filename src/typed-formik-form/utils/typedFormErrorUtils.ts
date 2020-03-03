@@ -1,5 +1,7 @@
 import flatten from 'flat';
-import { FormikErrors, FormikProps, getIn } from 'formik';
+import { FieldInputProps, FormikErrors, FormikProps, getIn } from 'formik';
+import { TypedFormikFormContextType } from '../components/typed-formik-form/TypedFormikForm';
+import { NavFrontendSkjemaFeil } from '../types';
 
 // import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
 // import { FormikErrorRender } from '../components/typed-formik-form/TypedFormikForm';
@@ -11,6 +13,20 @@ interface ErrorNodeInObject {
         values: object;
     };
 }
+
+export const getFeilPropForFormikInput = ({
+    feil,
+    field,
+    form,
+    context
+}: {
+    feil: NavFrontendSkjemaFeil;
+    field: FieldInputProps<any>;
+    form: FormikProps<any>;
+    context?: TypedFormikFormContextType;
+}): NavFrontendSkjemaFeil | undefined => {
+    return feil || (context ? context.getAndRenderFieldErrorMessage(field, form) : undefined);
+};
 
 export const getErrorsForField = <FormValues>(
     elementName: string,

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Textarea, TextareaControlledProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
+import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -28,7 +29,7 @@ function FormikTextarea<FieldName>({
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         {...restProps}
                         {...field}
-                        feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}
+                        feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         onChange={(evt) => {
                             form.setFieldValue(field.name, evt.target.value);
                         }}

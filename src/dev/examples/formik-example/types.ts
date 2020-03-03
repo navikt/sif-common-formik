@@ -11,7 +11,8 @@ export enum FormFields {
     'countries' = 'countries',
     'time' = 'time',
     'daterange_from' = 'daterange_from',
-    'daterange_to' = 'daterange_to'
+    'daterange_to' = 'daterange_to',
+    'files' = 'files'
 }
 
 export interface CompletedFormValues {
@@ -26,5 +27,6 @@ export interface CompletedFormValues {
     [FormFields.time]?: Time;
     [FormFields.daterange_from]?: Date;
     [FormFields.daterange_to]?: Date;
+    [FormFields.files]?: any;
 }
 export type FormValues = Partial<CompletedFormValues>;

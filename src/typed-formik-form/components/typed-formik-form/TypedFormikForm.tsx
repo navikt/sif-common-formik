@@ -23,7 +23,7 @@ export interface TypedFormikFormProps<FormValues> {
     onCancel?: () => void;
 }
 
-interface TypedFormikFormContextType {
+export interface TypedFormikFormContextType {
     showErrors: boolean;
     getAndRenderFieldErrorMessage: (field: FieldInputProps<any>, form: FormikProps<any>) => NavFrontendSkjemaFeil;
     fieldErrorRenderer?: FormikErrorRender<any>;

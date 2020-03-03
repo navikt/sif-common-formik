@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { FormikDateIntervalPicker } from '../../../typed-formik-form';
+import { FormikDateIntervalPicker, FormikFileInput } from '../../../typed-formik-form';
 import FormikTimeInput from '../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import {
     getTypedFormComponents
@@ -57,6 +57,15 @@ const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
                     validate: validateRequiredField
                 }}
             />
+            <Question>
+                <FormikFileInput
+                    name={FormFields.files}
+                    label="Vedlegg"
+                    acceptedExtensions={'tsx'}
+                    onFilesSelect={() => null}
+                    feil={true}
+                />
+            </Question>
         </Form.Form>
     );
 };

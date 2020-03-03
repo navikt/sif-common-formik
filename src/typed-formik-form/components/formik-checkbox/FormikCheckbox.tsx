@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Checkbox, CheckboxProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
+import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -30,7 +31,7 @@ function FormikCheckbox<FieldName>({
                         {...restProps}
                         {...field}
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
-                        feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}
+                        feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         checked={field.value === true}
                         onChange={(evt) => {
                             const newValue = evt.target.checked;

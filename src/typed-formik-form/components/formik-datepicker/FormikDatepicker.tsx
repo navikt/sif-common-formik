@@ -5,6 +5,7 @@ import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
 import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
+import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import CustomInput from '../helpers/custom-input/CustomInput';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
@@ -61,7 +62,7 @@ function FormikDatepicker<FieldName>({
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
-                    <CustomInput feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}>
+                    <CustomInput feil={getFeilPropForFormikInput({ field, form, context, feil })}>
                         <Label htmlFor={field.name}>
                             <LabelWithInfo info={info}>{label}</LabelWithInfo>
                         </Label>

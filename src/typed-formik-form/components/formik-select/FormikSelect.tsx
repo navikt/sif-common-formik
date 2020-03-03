@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Select, SelectProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
+import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -29,7 +30,7 @@ function FormikSelect<FieldName>({
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         {...field}
                         {...restProps}
-                        feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}
+                        feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         value={field.value === undefined ? '' : field.value}>
                         {children}
                     </Select>

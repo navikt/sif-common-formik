@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { SelectProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
+import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import CountrySelect from './CountrySelect';
@@ -29,7 +30,7 @@ function FormikCountrySelect<FieldName>({
                     <CountrySelect
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         {...field}
-                        feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}
+                        feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         onChange={(value) => form.setFieldValue(field.name, value)}
                         showOnlyEuAndEftaCountries={showOnlyEuAndEftaCountries}
                     />

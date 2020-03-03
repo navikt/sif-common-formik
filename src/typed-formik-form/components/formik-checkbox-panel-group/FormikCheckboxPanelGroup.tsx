@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { CheckboksPanelGruppe, CheckboksPanelGruppeProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
+import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import '../../styles/nav-frontend-skjema-extension.less';
@@ -58,7 +59,7 @@ function FormikCheckboxPanelGroup<FieldName>({
                                 form.setFieldValue(`${name}`, field.value);
                             }
                         }}
-                        feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}
+                        feil={getFeilPropForFormikInput({ field, form, context, feil })}
                     />
                 );
             }}

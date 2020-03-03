@@ -59,8 +59,9 @@ export default class FileInput extends React.Component<FileInputProps> {
     render() {
         const { id, name, label, feil, multiple, onClick, acceptedExtensions } = this.props;
         const inputId = `${id}-input`;
+
         return (
-            <CustomInput feil={feil}>
+            <CustomInput feil={feil} className={`fileInput ${feil !== undefined ? 'fileInput--withError' : ''}`}>
                 <label
                     role="button"
                     id={id}
@@ -72,7 +73,7 @@ export default class FileInput extends React.Component<FileInputProps> {
                     onKeyPress={this.onKeyPress}
                     onClick={onClick}>
                     <div className="attachmentButton__icon">
-                        <UploadSvg />>
+                        <UploadSvg />
                     </div>
                     <Element className="attachmentButton__label">{label}</Element>
                     <input

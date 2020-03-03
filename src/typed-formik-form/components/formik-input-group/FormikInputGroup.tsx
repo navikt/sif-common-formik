@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
 import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
+import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -29,7 +30,7 @@ function FormikInputGroup<FieldName>({
                     <SkjemaGruppe
                         {...restProps}
                         legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
-                        feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}>
+                        feil={getFeilPropForFormikInput({ field, form, context, feil })}>
                         {children}
                     </SkjemaGruppe>
                 );

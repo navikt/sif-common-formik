@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Input, InputProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
+import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -21,7 +22,7 @@ function FormikInput<FieldName>({ label, name, info, feil, validate, ...restProp
                         {...restProps}
                         {...field}
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
-                        feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}
+                        feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         value={field.value === undefined ? '' : field.value}
                     />
                 );

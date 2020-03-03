@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ArrayHelpers, Field, FieldArray, FieldProps } from 'formik';
 import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
+import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import FileInput from './file-input/FileInput';
 
@@ -23,6 +24,7 @@ function FormikFileInput<FieldName>({
     onClick
 }: FormikFileInputProps<FieldName> & TypedFormInputCommonProps) {
     const context = React.useContext(TypedFormikFormContext);
+
     return (
         <FieldArray
             name={`${name}`}
@@ -38,7 +40,7 @@ function FormikFileInput<FieldName>({
                                 onFilesSelect={(files) => onFilesSelect(files, arrayHelpers)}
                                 multiple={true}
                                 acceptedExtensions={acceptedExtensions}
-                                feil={context ? context.getAndRenderFieldErrorMessage(field, form) : feil}
+                                feil={getFeilPropForFormikInput({ field, form, context, feil })}
                             />
                         );
                     }}
