@@ -12,7 +12,12 @@ export enum FormFields {
     'time' = 'time',
     'daterange_from' = 'daterange_from',
     'daterange_to' = 'daterange_to',
-    'files' = 'files'
+    'files' = 'files',
+    'ferieuttak' = 'ferieuttak'
+}
+
+export interface MockFerieuttak {
+    country: string;
 }
 
 export interface CompletedFormValues {
@@ -28,5 +33,6 @@ export interface CompletedFormValues {
     [FormFields.daterange_from]?: Date;
     [FormFields.daterange_to]?: Date;
     [FormFields.files]?: any;
+    [FormFields.ferieuttak]?: MockFerieuttak[];
 }
 export type FormValues = Partial<CompletedFormValues>;

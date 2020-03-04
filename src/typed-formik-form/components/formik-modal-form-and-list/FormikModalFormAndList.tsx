@@ -1,25 +1,27 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
-import { FormikValidateFunction } from '../../types';
+import { FormikValidateFunction, NavFrontendSkjemaFeil } from '../../types';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import ModalFormAndList, { ModalFormAndListProps } from './modal-form-and-list/ModalFormAndList';
 
-interface Props<FieldsType, ItemType> extends ModalFormAndListProps<ItemType> {
-    name: FieldsType;
+export interface FormikModalFormAndListProps<FieldName, ItemType> extends ModalFormAndListProps<ItemType> {
+    name: FieldName;
+    feil?: NavFrontendSkjemaFeil;
     validate?: FormikValidateFunction;
     sortFunc?: (a: ItemType, b: ItemType) => number;
     onAfterChange?: (values: ItemType[]) => void;
 }
 
-function FormikModalFormAndList<FieldsType, ItemType>({
+function FormikModalFormAndList<FieldName, ItemType>({
     name,
     labels,
     listRenderer,
     formRenderer,
     sortFunc,
     onAfterChange,
+    feil,
     validate
-}: Props<FieldsType, ItemType>) {
+}: FormikModalFormAndListProps<FieldName, ItemType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field name={name} validate={validate}>
@@ -28,7 +30,7 @@ function FormikModalFormAndList<FieldsType, ItemType>({
                     <ModalFormAndList<ItemType>
                         labels={labels}
                         items={field.value}
-                        error={context ? context.getAndRenderFieldErrorMessage(field, form) : undefined}
+                        error={feil || (context ? context.getAndRenderFieldErrorMessage(field, form) : undefined)}
                         onChange={(values) => {
                             const updatedValues = sortFunc ? values.sort(sortFunc) : values;
                             form.setFieldValue(field.name, updatedValues);

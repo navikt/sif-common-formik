@@ -14,7 +14,16 @@ import { FormValues } from './types';
 
 interface Props {}
 
-const initialValues: FormValues = {};
+const initialValues: FormValues = {
+    ferieuttak: [
+        {
+            country: 'Sverige'
+        },
+        {
+            country: 'Danmark'
+        }
+    ]
+};
 
 const FormikExample: React.FunctionComponent<Props> = (props) => {
     const [view, setView] = useState(1);

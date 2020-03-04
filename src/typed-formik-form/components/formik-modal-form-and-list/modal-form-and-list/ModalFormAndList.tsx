@@ -8,6 +8,7 @@ import DialogFormWrapper, {
 } from '../dialog-form-wrapper/DialogFormWrapper';
 import Modal from '../modal/Modal';
 import { ModalFormAndListLabels, ModalFormAndListListItemBase } from '../types';
+import './modalFormAndList.less';
 
 type ModalFormRenderer<ItemType> = (props: {
     item?: ItemType;
@@ -77,7 +78,11 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
                 </DialogFormWrapper>
             </Modal>
             <CustomInput legend={labels.listTitle} feil={error} tag="div">
-                {items.length > 0 && listRenderer({ items, onEdit: handleEdit, onDelete: handleDelete })}
+                {items.length > 0 && (
+                    <div className="modalFormAndList__listWrapper">
+                        {listRenderer({ items, onEdit: handleEdit, onDelete: handleDelete })}
+                    </div>
+                )}
                 {items.length === 0 && labels.emptyListText && (
                     <div style={{ paddingBottom: '2rem' }}>
                         <AlertStripeInfo>{labels.emptyListText}</AlertStripeInfo>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { FormikDateIntervalPicker, FormikFileInput } from '../../../typed-formik-form';
+import {
+    FormikDateIntervalPicker, FormikFileInput, FormikModalFormAndList
+} from '../../../typed-formik-form';
 import FormikTimeInput from '../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import {
     getTypedFormComponents
@@ -10,8 +12,8 @@ import Tiles from '../../components/tiles/Tiles';
 import {
     isIntlFieldValidationErrorType, renderIntlFieldValidationError
 } from '../../modules/validation/fieldValidationRenderUtils';
-import { validateRequiredField } from '../../validation/fieldValidations';
-import { FormFields, FormValues } from './types';
+import { validateRequiredField, validateRequiredList } from '../../validation/fieldValidations';
+import { FormFields, FormValues, MockFerieuttak } from './types';
 
 interface Props {}
 
@@ -58,6 +60,26 @@ const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
                     validate: validateRequiredField
                 }}
             />
+            <Question>
+                <FormikModalFormAndList<FormFields, MockFerieuttak>
+                    name={FormFields.ferieuttak}
+                    feil={'heysan'}
+                    labels={{
+                        addLabel: 'Legg til',
+                        modalTitle: 'Ferieuttak',
+                        listTitle: 'Ferieuttak'
+                    }}
+                    formRenderer={() => <p>sdf</p>}
+                    listRenderer={({ items }) => (
+                        <div>
+                            {items.map((ferie, idx) => (
+                                <li key={idx}>{ferie.country}</li>
+                            ))}
+                        </div>
+                    )}
+                    validate={validateRequiredList}
+                />
+            </Question>
             <Question>
                 <FormikFileInput
                     name={FormFields.files}

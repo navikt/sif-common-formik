@@ -10,6 +10,7 @@ import CustomInput from '../helpers/custom-input/CustomInput';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
+import './datepicker.less';
 
 interface DateRange {
     fom: Date;
