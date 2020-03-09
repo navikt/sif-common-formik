@@ -16,7 +16,7 @@ export const routes: RouteConfig[] = [
     },
     {
         path: 'formik-example',
-        title: 'Skjemaeksempel',
+        title: 'TypedFormExample',
         renderContent: () => <FormikExample />
     }
 ];

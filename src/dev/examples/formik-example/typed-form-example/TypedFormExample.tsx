@@ -1,25 +1,25 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import {
-    FormikDateIntervalPicker, FormikFileInput, FormikModalFormAndList
-} from '../../../typed-formik-form';
-import FormikTimeInput from '../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
+import moment from 'moment';
+import { FormikDateIntervalPicker, FormikFileInput } from '../../../../typed-formik-form';
+import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import {
     getTypedFormComponents
-} from '../../../typed-formik-form/components/getTypedFormComponents';
-import Question from '../../components/question/Question';
-import Tiles from '../../components/tiles/Tiles';
+} from '../../../../typed-formik-form/components/getTypedFormComponents';
+import Question from '../../../components/question/Question';
+import Tiles from '../../../components/tiles/Tiles';
 import {
     isIntlFieldValidationErrorType, renderIntlFieldValidationError
-} from '../../modules/validation/fieldValidationRenderUtils';
-import { validateRequiredField, validateRequiredList } from '../../validation/fieldValidations';
-import { FormFields, FormValues, MockFerieuttak } from './types';
+} from '../../../modules/validation/fieldValidationRenderUtils';
+import { validateRequiredField, validateRequiredList } from '../../../validation/fieldValidations';
+import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
+import { FormFields, FormValues } from '../types';
 
 interface Props {}
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 
-const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
+const TypedFormExample: React.FunctionComponent<Props> = () => {
     const intl = useIntl();
     return (
         <Form.Form
@@ -31,6 +31,7 @@ const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
                 }
                 return error;
             }}>
+            <h3>Noen skjemaelementer</h3>
             <Question>
                 <Form.DatePicker name={FormFields.birthdate} label="Fødselsdato" validate={validateRequiredField} />
             </Question>
@@ -46,51 +47,53 @@ const FormWithTypedFormElements: React.FunctionComponent<Props> = () => {
             <Question>
                 <Form.YesOrNoQuestion legend="Har du barn?" name={FormFields.hasKids} />
             </Question>
-            <FormikTimeInput name={FormFields.time} label="Tidspunkt" />
-            <FormikDateIntervalPicker
-                legend="Tidsrom"
-                fromDatepickerProps={{
-                    name: FormFields.daterange_from,
-                    label: 'Fra',
-                    validate: validateRequiredField
-                }}
-                toDatepickerProps={{
-                    name: FormFields.daterange_to,
-                    label: 'Til',
-                    validate: validateRequiredField
-                }}
-            />
             <Question>
-                <FormikModalFormAndList<FormFields, MockFerieuttak>
+                <div style={{ display: 'flex', flex: 'flex-start' }}>
+                    <FormikTimeInput name={FormFields.time} label="Tidspunkt" />
+                </div>
+            </Question>
+            <Question>
+                <FormikDateIntervalPicker
+                    legend="Tidsrom"
+                    fromDatepickerProps={{
+                        name: FormFields.daterange_from,
+                        label: 'Fra',
+                        validate: validateRequiredField
+                    }}
+                    toDatepickerProps={{
+                        name: FormFields.daterange_to,
+                        label: 'Til',
+                        validate: validateRequiredField
+                    }}
+                />
+            </Question>
+            <Question>
+                <FerieuttakListAndDialog
                     name={FormFields.ferieuttak}
-                    feil={'heysan'}
                     labels={{
                         addLabel: 'Legg til',
                         modalTitle: 'Ferieuttak',
                         listTitle: 'Ferieuttak'
                     }}
-                    formRenderer={() => <p>sdf</p>}
-                    listRenderer={({ items }) => (
-                        <div>
-                            {items.map((ferie, idx) => (
-                                <li key={idx}>{ferie.country}</li>
-                            ))}
-                        </div>
-                    )}
+                    minDate={moment()
+                        .subtract(1, 'year')
+                        .toDate()}
+                    maxDate={moment()
+                        .add(1, 'year')
+                        .toDate()}
                     validate={validateRequiredList}
                 />
             </Question>
             <Question>
                 <FormikFileInput
                     name={FormFields.files}
-                    label="Vedlegg"
+                    label="Legg til filer"
                     acceptedExtensions={'tsx'}
                     onFilesSelect={() => null}
-                    feil={true}
                 />
             </Question>
         </Form.Form>
     );
 };
 
-export default FormWithTypedFormElements;
+export default TypedFormExample;

@@ -3,17 +3,17 @@ import { useIntl } from 'react-intl';
 import { FormikProps } from 'formik';
 import {
     getTypedFormComponents
-} from '../../../typed-formik-form/components/getTypedFormComponents';
-import Tiles from '../../components/tiles/Tiles';
+} from '../../../../typed-formik-form/components/getTypedFormComponents';
+import Tiles from '../../../components/tiles/Tiles';
 import {
     isIntlFieldValidationErrorType, renderIntlFieldValidationError
-} from '../../modules/validation/fieldValidationRenderUtils';
-import ConditionalQuestion from '../../modules/visibility/ConditionalQuestion';
-import { QuestionVisibilityContext } from '../../modules/visibility/QuestionVisibilityContext';
-import VisibilityBlock from '../../modules/visibility/VisibilityBlock';
-import { validateRequiredField } from '../../validation/fieldValidations';
+} from '../../../modules/validation/fieldValidationRenderUtils';
+import ConditionalQuestion from '../../../modules/visibility/ConditionalQuestion';
+import { QuestionVisibilityContext } from '../../../modules/visibility/QuestionVisibilityContext';
+import VisibilityBlock from '../../../modules/visibility/VisibilityBlock';
+import { validateRequiredField } from '../../../validation/fieldValidations';
+import { FormFields, FormValues } from '../types';
 import { exampleFormQuestions } from './config';
-import { FormFields, FormValues } from './types';
 
 interface Props {
     formik: FormikProps<FormValues>;
@@ -21,7 +21,7 @@ interface Props {
 
 const { Input, DatePicker, CountrySelect, Form } = getTypedFormComponents<FormFields, FormValues>();
 
-const FormWithConfig: React.FunctionComponent<Props> = ({ formik }) => {
+const FormWithConfigExample: React.FunctionComponent<Props> = ({ formik }) => {
     const intl = useIntl();
     return (
         <QuestionVisibilityContext.Provider value={{ visibility: exampleFormQuestions.getVisbility(formik.values) }}>
@@ -58,4 +58,4 @@ const FormWithConfig: React.FunctionComponent<Props> = ({ formik }) => {
     );
 };
 
-export default FormWithConfig;
+export default FormWithConfigExample;

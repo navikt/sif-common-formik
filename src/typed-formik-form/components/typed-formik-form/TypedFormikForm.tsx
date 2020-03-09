@@ -13,7 +13,7 @@ export interface TypedFormikFormProps<FormValues> {
     className?: string;
     includeValidationSummary?: boolean;
     includeButtons?: boolean;
-    fieldErrorRenderer?: FormikErrorRender<FormValues>;
+    fieldErrorRenderer: FormikErrorRender<FormValues>;
     resetFormOnCancel?: boolean;
     submitButtonLabel?: string;
     cancelButtonLabel?: string;

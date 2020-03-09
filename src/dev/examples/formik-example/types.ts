@@ -1,4 +1,5 @@
 import { Time, YesOrNo } from '../../../typed-formik-form/types';
+import { Ferieuttak } from './ferieuttak-example';
 
 export enum FormFields {
     'firstname' = 'firstname',
@@ -16,10 +17,6 @@ export enum FormFields {
     'ferieuttak' = 'ferieuttak'
 }
 
-export interface MockFerieuttak {
-    country: string;
-}
-
 export interface CompletedFormValues {
     [FormFields.firstname]: string;
     [FormFields.lastname]?: string;
@@ -33,6 +30,6 @@ export interface CompletedFormValues {
     [FormFields.daterange_from]?: Date;
     [FormFields.daterange_to]?: Date;
     [FormFields.files]?: any;
-    [FormFields.ferieuttak]?: MockFerieuttak[];
+    [FormFields.ferieuttak]?: Ferieuttak[];
 }
 export type FormValues = Partial<CompletedFormValues>;
