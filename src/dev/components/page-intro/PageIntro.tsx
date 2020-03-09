@@ -12,7 +12,11 @@ const PageIntro: React.FunctionComponent<Props> = ({ title, children }) => (
             <Box>
                 <Undertittel>{title}</Undertittel>
             </Box>
-            {children && <Ingress tag="div">{children}</Ingress>}
+            {children && (
+                <Box padBottom="xl">
+                    <Ingress tag="div">{children}</Ingress>
+                </Box>
+            )}
         </Box>
     </>
 );
