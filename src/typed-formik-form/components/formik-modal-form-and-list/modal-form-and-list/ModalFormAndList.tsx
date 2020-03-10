@@ -27,6 +27,7 @@ export interface ModalFormAndListProps<ItemType extends ModalFormAndListListItem
     listRenderer: ListRenderer<ItemType>;
     formRenderer: ModalFormRenderer<ItemType>;
     dialogWidth?: DialogFormWrapperWidths;
+    hideListTitleWhenNoItems?: boolean;
 }
 interface PrivateProps<ItemType> {
     onChange: (data: ItemType[]) => void;
@@ -43,6 +44,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
     labels,
     error,
     dialogWidth,
+    hideListTitleWhenNoItems,
     onChange
 }: Props<ItemType>) {
     const [modalState, setModalState] = React.useState<{ isVisible: boolean; selectedItem?: ItemType }>({
@@ -77,7 +79,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
                     {formRenderer({ onSubmit: handleOnSubmit, onCancel: resetModal, item: modalState.selectedItem })}
                 </DialogFormWrapper>
             </Modal>
-            <CustomInput legend={labels.listTitle} feil={error} tag="div">
+            <CustomInput legend={hideListTitleWhenNoItems ? undefined : labels.listTitle} feil={error} tag="div">
                 {items.length > 0 && (
                     <div className="modalFormAndList__listWrapper">
                         {listRenderer({ items, onEdit: handleEdit, onDelete: handleDelete })}
