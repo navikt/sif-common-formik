@@ -44,7 +44,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
     labels,
     error,
     dialogWidth,
-    hideListTitleWhenNoItems,
+    hideListTitleWhenNoItems = true,
     onChange
 }: Props<ItemType>) {
     const [modalState, setModalState] = React.useState<{ isVisible: boolean; selectedItem?: ItemType }>({
