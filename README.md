@@ -2,11 +2,7 @@
 
 Formik-wrapped skjemakomponenter fra nav-frontend-moduler
 
-# Release ny versjon til npmjs
-
-Ikke releaset enda.
-
-# Kjøre SIF-common guide
+# Kjøre eksempel-app
 
 Starter app som viser noen av komponentene
 
