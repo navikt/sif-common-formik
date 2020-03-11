@@ -9,7 +9,7 @@ interface Props extends SkjemaGruppeProps {
 
 const SkjemagruppeQuestion: React.FunctionComponent<Props> = ({ legend, feil, info, tag, children, className }) => (
     <SkjemaGruppe
-        className={`${className} singleInputWrapper`}
+        className={`${className ? className : ''} singleInputWrapper`}
         tag={tag ? tag : legend ? 'fieldset' : 'div'}
         feil={feil}
         legend={legend ? <LabelWithInfo info={info}>{legend}</LabelWithInfo> : undefined}>
