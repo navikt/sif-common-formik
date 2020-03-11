@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Element } from 'nav-frontend-typografi';
 import { NavFrontendSkjemaFeil } from '../../../types';
-import CustomInput from '../../helpers/custom-input/CustomInput';
+import SkjemagruppeQuestion from '../../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import UploadSvg from './UploadSvg';
 import './fileInput.less';
 
@@ -61,7 +61,9 @@ export default class FileInput extends React.Component<FileInputProps> {
         const inputId = `${id}-input`;
 
         return (
-            <CustomInput feil={feil} className={`fileInput ${feil !== undefined ? 'fileInput--withError' : ''}`}>
+            <SkjemagruppeQuestion
+                feil={feil}
+                className={`fileInput ${feil !== undefined ? 'fileInput--withError' : ''}`}>
                 <label
                     role="button"
                     id={id}
@@ -85,7 +87,7 @@ export default class FileInput extends React.Component<FileInputProps> {
                         multiple={multiple === true}
                     />
                 </label>
-            </CustomInput>
+            </SkjemagruppeQuestion>
         );
     }
 }

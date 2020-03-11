@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { TypedFormInputCommonProps } from '../../types';
-import CustomInput from '../helpers/custom-input/CustomInput';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
+import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
 interface OwnProps<FieldName> {
@@ -25,11 +25,11 @@ function FormikCustomInputWrapper<FieldName>({
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
-                    <CustomInput
+                    <SkjemagruppeQuestion
                         legend={(label = <LabelWithInfo info={info}>{label}</LabelWithInfo>)}
                         feil={context ? context.getAndRenderFieldErrorMessage(field, form) : undefined}>
                         {children}
-                    </CustomInput>
+                    </SkjemagruppeQuestion>
                 );
             }}
         </Field>

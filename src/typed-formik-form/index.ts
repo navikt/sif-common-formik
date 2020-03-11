@@ -17,6 +17,8 @@ export { default as FormikRadioPanelGroup } from './components/formik-radio-pane
 export { default as FormikSelect } from './components/formik-select/FormikSelect';
 export { default as FormikTextarea } from './components/formik-textarea/FormikTextarea';
 export { default as FormikYesOrNoQuestion } from './components/formik-yes-or-no-question/FormikYesOrNoQuestion';
+export { default as SkjemagruppeQuestion } from './components/helpers/skjemagruppe-question/SkjemagruppeQuestion';
+export { default as LabelWithInfo } from './components/helpers/label-with-info/LabelWithInfo';
 
 export * from './types';
 export * from './utils/countryUtils';

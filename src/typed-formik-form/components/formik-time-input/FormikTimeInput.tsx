@@ -3,8 +3,8 @@ import { Field, FieldProps } from 'formik';
 import { InputProps, Label } from 'nav-frontend-skjema';
 import { Time, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import CustomInput from '../helpers/custom-input/CustomInput';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
+import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import TimeInput from './TimeInput';
 
@@ -29,7 +29,7 @@ function FormikTimeInput<FieldName>({
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
-                    <CustomInput feil={getFeilPropForFormikInput({ field, form, context, feil })}>
+                    <SkjemagruppeQuestion feil={getFeilPropForFormikInput({ field, form, context, feil })}>
                         <Label htmlFor={field.name}>
                             <LabelWithInfo info={info}>{label}</LabelWithInfo>
                         </Label>
@@ -42,7 +42,7 @@ function FormikTimeInput<FieldName>({
                                 form.setFieldValue(field.name, time);
                             }}
                         />
-                    </CustomInput>
+                    </SkjemagruppeQuestion>
                 );
             }}
         </Field>

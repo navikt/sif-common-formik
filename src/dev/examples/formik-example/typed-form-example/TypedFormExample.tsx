@@ -6,6 +6,7 @@ import FormikTimeInput from '../../../../typed-formik-form/components/formik-tim
 import {
     getTypedFormComponents
 } from '../../../../typed-formik-form/components/getTypedFormComponents';
+import SkjemagruppeQuestion from '../../../../typed-formik-form/components/helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import Question from '../../../components/question/Question';
 import Tiles from '../../../components/tiles/Tiles';
 import {
@@ -38,6 +39,9 @@ const TypedFormExample: React.FunctionComponent<Props> = () => {
             <Question>
                 <Form.CountrySelect name={FormFields.birthCountry} label="Fødselsland" />
             </Question>
+            <SkjemagruppeQuestion legend="Dette er legend" info="Hey">
+                sdf
+            </SkjemagruppeQuestion>
             <Question>
                 <Tiles columns={2}>
                     <Form.Input name={FormFields.firstname} label="Fornavn" validate={validateRequiredField} />
