@@ -9,6 +9,9 @@ import FormikConfirmationCheckboxPanel, {
 import FormikCountrySelect, {
     FormikCountrySelectProps
 } from './formik-country-select/FormikCountrySelect';
+import FormikCustomInputWrapper, {
+    FormikCustomInputWrapperProps
+} from './formik-custom-input-wrapper/FormikCustomInputWrapper';
 import FormikDateIntervalPicker, {
     DateIntervalPickerProps
 } from './formik-date-interval-picker/FormikDateIntervalPicker';
@@ -21,6 +24,7 @@ import FormikRadioPanelGroup, {
 } from './formik-radio-panel-group/FormikRadioPanelGroup';
 import FormikSelect, { FormikSelectProps } from './formik-select/FormikSelect';
 import FormikTextarea, { FormikTextareaProps } from './formik-textarea/FormikTextarea';
+import FormikTimeInput, { FormikTimeInputProps } from './formik-time-input/FormikTimeInput';
 import FormikYesOrNoQuestion, {
     FormikYesOrNoQuestionProps
 } from './formik-yes-or-no-question/FormikYesOrNoQuestion';
@@ -39,6 +43,9 @@ export function getTypedFormComponents<FieldNames, FormValues>() {
             <FormikConfirmationCheckboxPanel<FieldNames> {...props} />
         ),
         CountrySelect: (props: FormikCountrySelectProps<FieldNames>) => <FormikCountrySelect<FieldNames> {...props} />,
+        FormikCustomInputWrapper: (props: FormikCustomInputWrapperProps<FieldNames>) => (
+            <FormikCustomInputWrapper {...props} />
+        ),
         DatePicker: (props: FormikDatepickerProps<FieldNames>) => <FormikDatepicker<FieldNames> {...props} />,
         DateIntervalPicker: (props: DateIntervalPickerProps<FieldNames>) => (
             <FormikDateIntervalPicker<FieldNames> {...props} />
@@ -53,6 +60,7 @@ export function getTypedFormComponents<FieldNames, FormValues>() {
         ),
         Select: (props: FormikSelectProps<FieldNames>) => <FormikSelect<FieldNames> {...props} />,
         Textarea: (props: FormikTextareaProps<FieldNames>) => <FormikTextarea<FieldNames> {...props} />,
+        TimeInput: (props: FormikTimeInputProps<FieldNames>) => <FormikTimeInput<FieldNames> {...props} />,
         YesOrNoQuestion: (props: FormikYesOrNoQuestionProps<FieldNames>) => (
             <FormikYesOrNoQuestion<FieldNames> {...props} />
         )
