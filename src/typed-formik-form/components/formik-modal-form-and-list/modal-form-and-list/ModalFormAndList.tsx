@@ -93,7 +93,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
                         <AlertStripeInfo>{labels.emptyListText}</AlertStripeInfo>
                     </div>
                 )}
-                <div style={{ marginTop: '1rem' }}>
+                <div style={hideListTitleWhenNoItems && items.length === 0 ? undefined : { marginTop: '1rem' }}>
                     <Knapp htmlType="button" onClick={() => setModalState({ isVisible: true })}>
                         {labels.addLabel}
                     </Knapp>
