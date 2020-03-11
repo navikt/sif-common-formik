@@ -27,7 +27,6 @@ export interface ModalFormAndListProps<ItemType extends ModalFormAndListListItem
     listRenderer: ListRenderer<ItemType>;
     formRenderer: ModalFormRenderer<ItemType>;
     dialogWidth?: DialogFormWrapperWidths;
-    hideListTitleWhenNoItems?: boolean;
 }
 interface PrivateProps<ItemType> {
     onChange: (data: ItemType[]) => void;
@@ -44,7 +43,6 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
     labels,
     error,
     dialogWidth,
-    hideListTitleWhenNoItems = true,
     onChange
 }: Props<ItemType>) {
     const [modalState, setModalState] = React.useState<{ isVisible: boolean; selectedItem?: ItemType }>({
@@ -72,6 +70,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
         setModalState({ isVisible: false, selectedItem: undefined });
     };
 
+    const showListTitle = items.length > 0;
     return (
         <>
             <Modal isOpen={modalState.isVisible} contentLabel={labels.modalTitle} onRequestClose={resetModal}>
@@ -79,10 +78,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
                     {formRenderer({ onSubmit: handleOnSubmit, onCancel: resetModal, item: modalState.selectedItem })}
                 </DialogFormWrapper>
             </Modal>
-            <SkjemagruppeQuestion
-                legend={hideListTitleWhenNoItems ? undefined : labels.listTitle}
-                feil={error}
-                tag="div">
+            <SkjemagruppeQuestion legend={showListTitle ? labels.listTitle : undefined} feil={error} tag="div">
                 {items.length > 0 && (
                     <div className="modalFormAndList__listWrapper">
                         {listRenderer({ items, onEdit: handleEdit, onDelete: handleDelete })}
@@ -93,7 +89,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
                         <AlertStripeInfo>{labels.emptyListText}</AlertStripeInfo>
                     </div>
                 )}
-                <div style={hideListTitleWhenNoItems && items.length === 0 ? undefined : { marginTop: '1rem' }}>
+                <div style={showListTitle ? { marginTop: '1rem' } : undefined}>
                     <Knapp htmlType="button" onClick={() => setModalState({ isVisible: true })}>
                         {labels.addLabel}
                     </Knapp>
