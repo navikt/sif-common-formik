@@ -33,7 +33,7 @@ function FormikYesOrNoQuestion<FieldName>({
             {...restProps}
             legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
             name={name}
-            useTwoColumns={true}
+            useTwoColumns={includeDoNotKnowOption ? false : true}
         />
     );
 }
