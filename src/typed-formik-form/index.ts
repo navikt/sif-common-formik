@@ -2,7 +2,6 @@ export { default as FormikCheckbox } from './components/formik-checkbox/FormikCh
 export { default as FormikCheckboxPanelGroup } from './components/formik-checkbox-panel-group/FormikCheckboxPanelGroup';
 export { default as FormikConfirmationCheckboxPanel } from './components/formik-confirmation-checkbox-panel/FormikConfirmationCheckboxPanel';
 export { default as FormikCountrySelect } from './components/formik-country-select/FormikCountrySelect';
-export { default as FormikCustomInputWrapper } from './components/formik-custom-input-wrapper/FormikCustomInputWrapper';
 export { default as FormikDateIntervalPicker } from './components/formik-date-interval-picker/FormikDateIntervalPicker';
 export { default as FormikDatepicker } from './components/formik-datepicker/FormikDatepicker';
 export { default as FormikFileInput } from './components/formik-file-input/FormikFileInput';

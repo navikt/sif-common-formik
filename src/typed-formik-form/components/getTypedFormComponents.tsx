@@ -9,9 +9,6 @@ import FormikConfirmationCheckboxPanel, {
 import FormikCountrySelect, {
     FormikCountrySelectProps
 } from './formik-country-select/FormikCountrySelect';
-import FormikCustomInputWrapper, {
-    FormikCustomInputWrapperProps
-} from './formik-custom-input-wrapper/FormikCustomInputWrapper';
 import FormikDateIntervalPicker, {
     DateIntervalPickerProps
 } from './formik-date-interval-picker/FormikDateIntervalPicker';
@@ -32,6 +29,7 @@ import TypedFormikForm, { TypedFormikFormProps } from './typed-formik-form/Typed
 import TypedFormikWrapper, {
     TypedFormikWrapperProps
 } from './typed-formik-wrapper/TypedFormikWrapper';
+import '../styles/nav-frontend-skjema-extension.less';
 
 export function getTypedFormComponents<FieldNames, FormValues>() {
     return {
@@ -43,9 +41,6 @@ export function getTypedFormComponents<FieldNames, FormValues>() {
             <FormikConfirmationCheckboxPanel<FieldNames> {...props} />
         ),
         CountrySelect: (props: FormikCountrySelectProps<FieldNames>) => <FormikCountrySelect<FieldNames> {...props} />,
-        FormikCustomInputWrapper: (props: FormikCustomInputWrapperProps<FieldNames>) => (
-            <FormikCustomInputWrapper {...props} />
-        ),
         DatePicker: (props: FormikDatepickerProps<FieldNames>) => <FormikDatepicker<FieldNames> {...props} />,
         DateIntervalPicker: (props: DateIntervalPickerProps<FieldNames>) => (
             <FormikDateIntervalPicker<FieldNames> {...props} />

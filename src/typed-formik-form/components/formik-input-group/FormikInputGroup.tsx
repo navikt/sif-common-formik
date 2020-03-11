@@ -20,6 +20,7 @@ function FormikInputGroup<FieldName>({
     children,
     info,
     validate,
+    className,
     ...restProps
 }: FormikInputGroupProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -29,6 +30,7 @@ function FormikInputGroup<FieldName>({
                 return (
                     <SkjemaGruppe
                         {...restProps}
+                        className={`${className ? className : ''} singleInputWrapper`}
                         legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}>
                         {children}

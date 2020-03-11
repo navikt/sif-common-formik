@@ -1,7 +1,6 @@
 import React from 'react';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
 import LabelWithInfo from '../label-with-info/LabelWithInfo';
-import './skjemagruppeQuestion.less';
 
 interface Props extends SkjemaGruppeProps {
     info?: React.ReactNode;
