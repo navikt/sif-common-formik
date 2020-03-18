@@ -3,9 +3,6 @@ import { FieldInputProps, FormikErrors, FormikProps, getIn } from 'formik';
 import { TypedFormikFormContextType } from '../components/typed-formik-form/TypedFormikForm';
 import { NavFrontendSkjemaFeil } from '../types';
 
-// import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
-// import { FormikErrorRender } from '../components/typed-formik-form/TypedFormikForm';
-
 interface ErrorNodeInObject {
     field: string;
     error: {
@@ -35,14 +32,8 @@ export const getErrorsForField = <FormValues>(
     return getIn(errors, elementName);
 };
 
-export const isValidationErrorsVisible = (form: FormikProps<any>): boolean => {
-    if (form) {
-        const { status: formikStatus, submitCount } = form;
-        return formikStatus !== undefined && formikStatus.stepSubmitCount !== undefined
-            ? submitCount > formikStatus.stepSubmitCount
-            : formikStatus?.showErrors === true;
-    }
-    return true;
+export const isValidationErrorsVisible = (formik: FormikProps<any>): boolean => {
+    return formik?.status?.showErrors === true;
 };
 
 export function flattenFieldArrayErrors<FormValues>(errors: FormValues): FormValues {
@@ -109,44 +100,3 @@ export function getAllErrors<FormValues>(formik: FormikProps<FormValues>): Formi
     }
     return undefined;
 }
-
-// export function getValidationSummaryErrorsWithIntl<FormValues>(
-//     formik: FormikProps<FormValues>,
-//     intl: IntlShape
-// ): FeiloppsummeringFeil[] | undefined {
-//     const { errors } = formik;
-//     if (errors) {
-//         const numberOfErrors = Object.keys(errors).length;
-//         const errorMessages: FeiloppsummeringFeil[] = [];
-
-//         if (numberOfErrors > 0 && isValidationErrorsVisible(formik)) {
-//             const allErrors = flattenFieldArrayErrors(errors);
-//             Object.keys(allErrors).forEach((key) => {
-//                 const error = allErrors[key];
-//                 const message = isFieldValidationError(error) ? renderFieldValidationError(intl, error) : error;
-//                 if (message && typeof message === 'string') {
-//                     errorMessages.push({
-//                         skjemaelementId: key,
-//                         feilmelding: message
-//                     });
-//                 }
-//             });
-
-//             if (errorMessages.length > 0) {
-//                 return errorMessages;
-//             }
-//         }
-//     }
-//     return undefined;
-// }
-
-// export const getFieldErrorMessage = (
-//     field: FieldInputProps<any>,
-//     form: FormikProps<any>,
-//     intl: IntlShape
-// ): React.ReactNode | undefined => {
-//     if (isValidationErrorsVisible(form)) {
-//         return getValidationErrorWithIntl(intl, form.errors, field.name);
-//     }
-//     return undefined;
-// };

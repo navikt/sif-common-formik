@@ -11,7 +11,9 @@ import Tiles from '../../../components/tiles/Tiles';
 import {
     isIntlFieldValidationErrorType, renderIntlFieldValidationError
 } from '../../../modules/validation/fieldValidationRenderUtils';
-import { validateRequiredField, validateRequiredList } from '../../../validation/fieldValidations';
+import {
+    validateRequiredField, validateRequiredList, validateYesOrNoIsAnswered
+} from '../../../validation/fieldValidations';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
 
@@ -50,7 +52,11 @@ const TypedFormExample: React.FunctionComponent<Props> = () => {
                 </Tiles>
             </Question>
             <Question>
-                <Form.YesOrNoQuestion legend="Har du barn?" name={FormFields.hasKids} />
+                <Form.YesOrNoQuestion
+                    legend="Har du barn?"
+                    name={FormFields.hasKids}
+                    validate={validateYesOrNoIsAnswered}
+                />
             </Question>
             <Question>
                 <div style={{ display: 'flex', flex: 'flex-start' }}>
