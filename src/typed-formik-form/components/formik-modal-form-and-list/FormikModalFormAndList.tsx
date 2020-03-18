@@ -37,6 +37,7 @@ function FormikModalFormAndList<FieldName, ItemType>({
                             if (onAfterChange) {
                                 onAfterChange(updatedValues);
                             }
+                            context?.onAfterFieldValueSet();
                         }}
                         formRenderer={formRenderer}
                         listRenderer={({ onEdit, onDelete }) => listRenderer({ items: field.value, onDelete, onEdit })}

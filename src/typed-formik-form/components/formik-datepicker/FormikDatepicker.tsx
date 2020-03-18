@@ -86,6 +86,7 @@ function FormikDatepicker<FieldName>({
                                     if (onChange) {
                                         onChange(date);
                                     }
+                                    context?.onAfterFieldValueSet();
                                 }
                             }}
                         />

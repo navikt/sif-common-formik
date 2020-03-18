@@ -20,12 +20,14 @@ export interface TypedFormikFormProps<FormValues> {
     id?: string;
     onValidSubmit?: () => void;
     onCancel?: () => void;
+    runDelayedFormValidation?: boolean;
 }
 
 export interface TypedFormikFormContextType {
     showErrors: boolean;
     getAndRenderFieldErrorMessage: (field: FieldInputProps<any>, form: FormikProps<any>) => NavFrontendSkjemaFeil;
     fieldErrorRenderer?: FormikErrorRender<any>;
+    onAfterFieldValueSet: () => void;
 }
 
 interface SubmitProps {
@@ -48,7 +50,8 @@ function TypedFormikForm<FormValues>({
     fieldErrorRenderer,
     onValidSubmit,
     id,
-    includeButtons = true
+    includeButtons = true,
+    runDelayedFormValidation
 }: TypedFormikFormProps<FormValues>) {
     const formik = useFormikContext<FormValues>();
     const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid, isValidating } = formik;
@@ -93,6 +96,13 @@ function TypedFormikForm<FormValues>({
                     }
                 }
                 return undefined;
+            },
+            onAfterFieldValueSet: () => {
+                if (runDelayedFormValidation && formik.status.showErrors) {
+                    setTimeout(() => {
+                        formik.validateForm();
+                    });
+                }
             }
         };
     };

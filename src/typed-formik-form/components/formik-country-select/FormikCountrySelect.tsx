@@ -31,7 +31,10 @@ function FormikCountrySelect<FieldName>({
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         {...field}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
-                        onChange={(value) => form.setFieldValue(field.name, value)}
+                        onChange={(value) => {
+                            form.setFieldValue(field.name, value);
+                            context?.onAfterFieldValueSet();
+                        }}
                         showOnlyEuAndEftaCountries={showOnlyEuAndEftaCountries}
                     />
                 );

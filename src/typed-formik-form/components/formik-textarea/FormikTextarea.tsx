@@ -32,6 +32,7 @@ function FormikTextarea<FieldName>({
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         onChange={(evt) => {
                             form.setFieldValue(field.name, evt.target.value);
+                            context?.onAfterFieldValueSet();
                         }}
                         value={field.value || ''}
                     />
