@@ -17,6 +17,7 @@ export interface TypedFormikFormProps<FormValues> {
     resetFormOnCancel?: boolean;
     submitButtonLabel?: string;
     cancelButtonLabel?: string;
+    externalSubmitButtonId?: string;
     onValidSubmit?: () => void;
     onCancel?: () => void;
 }
@@ -46,6 +47,7 @@ function TypedFormikForm<FormValues>({
     cancelButtonLabel,
     fieldErrorRenderer,
     onValidSubmit,
+    externalSubmitButtonId,
     includeButtons = true
 }: TypedFormikFormProps<FormValues>) {
     const formik = useFormikContext<FormValues>();
@@ -96,7 +98,7 @@ function TypedFormikForm<FormValues>({
     };
 
     return (
-        <form onSubmit={onSubmit} noValidate={true} className={className}>
+        <form onSubmit={onSubmit} noValidate={true} className={className} id={externalSubmitButtonId}>
             <TypedFormikFormContext.Provider value={createTypedFormikFormContext()}>
                 {children}
                 {includeValidationSummary && !formik.isValid && (
