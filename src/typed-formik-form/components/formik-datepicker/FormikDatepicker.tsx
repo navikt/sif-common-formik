@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Field, FieldProps } from 'formik';
-import Datovelger from 'nav-datovelger/dist/datovelger/Datovelger';
+import { Datovelger } from 'nav-datovelger';
 import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
@@ -79,8 +79,8 @@ function FormikDatepicker<FieldName>({
                             kalender={{
                                 plassering
                             }}
-                            onChange={(dateString: string) => {
-                                const date = datepickerUtils.getDateFromDateString(dateString);
+                            onChange={(dateString) => {
+                                const date = dateString ? datepickerUtils.getDateFromDateString(dateString) : undefined;
                                 if (field.value !== date) {
                                     form.setFieldValue(field.name, date);
                                     if (onChange) {
