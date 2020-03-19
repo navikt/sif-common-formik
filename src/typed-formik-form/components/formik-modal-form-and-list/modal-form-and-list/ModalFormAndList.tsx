@@ -90,7 +90,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
                     </div>
                 )}
                 <div style={showListTitle ? { marginTop: '1rem' } : undefined}>
-                    <Knapp htmlType="button" onClick={() => setModalState({ isVisible: true })}>
+                    <Knapp htmlType="button" onClick={() => setModalState({ isVisible: true })} mini={true}>
                         {labels.addLabel}
                     </Knapp>
                 </div>
