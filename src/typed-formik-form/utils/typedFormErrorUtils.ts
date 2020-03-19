@@ -29,7 +29,12 @@ export const getErrorsForField = <FormValues>(
     elementName: string,
     errors: FormikErrors<FormValues>
 ): FormikErrors<FormValues> | undefined => {
-    return getIn(errors, elementName);
+    const fieldErrors = getIn(errors, elementName);
+    if (Array.isArray(fieldErrors) && fieldErrors.length === 1 && fieldErrors[0] === null) {
+        // Filter out fieldArray errors containing only null item
+        return undefined;
+    }
+    return fieldErrors;
 };
 
 export const isValidationErrorsVisible = (formik: FormikProps<any>): boolean => {
@@ -44,7 +49,7 @@ export function flattenFieldArrayErrors<FormValues>(errors: FormValues): FormVal
             (error as FormValues[]).forEach((err, idx) => {
                 allErrors = {
                     ...allErrors,
-                    ...getErrorsFromFieldArrayErrors(err, key, idx)
+                    ...(err ? getErrorsFromFieldArrayErrors(err, key, idx) : undefined)
                 };
             });
         } else if (error.key) {
