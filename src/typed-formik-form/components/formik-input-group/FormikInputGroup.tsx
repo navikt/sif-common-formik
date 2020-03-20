@@ -29,14 +29,16 @@ function FormikInputGroup<FieldName>({
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 const errorMsg = getFeilPropForFormikInput({ field, form, context, feil });
+                const isRenderableErrorMsgType = ['string', 'object'].includes(typeof errorMsg);
                 return (
                     <SkjemaGruppe
                         {...restProps}
                         className={`${className ? className : ''} singleInputWrapper`}
                         legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}>
                         {children}
-                        {/** Må sette inn denne selv pga feil på SkjemaGruppe påvirker styling av alle elementer i gruppen*/
-                        errorMsg && <Feilmelding>{errorMsg}</Feilmelding>}
+
+                        {/** Må sette inn denne selv pga feil på SkjemaGruppe påvirker styling av alle elementer i gruppen*/}
+                        {isRenderableErrorMsgType && <Feilmelding>{errorMsg}</Feilmelding>}
                     </SkjemaGruppe>
                 );
             }}
