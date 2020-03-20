@@ -18,6 +18,7 @@ export interface TypedFormikFormProps<FormValues> {
     submitButtonLabel?: string;
     cancelButtonLabel?: string;
     id?: string;
+    cleanup?: (values: FormValues) => FormValues;
     onValidSubmit?: () => void;
     onCancel?: () => void;
     runDelayedFormValidation?: boolean;
@@ -50,6 +51,7 @@ function TypedFormikForm<FormValues>({
     fieldErrorRenderer,
     onValidSubmit,
     id,
+    cleanup,
     includeButtons = true,
     runDelayedFormValidation
 }: TypedFormikFormProps<FormValues>) {
@@ -76,6 +78,11 @@ function TypedFormikForm<FormValues>({
     if (userHasSubmittedValidForm(ref.current, { isValid, isSubmitting })) {
         if (onValidSubmit) {
             onValidSubmit();
+            if (cleanup) {
+                setTimeout(() => {
+                    formik.setValues(cleanup(formik.values));
+                });
+            }
         }
     }
 
