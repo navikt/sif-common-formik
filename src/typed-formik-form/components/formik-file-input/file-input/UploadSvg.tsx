@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-function UploadSvg(props) {
+function UploadSvg(props: any) {
     return (
         <svg width={22} height={22} viewBox="0 0 24 24" {...props}>
             <title>{'Opplastingsikon'}</title>

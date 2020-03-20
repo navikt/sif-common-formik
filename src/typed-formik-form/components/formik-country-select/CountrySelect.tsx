@@ -39,7 +39,7 @@ class CountrySelect extends React.Component<Props> {
         };
     }
 
-    getCountryOptions(locale): React.ReactNode[] {
+    getCountryOptions(locale: string): React.ReactNode[] {
         if (!this.countryOptionsCache || locale !== this.countryOptionsCache.locale) {
             this.updateCache(locale);
         }
@@ -51,7 +51,7 @@ class CountrySelect extends React.Component<Props> {
         return (
             <Select name={name} {...restProps} onChange={(e) => onChange(e.target.value)}>
                 <option value="" />
-                {this.getCountryOptions(locale)}
+                {this.getCountryOptions(locale || 'nb')}
             </Select>
         );
     }

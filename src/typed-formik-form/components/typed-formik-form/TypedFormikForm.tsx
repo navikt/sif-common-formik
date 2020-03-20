@@ -57,7 +57,7 @@ function TypedFormikForm<FormValues>({
 }: TypedFormikFormProps<FormValues>) {
     const formik = useFormikContext<FormValues>();
     const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid, isValidating } = formik;
-    const [formSubmitCount] = useState(submitCount);
+    const [formSubmitCount, setFormSubmitCout] = useState(submitCount);
 
     const ref = useRef<any>({ isSubmitting, isValid });
 
@@ -68,6 +68,9 @@ function TypedFormikForm<FormValues>({
         };
         if (!isSubmitting) {
             if (submitCount > formSubmitCount) {
+                if (isValid) {
+                    setFormSubmitCout(submitCount);
+                }
                 setStatus({ showErrors: true });
             } else {
                 setStatus({ showErrors: false });
