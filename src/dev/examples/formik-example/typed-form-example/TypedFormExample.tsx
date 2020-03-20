@@ -1,7 +1,9 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import moment from 'moment';
-import { FormikDateIntervalPicker, FormikFileInput } from '../../../../typed-formik-form';
+import {
+    FormikDateIntervalPicker, FormikFileInput, FormikInput
+} from '../../../../typed-formik-form';
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import {
     getTypedFormComponents
@@ -41,7 +43,12 @@ const TypedFormExample: React.FunctionComponent<Props> = () => {
                 <Form.CountrySelect name={FormFields.birthCountry} label="Fødselsland" />
             </Question>
             <Question>
-                <Form.InputGroup name={FormFields.birthCountry} legend="Dette er legend" info="Hey">
+                <Form.InputGroup
+                    name={FormFields.birthCountry}
+                    legend="Dette er legend"
+                    info="Hey"
+                    validate={validateRequiredField}>
+                    <FormikInput name="sdf" label="sdfsdf" />
                     sdf
                 </Form.InputGroup>
             </Question>

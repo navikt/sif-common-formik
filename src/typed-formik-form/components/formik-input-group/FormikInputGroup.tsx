@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Field, FieldProps } from 'formik';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
+import { Feilmelding } from 'nav-frontend-typografi';
 import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
@@ -27,13 +28,17 @@ function FormikInputGroup<FieldName>({
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
+                const errorMsg = getFeilPropForFormikInput({ field, form, context, feil });
+                const isRenderableErrorMsgType = ['string', 'object'].includes(typeof errorMsg);
                 return (
                     <SkjemaGruppe
                         {...restProps}
                         className={`${className ? className : ''} singleInputWrapper`}
-                        legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
-                        feil={getFeilPropForFormikInput({ field, form, context, feil })}>
+                        legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}>
                         {children}
+
+                        {/** Må sette inn denne selv pga feil på SkjemaGruppe påvirker styling av alle elementer i gruppen*/}
+                        {isRenderableErrorMsgType && <Feilmelding>{errorMsg}</Feilmelding>}
                     </SkjemaGruppe>
                 );
             }}
