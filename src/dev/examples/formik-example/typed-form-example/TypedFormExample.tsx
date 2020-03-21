@@ -1,6 +1,7 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import moment from 'moment';
+import { PopoverOrientering } from 'nav-frontend-popover';
 import {
     FormikDateIntervalPicker, FormikFileInput, FormikInput, FormikInputGroup
 } from '../../../../typed-formik-form';
@@ -22,7 +23,7 @@ import { FormFields, FormValues } from '../types';
 interface Props {}
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
-const fullForm = false;
+const fullForm = true;
 const TypedFormExample: React.FunctionComponent<Props> = () => {
     const intl = useIntl();
     return (
@@ -40,6 +41,7 @@ const TypedFormExample: React.FunctionComponent<Props> = () => {
                 <>
                     <Question>
                         <Form.DatePicker
+                            info={'sdfsdf'}
                             name={FormFields.birthdate}
                             label="Fødselsdato"
                             validate={validateRequiredField}
@@ -66,7 +68,9 @@ const TypedFormExample: React.FunctionComponent<Props> = () => {
                     </Question>
                     <Question>
                         <Form.YesOrNoQuestion
-                            legend="Har du barn?"
+                            legend={'sdfjjsdfj'}
+                            info={'sdfsdf'}
+                            infoPlassering={PopoverOrientering.Under}
                             name={FormFields.hasKids}
                             validate={validateYesOrNoIsAnswered}
                         />
