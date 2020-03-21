@@ -95,8 +95,21 @@ function getErrorsFromFieldArrayErrors<FieldName>(field: FieldName, fieldArrayKe
     return errors;
 }
 
+function removeNullArrayErrors(errors: FormikErrors<any>) {
+    const filteredErrors = {};
+    Object.keys(errors).forEach((key) => {
+        const error = errors[key];
+        if (error && Array.isArray(error) && error.length === 1 && error[0] === null) {
+            return;
+        } else {
+            filteredErrors[key] = error;
+        }
+    });
+    return filteredErrors;
+}
+
 export function getAllErrors<FormValues>(formik: FormikProps<FormValues>): FormikErrors<FormValues> | undefined {
-    const { errors } = formik;
+    const errors = formik.errors ? removeNullArrayErrors(formik.errors) : undefined;
     if (errors) {
         const numberOfErrors = Object.keys(errors).length;
         if (numberOfErrors > 0 && isValidationErrorsVisible(formik)) {
