@@ -40,9 +40,9 @@ function FormikInputGroup<FieldName>({
 
                         {/** Må sette inn denne selv pga feil på SkjemaGruppe påvirker styling av alle elementer i gruppen*/}
                         {isRenderableErrorMsgType && (
-                            <Feilmelding tabIndex={-1} id={field.name} className="focusable-feilmelding">
-                                {errorMsg}
-                            </Feilmelding>
+                            <div aria-live="polite" tabIndex={-1} id={field.name} className="focusable-feilmelding">
+                                <Feilmelding>{errorMsg}</Feilmelding>
+                            </div>
                         )}
                     </SkjemaGruppe>
                 );
