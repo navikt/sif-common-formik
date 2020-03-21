@@ -2,6 +2,7 @@ import { Time, YesOrNo } from '../../../typed-formik-form/types';
 import { Ferieuttak } from './ferieuttak-example';
 
 export enum FormFields {
+    'nameGroup' = 'nameGroup',
     'firstname' = 'firstname',
     'lastname' = 'lastname',
     'birthdate' = 'birthdate',
@@ -18,6 +19,7 @@ export enum FormFields {
 }
 
 export interface CompletedFormValues {
+    [FormFields.nameGroup]: string;
     [FormFields.firstname]: string;
     [FormFields.lastname]?: string;
     [FormFields.birthdate]: Date;

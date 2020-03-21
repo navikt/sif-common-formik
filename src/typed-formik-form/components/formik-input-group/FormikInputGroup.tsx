@@ -6,6 +6,7 @@ import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
+import './formikInputGroup.less';
 
 interface OwnProps<FieldName> extends SkjemaGruppeProps {
     name: FieldName;
@@ -38,7 +39,11 @@ function FormikInputGroup<FieldName>({
                         {children}
 
                         {/** Må sette inn denne selv pga feil på SkjemaGruppe påvirker styling av alle elementer i gruppen*/}
-                        {isRenderableErrorMsgType && <Feilmelding>{errorMsg}</Feilmelding>}
+                        {isRenderableErrorMsgType && (
+                            <Feilmelding tabIndex={-1} id={field.name} className="focusable-feilmelding">
+                                {errorMsg}
+                            </Feilmelding>
+                        )}
                     </SkjemaGruppe>
                 );
             }}
