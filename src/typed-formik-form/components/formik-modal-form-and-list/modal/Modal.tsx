@@ -7,12 +7,21 @@ export interface ModalProps {
     isOpen: boolean;
     onRequestClose: () => void;
     contentLabel: string;
+    shouldCloseOnOverlayClick?: boolean;
 }
 
-const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, onRequestClose, contentLabel, className, children }) => (
+const Modal: React.FunctionComponent<ModalProps> = ({
+    isOpen,
+    onRequestClose,
+    contentLabel,
+    className,
+    shouldCloseOnOverlayClick = false,
+    children
+}) => (
     <NFModal
         className={`modal ${className ? className : ''}`}
         isOpen={isOpen}
+        shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
         contentLabel={contentLabel}
         onRequestClose={onRequestClose}>
         <article className="modal__content">{children}</article>
