@@ -31,6 +31,7 @@ function FormikInput<FieldName>({
     feil,
     validate,
     inputMode,
+    autoComplete,
     ...restProps
 }: FormikInputProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -42,6 +43,7 @@ function FormikInput<FieldName>({
                     <Input
                         {...restProps}
                         {...field}
+                        autoComplete={autoComplete || 'off'}
                         inputMode={inputMode}
                         pattern={getPatternForInputMode(inputMode)}
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}

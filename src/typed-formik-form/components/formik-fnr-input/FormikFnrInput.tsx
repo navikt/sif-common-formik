@@ -31,6 +31,7 @@ function FormikFnrInput<FieldName>({
     feil,
     validate,
     inputMode = 'numeric',
+    autoComplete,
     ...restProps
 }: FormikInputProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -42,6 +43,7 @@ function FormikFnrInput<FieldName>({
                     <FnrInput
                         {...restProps}
                         {...field}
+                        autoComplete={autoComplete || 'off'}
                         onValidate={(valid) => console.log(valid)}
                         inputMode={inputMode}
                         pattern={getPatternForInputMode(inputMode)}
