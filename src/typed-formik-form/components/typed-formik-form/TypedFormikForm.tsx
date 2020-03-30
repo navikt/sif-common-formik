@@ -121,7 +121,7 @@ function TypedFormikForm<FormValues>({
         <form onSubmit={onSubmit} noValidate={true} className={className} id={id} autoComplete="off">
             <TypedFormikFormContext.Provider value={createTypedFormikFormContext()}>
                 {children}
-                {includeValidationSummary && !formik.isValid && (
+                {includeValidationSummary && !formik.isValid && isValidationErrorsVisible(formik) && (
                     <div style={{ marginTop: '2rem' }}>
                         <FormikValidationErrorSummary />
                     </div>
