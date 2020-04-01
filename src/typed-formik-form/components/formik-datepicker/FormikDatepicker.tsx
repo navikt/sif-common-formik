@@ -11,6 +11,7 @@ import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQ
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
 import './datepicker.less';
+import { DayPickerProps } from 'react-day-picker';
 
 interface DateRange {
     fom: Date;
@@ -33,6 +34,7 @@ interface OwnProps<FieldName> {
     disabled?: boolean;
     showYearSelector?: boolean;
     feil?: NavFrontendSkjemaFeil;
+    dayPickerProps?: DayPickerProps;
     onChange?: (date: Date | undefined) => void;
 }
 
