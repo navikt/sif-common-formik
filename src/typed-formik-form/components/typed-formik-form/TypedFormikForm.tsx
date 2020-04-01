@@ -58,6 +58,9 @@ function TypedFormikForm<FormValues>({
     const formik = useFormikContext<FormValues>();
     const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid, isValidating } = formik;
     const [formSubmitCount, setFormSubmitCout] = useState(submitCount);
+    const [shouldCleanup] = useState(cleanup !== undefined);
+    const [hasCleanedUp, setHasCleanedUp] = useState(false);
+    const [formSubmitEvent, setFormSubmitEvent] = useState({} as React.FormEvent<HTMLFormElement>);
 
     const ref = useRef<any>({ isSubmitting, isValid });
 
@@ -78,19 +81,30 @@ function TypedFormikForm<FormValues>({
         }
     }, [submitCount, setStatus, formSubmitCount, isSubmitting, isValid, isValidating]);
 
+    useEffect(() => {
+        hasCleanedUp && handleSubmit(formSubmitEvent);
+    }, [hasCleanedUp, formSubmitEvent, handleSubmit]);
+
     if (userHasSubmittedValidForm(ref.current, { isValid, isSubmitting })) {
         if (onValidSubmit) {
             onValidSubmit();
-            if (cleanup) {
-                setTimeout(() => {
-                    formik.setValues(cleanup(formik.values));
-                });
-            }
         }
     }
 
+    const runCleanup = (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.stopPropagation();
+        evt.preventDefault();
+        formik.setValues(cleanup!(formik.values));
+        setHasCleanedUp(true);
+        setFormSubmitEvent(evt);
+    };
+
     const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-        handleSubmit(evt);
+        if (shouldCleanup) {
+            runCleanup(evt);
+        } else {
+            handleSubmit(evt);
+        }
     };
 
     const createTypedFormikFormContext = (): TypedFormikFormContextType => {
