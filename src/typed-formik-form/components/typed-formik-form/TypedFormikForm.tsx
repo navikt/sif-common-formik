@@ -58,7 +58,6 @@ function TypedFormikForm<FormValues>({
     const formik = useFormikContext<FormValues>();
     const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid, isValidating } = formik;
     const [formSubmitCount, setFormSubmitCout] = useState(submitCount);
-    const [shouldCleanup] = useState(cleanup !== undefined);
     const [hasCleanedUp, setHasCleanedUp] = useState(false);
     const [formSubmitEvent, setFormSubmitEvent] = useState({} as React.FormEvent<HTMLFormElement>);
 
@@ -100,7 +99,7 @@ function TypedFormikForm<FormValues>({
     };
 
     const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-        if (shouldCleanup) {
+        if (cleanup !== undefined) {
             runCleanup(evt);
         } else {
             handleSubmit(evt);
