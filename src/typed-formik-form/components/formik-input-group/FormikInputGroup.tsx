@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
 import { Feilmelding } from 'nav-frontend-typografi';

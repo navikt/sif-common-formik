@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { RadioPanelGruppe, RadioPanelGruppeProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
@@ -42,7 +42,7 @@ function FormikRadioPanelGroup<FieldName>({
                         }}
                         radios={radios.map((rb) => ({
                             name: `${name}`,
-                            ...rb
+                            ...rb,
                         }))}
                     />
                 );

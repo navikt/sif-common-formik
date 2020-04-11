@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Textarea, TextareaControlledProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';

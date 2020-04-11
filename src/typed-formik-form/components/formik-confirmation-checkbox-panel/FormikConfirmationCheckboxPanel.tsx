@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { BekreftCheckboksPanel, BekreftCheckboksPanelProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';

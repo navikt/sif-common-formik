@@ -19,7 +19,7 @@ const Comp: React.FunctionComponent<Props> = ({ title, children, actions, isForm
                 marginBottom: '0px',
                 marginLeft: '.125rem',
                 borderTopLeftRadius: '.25rem',
-                borderTopRightRadius: '.25rem'
+                borderTopRightRadius: '.25rem',
             }}>
             {title}
         </Code>
@@ -30,7 +30,7 @@ const Comp: React.FunctionComponent<Props> = ({ title, children, actions, isForm
                     style={{
                         margin: '1rem -1rem -1rem -1rem',
                         padding: '.5rem 1rem',
-                        borderTop: '1px dashed #B7B1A9'
+                        borderTop: '1px dashed #B7B1A9',
                     }}>
                     <Element tag="span">Actions:{` `}</Element>
                     <Code style={{ display: 'inline-block', margin: 'none' }} isFormik={isFormik} isLayout={isLayout}>

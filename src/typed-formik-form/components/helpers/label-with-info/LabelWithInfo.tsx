@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
@@ -13,7 +13,7 @@ interface LabelWithHelperText {
 const LabelWithInfo: React.FunctionComponent<LabelWithHelperText> = ({
     children,
     info,
-    infoPlassering = PopoverOrientering.Over
+    infoPlassering = PopoverOrientering.Over,
 }) => {
     if (!children) {
         return null;
@@ -23,7 +23,7 @@ const LabelWithInfo: React.FunctionComponent<LabelWithHelperText> = ({
     }
 
     const partialPopoverProps: any = {
-        orientering: infoPlassering
+        orientering: infoPlassering,
     };
     return (
         <Element tag="span" className="labelWithInfo">

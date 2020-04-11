@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { SelectProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
@@ -20,7 +20,7 @@ function FormikCountrySelect<FieldName>({
     feil,
     validate,
     info,
-    showOnlyEuAndEftaCountries
+    showOnlyEuAndEftaCountries,
 }: FormikCountrySelectProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (

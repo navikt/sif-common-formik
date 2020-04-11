@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { ArrayHelpers, Field, FieldArray, FieldProps } from 'formik';
 import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
@@ -21,7 +21,7 @@ function FormikFileInput<FieldName>({
     validate,
     onFilesSelect,
     feil,
-    onClick
+    onClick,
 }: FormikFileInputProps<FieldName> & TypedFormInputCommonProps) {
     const context = React.useContext(TypedFormikFormContext);
 

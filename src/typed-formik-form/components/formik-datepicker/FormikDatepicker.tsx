@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import { DayPickerProps } from 'react-day-picker';
 import { Field, FieldProps } from 'formik';
 import { Datovelger } from 'nav-datovelger';
 import useMedia from 'use-media';
@@ -11,7 +12,6 @@ import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQ
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
 import './datepicker.less';
-import { DayPickerProps } from 'react-day-picker';
 
 interface DateRange {
     fom: Date;
@@ -79,7 +79,7 @@ function FormikDatepicker<FieldName>({
                             }
                             visÅrVelger={showYearSelector}
                             kalender={{
-                                plassering
+                                plassering,
                             }}
                             onChange={(dateString) => {
                                 const date = dateString ? datepickerUtils.getDateFromDateString(dateString) : undefined;

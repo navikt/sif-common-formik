@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import bemUtils from '../../utils/bemUtils';
 import './tiles.less';
 

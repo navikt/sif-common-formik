@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Element } from 'nav-frontend-typografi';
 import { NavFrontendSkjemaFeil } from '../../../types';
 import SkjemagruppeQuestion from '../../helpers/skjemagruppe-question/SkjemagruppeQuestion';

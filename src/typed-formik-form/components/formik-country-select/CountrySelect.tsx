@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Select, SelectProps } from 'nav-frontend-skjema';
 import { getCountries } from '../../utils/countryUtils';
 
@@ -35,7 +35,7 @@ class CountrySelect extends React.Component<Props> {
             options: createCountryOptions(
                 this.props.showOnlyEuAndEftaCountries ? this.props.showOnlyEuAndEftaCountries : false,
                 locale
-            )
+            ),
         };
     }
 

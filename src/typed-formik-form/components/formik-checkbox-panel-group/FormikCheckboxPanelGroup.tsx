@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { CheckboksPanelGruppe, CheckboksPanelGruppeProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
@@ -44,7 +44,7 @@ function FormikCheckboxPanelGroup<FieldName>({
                         legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
                         checkboxes={checkboxes.map((cb) => ({
                             ...cb,
-                            checked: isCheckboxChecked(field.value, cb.value)
+                            checked: isCheckboxChecked(field.value, cb.value),
                         }))}
                         className={useTwoColumns ? 'twoColumnPanelGruppe' : undefined}
                         onChange={(evt, value) => {

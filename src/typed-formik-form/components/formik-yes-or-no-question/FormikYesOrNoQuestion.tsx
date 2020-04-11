@@ -1,9 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { TypedFormInputCommonProps, YesOrNo } from '../../types';
-import FormikRadioPanelGroup, {
-    FormikRadioPanelGroupProps
-} from '../formik-radio-panel-group/FormikRadioPanelGroup';
+import FormikRadioPanelGroup, { FormikRadioPanelGroupProps } from '../formik-radio-panel-group/FormikRadioPanelGroup';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 
 export interface FormikYesOrNoQuestionProps<FieldName> extends Omit<FormikRadioPanelGroupProps<FieldName>, 'radios'> {
@@ -31,7 +29,7 @@ function FormikYesOrNoQuestion<FieldName>({
             radios={[
                 { label: yesLabel, value: YesOrNo.YES },
                 { label: noLabel, value: YesOrNo.NO },
-                ...(includeDoNotKnowOption ? [{ label: doNotKnowLabel, value: YesOrNo.DO_NOT_KNOW }] : [])
+                ...(includeDoNotKnowOption ? [{ label: doNotKnowLabel, value: YesOrNo.DO_NOT_KNOW }] : []),
             ]}
             {...restProps}
             legend={

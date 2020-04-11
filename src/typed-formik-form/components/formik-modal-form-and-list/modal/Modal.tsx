@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { default as NFModal } from 'nav-frontend-modal';
 import './modal.less';
 
@@ -16,7 +16,7 @@ const Modal: React.FunctionComponent<ModalProps> = ({
     contentLabel,
     className,
     shouldCloseOnOverlayClick = false,
-    children
+    children,
 }) => (
     <NFModal
         className={`modal ${className ? className : ''}`}

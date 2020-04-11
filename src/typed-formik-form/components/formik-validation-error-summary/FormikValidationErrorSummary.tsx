@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useFormikContext } from 'formik';
 import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { getAllErrors } from '../../utils/typedFormErrorUtils';
@@ -15,7 +15,7 @@ function FormikValidationErrorSummary() {
                   const error = allErrors[key];
                   const feil: FeiloppsummeringFeil = {
                       feilmelding: context.fieldErrorRenderer ? context.fieldErrorRenderer(error) : error,
-                      skjemaelementId: key
+                      skjemaelementId: key,
                   };
                   return feil;
               })

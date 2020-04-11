@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import bemHelper from '../../utils/bemUtils';
 
@@ -22,7 +22,7 @@ const Box: React.FunctionComponent<BoxProps> = ({ margin, padBottom, className, 
         bem.modifierConditional(`bottom-${padBottom}`, padBottom !== undefined),
         {
             [bem.modifier('textAlignCenter')]: textAlignCenter,
-            [`${className}`]: className !== undefined
+            [`${className}`]: className !== undefined,
         }
     );
     return <div className={classNames}>{children}</div>;
