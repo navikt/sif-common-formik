@@ -53,19 +53,19 @@ function TypedFormikForm<FormValues>({
     id,
     cleanup,
     includeButtons = true,
-    runDelayedFormValidation
+    runDelayedFormValidation,
 }: TypedFormikFormProps<FormValues>) {
     const formik = useFormikContext<FormValues>();
     const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid, isValidating } = formik;
     const [formSubmitCount, setFormSubmitCout] = useState(submitCount);
-    const [hasCleanedUp, setHasCleanedUp] = useState(false);
+    const [cleanupState, setCleanupState] = useState({ hasCleanedUp: false, counter: 0 });
 
     const ref = useRef<any>({ isSubmitting, isValid });
 
     useEffect(() => {
         ref.current = {
             isSubmitting,
-            isValid
+            isValid,
         };
         if (!isSubmitting) {
             if (submitCount > formSubmitCount) {
@@ -80,8 +80,8 @@ function TypedFormikForm<FormValues>({
     }, [submitCount, setStatus, formSubmitCount, isSubmitting, isValid, isValidating]);
 
     useEffect(() => {
-        hasCleanedUp && handleSubmit();
-    }, [hasCleanedUp, handleSubmit]);
+        cleanupState.hasCleanedUp && handleSubmit();
+    }, [cleanupState, handleSubmit]);
 
     if (userHasSubmittedValidForm(ref.current, { isValid, isSubmitting })) {
         if (onValidSubmit) {
@@ -93,10 +93,11 @@ function TypedFormikForm<FormValues>({
         evt.stopPropagation();
         evt.preventDefault();
         formik.setValues(cleanup!(formik.values));
-        setHasCleanedUp(true);
+        setCleanupState({ hasCleanedUp: true, counter: cleanupState.counter + 1 });
     };
 
     const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+        setCleanupState({ ...cleanupState, hasCleanedUp: false });
         if (cleanup !== undefined) {
             runCleanup(evt);
         } else {
@@ -124,7 +125,7 @@ function TypedFormikForm<FormValues>({
                         formik.validateForm();
                     });
                 }
-            }
+            },
         };
     };
 
