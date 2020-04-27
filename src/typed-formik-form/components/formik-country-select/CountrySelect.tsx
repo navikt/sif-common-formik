@@ -103,7 +103,7 @@ const filteredListEØSCountries = (countryOptionValue: string, shouldFilter?: bo
 const createCountryOptions = (
     onluEuAndEftaCountries: boolean,
     locale: string,
-    useAlpha3Code: boolean = false
+    useAlpha3Code: boolean = true
 ): React.ReactNode[] => {
     const lang = locale === 'en' ? 'nn' : 'nb';
     const countries = getCountries();
