@@ -9,6 +9,7 @@ interface Props extends Omit<SelectProps, 'onChange' | 'children'> {
     locale?: string;
     onChange: (countryCode: string) => void;
     showOnlyEuAndEftaCountries?: boolean;
+    useAlpha3Code?: boolean;
 }
 
 export type ChangeEvent = React.ChangeEvent<HTMLSelectElement>;
@@ -17,9 +18,6 @@ interface CountryOptionsCache {
     locale: string;
     options: React.ReactNode[];
 }
-
-const isoCodeIndex = 0;
-const countryNameIndex = 1;
 
 class CountrySelect extends React.Component<Props> {
     countryOptionsCache: CountryOptionsCache | undefined;
@@ -34,7 +32,8 @@ class CountrySelect extends React.Component<Props> {
             locale,
             options: createCountryOptions(
                 this.props.showOnlyEuAndEftaCountries ? this.props.showOnlyEuAndEftaCountries : false,
-                locale
+                locale,
+                this.props.useAlpha3Code
             ),
         };
     }
@@ -47,7 +46,7 @@ class CountrySelect extends React.Component<Props> {
     }
 
     render() {
-        const { onChange, name, showOnlyEuAndEftaCountries, locale, ...restProps } = this.props;
+        const { onChange, name, showOnlyEuAndEftaCountries, locale, useAlpha3Code, ...restProps } = this.props;
         return (
             <Select name={name} {...restProps} onChange={(e) => onChange(e.target.value)}>
                 <option value="" />
@@ -101,17 +100,24 @@ const filteredListEØSCountries = (countryOptionValue: string, shouldFilter?: bo
     }
 };
 
-const createCountryOptions = (onluEuAndEftaCountries: boolean, locale: string): React.ReactNode[] => {
-    const localeToUse = locale === 'en' ? 'nn' : 'nb';
+const createCountryOptions = (
+    onluEuAndEftaCountries: boolean,
+    locale: string,
+    useAlpha3Code: boolean = false
+): React.ReactNode[] => {
+    const lang = locale === 'en' ? 'nn' : 'nb';
     const countries = getCountries();
-    return Object.entries(countries.getNames(localeToUse))
-        .sort((a: string[], b: string[]) => a[1].localeCompare(b[1], localeToUse))
+
+    return Object.entries(countries.getNames(lang))
+        .sort((a: string[], b: string[]) => a[1].localeCompare(b[1], lang))
         .filter((countryOptionValue: string[]) =>
-            filteredListEØSCountries(countryOptionValue[isoCodeIndex], onluEuAndEftaCountries)
+            filteredListEØSCountries(countryOptionValue[0], onluEuAndEftaCountries)
         )
         .map((countryOptionValue: string[]) => (
-            <option key={countryOptionValue[isoCodeIndex]} value={countryOptionValue[isoCodeIndex]}>
-                {countryOptionValue[countryNameIndex]}
+            <option
+                key={countryOptionValue[0]}
+                value={useAlpha3Code ? countries.alpha2ToAlpha3(countryOptionValue[0]) : countryOptionValue[0]}>
+                {countryOptionValue[1]}
             </option>
         ));
 };
