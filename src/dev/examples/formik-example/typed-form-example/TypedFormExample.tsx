@@ -3,19 +3,23 @@ import { useIntl } from 'react-intl';
 import moment from 'moment';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import {
-    FormikDateIntervalPicker, FormikFileInput, FormikInput, FormikInputGroup
+    FormikDateIntervalPicker,
+    FormikFileInput,
+    FormikInput,
+    FormikInputGroup,
 } from '../../../../typed-formik-form';
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
-import {
-    getTypedFormComponents
-} from '../../../../typed-formik-form/components/getTypedFormComponents';
+import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import Question from '../../../components/question/Question';
 import Tiles from '../../../components/tiles/Tiles';
 import {
-    isIntlFieldValidationErrorType, renderIntlFieldValidationError
+    isIntlFieldValidationErrorType,
+    renderIntlFieldValidationError,
 } from '../../../modules/validation/fieldValidationRenderUtils';
 import {
-    validateRequiredField, validateRequiredList, validateYesOrNoIsAnswered
+    validateRequiredField,
+    validateRequiredList,
+    validateYesOrNoIsAnswered,
 } from '../../../validation/fieldValidations';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
@@ -48,7 +52,7 @@ const TypedFormExample: React.FunctionComponent<Props> = () => {
                         />
                     </Question>
                     <Question>
-                        <Form.CountrySelect name={FormFields.birthCountry} label="Fødselsland" />
+                        <Form.CountrySelect name={FormFields.birthCountry} label="Fødselsland" useAlpha3Code={true} />
                     </Question>
                     <Question>
                         <Form.InputGroup
@@ -89,12 +93,12 @@ const TypedFormExample: React.FunctionComponent<Props> = () => {
                             fromDatepickerProps={{
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
-                                validate: validateRequiredField
+                                validate: validateRequiredField,
                             }}
                             toDatepickerProps={{
                                 name: FormFields.daterange_to,
                                 label: 'Til',
-                                validate: validateRequiredField
+                                validate: validateRequiredField,
                             }}
                         />
                     </Question>
@@ -104,14 +108,10 @@ const TypedFormExample: React.FunctionComponent<Props> = () => {
                             labels={{
                                 addLabel: 'Legg til',
                                 modalTitle: 'Ferieuttak',
-                                listTitle: 'Ferieuttak'
+                                listTitle: 'Ferieuttak',
                             }}
-                            minDate={moment()
-                                .subtract(1, 'year')
-                                .toDate()}
-                            maxDate={moment()
-                                .add(1, 'year')
-                                .toDate()}
+                            minDate={moment().subtract(1, 'year').toDate()}
+                            maxDate={moment().add(1, 'year').toDate()}
                             validate={validateRequiredList}
                         />
                     </Question>

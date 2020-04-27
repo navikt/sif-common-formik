@@ -10,6 +10,7 @@ import CountrySelect from './CountrySelect';
 interface OwnProps<FieldName> extends Omit<SelectProps, 'name' | 'children'> {
     name: FieldName;
     showOnlyEuAndEftaCountries?: boolean;
+    useAlpha3Code?: boolean;
 }
 
 export type FormikCountrySelectProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
@@ -20,6 +21,7 @@ function FormikCountrySelect<FieldName>({
     feil,
     validate,
     info,
+    useAlpha3Code,
     showOnlyEuAndEftaCountries,
 }: FormikCountrySelectProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -36,6 +38,7 @@ function FormikCountrySelect<FieldName>({
                             context?.onAfterFieldValueSet();
                         }}
                         showOnlyEuAndEftaCountries={showOnlyEuAndEftaCountries}
+                        useAlpha3Code={useAlpha3Code}
                     />
                 );
             }}
