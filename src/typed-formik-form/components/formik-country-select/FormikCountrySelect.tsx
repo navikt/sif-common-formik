@@ -21,7 +21,7 @@ function FormikCountrySelect<FieldName>({
     feil,
     validate,
     info,
-    useAlpha3Code,
+    useAlpha3Code = true,
     showOnlyEuAndEftaCountries,
 }: FormikCountrySelectProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
