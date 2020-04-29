@@ -7,6 +7,7 @@ import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 export interface FormikYesOrNoQuestionProps<FieldName> extends Omit<FormikRadioPanelGroupProps<FieldName>, 'radios'> {
     includeDoNotKnowOption?: boolean;
     infoPlassering?: PopoverOrientering;
+    useTwoColumns?: boolean;
     labels?: {
         [YesOrNo.YES]?: string;
         [YesOrNo.NO]?: string;
@@ -20,6 +21,7 @@ function FormikYesOrNoQuestion<FieldName>({
     includeDoNotKnowOption,
     labels,
     infoPlassering,
+    useTwoColumns = true,
     info,
     ...restProps
 }: FormikYesOrNoQuestionProps<FieldName> & TypedFormInputCommonProps) {
@@ -38,7 +40,7 @@ function FormikYesOrNoQuestion<FieldName>({
                 </LabelWithInfo>
             }
             name={name}
-            useTwoColumns={includeDoNotKnowOption ? false : true}
+            useTwoColumns={includeDoNotKnowOption ? false : useTwoColumns}
         />
     );
 }
