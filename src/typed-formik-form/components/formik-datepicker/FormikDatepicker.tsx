@@ -35,6 +35,7 @@ interface OwnProps<FieldName> {
     showYearSelector?: boolean;
     feil?: NavFrontendSkjemaFeil;
     dayPickerProps?: DayPickerProps;
+    description?: React.ReactNode;
     onChange?: (date: Date | undefined) => void;
 }
 
@@ -54,6 +55,7 @@ function FormikDatepicker<FieldName>({
     fullScreenOnMobile,
     feil,
     onChange,
+    description,
     ...restProps
 }: FormikDatepickerProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -69,6 +71,7 @@ function FormikDatepicker<FieldName>({
                         <Label htmlFor={field.name}>
                             <LabelWithInfo info={info}>{label}</LabelWithInfo>
                         </Label>
+                        {description && <div className={'skjemaelement__description'}>{description}</div>}
                         <Datovelger
                             id={elementId}
                             {...restProps}
