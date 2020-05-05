@@ -68,7 +68,7 @@ function FormikDatepicker<FieldName>({
             {({ field, form }: FieldProps) => {
                 return (
                     <SkjemagruppeQuestion feil={getFeilPropForFormikInput({ field, form, context, feil })}>
-                        <Label htmlFor={field.name}>
+                        <Label htmlFor={elementId}>
                             <LabelWithInfo info={info}>{label}</LabelWithInfo>
                         </Label>
                         {description && <div className={'skjemaelement__description'}>{description}</div>}
