@@ -11,6 +11,7 @@ import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
+import ErrorBoundary from './ErrorBoundary';
 import './datepicker.less';
 
 interface DateRange {
@@ -37,6 +38,7 @@ interface OwnProps<FieldName> {
     dayPickerProps?: DayPickerProps;
     description?: React.ReactNode;
     onChange?: (date: Date | undefined) => void;
+    useErrorBoundary?: boolean;
 }
 
 export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
@@ -56,6 +58,7 @@ function FormikDatepicker<FieldName>({
     feil,
     onChange,
     description,
+    useErrorBoundary = false,
     ...restProps
 }: FormikDatepickerProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -66,35 +69,38 @@ function FormikDatepicker<FieldName>({
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
+                const datovelger = (
+                    <Datovelger
+                        id={elementId}
+                        {...restProps}
+                        input={{ name: inputName, placeholder, id: elementId }}
+                        valgtDato={datepickerUtils.getDateStringFromValue(field.value)}
+                        avgrensninger={
+                            dateLimitations ? datepickerUtils.parseDateLimitations(dateLimitations) : undefined
+                        }
+                        visÅrVelger={showYearSelector}
+                        kalender={{
+                            plassering,
+                        }}
+                        onChange={(dateString) => {
+                            const date = dateString ? datepickerUtils.getDateFromDateString(dateString) : undefined;
+                            if (field.value !== date) {
+                                form.setFieldValue(field.name, date);
+                                if (onChange) {
+                                    onChange(date);
+                                }
+                                context?.onAfterFieldValueSet();
+                            }
+                        }}
+                    />
+                );
                 return (
                     <SkjemagruppeQuestion feil={getFeilPropForFormikInput({ field, form, context, feil })}>
                         <Label htmlFor={elementId}>
                             <LabelWithInfo info={info}>{label}</LabelWithInfo>
                         </Label>
                         {description && <div className={'skjemaelement__description'}>{description}</div>}
-                        <Datovelger
-                            id={elementId}
-                            {...restProps}
-                            input={{ name: inputName, placeholder, id: elementId }}
-                            valgtDato={datepickerUtils.getDateStringFromValue(field.value)}
-                            avgrensninger={
-                                dateLimitations ? datepickerUtils.parseDateLimitations(dateLimitations) : undefined
-                            }
-                            visÅrVelger={showYearSelector}
-                            kalender={{
-                                plassering,
-                            }}
-                            onChange={(dateString) => {
-                                const date = dateString ? datepickerUtils.getDateFromDateString(dateString) : undefined;
-                                if (field.value !== date) {
-                                    form.setFieldValue(field.name, date);
-                                    if (onChange) {
-                                        onChange(date);
-                                    }
-                                    context?.onAfterFieldValueSet();
-                                }
-                            }}
-                        />
+                        {useErrorBoundary ? <ErrorBoundary>{datovelger}</ErrorBoundary> : datovelger}
                     </SkjemagruppeQuestion>
                 );
             }}

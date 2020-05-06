@@ -49,6 +49,7 @@ const TypedFormExample: React.FunctionComponent<Props> = () => {
                             name={FormFields.birthdate}
                             label="Fødselsdato"
                             validate={validateRequiredField}
+                            useErrorBoundary={true}
                         />
                     </Question>
                     <Question>
