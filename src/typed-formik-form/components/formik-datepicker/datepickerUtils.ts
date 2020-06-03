@@ -4,8 +4,7 @@ import { DateLimitiations } from './FormikDatepicker';
 
 const apiDateFormat = 'YYYY-MM-DD';
 
-export const dateToISOFormattedDateString = (date?: Date) =>
-    date ? moment.utc(date).format(apiDateFormat) : undefined;
+export const dateToISOFormattedDateString = (date?: Date) => (date ? moment(date).format(apiDateFormat) : undefined);
 
 const parseDateLimitations = (dateLimitations: DateLimitiations): DatovelgerAvgrensninger => {
     return {
@@ -16,8 +15,8 @@ const parseDateLimitations = (dateLimitations: DateLimitiations): DatovelgerAvgr
             dateLimitations.ugyldigeTidsperioder &&
             dateLimitations.ugyldigeTidsperioder.map((t: { fom: Date; tom: Date }) => ({
                 fom: dateToISOFormattedDateString(t.fom)!,
-                tom: dateToISOFormattedDateString(t.tom)!
-            }))
+                tom: dateToISOFormattedDateString(t.tom)!,
+            })),
     };
 };
 
@@ -39,7 +38,7 @@ const getDateFromDateString = (dateString: string): Date | undefined =>
 const datepickerUtils = {
     getDateStringFromValue,
     getDateFromDateString,
-    parseDateLimitations
+    parseDateLimitations,
 };
 
 export default datepickerUtils;
