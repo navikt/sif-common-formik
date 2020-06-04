@@ -21,9 +21,6 @@ const Intro: React.FunctionComponent<Props> = (props) => (
                 <li>
                     Definer et interface for skjemaet: <code>FormValues</code>
                 </li>
-                <li>
-                    Bygg opp app med <code>TypedFormikWrapper -> FormikForm[] -> FormikInputs[]</code>
-                </li>
             </ol>
             <p> ... se kode for konkret eksempel</p>
         </PageIntro>
