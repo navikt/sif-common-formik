@@ -10,7 +10,7 @@ const MAX_MINUTES = 59;
 type TimeInputChangeFunc = (time: Partial<Time> | undefined) => void;
 
 interface TimeInputProps {
-    time?: Time | undefined;
+    time?: Time | Partial<Time> | undefined;
     maxHours?: number;
     maxMinutes?: number;
     onChange: TimeInputChangeFunc;
@@ -36,7 +36,7 @@ const getNewTime = (
         if (!isNaN(hours)) {
             return {
                 ...stateTime,
-                hours
+                hours,
             };
         }
         return stateTime.minutes ? { ...stateTime, hours: undefined } : { hours: undefined };
@@ -46,7 +46,7 @@ const getNewTime = (
         if (!isNaN(minutes)) {
             return {
                 ...stateTime,
-                minutes
+                minutes,
             };
         }
         return stateTime.hours ? { ...stateTime, minutes: undefined } : { minutes: undefined };
@@ -55,13 +55,13 @@ const getNewTime = (
     return stateTime;
 };
 
-const TimeInput: React.FunctionComponent<TimeInputProps> = ({
+const TimeInput = ({
     time = { hours: undefined, minutes: undefined },
     maxHours = MAX_HOURS,
     maxMinutes = MAX_MINUTES,
     onChange,
-    layout = 'compact'
-}) => {
+    layout = 'compact',
+}: TimeInputProps) => {
     const [stateTime, setStateTime] = useState<Partial<Time> | undefined>(time);
     const hours =
         !stateTime || stateTime.hours === undefined || isNaN(stateTime.hours)
@@ -115,7 +115,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                             if (evt.target.value === '' || evt.target.value === '0') {
                                 const newTime = {
                                     ...stateTime,
-                                    minutes: stateTime && stateTime.hours !== undefined ? 0 : undefined
+                                    minutes: stateTime && stateTime.hours !== undefined ? 0 : undefined,
                                 };
                                 setStateTime(newTime);
                                 handleTimeChange(newTime, onChange);

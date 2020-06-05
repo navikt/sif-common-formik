@@ -19,43 +19,6 @@ interface CountryOptionsCache {
     options: React.ReactNode[];
 }
 
-class CountrySelect extends React.Component<Props> {
-    countryOptionsCache: CountryOptionsCache | undefined;
-    constructor(props: Props) {
-        super(props);
-        this.getCountryOptions = this.getCountryOptions.bind(this);
-        this.updateCache = this.updateCache.bind(this);
-    }
-
-    updateCache(locale: string) {
-        this.countryOptionsCache = {
-            locale,
-            options: createCountryOptions(
-                this.props.showOnlyEuAndEftaCountries ? this.props.showOnlyEuAndEftaCountries : false,
-                locale,
-                this.props.useAlpha3Code
-            ),
-        };
-    }
-
-    getCountryOptions(locale: string): React.ReactNode[] {
-        if (!this.countryOptionsCache || locale !== this.countryOptionsCache.locale) {
-            this.updateCache(locale);
-        }
-        return this.countryOptionsCache && this.countryOptionsCache.options ? this.countryOptionsCache.options : [];
-    }
-
-    render() {
-        const { onChange, name, showOnlyEuAndEftaCountries, locale, useAlpha3Code, ...restProps } = this.props;
-        return (
-            <Select name={name} {...restProps} onChange={(e) => onChange(e.target.value)}>
-                <option value="" />
-                {this.getCountryOptions(locale || 'nb')}
-            </Select>
-        );
-    }
-}
-
 const filteredListEØSCountries = (countryOptionValue: string, shouldFilter?: boolean) => {
     if (shouldFilter) {
         switch (countryOptionValue) {
@@ -103,7 +66,7 @@ const filteredListEØSCountries = (countryOptionValue: string, shouldFilter?: bo
 const createCountryOptions = (
     onluEuAndEftaCountries: boolean,
     locale: string,
-    useAlpha3Code: boolean = true
+    useAlpha3Code = true
 ): React.ReactNode[] => {
     const lang = locale === 'en' ? 'nn' : 'nb';
     const countries = getCountries();
@@ -121,5 +84,42 @@ const createCountryOptions = (
             </option>
         ));
 };
+
+class CountrySelect extends React.Component<Props> {
+    countryOptionsCache: CountryOptionsCache | undefined;
+    constructor(props: Props) {
+        super(props);
+        this.getCountryOptions = this.getCountryOptions.bind(this);
+        this.updateCache = this.updateCache.bind(this);
+    }
+
+    updateCache(locale: string) {
+        this.countryOptionsCache = {
+            locale,
+            options: createCountryOptions(
+                this.props.showOnlyEuAndEftaCountries ? this.props.showOnlyEuAndEftaCountries : false,
+                locale,
+                this.props.useAlpha3Code
+            ),
+        };
+    }
+
+    getCountryOptions(locale: string): React.ReactNode[] {
+        if (!this.countryOptionsCache || locale !== this.countryOptionsCache.locale) {
+            this.updateCache(locale);
+        }
+        return this.countryOptionsCache && this.countryOptionsCache.options ? this.countryOptionsCache.options : [];
+    }
+
+    render() {
+        const { onChange, name, showOnlyEuAndEftaCountries, locale, useAlpha3Code, ...restProps } = this.props;
+        return (
+            <Select name={name} {...restProps} onChange={(e) => onChange(e.target.value)}>
+                <option value="" />
+                {this.getCountryOptions(locale || 'nb')}
+            </Select>
+        );
+    }
+}
 
 export default CountrySelect;

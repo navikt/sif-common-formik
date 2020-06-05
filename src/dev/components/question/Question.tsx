@@ -1,9 +1,9 @@
 import React from 'react';
 
-interface Props {}
+interface Props {
+    children: React.ReactNode;
+}
 
-const Question: React.FunctionComponent<Props> = (props) => (
-    <div style={{ marginBottom: '2rem' }}>{props.children}</div>
-);
+const Question = (props: Props) => <div style={{ marginBottom: '2rem' }}>{props.children}</div>;
 
 export default Question;

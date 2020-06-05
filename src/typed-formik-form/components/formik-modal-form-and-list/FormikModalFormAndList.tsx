@@ -20,7 +20,7 @@ function FormikModalFormAndList<FieldName, ItemType>({
     sortFunc,
     onAfterChange,
     feil,
-    validate
+    validate,
 }: FormikModalFormAndListProps<FieldName, ItemType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (

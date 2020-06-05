@@ -65,7 +65,7 @@ export default class FileInput extends React.Component<FileInputProps> {
                 feil={feil}
                 className={`fileInput ${feil !== undefined ? 'fileInput--withError' : ''}`}>
                 <label
-                    role="button"
+                    role="button" // eslint-disable-line
                     id={id}
                     tabIndex={0}
                     htmlFor={inputId}

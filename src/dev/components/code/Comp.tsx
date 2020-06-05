@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 import { Element } from 'nav-frontend-typografi';
 import Code from './Code';
 
@@ -8,9 +8,10 @@ interface Props {
     actions?: string;
     isFormik?: boolean;
     isLayout?: boolean;
+    children: React.ReactNode;
 }
 
-const Comp: React.FunctionComponent<Props> = ({ title, children, actions, isFormik, isLayout }) => (
+const Comp = ({ title, children, actions, isFormik, isLayout }: Props) => (
     <div>
         <Code
             isFormik={isFormik}

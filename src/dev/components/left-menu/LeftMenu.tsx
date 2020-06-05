@@ -6,9 +6,9 @@ import bemUtils from '../../utils/bemUtils';
 
 const lenkeBem = bemUtils('lenke');
 
-const LeftMenu: React.FunctionComponent = () => {
+const LeftMenu = () => {
     const {
-        location: { pathname }
+        location: { pathname },
     } = useHistory();
     return (
         <div className="leftMenu">

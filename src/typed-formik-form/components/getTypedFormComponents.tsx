@@ -1,34 +1,27 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import FormikCheckboxPanelGroup, {
-    FormikCheckboxPanelGroupProps
+    FormikCheckboxPanelGroupProps,
 } from './formik-checkbox-panel-group/FormikCheckboxPanelGroup';
 import FormikCheckbox, { FormikCheckboxProps } from './formik-checkbox/FormikCheckbox';
 import FormikConfirmationCheckboxPanel, {
-    FormikConfirmationCheckboxPanelProps
+    FormikConfirmationCheckboxPanelProps,
 } from './formik-confirmation-checkbox-panel/FormikConfirmationCheckboxPanel';
-import FormikCountrySelect, {
-    FormikCountrySelectProps
-} from './formik-country-select/FormikCountrySelect';
+import FormikCountrySelect, { FormikCountrySelectProps } from './formik-country-select/FormikCountrySelect';
 import FormikDateIntervalPicker, {
-    DateIntervalPickerProps
+    DateIntervalPickerProps,
 } from './formik-date-interval-picker/FormikDateIntervalPicker';
 import FormikDatepicker, { FormikDatepickerProps } from './formik-datepicker/FormikDatepicker';
 import FormikFileInput, { FormikFileInputProps } from './formik-file-input/FormikFileInput';
 import FormikInputGroup, { FormikInputGroupProps } from './formik-input-group/FormikInputGroup';
 import FormikInput, { FormikInputProps } from './formik-input/FormikInput';
-import FormikRadioPanelGroup, {
-    FormikRadioPanelGroupProps
-} from './formik-radio-panel-group/FormikRadioPanelGroup';
+import FormikRadioPanelGroup, { FormikRadioPanelGroupProps } from './formik-radio-panel-group/FormikRadioPanelGroup';
 import FormikSelect, { FormikSelectProps } from './formik-select/FormikSelect';
 import FormikTextarea, { FormikTextareaProps } from './formik-textarea/FormikTextarea';
 import FormikTimeInput, { FormikTimeInputProps } from './formik-time-input/FormikTimeInput';
-import FormikYesOrNoQuestion, {
-    FormikYesOrNoQuestionProps
-} from './formik-yes-or-no-question/FormikYesOrNoQuestion';
+import FormikYesOrNoQuestion, { FormikYesOrNoQuestionProps } from './formik-yes-or-no-question/FormikYesOrNoQuestion';
 import TypedFormikForm, { TypedFormikFormProps } from './typed-formik-form/TypedFormikForm';
-import TypedFormikWrapper, {
-    TypedFormikWrapperProps
-} from './typed-formik-wrapper/TypedFormikWrapper';
+import TypedFormikWrapper, { TypedFormikWrapperProps } from './typed-formik-wrapper/TypedFormikWrapper';
 import '../styles/nav-frontend-skjema-extension.less';
 
 export function getTypedFormComponents<FieldNames, FormValues>() {
@@ -58,6 +51,6 @@ export function getTypedFormComponents<FieldNames, FormValues>() {
         TimeInput: (props: FormikTimeInputProps<FieldNames>) => <FormikTimeInput<FieldNames> {...props} />,
         YesOrNoQuestion: (props: FormikYesOrNoQuestionProps<FieldNames>) => (
             <FormikYesOrNoQuestion<FieldNames> {...props} />
-        )
+        ),
     };
 }

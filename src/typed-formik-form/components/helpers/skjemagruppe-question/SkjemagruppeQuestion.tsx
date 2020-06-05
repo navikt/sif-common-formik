@@ -6,7 +6,7 @@ interface Props extends SkjemaGruppeProps {
     info?: React.ReactNode;
 }
 
-const SkjemagruppeQuestion: React.FunctionComponent<Props> = ({ legend, feil, info, tag, children, className }) => (
+const SkjemagruppeQuestion = ({ legend, feil, info, tag, children, className }: Props) => (
     <SkjemaGruppe
         className={`${className ? className : ''} singleInputWrapper`}
         tag={tag ? tag : legend ? 'fieldset' : 'div'}

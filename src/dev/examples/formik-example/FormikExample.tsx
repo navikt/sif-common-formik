@@ -1,36 +1,28 @@
 import React from 'react';
 import moment from 'moment';
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 import 'nav-frontend-tabs-style';
 import TypedFormikWrapper from '../../../typed-formik-form/components/typed-formik-wrapper/TypedFormikWrapper';
 import PageIntro from '../../components/page-intro/PageIntro';
 import TypedFormExample from './typed-form-example/TypedFormExample';
 import { FormValues } from './types';
 
-interface Props {}
-
 const initialValues: FormValues = {
     ferieuttak: [
         {
             id: '1',
             fom: new Date(),
-            tom: moment()
-                .add(1, 'month')
-                .toDate()
+            tom: moment().add(1, 'month').toDate(),
         },
         {
             id: '2',
-            fom: moment()
-                .add(1, 'month')
-                .toDate(),
-            tom: moment()
-                .add(2, 'month')
-                .toDate()
-        }
-    ]
+            fom: moment().add(1, 'month').toDate(),
+            tom: moment().add(2, 'month').toDate(),
+        },
+    ],
 };
 
-const FormikExample: React.FunctionComponent<Props> = () => {
+const FormikExample = () => {
     return (
         <>
             <PageIntro title="@navikt/sif-common-formik">
