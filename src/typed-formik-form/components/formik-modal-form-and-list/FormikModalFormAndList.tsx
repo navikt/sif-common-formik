@@ -1,8 +1,8 @@
 import React from 'react';
-import { Field, FieldProps, } from 'formik';
-import { FormikValidateFunction, NavFrontendSkjemaFeil, } from '../../types';
-import { TypedFormikFormContext, } from '../typed-formik-form/TypedFormikForm';
-import ModalFormAndList, { ModalFormAndListProps, } from './modal-form-and-list/ModalFormAndList';
+import { Field, FieldProps } from 'formik';
+import { FormikValidateFunction, NavFrontendSkjemaFeil } from '../../types';
+import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
+import ModalFormAndList, { ModalFormAndListProps } from './modal-form-and-list/ModalFormAndList';
 
 export interface FormikModalFormAndListProps<FieldName, ItemType> extends ModalFormAndListProps<ItemType> {
     name: FieldName;
@@ -20,7 +20,7 @@ function FormikModalFormAndList<FieldName, ItemType>({
     sortFunc,
     onAfterChange,
     feil,
-    validate
+    validate,
 }: FormikModalFormAndListProps<FieldName, ItemType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (

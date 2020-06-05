@@ -1,11 +1,11 @@
 import React from 'react';
-import { Field, FieldProps, } from 'formik';
-import { InputProps, Label, } from 'nav-frontend-skjema';
-import { Time, TypedFormInputCommonProps, } from '../../types';
-import { getFeilPropForFormikInput, } from '../../utils/typedFormErrorUtils';
+import { Field, FieldProps } from 'formik';
+import { InputProps, Label } from 'nav-frontend-skjema';
+import { Time, TypedFormInputCommonProps } from '../../types';
+import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
-import { TypedFormikFormContext, } from '../typed-formik-form/TypedFormikForm';
+import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import TimeInput from './TimeInput';
 
 interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange'> {
