@@ -1,12 +1,11 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { FormikProps } from 'formik';
-import {
-    getTypedFormComponents
-} from '../../../../typed-formik-form/components/getTypedFormComponents';
+import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import Tiles from '../../../components/tiles/Tiles';
 import {
-    isIntlFieldValidationErrorType, renderIntlFieldValidationError
+    isIntlFieldValidationErrorType,
+    renderIntlFieldValidationError,
 } from '../../../modules/validation/fieldValidationRenderUtils';
 import ConditionalQuestion from '../../../modules/visibility/ConditionalQuestion';
 import { QuestionVisibilityContext } from '../../../modules/visibility/QuestionVisibilityContext';
@@ -21,7 +20,7 @@ interface Props {
 
 const { Input, DatePicker, CountrySelect, Form } = getTypedFormComponents<FormFields, FormValues>();
 
-const FormWithConfigExample: React.FunctionComponent<Props> = ({ formik }) => {
+const FormWithConfigExample = ({ formik }: Props) => {
     const intl = useIntl();
     return (
         <QuestionVisibilityContext.Provider value={{ visibility: exampleFormQuestions.getVisbility(formik.values) }}>

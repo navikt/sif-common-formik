@@ -24,11 +24,9 @@ import {
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
 
-interface Props {}
-
 const Form = getTypedFormComponents<FormFields, FormValues>();
 const fullForm = true;
-const TypedFormExample: React.FunctionComponent<Props> = () => {
+const TypedFormExample = () => {
     const intl = useIntl();
     return (
         <Form.Form

@@ -6,7 +6,7 @@ import Intro from './Intro';
 
 type Props = RouteComponentProps;
 
-const DevContent: React.FunctionComponent<Props> = ({ history }: Props) => {
+const DevContent = ({ history }: Props) => {
     const {
         location: { pathname },
     } = history;

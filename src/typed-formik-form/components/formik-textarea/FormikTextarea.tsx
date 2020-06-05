@@ -1,10 +1,10 @@
 import React from 'react';
-import { Field, FieldProps } from 'formik';
-import { Textarea, TextareaControlledProps } from 'nav-frontend-skjema';
-import { TypedFormInputCommonProps } from '../../types';
-import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
+import { Field, FieldProps, } from 'formik';
+import { Textarea, TextareaControlledProps, } from 'nav-frontend-skjema';
+import { TypedFormInputCommonProps, } from '../../types';
+import { getFeilPropForFormikInput, } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
-import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
+import { TypedFormikFormContext, } from '../typed-formik-form/TypedFormikForm';
 
 interface OwnProps<FieldName> extends Omit<TextareaControlledProps, 'name' | 'defaultValue'> {
     name: FieldName;

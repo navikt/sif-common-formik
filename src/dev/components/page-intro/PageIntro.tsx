@@ -4,9 +4,10 @@ import Box from '../box/Box';
 
 interface Props {
     title: string;
+    children: React.ReactNode;
 }
 
-const PageIntro: React.FunctionComponent<Props> = ({ title, children }) => (
+const PageIntro = ({ title, children }: Props) => (
     <>
         <Box margin="m">
             <Box>

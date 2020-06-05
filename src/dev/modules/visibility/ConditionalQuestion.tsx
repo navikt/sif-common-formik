@@ -7,7 +7,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-const ConditionalQuestion: React.FunctionComponent<Props> = ({ forField, children }) => (
+const ConditionalQuestion = ({ forField, children }: Props) => (
     <VisibilityBlock fieldName={forField}>
         <Question>{children}</Question>
     </VisibilityBlock>

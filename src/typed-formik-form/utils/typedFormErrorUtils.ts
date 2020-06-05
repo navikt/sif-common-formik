@@ -15,7 +15,7 @@ export const getFeilPropForFormikInput = ({
     feil,
     field,
     form,
-    context
+    context,
 }: {
     feil: NavFrontendSkjemaFeil;
     field: FieldInputProps<any>;
@@ -41,29 +41,6 @@ export const isValidationErrorsVisible = (formik: FormikProps<any>): boolean => 
     return formik?.status?.showErrors === true;
 };
 
-export function flattenFieldArrayErrors<FormValues>(errors: FormValues): FormValues {
-    let allErrors: any = {};
-    Object.keys(errors).forEach((key) => {
-        const error = errors[key];
-        if (isFieldArrayErrors(error)) {
-            (error as FormValues[]).forEach((err, idx) => {
-                allErrors = {
-                    ...allErrors,
-                    ...(err ? getErrorsFromFieldArrayErrors(err, key, idx) : undefined)
-                };
-            });
-        } else if (error.key) {
-            allErrors[key] = error;
-        } else if (typeof error === 'object') {
-            const errorNode = findErrorNodeInObject(key, error);
-            if (errorNode) {
-                allErrors[errorNode.field] = errorNode.error;
-            }
-        }
-    });
-    return allErrors;
-}
-
 const findErrorNodeInObject = (key: string, error: object): undefined | ErrorNodeInObject => {
     const flatError: object = flatten({ [key]: error });
     const keys = Object.keys(flatError);
@@ -73,8 +50,8 @@ const findErrorNodeInObject = (key: string, error: object): undefined | ErrorNod
             field,
             error: {
                 key: flatError[keys[0]],
-                values: flatten.unflatten(flatError[keys[1]])
-            }
+                values: flatten.unflatten(flatError[keys[1]]),
+            },
         };
     }
     return undefined;
@@ -95,6 +72,28 @@ function getErrorsFromFieldArrayErrors<FieldName>(field: FieldName, fieldArrayKe
     return errors;
 }
 
+export function flattenFieldArrayErrors<FormValues>(errors: FormValues): FormValues {
+    let allErrors: any = {};
+    Object.keys(errors).forEach((key) => {
+        const error = errors[key];
+        if (isFieldArrayErrors(error)) {
+            (error as FormValues[]).forEach((err, idx) => {
+                allErrors = {
+                    ...allErrors,
+                    ...(err ? getErrorsFromFieldArrayErrors(err, key, idx) : undefined),
+                };
+            });
+        } else if (error.key) {
+            allErrors[key] = error;
+        } else if (typeof error === 'object') {
+            const errorNode = findErrorNodeInObject(key, error);
+            if (errorNode) {
+                allErrors[errorNode.field] = errorNode.error;
+            }
+        }
+    });
+    return allErrors;
+}
 function removeNullArrayErrors(errors: FormikErrors<any>) {
     const filteredErrors = {};
     Object.keys(errors).forEach((key) => {

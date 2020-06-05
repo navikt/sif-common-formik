@@ -5,9 +5,7 @@ import NAVLogo from './components/svg/NAVLogo';
 import DevContent from './DevContent';
 import './styles/dev.less';
 
-interface Props {}
-
-const DevPage: React.FunctionComponent<Props> = () => {
+const DevPage = () => {
     return (
         <main className="devPage">
             <header className="header">

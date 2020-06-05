@@ -11,10 +11,11 @@ export interface IntlProviderProps {
 }
 export interface IntlProviderProps {
     locale: string;
+    children: React.ReactNode;
     onError?: (error: any) => void;
 }
 
-const AppIntlProvider: React.FunctionComponent<IntlProviderProps> = ({ locale, onError, children }) => {
+const AppIntlProvider = ({ locale, onError, children }: IntlProviderProps) => {
     const messages = locale === 'nb' ? appMessages.nb : appMessages.nn;
     return (
         <IntlProvider locale={locale} messages={messages} onError={onError}>

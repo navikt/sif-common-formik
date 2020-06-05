@@ -3,9 +3,7 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { guid } from 'nav-frontend-js-utils';
 import { Knapp } from 'nav-frontend-knapper';
 import SkjemagruppeQuestion from '../../helpers/skjemagruppe-question/SkjemagruppeQuestion';
-import DialogFormWrapper, {
-    DialogFormWrapperWidths
-} from '../dialog-form-wrapper/DialogFormWrapper';
+import DialogFormWrapper, { DialogFormWrapperWidths } from '../dialog-form-wrapper/DialogFormWrapper';
 import Modal from '../modal/Modal';
 import { ModalFormAndListLabels, ModalFormAndListListItemBase } from '../types';
 import './modalFormAndList.less';
@@ -43,10 +41,10 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
     labels,
     error,
     dialogWidth,
-    onChange
+    onChange,
 }: Props<ItemType>) {
     const [modalState, setModalState] = React.useState<{ isVisible: boolean; selectedItem?: ItemType }>({
-        isVisible: false
+        isVisible: false,
     });
 
     const handleOnSubmit = (values: ItemType) => {

@@ -10,11 +10,7 @@ interface LabelWithHelperText {
     infoPlassering?: PopoverOrientering;
 }
 
-const LabelWithInfo: React.FunctionComponent<LabelWithHelperText> = ({
-    children,
-    info,
-    infoPlassering = PopoverOrientering.Over,
-}) => {
+const LabelWithInfo = ({ children, info, infoPlassering = PopoverOrientering.Over }: LabelWithHelperText) => {
     if (!children) {
         return null;
     }

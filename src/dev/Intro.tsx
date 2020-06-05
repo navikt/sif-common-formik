@@ -2,9 +2,7 @@ import React from 'react';
 import { Ingress } from 'nav-frontend-typografi';
 import PageIntro from './components/page-intro/PageIntro';
 
-interface Props {}
-
-const Intro: React.FunctionComponent<Props> = (props) => (
+const Intro = () => (
     <>
         <PageIntro title="@navikt/sif-common-formik">
             <h2>Typed formik wrapper for nav-frontend-skjema</h2>
