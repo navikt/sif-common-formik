@@ -20,6 +20,7 @@ interface Props {
     minDate: Date;
     maxDate: Date;
     ferieuttak?: Partial<Ferieuttak>;
+    alleFerieuttak?: Ferieuttak[];
     labels?: Partial<FerieuttakFormLabels>;
     onSubmit: (values: Ferieuttak) => void;
     onCancel: () => void;
@@ -47,7 +48,8 @@ const FerieuttakForm = ({
     maxDate,
     minDate,
     labels,
-    ferieuttak: initialValues = { fom: undefined, tom: undefined },
+    ferieuttak = { fom: undefined, tom: undefined },
+    alleFerieuttak = [],
     onSubmit,
     onCancel,
 }: Props) => {
@@ -65,7 +67,7 @@ const FerieuttakForm = ({
     return (
         <>
             <Form.FormikWrapper
-                initialValues={initialValues}
+                initialValues={ferieuttak}
                 onSubmit={onFormikSubmit}
                 renderForm={(formik) => (
                     <Form.Form
@@ -83,6 +85,9 @@ const FerieuttakForm = ({
                                 dateLimitations: {
                                     minDato: minDate,
                                     maksDato: maxDate || formik.values.tom,
+                                    ugyldigeTidsperioder: alleFerieuttak.filter((f) =>
+                                        ferieuttak ? ferieuttak.id !== f.id : true
+                                    ),
                                 },
                                 validate: (date: Date) =>
                                     dateRangeValidation.validateFromDate(date, minDate, maxDate, formik.values.tom),

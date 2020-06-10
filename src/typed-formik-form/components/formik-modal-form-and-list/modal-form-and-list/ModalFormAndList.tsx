@@ -10,6 +10,7 @@ import './modalFormAndList.less';
 
 type ModalFormRenderer<ItemType> = (props: {
     item?: ItemType;
+    allItems?: ItemType[];
     onSubmit: (item: ItemType) => void;
     onCancel: () => void;
 }) => React.ReactNode;
@@ -73,7 +74,12 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
         <>
             <Modal isOpen={modalState.isVisible} contentLabel={labels.modalTitle} onRequestClose={resetModal}>
                 <DialogFormWrapper width={dialogWidth}>
-                    {formRenderer({ onSubmit: handleOnSubmit, onCancel: resetModal, item: modalState.selectedItem })}
+                    {formRenderer({
+                        onSubmit: handleOnSubmit,
+                        onCancel: resetModal,
+                        item: modalState.selectedItem,
+                        allItems: items,
+                    })}
                 </DialogFormWrapper>
             </Modal>
             <SkjemagruppeQuestion legend={showListTitle ? labels.listTitle : undefined} feil={error} tag="div">
