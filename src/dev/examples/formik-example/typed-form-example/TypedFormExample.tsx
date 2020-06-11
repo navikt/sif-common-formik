@@ -23,6 +23,7 @@ import {
 } from '../../../validation/fieldValidations';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
+import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 const fullForm = true;
@@ -98,6 +99,24 @@ const TypedFormExample = () => {
                                 name: FormFields.daterange_to,
                                 label: 'Til',
                                 validate: validateRequiredField,
+                            }}
+                        />
+                    </Question>
+                    <Question>
+                        <FormikDateRangePicker
+                            legend="Tidsrom"
+                            dateLimitations={{
+                                disableWeekend: true,
+                                minDate: moment().subtract(4, 'months').toDate(),
+                                maxDate: moment().add(4, 'months').toDate(),
+                            }}
+                            fromInputProps={{
+                                name: FormFields.daterange_from,
+                                label: 'Fra',
+                            }}
+                            toInputProps={{
+                                name: FormFields.daterange_to,
+                                label: 'Til',
                             }}
                         />
                     </Question>

@@ -1,22 +1,26 @@
 import moment from 'moment';
-import { DatovelgerAvgrensninger } from 'nav-datovelger';
-import { DateLimitiations } from './FormikDatepicker';
+import { DatovelgerAvgrensninger, Tidsperiode } from 'nav-datovelger';
+import { DatepickerLimitiations } from './FormikDatepicker';
 
 const apiDateFormat = 'YYYY-MM-DD';
 
-export const dateToISOFormattedDateString = (date?: Date) => (date ? moment(date).format(apiDateFormat) : undefined);
+const dateToISOFormattedDateString = (date: Date) => moment(date).format(apiDateFormat);
 
-const parseDateLimitations = (dateLimitations: DateLimitiations): DatovelgerAvgrensninger => {
+const parseDateLimitations = ({
+    minDate,
+    maxDate,
+    disabledDateRanges = [],
+    disableWeekend,
+}: DatepickerLimitiations): DatovelgerAvgrensninger => {
+    const ugyldigeTidsperioder: Tidsperiode[] = disabledDateRanges.map((d) => ({
+        fom: dateToISOFormattedDateString(d.from),
+        tom: dateToISOFormattedDateString(d.to),
+    }));
     return {
-        maksDato: dateToISOFormattedDateString(dateLimitations.maksDato),
-        minDato: dateToISOFormattedDateString(dateLimitations.minDato),
-        helgedagerIkkeTillatt: dateLimitations.helgedagerIkkeTillatt,
-        ugyldigeTidsperioder:
-            dateLimitations.ugyldigeTidsperioder &&
-            dateLimitations.ugyldigeTidsperioder.map((t: { fom: Date; tom: Date }) => ({
-                fom: dateToISOFormattedDateString(t.fom)!,
-                tom: dateToISOFormattedDateString(t.tom)!,
-            })),
+        minDato: minDate ? dateToISOFormattedDateString(minDate) : undefined,
+        maksDato: maxDate ? dateToISOFormattedDateString(maxDate) : undefined,
+        helgedagerIkkeTillatt: disableWeekend,
+        ugyldigeTidsperioder,
     };
 };
 
