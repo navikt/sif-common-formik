@@ -117,13 +117,22 @@ describe('dateIntervalPickerUtils', () => {
             })!;
             expect(formatDateToApiFormat(result)).toEqual('2019-12-12');
         });
-        it('returns first available date if there are ranges between toDate and minDate', () => {
+        it('returns first available date if there are ranges between toDate and minDate and allowRangesToStartAndStopOnSameDate !== true', () => {
             const result = getMinDateForRangeStart({
                 toDate,
                 minDate,
                 dateRanges,
             })!;
             expect(formatDateToApiFormat(result)).toEqual('2020-03-06');
+        });
+        it('returns first available date if there are ranges between toDate and minDate  and allowRangesToStartAndStopOnSameDate === tru', () => {
+            const result = getMinDateForRangeStart({
+                toDate,
+                minDate,
+                dateRanges,
+                allowRangesToStartAndStopOnSameDate: true,
+            })!;
+            expect(formatDateToApiFormat(result)).toEqual('2020-03-05');
         });
     });
 
@@ -170,10 +179,21 @@ describe('dateIntervalPickerUtils', () => {
             });
             expect(formatDateToApiFormat(result!)).toEqual('2020-02-29');
         });
+        it('returns last available date from before following dateRanges and allowRangesToStartAndStopOnSameDate === true', () => {
+            const result = getMaxDateForRangeStart({
+                fromDate,
+                maxDate,
+                toDate,
+                otherRanges: dateRanges,
+                allowRangesToStartAndStopOnSameDate: true,
+            });
+            expect(formatDateToApiFormat(result!)).toEqual('2020-03-01');
+        });
     });
 
     describe('getMinDateForRangeEnd', () => {
         const fromDate = apiStringDateToDate('2020-02-08');
+        const toDate = apiStringDateToDate('2020-03-01');
         const minDate = apiStringDateToDate('2019-12-12');
 
         it('returns undefined if no data is set', () => {
@@ -187,6 +207,34 @@ describe('dateIntervalPickerUtils', () => {
 
         it('returns fromDate if no startDate is set', () => {
             const result = getMinDateForRangeEnd({ minDate, fromDate })!;
+            expect(formatDateToApiFormat(result)).toEqual('2020-02-08');
+        });
+
+        it('returns first available date if there are ranges between toDate and minDate and allowRangesToStartAndStopOnSameDate !== true', () => {
+            const result = getMinDateForRangeEnd({
+                toDate,
+                minDate,
+                dateRanges,
+            })!;
+            expect(formatDateToApiFormat(result)).toEqual('2020-02-06');
+        });
+        it('returns first available date if there are ranges between toDate and minDate and allowRangesToStartAndStopOnSameDate === true', () => {
+            const result = getMinDateForRangeEnd({
+                toDate,
+                minDate,
+                dateRanges,
+                allowRangesToStartAndStopOnSameDate: true,
+            })!;
+            expect(formatDateToApiFormat(result)).toEqual('2020-02-05');
+        });
+        it('returns fromDate if all values are set', () => {
+            const result = getMinDateForRangeEnd({
+                fromDate,
+                toDate,
+                minDate,
+                dateRanges,
+                allowRangesToStartAndStopOnSameDate: true,
+            })!;
             expect(formatDateToApiFormat(result)).toEqual('2020-02-08');
         });
     });
@@ -203,9 +251,18 @@ describe('dateIntervalPickerUtils', () => {
             const result = getMaxDateForRangeEnd({ fromDate, maxDate })!;
             expect(formatDateToApiFormat(result)).toEqual('2020-10-10');
         });
-        it('returns day before following dateRange it range exists', () => {
+        it('returns day before following dateRange it range exists and allowRangesToStartAndStopOnSameDate !== true', () => {
             const result = getMaxDateForRangeEnd({ fromDate, maxDate, dateRanges })!;
             expect(formatDateToApiFormat(result)).toEqual('2020-02-29');
+        });
+        it('returns following dateRange fromDate when allowRangesToStartAndStopOnSameDate === true', () => {
+            const result = getMaxDateForRangeEnd({
+                fromDate,
+                maxDate,
+                dateRanges,
+                allowRangesToStartAndStopOnSameDate: true,
+            })!;
+            expect(formatDateToApiFormat(result)).toEqual('2020-03-01');
         });
     });
 });

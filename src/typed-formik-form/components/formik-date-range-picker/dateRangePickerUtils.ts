@@ -50,25 +50,38 @@ export const getClosestDateRangeAfterDate = (date: Date, ranges: DateRange[]): D
     return rangesAfterDate.length === 0 ? undefined : rangesAfterDate[0];
 };
 
+const getFollowingDate = (
+    dateRange: DateRange | undefined,
+    allowRangesToStartAndStopOnSameDate?: boolean
+): Date | undefined => {
+    if (!dateRange) {
+        return undefined;
+    }
+    return allowRangesToStartAndStopOnSameDate ? dateRange.from : moment(dateRange.from).subtract(1, 'day').toDate();
+};
+
 export const getMaxDateForRangeStart = ({
     fromDate,
     toDate,
     maxDate,
     otherRanges: dateRanges = [],
+    allowRangesToStartAndStopOnSameDate,
 }: {
     fromDate?: Date;
     toDate?: Date;
     maxDate?: Date;
     otherRanges?: DateRange[];
+    allowRangesToStartAndStopOnSameDate?: boolean;
 }): Date | undefined => {
     if (!fromDate) {
         return maxDate;
     }
-    const followingRanges = getRangesStartingAfterDate(fromDate, dateRanges).sort(sortDateRange);
+    const follwingDateRange = getClosestDateRangeAfterDate(fromDate, dateRanges);
+    const followingDate = getFollowingDate(follwingDateRange, allowRangesToStartAndStopOnSameDate);
     const dates: Date[] = [
         ...(toDate ? [toDate] : []),
         ...(maxDate ? [maxDate] : []),
-        ...(followingRanges.length > 0 ? [moment(followingRanges[0].from).subtract(1, 'day').toDate()] : []),
+        ...(followingDate ? [followingDate] : []),
     ];
     return findClosestDateAfterDate(fromDate, dates);
 };
@@ -77,41 +90,51 @@ export const getMaxDateForRangeEnd = ({
     toDate,
     maxDate,
     dateRanges = [],
+    allowRangesToStartAndStopOnSameDate,
 }: {
     fromDate?: Date;
     toDate?: Date;
     maxDate?: Date;
     dateRanges?: DateRange[];
+    allowRangesToStartAndStopOnSameDate?: boolean;
 }): Date | undefined => {
     const baseDate = fromDate || toDate;
     if (!baseDate) {
         return maxDate;
     }
     const follwingDateRange = getClosestDateRangeAfterDate(baseDate, dateRanges);
-    const dates: Date[] = [
-        ...(maxDate ? [maxDate] : []),
-        ...(follwingDateRange ? [moment(follwingDateRange.from).subtract(1, 'day').toDate()] : []),
-    ];
+    const followingDate = getFollowingDate(follwingDateRange, allowRangesToStartAndStopOnSameDate);
+    const dates: Date[] = [...(maxDate ? [maxDate] : []), ...(followingDate ? [followingDate] : [])];
     return findClosestDateAfterDate(baseDate, dates);
+};
+
+const getPreceedingDate = (
+    dateRange: DateRange | undefined,
+    allowRangesToStartAndStopOnSameDate?: boolean
+): Date | undefined => {
+    if (!dateRange) {
+        return undefined;
+    }
+    return allowRangesToStartAndStopOnSameDate ? dateRange.to : moment(dateRange.to).add(1, 'day').toDate();
 };
 
 export const getMinDateForRangeStart = ({
     toDate,
     minDate,
     dateRanges = [],
+    allowRangesToStartAndStopOnSameDate,
 }: {
     toDate?: Date;
     minDate?: Date;
     dateRanges?: DateRange[];
+    allowRangesToStartAndStopOnSameDate?: boolean;
 }): Date | undefined => {
     if (!toDate) {
         return minDate;
     }
     const preceedingDateRange = getClosestDateRangeBeforeDate(toDate, dateRanges);
-    const dates: Date[] = [
-        ...(minDate ? [minDate] : []),
-        ...(preceedingDateRange ? [moment(preceedingDateRange.to).add(1, 'day').toDate()] : []),
-    ];
+    const preceedingDate = getPreceedingDate(preceedingDateRange, allowRangesToStartAndStopOnSameDate);
+    const dates: Date[] = [...(minDate ? [minDate] : []), ...(preceedingDate ? [preceedingDate] : [])];
     return findClosestDateBeforeDate(toDate, dates);
 };
 
@@ -120,21 +143,24 @@ export const getMinDateForRangeEnd = ({
     toDate,
     minDate,
     dateRanges: otherRanges = [],
+    allowRangesToStartAndStopOnSameDate,
 }: {
     fromDate?: Date;
     toDate?: Date;
     minDate?: Date;
     dateRanges?: DateRange[];
+    allowRangesToStartAndStopOnSameDate?: boolean;
 }): Date | undefined => {
     const baseDate = fromDate || toDate;
     if (!baseDate) {
         return minDate;
     }
     const preceedingDateRange = getClosestDateRangeBeforeDate(baseDate, otherRanges);
+    const preceedingDate = getPreceedingDate(preceedingDateRange, allowRangesToStartAndStopOnSameDate);
     const dates: Date[] = [
         ...(fromDate ? [fromDate] : []),
         ...(minDate ? [minDate] : []),
-        ...(preceedingDateRange ? [moment(preceedingDateRange.to).add(1, 'day').toDate()] : []),
+        ...(preceedingDate ? [preceedingDate] : []),
     ];
     return findClosestDateBeforeOrEqualDate(baseDate, dates);
 };
@@ -145,12 +171,20 @@ interface DateRangePickerLimitations {
 }
 
 export const getDateRangePickerLimitations = (props: {
+    /** Selected from date */
     fromDate?: Date;
+    /** Selected to date */
     toDate?: Date;
+    /** Min allowed date */
     minDate?: Date;
+    /** Max allowed date */
     maxDate?: Date;
+    /** Other date ranges which become disabled in the datepicker */
     dateRanges?: DateRange[];
+    /** Disallow selection of saturday and sunday */
     disableWeekend?: boolean;
+    /** Allow one dateRange to start on the same date another ends */
+    allowRangesToStartAndStopOnSameDate?: boolean;
 }): DateRangePickerLimitations => {
     return {
         fromDateLimitations: {

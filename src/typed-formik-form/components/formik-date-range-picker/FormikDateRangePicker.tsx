@@ -12,6 +12,7 @@ export interface DateRangePickerProps<FieldName> {
     info?: string;
     description?: React.ReactNode;
     dateLimitations?: DatepickerLimitiations;
+    allowRangesToStartAndStopOnSameDate?: boolean;
     fromInputProps: DatePickerBaseProps<FieldName>;
     toInputProps: DatePickerBaseProps<FieldName>;
     validate?: FormikValidateFunction;
@@ -23,6 +24,7 @@ function FormikDateRangePicker<FieldName>({
     toInputProps,
     description,
     dateLimitations,
+    allowRangesToStartAndStopOnSameDate,
     info,
 }: DateRangePickerProps<FieldName>) {
     const { values } = useFormikContext<any>();
@@ -35,6 +37,7 @@ function FormikDateRangePicker<FieldName>({
         maxDate: dateLimitations?.maxDate,
         dateRanges: dateLimitations?.disabledDateRanges,
         disableWeekend: dateLimitations?.disableWeekend,
+        allowRangesToStartAndStopOnSameDate,
     });
     return (
         <SkjemaGruppe
