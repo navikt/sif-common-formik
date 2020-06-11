@@ -14,7 +14,7 @@ import datepickerUtils from './datepickerUtils';
 import ErrorBoundary from './ErrorBoundary';
 import './datepicker.less';
 
-interface DateRange {
+export interface DateTidsperiode {
     fom: Date;
     tom: Date;
 }
@@ -22,7 +22,7 @@ interface DateRange {
 export interface DateLimitiations {
     minDato?: Date;
     maksDato?: Date;
-    ugyldigeTidsperioder?: DateRange[];
+    ugyldigeTidsperioder?: DateTidsperiode[];
     helgedagerIkkeTillatt?: boolean;
 }
 interface OwnProps<FieldName> {
