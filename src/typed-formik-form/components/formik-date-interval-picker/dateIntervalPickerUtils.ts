@@ -1,10 +1,6 @@
 import moment from 'moment';
-import { DateLimitiations, DateTidsperiode } from '../formik-datepicker/FormikDatepicker';
-
-export interface DateRange {
-    from: Date;
-    to: Date;
-}
+import { DateRange } from '../../types';
+import { DatepickerLimitiations } from '../formik-datepicker/FormikDatepicker';
 
 const sortDateRange = (d1: DateRange, d2: DateRange): number => {
     if (moment(d1.from).isSameOrBefore(d2.from)) {
@@ -144,14 +140,9 @@ export const getMinDateForRangeEnd = ({
 };
 
 interface DateIntervalDateLimitations {
-    fromDateLimitations: DateLimitiations;
-    toDateLimitations: DateLimitiations;
+    fromDateLimitations: DatepickerLimitiations;
+    toDateLimitations: DatepickerLimitiations;
 }
-
-const mapDateRangeToTidsperiode = (d: DateRange): DateTidsperiode => ({
-    fom: d.from,
-    tom: d.to,
-});
 
 export const getDateLimitationsForDateIntervalPicker = (props: {
     fromDate?: Date;
@@ -160,17 +151,16 @@ export const getDateLimitationsForDateIntervalPicker = (props: {
     maxDate: Date;
     dateRanges?: DateRange[];
 }): DateIntervalDateLimitations => {
-    const ugyldigeTidsperioder = (props.dateRanges || []).map(mapDateRangeToTidsperiode);
     return {
         fromDateLimitations: {
-            minDato: getMinDateForRangeStart(props),
-            maksDato: getMaxDateForRangeStart(props),
-            ugyldigeTidsperioder,
+            minDate: getMinDateForRangeStart(props),
+            maxDate: getMaxDateForRangeStart(props),
+            disabledDateRanges: props.dateRanges,
         },
         toDateLimitations: {
-            minDato: getMinDateForRangeEnd(props),
-            maksDato: getMaxDateForRangeEnd(props),
-            ugyldigeTidsperioder,
+            minDate: getMinDateForRangeEnd(props),
+            maxDate: getMaxDateForRangeEnd(props),
+            disabledDateRanges: props.dateRanges,
         },
     };
 };

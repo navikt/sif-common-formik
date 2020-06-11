@@ -10,6 +10,11 @@ export interface Time {
     minutes: number;
 }
 
+export interface DateRange {
+    from: Date;
+    to: Date;
+}
+
 export type FormikValidateFunction = (value: any) => any;
 
 export type NavFrontendSkjemaFeil = React.ReactNode | boolean;

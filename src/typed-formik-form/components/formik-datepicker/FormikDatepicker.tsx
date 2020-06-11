@@ -5,7 +5,7 @@ import { Datovelger } from 'nav-datovelger';
 import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
-import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
+import { DateRange, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
@@ -14,22 +14,17 @@ import datepickerUtils from './datepickerUtils';
 import ErrorBoundary from './ErrorBoundary';
 import './datepicker.less';
 
-export interface DateTidsperiode {
-    fom: Date;
-    tom: Date;
-}
-
-export interface DateLimitiations {
-    minDato?: Date;
-    maksDato?: Date;
-    ugyldigeTidsperioder?: DateTidsperiode[];
-    helgedagerIkkeTillatt?: boolean;
+export interface DatepickerLimitiations {
+    minDate?: Date;
+    maxDate?: Date;
+    disabledDateRanges?: DateRange[];
+    disableWeekend?: boolean;
 }
 interface OwnProps<FieldName> {
     id?: string;
     name: FieldName;
     label: string;
-    dateLimitations?: DateLimitiations;
+    dateLimitations?: DatepickerLimitiations;
     fullscreenOverlay?: boolean;
     fullScreenOnMobile?: boolean;
     disabled?: boolean;
