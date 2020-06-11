@@ -29,17 +29,22 @@ export interface DatePickerBaseProps<FieldName> extends Pick<TypedFormInputCommo
     onChange?: (date: Date | undefined) => void;
     dayPickerProps?: DayPickerProps;
 }
-interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
-    id?: string;
-    dateLimitations?: DatepickerLimitiations;
+
+export interface DatePickerPresentationProps {
     showYearSelector?: boolean;
     fullscreenOverlay?: boolean;
     fullScreenOnMobile?: boolean;
+}
+interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
+    id?: string;
+    dateLimitations?: DatepickerLimitiations;
     description?: React.ReactNode;
     useErrorBoundary?: boolean;
 }
 
-export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> &
+    TypedFormInputCommonProps &
+    DatePickerPresentationProps;
 
 const placeholder = 'dd.mm.åååå';
 

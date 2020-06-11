@@ -1,35 +1,44 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { FormikValidateFunction } from '../../types';
-import FormikDatepicker, { DatePickerBaseProps, DatepickerLimitiations } from '../formik-datepicker/FormikDatepicker';
+import FormikDatepicker, {
+    DatePickerBaseProps,
+    DatepickerLimitiations,
+    DatePickerPresentationProps,
+} from '../formik-datepicker/FormikDatepicker';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { getDateRangePickerLimitations } from './dateRangePickerUtils';
 import './dateRangePicker.less';
 
-export interface FormikDateRangePickerProps<FieldName> {
+interface OwnProps<FieldName> {
     legend?: string;
     info?: string;
     description?: React.ReactNode;
-    dateLimitations?: DatepickerLimitiations;
-    commonInputProps?: {
-        showYearSelector?: boolean;
-        fullscreenOverlay?: boolean;
-        fullScreenOnMobile?: boolean;
-    };
+    showYearSelector?: boolean;
+    fullscreenOverlay?: boolean;
+    fullScreenOnMobile?: boolean;
     allowRangesToStartAndStopOnSameDate?: boolean;
     fromInputProps: DatePickerBaseProps<FieldName>;
     toInputProps: DatePickerBaseProps<FieldName>;
-    validate?: FormikValidateFunction;
 }
+
+export type FormikDateRangePickerProps<FieldName> = OwnProps<FieldName> &
+    DatePickerBaseProps<FieldName> &
+    DatePickerPresentationProps &
+    DatepickerLimitiations;
 
 function FormikDateRangePicker<FieldName>({
     legend,
     fromInputProps,
     toInputProps,
     description,
-    dateLimitations,
-    commonInputProps,
+    minDate,
+    maxDate,
+    disableWeekend,
+    disabledDateRanges,
+    showYearSelector,
+    fullScreenOnMobile,
+    fullscreenOverlay,
     allowRangesToStartAndStopOnSameDate,
     info,
 }: FormikDateRangePickerProps<FieldName>) {
@@ -39,10 +48,10 @@ function FormikDateRangePicker<FieldName>({
     const { fromDateLimitations, toDateLimitations } = getDateRangePickerLimitations({
         fromDate,
         toDate,
-        minDate: dateLimitations?.minDate,
-        maxDate: dateLimitations?.maxDate,
-        dateRanges: dateLimitations?.disabledDateRanges,
-        disableWeekend: dateLimitations?.disableWeekend,
+        minDate,
+        maxDate,
+        dateRanges: disabledDateRanges,
+        disableWeekend,
         allowRangesToStartAndStopOnSameDate,
     });
     return (
@@ -53,12 +62,12 @@ function FormikDateRangePicker<FieldName>({
             <div className="dateRangePicker__flexContainer">
                 <FormikDatepicker<FieldName>
                     {...fromInputProps}
-                    {...commonInputProps}
+                    {...{ fullscreenOverlay, fullScreenOnMobile, showYearSelector }}
                     dateLimitations={fromDateLimitations}
                 />
                 <FormikDatepicker<FieldName>
                     {...toInputProps}
-                    {...commonInputProps}
+                    {...{ fullscreenOverlay, fullScreenOnMobile, showYearSelector }}
                     dateLimitations={toDateLimitations}
                 />
             </div>
