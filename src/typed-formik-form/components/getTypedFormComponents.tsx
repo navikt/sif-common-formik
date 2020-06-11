@@ -12,6 +12,7 @@ import FormikDateIntervalPicker, {
     DateIntervalPickerProps,
 } from './formik-date-interval-picker/FormikDateIntervalPicker';
 import FormikDatepicker, { FormikDatepickerProps } from './formik-datepicker/FormikDatepicker';
+import FormikDateRangePicker, { FormikDateRangePickerProps } from './formik-date-range-picker/FormikDateRangePicker';
 import FormikFileInput, { FormikFileInputProps } from './formik-file-input/FormikFileInput';
 import FormikInputGroup, { FormikInputGroupProps } from './formik-input-group/FormikInputGroup';
 import FormikInput, { FormikInputProps } from './formik-input/FormikInput';
@@ -37,6 +38,9 @@ export function getTypedFormComponents<FieldNames, FormValues>() {
         DatePicker: (props: FormikDatepickerProps<FieldNames>) => <FormikDatepicker<FieldNames> {...props} />,
         DateIntervalPicker: (props: DateIntervalPickerProps<FieldNames>) => (
             <FormikDateIntervalPicker<FieldNames> {...props} />
+        ),
+        DateRangePicker: (props: FormikDateRangePickerProps<FieldNames>) => (
+            <FormikDateRangePicker<FieldNames> {...props} />
         ),
         FileInput: (props: FormikFileInputProps<FieldNames>) => <FormikFileInput<FieldNames> {...props} />,
         Form: (props: TypedFormikFormProps<FormValues>) => <TypedFormikForm {...props} />,

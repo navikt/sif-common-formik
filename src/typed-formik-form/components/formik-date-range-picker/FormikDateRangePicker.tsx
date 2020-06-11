@@ -7,7 +7,7 @@ import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { getDateRangePickerLimitations } from './dateRangePickerUtils';
 import './dateRangePicker.less';
 
-export interface DateRangePickerProps<FieldName> {
+export interface FormikDateRangePickerProps<FieldName> {
     legend?: string;
     info?: string;
     description?: React.ReactNode;
@@ -26,7 +26,7 @@ function FormikDateRangePicker<FieldName>({
     dateLimitations,
     allowRangesToStartAndStopOnSameDate,
     info,
-}: DateRangePickerProps<FieldName>) {
+}: FormikDateRangePickerProps<FieldName>) {
     const { values } = useFormikContext<any>();
     const fromDate: Date | undefined = values[fromInputProps.name];
     const toDate: Date | undefined = values[toInputProps.name];
