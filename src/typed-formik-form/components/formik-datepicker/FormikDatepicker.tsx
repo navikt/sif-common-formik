@@ -25,17 +25,17 @@ export interface DatePickerBaseProps<FieldName> {
     name: FieldName;
     label: string;
     disabled?: boolean;
-    showYearSelector?: boolean;
     feil?: NavFrontendSkjemaFeil;
+    onChange?: (date: Date | undefined) => void;
     dayPickerProps?: DayPickerProps;
 }
 interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
     id?: string;
     dateLimitations?: DatepickerLimitiations;
+    showYearSelector?: boolean;
     fullscreenOverlay?: boolean;
     fullScreenOnMobile?: boolean;
     description?: React.ReactNode;
-    onChange?: (date: Date | undefined) => void;
     useErrorBoundary?: boolean;
 }
 
