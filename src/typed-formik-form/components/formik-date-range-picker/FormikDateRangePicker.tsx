@@ -2,16 +2,21 @@ import React from 'react';
 import { useFormikContext } from 'formik';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { FormikValidateFunction } from '../../types';
-import FormikDatepicker, { DatepickerLimitiations, DatePickerBaseProps } from '../formik-datepicker/FormikDatepicker';
+import FormikDatepicker, { DatePickerBaseProps, DatepickerLimitiations } from '../formik-datepicker/FormikDatepicker';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { getDateRangePickerLimitations } from './dateRangePickerUtils';
 import './dateRangePicker.less';
 
-export interface DateRangePickerProps<FieldName> {
+export interface FormikDateRangePickerProps<FieldName> {
     legend?: string;
     info?: string;
     description?: React.ReactNode;
     dateLimitations?: DatepickerLimitiations;
+    commonInputProps?: {
+        showYearSelector?: boolean;
+        fullscreenOverlay?: boolean;
+        fullScreenOnMobile?: boolean;
+    };
     allowRangesToStartAndStopOnSameDate?: boolean;
     fromInputProps: DatePickerBaseProps<FieldName>;
     toInputProps: DatePickerBaseProps<FieldName>;
@@ -24,9 +29,10 @@ function FormikDateRangePicker<FieldName>({
     toInputProps,
     description,
     dateLimitations,
+    commonInputProps,
     allowRangesToStartAndStopOnSameDate,
     info,
-}: DateRangePickerProps<FieldName>) {
+}: FormikDateRangePickerProps<FieldName>) {
     const { values } = useFormikContext<any>();
     const fromDate: Date | undefined = values[fromInputProps.name];
     const toDate: Date | undefined = values[toInputProps.name];
@@ -45,8 +51,16 @@ function FormikDateRangePicker<FieldName>({
             description={description}
             className="dateRangePicker">
             <div className="dateRangePicker__flexContainer">
-                <FormikDatepicker<FieldName> {...fromInputProps} dateLimitations={fromDateLimitations} />
-                <FormikDatepicker<FieldName> {...toInputProps} dateLimitations={toDateLimitations} />
+                <FormikDatepicker<FieldName>
+                    {...fromInputProps}
+                    {...commonInputProps}
+                    dateLimitations={fromDateLimitations}
+                />
+                <FormikDatepicker<FieldName>
+                    {...toInputProps}
+                    {...commonInputProps}
+                    dateLimitations={toDateLimitations}
+                />
             </div>
         </SkjemaGruppe>
     );
