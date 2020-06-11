@@ -74,14 +74,14 @@ export const getMaxDateForRangeStart = ({
     allowRangesToStartAndStopOnSameDate?: boolean;
 }): Date | undefined => {
     if (!fromDate) {
-        return maxDate;
+        return toDate || maxDate;
     }
     const follwingDateRange = getClosestDateRangeAfterDate(fromDate, dateRanges);
-    const followingDate = getFollowingDate(follwingDateRange, allowRangesToStartAndStopOnSameDate);
+    const followingRangeeDate = getFollowingDate(follwingDateRange, allowRangesToStartAndStopOnSameDate);
     const dates: Date[] = [
         ...(toDate ? [toDate] : []),
         ...(maxDate ? [maxDate] : []),
-        ...(followingDate ? [followingDate] : []),
+        ...(followingRangeeDate ? [followingRangeeDate] : []),
     ];
     return findClosestDateAfterDate(fromDate, dates);
 };
