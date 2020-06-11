@@ -23,7 +23,6 @@ interface OwnProps<FieldName> {
 }
 
 export type FormikDateRangePickerProps<FieldName> = OwnProps<FieldName> &
-    DatePickerBaseProps<FieldName> &
     DatePickerPresentationProps &
     DatepickerLimitiations;
 

@@ -105,11 +105,9 @@ const TypedFormExample = () => {
                     <Question>
                         <FormikDateRangePicker
                             legend="Tidsrom"
-                            dateLimitations={{
-                                disableWeekend: true,
-                                minDate: moment().subtract(4, 'months').toDate(),
-                                maxDate: moment().add(4, 'months').toDate(),
-                            }}
+                            disableWeekend={true}
+                            minDate={moment().subtract(4, 'months').toDate()}
+                            maxDate={moment().add(4, 'months').toDate()}
                             fromInputProps={{
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
