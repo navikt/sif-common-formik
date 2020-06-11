@@ -24,7 +24,6 @@ export interface DatepickerLimitiations {
 export interface DatePickerBaseProps<FieldName> {
     name: FieldName;
     label: string;
-    dateLimitations?: DatepickerLimitiations;
     disabled?: boolean;
     showYearSelector?: boolean;
     feil?: NavFrontendSkjemaFeil;
@@ -32,6 +31,7 @@ export interface DatePickerBaseProps<FieldName> {
 }
 interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
     id?: string;
+    dateLimitations?: DatepickerLimitiations;
     fullscreenOverlay?: boolean;
     fullScreenOnMobile?: boolean;
     description?: React.ReactNode;
