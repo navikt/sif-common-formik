@@ -5,7 +5,7 @@ import { Datovelger } from 'nav-datovelger';
 import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
-import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
+import { DateRange, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
@@ -14,28 +14,26 @@ import datepickerUtils from './datepickerUtils';
 import ErrorBoundary from './ErrorBoundary';
 import './datepicker.less';
 
-interface DateRange {
-    fom: Date;
-    tom: Date;
+export interface DatepickerLimitiations {
+    minDate?: Date;
+    maxDate?: Date;
+    disabledDateRanges?: DateRange[];
+    disableWeekend?: boolean;
 }
 
-export interface DateLimitiations {
-    minDato?: Date;
-    maksDato?: Date;
-    ugyldigeTidsperioder?: DateRange[];
-    helgedagerIkkeTillatt?: boolean;
-}
-interface OwnProps<FieldName> {
-    id?: string;
+export interface DatePickerBaseProps<FieldName> {
     name: FieldName;
     label: string;
-    dateLimitations?: DateLimitiations;
-    fullscreenOverlay?: boolean;
-    fullScreenOnMobile?: boolean;
+    dateLimitations?: DatepickerLimitiations;
     disabled?: boolean;
     showYearSelector?: boolean;
     feil?: NavFrontendSkjemaFeil;
     dayPickerProps?: DayPickerProps;
+}
+interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
+    id?: string;
+    fullscreenOverlay?: boolean;
+    fullScreenOnMobile?: boolean;
     description?: React.ReactNode;
     onChange?: (date: Date | undefined) => void;
     useErrorBoundary?: boolean;

@@ -9,6 +9,10 @@ export interface Time {
     hours: number;
     minutes: number;
 }
+export interface DateRange {
+    from: Date;
+    to: Date;
+}
 
 export type FormikValidateFunction = (value: any) => any;
 
