@@ -62,12 +62,12 @@ function FormikDateRangePicker<FieldName>({
                 <FormikDatepicker<FieldName>
                     {...fromInputProps}
                     {...{ fullscreenOverlay, fullScreenOnMobile, showYearSelector }}
-                    dateLimitations={fromDateLimitations}
+                    {...fromDateLimitations}
                 />
                 <FormikDatepicker<FieldName>
                     {...toInputProps}
                     {...{ fullscreenOverlay, fullScreenOnMobile, showYearSelector }}
-                    dateLimitations={toDateLimitations}
+                    {...toDateLimitations}
                 />
             </div>
         </SkjemaGruppe>

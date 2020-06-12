@@ -37,21 +37,20 @@ export interface DatePickerPresentationProps {
 }
 interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
     id?: string;
-    dateLimitations?: DatepickerLimitiations;
     description?: React.ReactNode;
     useErrorBoundary?: boolean;
 }
 
 export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> &
     TypedFormInputCommonProps &
-    DatePickerPresentationProps;
+    DatePickerPresentationProps &
+    DatepickerLimitiations;
 
 const placeholder = 'dd.mm.åååå';
 
 function FormikDatepicker<FieldName>({
     validate,
     label,
-    dateLimitations,
     name,
     id,
     info,
@@ -59,6 +58,10 @@ function FormikDatepicker<FieldName>({
     fullscreenOverlay,
     fullScreenOnMobile,
     feil,
+    minDate,
+    maxDate,
+    disableWeekend,
+    disabledDateRanges,
     onChange,
     description,
     useErrorBoundary = false,
@@ -78,9 +81,12 @@ function FormikDatepicker<FieldName>({
                         {...restProps}
                         input={{ name: inputName, placeholder, id: elementId }}
                         valgtDato={datepickerUtils.getDateStringFromValue(field.value)}
-                        avgrensninger={
-                            dateLimitations ? datepickerUtils.parseDateLimitations(dateLimitations) : undefined
-                        }
+                        avgrensninger={datepickerUtils.parseDateLimitations({
+                            minDate,
+                            maxDate,
+                            disableWeekend,
+                            disabledDateRanges,
+                        })}
                         visÅrVelger={showYearSelector}
                         kalender={{
                             plassering,
