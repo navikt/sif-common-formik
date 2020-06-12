@@ -24,11 +24,13 @@ import {
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
 import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
+import { useFormikContext } from 'formik';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 const fullForm = true;
 const TypedFormExample = () => {
     const intl = useIntl();
+    const { values } = useFormikContext<FormValues>();
     return (
         <Form.Form
             submitButtonLabel="Ok"
@@ -93,11 +95,13 @@ const TypedFormExample = () => {
                             fromDatepickerProps={{
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
+                                maxDate: values.daterange_to,
                                 validate: validateRequiredField,
                             }}
                             toDatepickerProps={{
                                 name: FormFields.daterange_to,
                                 label: 'Til',
+                                minDate: values.daterange_from,
                                 validate: validateRequiredField,
                             }}
                         />
