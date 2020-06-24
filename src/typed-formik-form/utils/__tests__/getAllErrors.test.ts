@@ -7,21 +7,19 @@ const formikTemplate = {
     },
 };
 
-// Enkelt object
 const simple = {
     a: {
         key: 'key1',
-        values: undefined,
+        values: 'a value',
     },
 };
 const simpleErrors = {
     a: {
         key: 'key1',
-        values: undefined,
+        values: 'a value',
     },
 };
 
-// Dypt object
 const complexWorking = {
     a: {
         b: {
@@ -30,7 +28,7 @@ const complexWorking = {
                     e: {
                         f: {
                             key: 'key2',
-                            values: undefined,
+                            values: 'a value',
                         },
                     },
                 },
@@ -41,17 +39,16 @@ const complexWorking = {
 const complexWorkingErrors = {
     'a.b.c.d.e.f': {
         key: 'key2',
-        values: undefined,
+        values: 'a value',
     },
 };
 
-// Lister på nivå 1
 const complex2 = {
     a: [
         {
             b: {
                 key: 'key3',
-                values: undefined,
+                values: 'a value',
             },
         },
     ],
@@ -59,18 +56,17 @@ const complex2 = {
 const complex2Errors = {
     'a.0.b': {
         key: 'key3',
-        values: undefined,
+        values: 'a value',
     },
 };
 
-// Liste med null på index 0
 const listWithNullValue = {
     a: [
         null,
         {
             b: {
                 key: 'key421341',
-                values: undefined,
+                values: 'a value',
             },
         },
     ],
@@ -78,14 +74,14 @@ const listWithNullValue = {
 const listWithNullValueErrors = {
     'a.1.b': {
         key: 'key421341',
-        values: undefined,
+        values: 'a value',
     },
 };
 
 const combiStor = {
     a: {
         key: 'aksjdb',
-        values: undefined
+        values: 'a value',
     },
     b: {
         c: {
@@ -93,11 +89,11 @@ const combiStor = {
                 e: {
                     f: {
                         key: 'pasfvfe',
-                        values: undefined
-                    }
-                }
-            }
-        }
+                        values: 'a value',
+                    },
+                },
+            },
+        },
     },
     g: [
         null,
@@ -105,40 +101,39 @@ const combiStor = {
         {
             h: {
                 key: 'dfoqbnfbf',
-                values: undefined
-            }
-        }
-    ]
-}
+                values: 'a value',
+            },
+        },
+    ],
+};
 const combiStorErrors = {
-    'a': {
+    a: {
         key: 'aksjdb',
-        values: undefined
+        values: 'a value',
     },
     'b.c.d.e.f': {
         key: 'pasfvfe',
-        values: undefined
+        values: 'a value',
     },
     'g.2.h': {
         key: 'dfoqbnfbf',
-        values: undefined
-    }
-}
+        values: 'a value',
+    },
+};
 
-// Liste i liste
 const listInList = {
     a: [
         {
             b: {
                 key: 'key4',
-                values: undefined,
+                values: 'a value',
             },
             c: {
                 d: [
                     {
                         e: {
                             key: 'key4',
-                            values: undefined,
+                            values: 'a value',
                         },
                     },
                 ],
@@ -149,15 +144,14 @@ const listInList = {
 const listInListErrors = {
     'a.0.b': {
         key: 'key4',
-        values: undefined,
+        values: 'a value',
     },
     'a.0.c.d.0.e': {
         key: 'key4',
-        values: undefined,
+        values: 'a value',
     },
 };
 
-// Dypt object i liste
 const dyptObjectInniListe = {
     a: [
         {
@@ -165,59 +159,59 @@ const dyptObjectInniListe = {
                 c: {
                     d: {
                         key: 'asflfnqnbfn',
-                        values: undefined
-                    }
-                }
-            }
-        }
-    ]
-}
+                        values: 'a value',
+                    },
+                },
+            },
+        },
+    ],
+};
 const dyptObjectInniListeErrors = {
     'a.0.b.c.d': {
         key: 'asflfnqnbfn',
-        values: undefined
-    }
-}
+        values: 'a value',
+    },
+};
 
-describe('asdf', () => {
-    it('works', () => {
+describe('teste getAllErrors', () => {
+    it('test1', () => {
         const formikInput = { ...formikTemplate, errors: simple };
         // @ts-ignore
         const input = getAllErrors(formikInput);
         expect(input).toStrictEqual(simpleErrors);
     });
-    it('works', () => {
+    it('test2', () => {
         const formikInput = { ...formikTemplate, errors: complexWorking };
         // @ts-ignore
         const input = getAllErrors(formikInput);
         expect(input).toStrictEqual(complexWorkingErrors);
     });
-    it('works', () => {
+    it('test3', () => {
         const formikInput = { ...formikTemplate, errors: complex2 };
         // @ts-ignore
         const input = getAllErrors(formikInput);
         expect(input).toStrictEqual(complex2Errors);
     });
-    it('works', () => {
+    it('test4', () => {
         const formikInput = { ...formikTemplate, errors: listWithNullValue };
         // @ts-ignore
         const input = getAllErrors(formikInput);
         expect(input).toStrictEqual(listWithNullValueErrors);
     });
-    it('works', () => {
+    it('test5', () => {
         const formikInput = { ...formikTemplate, errors: combiStor };
         // @ts-ignore
         const input = getAllErrors(formikInput);
         expect(input).toStrictEqual(combiStorErrors);
     });
 
-    it('works', () => {
+    it('test6', () => {
         const formikInput = { ...formikTemplate, errors: dyptObjectInniListe };
         // @ts-ignore
         const input = getAllErrors(formikInput);
         expect(input).toStrictEqual(dyptObjectInniListeErrors);
     });
-    it('works', () => {
+    it('test7', () => {
         const formikInput = { ...formikTemplate, errors: listInList };
         // @ts-ignore
         const input = getAllErrors(formikInput);
