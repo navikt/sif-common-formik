@@ -46,6 +46,7 @@ export const returnAllInFrontOfKey = (input: string): string | undefined => {
 
 export const flattenFieldErrors = (input: any) => {
     const flattened = flatten(input);
+    console.info(JSON.stringify(flattened, null, 4))
     const keysInFlattened = Object.keys(flattened);
     const mutatingResult = {};
     keysInFlattened.forEach((key) => {
