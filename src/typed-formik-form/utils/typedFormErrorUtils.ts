@@ -34,8 +34,8 @@ export const isValidationErrorsVisible = (formik: FormikProps<any>): boolean => 
 };
 
 export const returnAllInFrontOfKey = (input: string): string | undefined => {
-    let searchString = '.key';
-    if (input.indexOf(searchString) >= 0 ) {
+    const searchString = '.key';
+    if (input.indexOf(searchString) >= 0) {
         const a = input.slice().split(searchString);
         if (a[0]) {
             return a[0];
