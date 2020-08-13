@@ -92,7 +92,7 @@ function TypedFormikForm<FormValues>({
     const runCleanup = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.stopPropagation();
         evt.preventDefault();
-        formik.setValues(cleanup!(formik.values));
+        formik.setValues(cleanup ? cleanup(formik.values) : formik.values);
         setCleanupState({ hasCleanedUp: true, counter: cleanupState.counter + 1 });
     };
 
