@@ -7,7 +7,7 @@ export interface Props {
     layout?: 'normal' | 'mobile-50-50' | 'stretch';
 }
 
-const ButtonRow: React.StatelessComponent<Props> = ({ children, align = 'center', layout = 'normal' }) => {
+const ButtonRow: React.StatelessComponent<Props> = ({ children, align = 'center', layout = 'normal' }: Props) => {
     const cls = `buttonRow buttonRow--${align} buttonRow--${layout}`;
     return (
         <div className={cls}>
