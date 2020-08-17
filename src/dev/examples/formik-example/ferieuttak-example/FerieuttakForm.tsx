@@ -5,7 +5,8 @@ import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/comm
 import dateRangeValidation from '@navikt/sif-common-core/lib/validation/dateRangeValidation';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { getTypedFormComponents } from '../../../../typed-formik-form';
-import { Ferieuttak, isFerieuttak } from './types';
+import { Ferieuttak, isFerieuttak, Ferieland } from './types';
+import { validateRequiredList } from '../../../validation/fieldValidations';
 
 export interface FerieuttakFormLabels {
     title: string;
@@ -38,6 +39,7 @@ const defaultLabels: FerieuttakFormLabels = {
 enum FerieuttakFormFields {
     tom = 'tom',
     fom = 'fom',
+    land = 'land',
 }
 
 type FormValues = Partial<Ferieuttak>;
@@ -48,7 +50,7 @@ const FerieuttakForm = ({
     maxDate,
     minDate,
     labels,
-    ferieuttak = { fom: undefined, tom: undefined },
+    ferieuttak = { fom: undefined, tom: undefined, land: [] },
     alleFerieuttak = [],
     onSubmit,
     onCancel,
@@ -109,6 +111,25 @@ const FerieuttakForm = ({
                                     });
                                 },
                             }}
+                        />
+                        <Form.CheckboxPanelGroup
+                            name={FerieuttakFormFields.land}
+                            legend={'Hvilket land'}
+                            checkboxes={[
+                                {
+                                    value: Ferieland.Norge,
+                                    label: 'Norge',
+                                },
+                                {
+                                    value: Ferieland.Sverige,
+                                    label: 'Sverige',
+                                },
+                                {
+                                    value: Ferieland.Danmark,
+                                    label: 'Danmark',
+                                },
+                            ]}
+                            validate={validateRequiredList}
                         />
                     </Form.Form>
                 )}

@@ -3,8 +3,8 @@ module.exports = {
         {
             plugin: require('craco-less'),
             options: {
-                noIeCompat: true
-            }
-        }
-    ]
+                noIeCompat: true,
+            },
+        },
+    ],
 };
