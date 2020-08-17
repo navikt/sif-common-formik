@@ -55,6 +55,7 @@ const getValuesForFlattenedKey = (flatErrors: FlattendErrors, errorKey: string):
         const values = {};
         valueKeys.forEach((key) => {
             const valueKey = key.substr(key.indexOf(`.values`) + 8);
+            // const valueKey = valueKeyWithIndex.substr(valueKeyWithIndex.indexOf('.') + 1); // Remove index added by flatten
             values[valueKey] = unflatten(flatErrors[key]);
         });
         return values;

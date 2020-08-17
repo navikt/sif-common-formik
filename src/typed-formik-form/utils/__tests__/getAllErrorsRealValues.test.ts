@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { getAllErrors } from '../typedFormErrorUtils';
 
 const formikTemplate = {
@@ -13,24 +14,24 @@ const formikErrors1 = {
         annetArbeidsforhold: {
             harHattFraværHosArbeidsgiver: {
                 key: 'common.fieldvalidation.påkrevd',
-                values: 'a value of some sort',
+                values: { valueKey: 'a value' },
             },
         },
         harFosterbarn: {
             key: 'common.fieldvalidation.påkrevd',
-            values: 'a value of some sort',
+            values: { valueKey: 'a value' },
         },
         arbeidsforhold: [
             {
                 harHattFraværHosArbeidsgiver: {
                     key: 'common.fieldvalidation.påkrevd',
-                    values: 'a value of some sort',
+                    values: { valueKey: 'a value' },
                 },
             },
             {
                 harHattFraværHosArbeidsgiver: {
                     key: 'common.fieldvalidation.påkrevd',
-                    values: 'a value of some sort',
+                    values: { valueKey: 'a value' },
                 },
             },
         ],
@@ -40,19 +41,19 @@ const formikErrors1 = {
 const expectedErrors1 = {
     'annetArbeidsforhold.harHattFraværHosArbeidsgiver': {
         key: 'common.fieldvalidation.påkrevd',
-        values: 'a value of some sort',
+        values: { valueKey: 'a value' },
     },
     harFosterbarn: {
         key: 'common.fieldvalidation.påkrevd',
-        values: 'a value of some sort',
+        values: { valueKey: 'a value' },
     },
     'arbeidsforhold.0.harHattFraværHosArbeidsgiver': {
         key: 'common.fieldvalidation.påkrevd',
-        values: 'a value of some sort',
+        values: { valueKey: 'a value' },
     },
     'arbeidsforhold.1.harHattFraværHosArbeidsgiver': {
         key: 'common.fieldvalidation.påkrevd',
-        values: 'a value of some sort',
+        values: { valueKey: 'a value' },
     },
 };
 
@@ -63,7 +64,7 @@ const formikErrors2 = {
             {
                 arbeidsgiverHarUtbetaltLønn: {
                     key: 'common.fieldvalidation.påkrevd',
-                    values: 'a value of some sort',
+                    values: { valueKey: 'a value' },
                 },
             },
         ],
@@ -73,7 +74,7 @@ const formikErrors2 = {
 const expectedErrors2 = {
     'arbeidsforhold.0.arbeidsgiverHarUtbetaltLønn': {
         key: 'common.fieldvalidation.påkrevd',
-        values: 'a value of some sort',
+        values: { valueKey: 'a value' },
     },
 };
 
@@ -85,7 +86,7 @@ const formikErrors3 = {
                 ansettelseslengde: {
                     ingenAvSituasjoneneForklaring: {
                         key: 'common.fieldvalidation.påkrevd',
-                        values: 'a value of some sort',
+                        values: { valueKey: 'a value' },
                     },
                 },
             },
@@ -96,7 +97,7 @@ const formikErrors3 = {
 const expectedErrors3 = {
     'arbeidsforhold.0.ansettelseslengde.ingenAvSituasjoneneForklaring': {
         key: 'common.fieldvalidation.påkrevd',
-        values: 'a value of some sort',
+        values: { valueKey: 'a value' },
     },
 };
 
@@ -108,7 +109,7 @@ const formikErrors4 = {
             {
                 arbeidsgiverHarUtbetaltLønn: {
                     key: 'common.fieldvalidation.påkrevd',
-                    values: 'a value of some sort',
+                    values: { valueKey: 'a value' },
                 },
             },
         ],
@@ -118,7 +119,7 @@ const formikErrors4 = {
 const expectedErrors4 = {
     'arbeidsforhold.1.arbeidsgiverHarUtbetaltLønn': {
         key: 'common.fieldvalidation.påkrevd',
-        values: 'a value of some sort',
+        values: { valueKey: 'a value' },
     },
 };
 
@@ -128,7 +129,7 @@ const formikErrors5 = {
         annetArbeidsforhold: {
             arbeidsgiverHarUtbetaltLønn: {
                 key: 'common.fieldvalidation.påkrevd',
-                values: 'a value of some sort',
+                values: { valueKey: 'a value' },
             },
         },
     },
@@ -137,7 +138,7 @@ const formikErrors5 = {
 const expectedErrors5 = {
     'annetArbeidsforhold.arbeidsgiverHarUtbetaltLønn': {
         key: 'common.fieldvalidation.påkrevd',
-        values: 'a value of some sort',
+        values: { valueKey: 'a value' },
     },
 };
 

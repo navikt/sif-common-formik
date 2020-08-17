@@ -7,7 +7,7 @@ describe('teste funksjon flattenFieldErrors', () => {
                 b: {
                     c: {
                         key: 'mykey',
-                        values: ['value1', 'value2', 'value3'],
+                        values: { k1: 'value1', k2: 'value2', k3: 'value3' },
                     },
                 },
             },
@@ -15,15 +15,7 @@ describe('teste funksjon flattenFieldErrors', () => {
                 e: {
                     f: {
                         key: 'mySecondKey',
-                        values: (input: any) => input,
-                    },
-                },
-            },
-            g: {
-                h: {
-                    i: {
-                        key: 'mySecondKey',
-                        values: [(input: any) => input, (input: any) => input],
+                        values: { k1: (input: any) => input },
                     },
                 },
             },
@@ -32,17 +24,13 @@ describe('teste funksjon flattenFieldErrors', () => {
         const theRightAnswer = {
             'a.b.c': {
                 key: 'mykey',
-                values: ['value1', 'value2', 'value3'],
+                values: { k1: 'value1', k2: 'value2', k3: 'value3' },
             },
             'd.e.f': {
                 key: 'mySecondKey',
-                values: (input: any) => input,
-            },
-            'g.h.i': {
-                key: 'mySecondKey',
-                values: [(input: any) => input, (input: any) => input],
+                values: { k1: (input: any) => input },
             },
         };
-        expect(output).toStrictEqual(theRightAnswer);
+        expect(JSON.stringify(output)).toStrictEqual(JSON.stringify(theRightAnswer));
     });
 });

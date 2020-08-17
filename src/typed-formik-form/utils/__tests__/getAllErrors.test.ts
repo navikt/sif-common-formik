@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { getAllErrors } from '../typedFormErrorUtils';
 
 const formikTemplate = {
@@ -10,13 +11,13 @@ const formikTemplate = {
 const simple = {
     a: {
         key: 'key1',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
 };
 const simpleErrors = {
     a: {
         key: 'key1',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
 };
 
@@ -28,7 +29,7 @@ const complexWorking = {
                     e: {
                         f: {
                             key: 'key2',
-                            values: 'a value',
+                            values: { valueKey: 'a value' },
                         },
                     },
                 },
@@ -39,7 +40,7 @@ const complexWorking = {
 const complexWorkingErrors = {
     'a.b.c.d.e.f': {
         key: 'key2',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
 };
 
@@ -48,7 +49,7 @@ const complex2 = {
         {
             b: {
                 key: 'key3',
-                values: 'a value',
+                values: { valueKey: 'a value' },
             },
         },
     ],
@@ -56,7 +57,7 @@ const complex2 = {
 const complex2Errors = {
     'a.0.b': {
         key: 'key3',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
 };
 
@@ -66,7 +67,7 @@ const listWithNullValue = {
         {
             b: {
                 key: 'key421341',
-                values: 'a value',
+                values: { valueKey: 'a value' },
             },
         },
     ],
@@ -74,14 +75,14 @@ const listWithNullValue = {
 const listWithNullValueErrors = {
     'a.1.b': {
         key: 'key421341',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
 };
 
 const combiStor = {
     a: {
         key: 'aksjdb',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
     b: {
         c: {
@@ -89,7 +90,7 @@ const combiStor = {
                 e: {
                     f: {
                         key: 'pasfvfe',
-                        values: 'a value',
+                        values: { valueKey: 'a value' },
                     },
                 },
             },
@@ -101,7 +102,7 @@ const combiStor = {
         {
             h: {
                 key: 'dfoqbnfbf',
-                values: 'a value',
+                values: { valueKey: 'a value' },
             },
         },
     ],
@@ -109,15 +110,15 @@ const combiStor = {
 const combiStorErrors = {
     a: {
         key: 'aksjdb',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
     'b.c.d.e.f': {
         key: 'pasfvfe',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
     'g.2.h': {
         key: 'dfoqbnfbf',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
 };
 
@@ -126,14 +127,14 @@ const listInList = {
         {
             b: {
                 key: 'key4',
-                values: 'a value',
+                values: { valueKey: 'a value' },
             },
             c: {
                 d: [
                     {
                         e: {
                             key: 'key4',
-                            values: 'a value',
+                            values: { valueKey: 'a value' },
                         },
                     },
                 ],
@@ -144,11 +145,11 @@ const listInList = {
 const listInListErrors = {
     'a.0.b': {
         key: 'key4',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
     'a.0.c.d.0.e': {
         key: 'key4',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
 };
 
@@ -159,7 +160,7 @@ const dyptObjectInniListe = {
                 c: {
                     d: {
                         key: 'asflfnqnbfn',
-                        values: 'a value',
+                        values: { valueKey: 'a value' },
                     },
                 },
             },
@@ -169,7 +170,7 @@ const dyptObjectInniListe = {
 const dyptObjectInniListeErrors = {
     'a.0.b.c.d': {
         key: 'asflfnqnbfn',
-        values: 'a value',
+        values: { valueKey: 'a value' },
     },
 };
 
