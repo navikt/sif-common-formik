@@ -71,7 +71,8 @@ const createCountryOptions = (
     const lang = locale === 'en' ? 'nn' : 'nb';
     const countries = getCountries();
 
-    return Object.entries(countries.getNames(lang))
+    const names: [string, any][] = Object.entries(countries.getNames(lang));
+    return names
         .sort((a: string[], b: string[]) => a[1].localeCompare(b[1], lang))
         .filter((countryOptionValue: string[]) =>
             filteredListEØSCountries(countryOptionValue[0], onluEuAndEftaCountries)
