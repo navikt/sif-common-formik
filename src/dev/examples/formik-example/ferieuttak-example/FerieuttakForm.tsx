@@ -78,6 +78,25 @@ const FerieuttakForm = ({
                         <Box padBottom="l">
                             <Systemtittel tag="h1">{formLabels.title}</Systemtittel>
                         </Box>
+                        <Form.CheckboxPanelGroup
+                            name={FerieuttakFormFields.land}
+                            legend={'Hvilket land'}
+                            checkboxes={[
+                                {
+                                    value: Ferieland.Norge,
+                                    label: 'Norge',
+                                },
+                                {
+                                    value: Ferieland.Sverige,
+                                    label: 'Sverige',
+                                },
+                                {
+                                    value: Ferieland.Danmark,
+                                    label: 'Danmark',
+                                },
+                            ]}
+                            validate={validateRequiredList}
+                        />
                         <Form.DateIntervalPicker
                             legend={formLabels.intervalTitle}
                             fromDatepickerProps={{
@@ -111,25 +130,6 @@ const FerieuttakForm = ({
                                     });
                                 },
                             }}
-                        />
-                        <Form.CheckboxPanelGroup
-                            name={FerieuttakFormFields.land}
-                            legend={'Hvilket land'}
-                            checkboxes={[
-                                {
-                                    value: Ferieland.Norge,
-                                    label: 'Norge',
-                                },
-                                {
-                                    value: Ferieland.Sverige,
-                                    label: 'Sverige',
-                                },
-                                {
-                                    value: Ferieland.Danmark,
-                                    label: 'Danmark',
-                                },
-                            ]}
-                            validate={validateRequiredList}
                         />
                     </Form.Form>
                 )}
