@@ -21,14 +21,14 @@ export interface DatepickerLimitiations {
     disableWeekend?: boolean;
 }
 
-export type FormikDatepickerChangeValue = Date | string | undefined;
+export type FormikDatepickerValue = Date | string | undefined;
 
 export interface DatePickerBaseProps<FieldName> extends Pick<TypedFormInputCommonProps, 'validate'> {
     name: FieldName;
     label: string;
     disabled?: boolean;
     feil?: NavFrontendSkjemaFeil;
-    onChange?: (date: FormikDatepickerChangeValue) => void;
+    onChange?: (date: FormikDatepickerValue) => void;
     dayPickerProps?: DayPickerProps;
 }
 export interface DatePickerPresentationProps {
