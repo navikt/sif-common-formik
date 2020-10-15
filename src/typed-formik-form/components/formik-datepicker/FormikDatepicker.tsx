@@ -10,8 +10,7 @@ import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
-import datepickerUtils from './datepickerUtils';
-import ErrorBoundary from './ErrorBoundary';
+import datepickerUtils, { createFormiDatepickerValue } from './datepickerUtils';
 import './datepicker.less';
 
 export interface DatepickerLimitiations {
@@ -21,7 +20,11 @@ export interface DatepickerLimitiations {
     disableWeekend?: boolean;
 }
 
-export type FormikDatepickerValue = Date | string | undefined;
+export type FormikDatepickerValue = {
+    date: Date | undefined;
+    dateStringIsValid: boolean;
+    dateString: string;
+};
 
 export interface DatePickerBaseProps<FieldName> extends Pick<TypedFormInputCommonProps, 'validate'> {
     name: FieldName;
@@ -39,7 +42,6 @@ export interface DatePickerPresentationProps {
 interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
     id?: string;
     description?: React.ReactNode;
-    useErrorBoundary?: boolean;
 }
 
 export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> &
@@ -65,7 +67,6 @@ function FormikDatepicker<FieldName>({
     disabledDateRanges,
     onChange,
     description,
-    useErrorBoundary = false,
     ...restProps
 }: FormikDatepickerProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -74,17 +75,18 @@ function FormikDatepicker<FieldName>({
     const position: CalendarPlacement | undefined =
         fullscreenOverlay || (fullScreenOnMobile && isWide === false) ? 'fullscreen' : undefined;
     const inputName = (name || '') as string;
+
     return (
         <Field validate={validate} name={name}>
-            {({ field, form }: FieldProps) => {
+            {({ field, form }: FieldProps<FormikDatepickerValue>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
-
-                const handleOnChange: DatepickerChange = (dateString: string, isValid) => {
-                    const date = dateString ? datepickerUtils.getDateFromDateString(dateString, isValid) : undefined;
-                    if (field.value !== date) {
-                        form.setFieldValue(field.name, date);
+                const fieldValue = field.value || {};
+                const handleOnDatepickerChange: DatepickerChange = (dateString) => {
+                    const value = createFormiDatepickerValue(dateString);
+                    if (fieldValue.dateString !== value.dateString) {
+                        form.setFieldValue(field.name, value);
                         if (onChange) {
-                            onChange(date);
+                            onChange(value);
                         }
                         if (context) {
                             context.onAfterFieldValueSet();
@@ -92,32 +94,29 @@ function FormikDatepicker<FieldName>({
                     }
                 };
 
-                const datovelger = (
-                    <Datepicker
-                        inputId={elementId}
-                        {...restProps}
-                        inputProps={{ name: inputName, placeholder, 'aria-invalid': isInvalid }}
-                        value={datepickerUtils.getDateStringFromValue(field.value)}
-                        limitations={datepickerUtils.parseDateLimitations({
-                            minDate,
-                            maxDate,
-                            disableWeekend,
-                            disabledDateRanges,
-                        })}
-                        showYearSelector={showYearSelector}
-                        calendarSettings={{
-                            position,
-                        }}
-                        onChange={handleOnChange}
-                    />
-                );
                 return (
                     <SkjemagruppeQuestion feil={getFeilPropForFormikInput({ field, form, context, feil })}>
                         <Label htmlFor={elementId}>
                             <LabelWithInfo info={info}>{label}</LabelWithInfo>
                         </Label>
                         {description && <div className={'skjemaelement__description'}>{description}</div>}
-                        {useErrorBoundary ? <ErrorBoundary>{datovelger}</ErrorBoundary> : datovelger}
+                        <Datepicker
+                            inputId={elementId}
+                            {...restProps}
+                            inputProps={{ name: inputName, placeholder, 'aria-invalid': isInvalid }}
+                            value={fieldValue.dateString}
+                            limitations={datepickerUtils.parseDateLimitations({
+                                minDate,
+                                maxDate,
+                                disableWeekend,
+                                disabledDateRanges,
+                            })}
+                            showYearSelector={showYearSelector}
+                            calendarSettings={{
+                                position,
+                            }}
+                            onChange={handleOnDatepickerChange}
+                        />
                     </SkjemagruppeQuestion>
                 );
             }}

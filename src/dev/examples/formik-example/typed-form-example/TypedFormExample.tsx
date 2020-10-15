@@ -5,6 +5,7 @@ import moment from 'moment';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import {
     FormikDateIntervalPicker,
+    FormikDatepickerValue,
     FormikFileInput,
     FormikInput,
     FormikInputGroup,
@@ -19,20 +20,24 @@ import {
     renderIntlFieldValidationError,
 } from '../../../modules/validation/fieldValidationRenderUtils';
 import {
-    validateAll,
     validateDate,
+    validateFormikDate,
     validateRequiredField,
     validateRequiredList,
     validateYesOrNoIsAnswered,
 } from '../../../validation/fieldValidations';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
+import { Knapp } from 'nav-frontend-knapper';
+import { createFormiDatepickerValue } from '../../../../typed-formik-form/components/formik-datepicker/datepickerUtils';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 const fullForm = false;
+
 const TypedFormExample = () => {
     const intl = useIntl();
     const { values } = useFormikContext<FormValues>();
+    const { setFieldValue } = useFormikContext<FormValues>();
     return (
         <Form.Form
             submitButtonLabel="Ok"
@@ -151,9 +156,18 @@ const TypedFormExample = () => {
                         <Form.DatePicker
                             name={FormFields.birthdate}
                             label="Fødselsdato"
-                            validate={validateAll([validateRequiredField, validateDate])}
+                            validate={(value: FormikDatepickerValue) => {
+                                return validateFormikDate(value, true);
+                            }}
                         />
                     </Question>
+                    <Knapp
+                        htmlType="button"
+                        onClick={() => {
+                            setFieldValue(FormFields.birthdate, createFormiDatepickerValue('2000-10-2'));
+                        }}>
+                        Sett ugyldig dato
+                    </Knapp>
                     <FormikInputGroup name={FormFields.nameGroup} legend="Test me" validate={validateRequiredField}>
                         Content in group
                     </FormikInputGroup>

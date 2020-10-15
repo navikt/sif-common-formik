@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { DatepickerLimitations, DatepickerDateRange, isISODateString } from 'nav-datovelger';
-import { DatepickerLimitiations } from './FormikDatepicker';
+import { DatepickerLimitiations, FormikDatepickerValue } from './FormikDatepicker';
 
 const apiDateFormat = 'YYYY-MM-DD';
 
@@ -39,11 +39,37 @@ const getDateStringFromValue = (value?: Date | string): string | undefined => {
     return date ? dateToISOFormattedDateString(date) : undefined;
 };
 
-const getDateFromDateString = (dateString: string, isValidString: boolean): Date | string | undefined => {
-    if (!isValidString) {
-        return dateString;
+const getDateFromDateString = (dateString: string): Date | undefined => {
+    if (isISODateString(dateString)) {
+        return new Date(dateString);
     }
-    return new Date(dateString);
+    return undefined;
+};
+
+const isDate = (input: any): input is Date => {
+    return typeof input === 'object' && Object.prototype.toString.call(input) === '[object Date]' ? true : false;
+};
+
+export const createFormiDatepickerValue = (value: string | Date | undefined): FormikDatepickerValue => {
+    let date: Date | undefined;
+    let dateString = '';
+    let dateStringIsValid = false;
+
+    if (isDate(value)) {
+        date = value;
+        dateString = dateToISOFormattedDateString(value);
+        dateStringIsValid = true;
+    }
+    if (typeof value === 'string') {
+        date = getDateFromDateString(value);
+        dateString = date ? dateToISOFormattedDateString(date) : value;
+        dateStringIsValid = date !== undefined;
+    }
+    return {
+        date,
+        dateString,
+        dateStringIsValid,
+    };
 };
 
 const datepickerUtils = {
