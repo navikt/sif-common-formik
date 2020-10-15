@@ -10,7 +10,7 @@ import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
-import datepickerUtils, { createFormiDatepickerValue } from './datepickerUtils';
+import datepickerUtils, { createFormikDatepickerValue } from './datepickerUtils';
 import './datepicker.less';
 
 export interface DatepickerLimitiations {
@@ -82,7 +82,7 @@ function FormikDatepicker<FieldName>({
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
                 const fieldValue = field.value || {};
                 const handleOnDatepickerChange: DatepickerChange = (dateString) => {
-                    const value = createFormiDatepickerValue(dateString);
+                    const value = createFormikDatepickerValue(dateString);
                     if (fieldValue.dateString !== value.dateString) {
                         form.setFieldValue(field.name, value);
                         if (onChange) {

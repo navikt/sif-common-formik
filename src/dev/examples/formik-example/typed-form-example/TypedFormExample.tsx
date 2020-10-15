@@ -2,8 +2,10 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { useFormikContext } from 'formik';
 import moment from 'moment';
+import { Knapp } from 'nav-frontend-knapper';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import {
+    createFormikDatepickerValue,
     FormikDateIntervalPicker,
     FormikDatepickerValue,
     FormikFileInput,
@@ -28,8 +30,6 @@ import {
 } from '../../../validation/fieldValidations';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
-import { Knapp } from 'nav-frontend-knapper';
-import { createFormiDatepickerValue } from '../../../../typed-formik-form/components/formik-datepicker/datepickerUtils';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 const fullForm = false;
@@ -164,7 +164,7 @@ const TypedFormExample = () => {
                     <Knapp
                         htmlType="button"
                         onClick={() => {
-                            setFieldValue(FormFields.birthdate, createFormiDatepickerValue('2000-10-2'));
+                            setFieldValue(FormFields.birthdate, createFormikDatepickerValue('2000-10-2'));
                         }}>
                         Sett ugyldig dato
                     </Knapp>

@@ -50,7 +50,13 @@ const isDate = (input: any): input is Date => {
     return typeof input === 'object' && Object.prototype.toString.call(input) === '[object Date]' ? true : false;
 };
 
-export const createFormiDatepickerValue = (value: string | Date | undefined): FormikDatepickerValue => {
+const datepickerUtils = {
+    getDateStringFromValue,
+    getDateFromDateString,
+    parseDateLimitations,
+};
+
+export const createFormikDatepickerValue = (value: string | Date | undefined): FormikDatepickerValue => {
     let date: Date | undefined;
     let dateString = '';
     let dateStringIsValid = false;
@@ -70,12 +76,6 @@ export const createFormiDatepickerValue = (value: string | Date | undefined): Fo
         dateString,
         dateStringIsValid,
     };
-};
-
-const datepickerUtils = {
-    getDateStringFromValue,
-    getDateFromDateString,
-    parseDateLimitations,
 };
 
 export default datepickerUtils;
