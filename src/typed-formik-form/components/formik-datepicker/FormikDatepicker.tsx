@@ -1,7 +1,7 @@
 import React from 'react';
 import { DayPickerProps } from 'react-day-picker';
 import { Field, FieldProps } from 'formik';
-import { Datovelger } from 'nav-datovelger';
+import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger';
 import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
@@ -26,10 +26,9 @@ export interface DatePickerBaseProps<FieldName> extends Pick<TypedFormInputCommo
     label: string;
     disabled?: boolean;
     feil?: NavFrontendSkjemaFeil;
-    onChange?: (date: Date | undefined) => void;
+    onChange?: (date: Date | string | undefined) => void;
     dayPickerProps?: DayPickerProps;
 }
-
 export interface DatePickerPresentationProps {
     showYearSelector?: boolean;
     fullscreenOverlay?: boolean;
@@ -70,37 +69,44 @@ function FormikDatepicker<FieldName>({
     const context = React.useContext(TypedFormikFormContext);
     const isWide = useMedia({ minWidth: 736 });
     const elementId = id || guid();
-    const plassering = fullscreenOverlay || (fullScreenOnMobile && isWide === false) ? 'fullskjerm' : undefined;
+    const position: CalendarPlacement | undefined =
+        fullscreenOverlay || (fullScreenOnMobile && isWide === false) ? 'fullscreen' : undefined;
     const inputName = (name || '') as string;
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
+                const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
+
+                const handleOnChange: DatepickerChange = (dateString: string, isValid) => {
+                    const date = dateString ? datepickerUtils.getDateFromDateString(dateString, isValid) : undefined;
+                    if (field.value !== date) {
+                        form.setFieldValue(field.name, date);
+                        if (onChange) {
+                            onChange(date);
+                        }
+                        if (context) {
+                            context.onAfterFieldValueSet();
+                        }
+                    }
+                };
+
                 const datovelger = (
-                    <Datovelger
-                        id={elementId}
+                    <Datepicker
+                        inputId={elementId}
                         {...restProps}
-                        input={{ name: inputName, placeholder, id: elementId }}
-                        valgtDato={datepickerUtils.getDateStringFromValue(field.value)}
-                        avgrensninger={datepickerUtils.parseDateLimitations({
+                        inputProps={{ name: inputName, placeholder, 'aria-invalid': isInvalid }}
+                        value={datepickerUtils.getDateStringFromValue(field.value)}
+                        limitations={datepickerUtils.parseDateLimitations({
                             minDate,
                             maxDate,
                             disableWeekend,
                             disabledDateRanges,
                         })}
-                        visÅrVelger={showYearSelector}
-                        kalender={{
-                            plassering,
+                        showYearSelector={showYearSelector}
+                        calendarSettings={{
+                            position,
                         }}
-                        onChange={(dateString) => {
-                            const date = dateString ? datepickerUtils.getDateFromDateString(dateString) : undefined;
-                            if (field.value !== date) {
-                                form.setFieldValue(field.name, date);
-                                if (onChange) {
-                                    onChange(date);
-                                }
-                                context?.onAfterFieldValueSet();
-                            }
-                        }}
+                        onChange={handleOnChange}
                     />
                 );
                 return (

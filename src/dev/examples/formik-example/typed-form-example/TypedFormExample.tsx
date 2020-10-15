@@ -1,5 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
+import { useFormikContext } from 'formik';
 import moment from 'moment';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import {
@@ -8,6 +9,7 @@ import {
     FormikInput,
     FormikInputGroup,
 } from '../../../../typed-formik-form';
+import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import Question from '../../../components/question/Question';
@@ -17,17 +19,17 @@ import {
     renderIntlFieldValidationError,
 } from '../../../modules/validation/fieldValidationRenderUtils';
 import {
+    validateAll,
+    validateDate,
     validateRequiredField,
     validateRequiredList,
     validateYesOrNoIsAnswered,
 } from '../../../validation/fieldValidations';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
-import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
-import { useFormikContext } from 'formik';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
-const fullForm = true;
+const fullForm = false;
 const TypedFormExample = () => {
     const intl = useIntl();
     const { values } = useFormikContext<FormValues>();
@@ -49,8 +51,7 @@ const TypedFormExample = () => {
                             info={'sdfsdf'}
                             name={FormFields.birthdate}
                             label="Fødselsdato"
-                            validate={validateRequiredField}
-                            useErrorBoundary={true}
+                            validate={validateDate}
                         />
                     </Question>
                     <Question>
@@ -146,6 +147,13 @@ const TypedFormExample = () => {
                 </>
             ) : (
                 <>
+                    <Question>
+                        <Form.DatePicker
+                            name={FormFields.birthdate}
+                            label="Fødselsdato"
+                            validate={validateAll([validateRequiredField, validateDate])}
+                        />
+                    </Question>
                     <FormikInputGroup name={FormFields.nameGroup} legend="Test me" validate={validateRequiredField}>
                         Content in group
                     </FormikInputGroup>

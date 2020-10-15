@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { DatovelgerAvgrensninger, Tidsperiode } from 'nav-datovelger';
+import { DatepickerLimitations, DatepickerDateRange, isISODateString } from 'nav-datovelger';
 import { DatepickerLimitiations } from './FormikDatepicker';
 
 const apiDateFormat = 'YYYY-MM-DD';
@@ -11,22 +11,25 @@ const parseDateLimitations = ({
     maxDate,
     disabledDateRanges = [],
     disableWeekend,
-}: DatepickerLimitiations): DatovelgerAvgrensninger => {
-    const ugyldigeTidsperioder: Tidsperiode[] = disabledDateRanges.map((d) => ({
-        fom: dateToISOFormattedDateString(d.from),
-        tom: dateToISOFormattedDateString(d.to),
+}: DatepickerLimitiations): DatepickerLimitations => {
+    const invalidDateRanges: DatepickerDateRange[] = disabledDateRanges.map((d) => ({
+        from: dateToISOFormattedDateString(d.from),
+        to: dateToISOFormattedDateString(d.to),
     }));
     return {
-        minDato: minDate ? dateToISOFormattedDateString(minDate) : undefined,
-        maksDato: maxDate ? dateToISOFormattedDateString(maxDate) : undefined,
-        helgedagerIkkeTillatt: disableWeekend,
-        ugyldigeTidsperioder,
+        minDate: minDate ? dateToISOFormattedDateString(minDate) : undefined,
+        maxDate: maxDate ? dateToISOFormattedDateString(maxDate) : undefined,
+        weekendsNotSelectable: disableWeekend,
+        invalidDateRanges,
     };
 };
 
 const getDateStringFromValue = (value?: Date | string): string | undefined => {
     let date;
     if (value && typeof value === 'string') {
+        if (isISODateString(value) === false) {
+            return value;
+        }
         if (moment(value, moment.ISO_8601, true).isValid()) {
             date = moment(value).toDate();
         }
@@ -36,8 +39,12 @@ const getDateStringFromValue = (value?: Date | string): string | undefined => {
     return date ? dateToISOFormattedDateString(date) : undefined;
 };
 
-const getDateFromDateString = (dateString: string): Date | undefined =>
-    dateString && dateString !== 'Invalid date' ? new Date(dateString) : undefined;
+const getDateFromDateString = (dateString: string, isValidString: boolean): Date | string | undefined => {
+    if (!isValidString) {
+        return dateString;
+    }
+    return new Date(dateString);
+};
 
 const datepickerUtils = {
     getDateStringFromValue,
