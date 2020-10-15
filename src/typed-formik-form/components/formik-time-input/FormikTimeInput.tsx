@@ -40,7 +40,9 @@ function FormikTimeInput<FieldName>({
                             time={field.value || undefined}
                             onChange={(time: Partial<Time> | undefined) => {
                                 form.setFieldValue(field.name, time);
-                                context?.onAfterFieldValueSet();
+                                if (context) {
+                                    context.onAfterFieldValueSet();
+                                }
                             }}
                         />
                     </SkjemagruppeQuestion>

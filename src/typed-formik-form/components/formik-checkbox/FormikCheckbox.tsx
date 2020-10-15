@@ -39,7 +39,9 @@ function FormikCheckbox<FieldName>({
                             if (afterOnChange) {
                                 afterOnChange(newValue);
                             }
-                            context?.onAfterFieldValueSet();
+                            if (context) {
+                                context.onAfterFieldValueSet();
+                            }
                         }}
                     />
                 );

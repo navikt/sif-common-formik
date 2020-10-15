@@ -38,7 +38,9 @@ function FormikRadioPanelGroup<FieldName>({
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         onChange={(evt, value) => {
                             form.setFieldValue(field.name, value);
-                            context?.onAfterFieldValueSet();
+                            if (context) {
+                                context.onAfterFieldValueSet();
+                            }
                         }}
                         radios={radios.map((rb) => ({
                             name: `${name}`,

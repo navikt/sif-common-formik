@@ -1,14 +1,7 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
-import '@formatjs/intl-pluralrules/dist/locale-data/en';
-import '@formatjs/intl-pluralrules/dist/locale-data/nb';
-import '@formatjs/intl-pluralrules/dist/locale-data/nn';
-import '@formatjs/intl-pluralrules/polyfill';
 import { appMessages } from './messages';
 
-export interface IntlProviderProps {
-    locale: string;
-}
 export interface IntlProviderProps {
     locale: string;
     children: React.ReactNode;

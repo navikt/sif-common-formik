@@ -1,3 +1,4 @@
+import { DatepickerValue } from 'nav-datovelger/lib/Datepicker';
 import { Time, YesOrNo } from '../../../typed-formik-form/types';
 import { Ferieuttak } from './ferieuttak-example';
 
@@ -15,14 +16,14 @@ export enum FormFields {
     'daterange_from' = 'daterange_from',
     'daterange_to' = 'daterange_to',
     'files' = 'files',
-    'ferieuttak' = 'ferieuttak'
+    'ferieuttak' = 'ferieuttak',
 }
 
 export interface CompletedFormValues {
     [FormFields.nameGroup]: string;
     [FormFields.firstname]: string;
     [FormFields.lastname]?: string;
-    [FormFields.birthdate]: Date;
+    [FormFields.birthdate]: DatepickerValue;
     [FormFields.birthCountry]: string;
     [FormFields.hasKids]: YesOrNo;
     [FormFields.numberOfKids]?: number;

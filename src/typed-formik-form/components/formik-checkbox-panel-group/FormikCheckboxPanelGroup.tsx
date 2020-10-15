@@ -57,7 +57,9 @@ function FormikCheckboxPanelGroup<FieldName>({
                                     field.value = [value];
                                 }
                                 form.setFieldValue(`${name}`, field.value);
-                                context?.onAfterFieldValueSet();
+                                if (context) {
+                                    context.onAfterFieldValueSet();
+                                }
                             }
                         }}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}

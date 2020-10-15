@@ -36,7 +36,7 @@ const defaultLabels: FerieuttakFormLabels = {
     cancelButton: 'Avbryt',
 };
 
-enum FerieuttakFormFields {
+export enum FerieuttakFormFields {
     tom = 'tom',
     fom = 'fom',
     land = 'land',

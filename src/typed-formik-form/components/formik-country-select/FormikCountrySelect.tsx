@@ -35,7 +35,9 @@ function FormikCountrySelect<FieldName>({
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         onChange={(value) => {
                             form.setFieldValue(field.name, value);
-                            context?.onAfterFieldValueSet();
+                            if (context) {
+                                context.onAfterFieldValueSet();
+                            }
                         }}
                         showOnlyEuAndEftaCountries={showOnlyEuAndEftaCountries}
                         useAlpha3Code={useAlpha3Code}

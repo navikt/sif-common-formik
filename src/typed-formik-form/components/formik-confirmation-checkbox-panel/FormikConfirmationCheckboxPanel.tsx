@@ -31,7 +31,9 @@ function FormikConfirmationCheckboxPanel<FieldName>({
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         onChange={(evt) => {
                             form.setFieldValue(`${name}`, (evt as React.ChangeEvent<HTMLInputElement>).target.checked);
-                            context?.onAfterFieldValueSet();
+                            if (context) {
+                                context.onAfterFieldValueSet();
+                            }
                         }}>
                         {children}
                     </BekreftCheckboksPanel>
