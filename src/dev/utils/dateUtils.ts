@@ -18,35 +18,17 @@ export const isMoreThan3YearsAgo = (date: Date) => moment(date).isBefore(date3Ye
 export const dateToISOFormattedDateString = (date?: Date) =>
     date ? moment.utc(date).format(apiDateFormat) : undefined;
 
-export const date10MonthsAgo = moment()
-    .subtract(10, 'months')
-    .startOf('day')
-    .toDate();
+export const date10MonthsAgo = moment().subtract(10, 'months').startOf('day').toDate();
 
-export const date1YearAgo = moment()
-    .subtract(1, 'years')
-    .startOf('day')
-    .toDate();
+export const date1YearAgo = moment().subtract(1, 'years').startOf('day').toDate();
 
-export const date4YearsAgo = moment()
-    .subtract(4, 'years')
-    .startOf('day')
-    .toDate();
+export const date4YearsAgo = moment().subtract(4, 'years').startOf('day').toDate();
 
-export const date3YearsAgo = moment()
-    .subtract(3, 'years')
-    .startOf('day')
-    .toDate();
+export const date3YearsAgo = moment().subtract(3, 'years').startOf('day').toDate();
 
-export const date4WeeksAgo = moment()
-    .subtract(4, 'weeks')
-    .startOf('day')
-    .toDate();
+export const date4WeeksAgo = moment().subtract(4, 'weeks').startOf('day').toDate();
 
-export const date1YearFromNow = moment()
-    .add(1, 'years')
-    .endOf('day')
-    .toDate();
+export const date1YearFromNow = moment().add(1, 'years').endOf('day').toDate();
 
 export const dateToday = moment().toDate();
 

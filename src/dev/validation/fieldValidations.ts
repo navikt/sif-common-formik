@@ -1,3 +1,4 @@
+import { isISODateString } from 'nav-datovelger';
 import { FormikDatepickerValue, YesOrNo } from '../../typed-formik-form';
 import { FieldValidationResult } from '../modules/validation/types';
 import { erGyldigNorskOrgnummer } from './erGyldigNorskOrgnummer';
@@ -64,11 +65,11 @@ export const validateFormikDate = (
     value: FormikDatepickerValue | undefined,
     isRequired?: boolean
 ): FieldValidationResult => {
-    const { dateString = '', dateStringIsValid: isValidDateString = false } = value || {};
-    if (isRequired && dateString === '') {
+    const { dateString = '' } = value || {};
+    if (isRequired && (value === undefined || dateString === '')) {
         return fieldIsRequiredError();
     }
-    if (isValidDateString === false) {
+    if (isISODateString(dateString) === false) {
         return createFieldValidationError(FieldValidationErrors.dato_ugyldig);
     }
     return undefined;

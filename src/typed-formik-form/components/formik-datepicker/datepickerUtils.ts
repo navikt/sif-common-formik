@@ -59,22 +59,18 @@ const datepickerUtils = {
 export const createFormikDatepickerValue = (value: string | Date | undefined): FormikDatepickerValue => {
     let date: Date | undefined;
     let dateString = '';
-    let dateStringIsValid = false;
 
     if (isDate(value)) {
         date = value;
         dateString = dateToISOFormattedDateString(value);
-        dateStringIsValid = true;
     }
     if (typeof value === 'string') {
         date = getDateFromDateString(value);
         dateString = date ? dateToISOFormattedDateString(date) : value;
-        dateStringIsValid = date !== undefined;
     }
     return {
         date,
         dateString,
-        dateStringIsValid,
     };
 };
 
