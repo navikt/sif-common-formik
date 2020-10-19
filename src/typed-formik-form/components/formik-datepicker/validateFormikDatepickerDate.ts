@@ -1,6 +1,6 @@
 import { isISODateString } from 'nav-datovelger';
 import { IntlShape } from 'react-intl';
-import { FormikDatepickerValue } from '../components/formik-datepicker/FormikDatepicker';
+import { FormikDatepickerValue } from './FormikDatepicker';
 
 /**
  * Midlertidig plassering av kode
@@ -21,10 +21,24 @@ interface IntlFieldValidationError {
 
 type FieldValidationResult = IntlFieldValidationError | undefined | void;
 
-enum FormikFieldValidationErrors {
-    'påkrevd' = 'common.fieldvalidation.påkrevd',
-    'dato_ugyldig' = 'common.fieldvalidation.dato.ugyldig',
-}
+declare type FormikValidateFunction = (value: any) => any;
+
+type FieldValidationArray = (validations: FormikValidateFunction[]) => (value: any) => FieldValidationResult;
+
+export const validateAll: FieldValidationArray = (validations: FormikValidateFunction[]) => (
+    value: any
+): FieldValidationResult => {
+    let result: FieldValidationResult;
+    validations.some((validate) => {
+        const r = validate(value);
+        if (r) {
+            result = r;
+            return true;
+        }
+        return false;
+    });
+    return result;
+};
 
 const createFieldValidationError = <T extends string>(key: T | undefined, values?: any): FieldValidationResult => {
     return key
@@ -35,16 +49,13 @@ const createFieldValidationError = <T extends string>(key: T | undefined, values
         : undefined;
 };
 
-const fieldIsRequiredError = () => createFieldValidationError(FormikFieldValidationErrors.påkrevd);
-
-export const validateFormikDate = (
+export const validateFormikDatepickerDate = (
     value: FormikDatepickerValue | undefined,
-    isRequired?: boolean,
-    errorKey: string = FormikFieldValidationErrors.dato_ugyldig
+    errorKey: string
 ): FieldValidationResult => {
     const { dateString = '' } = value || {};
-    if (isRequired && (value === undefined || dateString === '')) {
-        return fieldIsRequiredError();
+    if (dateString.trim() === '') {
+        return undefined;
     }
     if (isISODateString(dateString) === false) {
         return createFieldValidationError(errorKey);

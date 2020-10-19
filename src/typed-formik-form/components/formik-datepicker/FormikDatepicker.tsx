@@ -5,12 +5,14 @@ import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger'
 import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
+import { validateAll } from '../../../dev/validation/fieldValidations';
 import { DateRange, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils, { createFormikDatepickerValue } from './datepickerUtils';
+import { validateFormikDatepickerDate } from './validateFormikDatepickerDate';
 import './datepicker.less';
 
 export interface DatepickerLimitiations {
@@ -32,6 +34,8 @@ export interface DatePickerBaseProps<FieldName> extends Pick<TypedFormInputCommo
     feil?: NavFrontendSkjemaFeil;
     onChange?: (date: FormikDatepickerValue) => void;
     dayPickerProps?: DayPickerProps;
+    invalidFormatErrorKey?: string;
+    disableFormatValidation?: boolean;
 }
 export interface DatePickerPresentationProps {
     showYearSelector?: boolean;
@@ -66,6 +70,8 @@ function FormikDatepicker<FieldName>({
     disabledDateRanges,
     onChange,
     description,
+    disableFormatValidation = false,
+    invalidFormatErrorKey = 'datepicker.invalidFormat',
     ...restProps
 }: FormikDatepickerProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -75,8 +81,15 @@ function FormikDatepicker<FieldName>({
         fullscreenOverlay || (fullScreenOnMobile && isWide === false) ? 'fullscreen' : undefined;
     const inputName = (name || '') as string;
 
+    const validations = disableFormatValidation
+        ? []
+        : [(value) => validateFormikDatepickerDate(value, invalidFormatErrorKey)];
+    if (validate) {
+        validations.push(validate);
+    }
+
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validateAll(validations)} name={name}>
             {({ field, form }: FieldProps<FormikDatepickerValue>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
                 const fieldValue = field.value || {};
