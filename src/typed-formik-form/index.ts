@@ -24,6 +24,7 @@ export { default as LabelWithInfo } from './components/helpers/label-with-info/L
 export { default as SkjemagruppeQuestion } from './components/helpers/skjemagruppe-question/SkjemagruppeQuestion';
 
 export * from './types';
+export * from './validation';
 export * from './utils/countryUtils';
 export * from './utils/formikUtils';
 export * from './utils/typedFormErrorUtils';
