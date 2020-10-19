@@ -22,7 +22,6 @@ export interface DatepickerLimitiations {
 
 export type FormikDatepickerValue = {
     date: Date | undefined;
-
     dateString: string;
 };
 
