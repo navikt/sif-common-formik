@@ -5,14 +5,13 @@ import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger'
 import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
-import { validateAll } from '../../../dev/validation/fieldValidations';
 import { DateRange, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils, { createFormikDatepickerValue } from './datepickerUtils';
-import { validateFormikDatepickerDate } from './validateFormikDatepickerDate';
+import { validateAll, validateFormikDatepickerDate } from './validateFormikDatepickerDate';
 import './datepicker.less';
 
 export interface DatepickerLimitiations {
