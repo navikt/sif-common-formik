@@ -25,7 +25,6 @@ export type FormikDatepickerValue = {
     date: Date | undefined;
     dateString: string;
 };
-
 export interface DatePickerBaseProps<FieldName> {
     name: FieldName;
     label: string;
@@ -48,7 +47,7 @@ interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
 }
 
 export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> &
-    TypedFormInputCommonProps<FormikDatepickerValue | undefined> &
+    Omit<TypedFormInputCommonProps, 'validate'> &
     DatePickerPresentationProps &
     DatepickerLimitiations;
 
