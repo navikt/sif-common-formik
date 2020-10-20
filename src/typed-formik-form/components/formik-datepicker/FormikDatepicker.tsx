@@ -5,7 +5,7 @@ import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger'
 import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
-import { DateRange, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
+import { DateRange, FormikValidateFunction, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
@@ -26,15 +26,16 @@ export type FormikDatepickerValue = {
     dateString: string;
 };
 
-export interface DatePickerBaseProps<FieldName> extends Pick<TypedFormInputCommonProps, 'validate'> {
+export interface DatePickerBaseProps<FieldName> {
     name: FieldName;
     label: string;
     disabled?: boolean;
     feil?: NavFrontendSkjemaFeil;
-    onChange?: (date: FormikDatepickerValue) => void;
     dayPickerProps?: DayPickerProps;
     invalidFormatErrorKey?: string;
     disableFormatValidation?: boolean;
+    onChange?: (date: FormikDatepickerValue) => void;
+    validate?: FormikValidateFunction<FormikDatepickerValue | undefined>;
 }
 export interface DatePickerPresentationProps {
     showYearSelector?: boolean;

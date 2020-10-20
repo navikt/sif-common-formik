@@ -5,9 +5,9 @@ import { erGyldigNorskOrgnummer } from './erGyldigNorskOrgnummer';
 import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
 import { hasValue } from './hasValue';
 
-export declare type FormikValidateFunction = (value: any) => any;
+export declare type FormikValFunc = (value: any) => any;
 
-export type FieldValidationArray = (validations: FormikValidateFunction[]) => (value: any) => FieldValidationResult;
+export type FieldValidationArray = (validations: FormikValFunc[]) => (value: any) => FieldValidationResult;
 
 export enum FieldValidationErrors {
     'påkrevd' = 'common.fieldvalidation.påkrevd',
@@ -106,7 +106,7 @@ export const validateOrgNumber = (orgnum: string, isNorwegian: boolean): FieldVa
     return validateRequiredField(orgnum);
 };
 
-export const validateAll: FieldValidationArray = (validations: FormikValidateFunction[]) => (
+export const validateAll: FieldValidationArray = (validations: FormikValFunc[]) => (
     value: any
 ): FieldValidationResult => {
     let result: FieldValidationResult;

@@ -110,7 +110,7 @@ const FerieuttakForm = ({
                                     .map((f) => ({ from: f.fom, to: f.tom })),
                                 validate: (value) =>
                                     dateRangeValidation.validateFromDate(
-                                        value.date,
+                                        value?.date,
                                         minDate,
                                         maxDate,
                                         formik.values.tom
@@ -128,7 +128,12 @@ const FerieuttakForm = ({
                                 minDate: minDate || formik.values.fom,
                                 maxDate,
                                 validate: (value) =>
-                                    dateRangeValidation.validateToDate(value.date, minDate, maxDate, formik.values.fom),
+                                    dateRangeValidation.validateToDate(
+                                        value?.date,
+                                        minDate,
+                                        maxDate,
+                                        formik.values.fom
+                                    ),
                                 onChange: () => {
                                     setTimeout(() => {
                                         formik.validateField(FerieuttakFormFields.fom);
