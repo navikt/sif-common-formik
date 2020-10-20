@@ -47,7 +47,7 @@ interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
 }
 
 export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> &
-    TypedFormInputCommonProps &
+    TypedFormInputCommonProps<FormikDatepickerValue | undefined> &
     DatePickerPresentationProps &
     DatepickerLimitiations;
 

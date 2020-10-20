@@ -14,11 +14,11 @@ export interface DateRange {
     to: Date;
 }
 
-export type FormikValidateFunction = (value: any) => any;
+export type FormikValidateFunction<ValueType = any> = (value: ValueType) => any;
 
 export type NavFrontendSkjemaFeil = React.ReactNode | boolean;
 
-export interface TypedFormInputCommonProps {
-    validate?: FormikValidateFunction;
+export interface TypedFormInputCommonProps<ValueType = any> {
+    validate?: FormikValidateFunction<ValueType>;
     info?: React.ReactNode;
 }

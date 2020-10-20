@@ -7,7 +7,6 @@ import { PopoverOrientering } from 'nav-frontend-popover';
 import {
     createFormikDatepickerValue,
     FormikDateIntervalPicker,
-    FormikDatepickerValue,
     FormikFileInput,
     FormikInput,
     FormikInputGroup,
@@ -22,7 +21,6 @@ import {
     renderIntlFieldValidationError,
 } from '../../../modules/validation/fieldValidationRenderUtils';
 import {
-    validateDate,
     validateFormikDate,
     validateRequiredField,
     validateRequiredList,
@@ -56,7 +54,7 @@ const TypedFormExample = () => {
                             info={'sdfsdf'}
                             name={FormFields.birthdate}
                             label="Fødselsdato"
-                            validate={validateDate}
+                            validate={validateFormikDate}
                         />
                     </Question>
                     <Question>
@@ -156,7 +154,7 @@ const TypedFormExample = () => {
                         <Form.DatePicker
                             name={FormFields.birthdate}
                             label="Fødselsdato"
-                            validate={(value: FormikDatepickerValue) => {
+                            validate={(value) => {
                                 return validateFormikDate(value, true);
                             }}
                         />

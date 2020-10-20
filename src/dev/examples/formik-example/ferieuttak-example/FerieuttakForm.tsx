@@ -108,8 +108,13 @@ const FerieuttakForm = ({
                                 disabledDateRanges: alleFerieuttak
                                     .filter((f) => (ferieuttak ? ferieuttak.id !== f.id : true))
                                     .map((f) => ({ from: f.fom, to: f.tom })),
-                                validate: (date: Date) =>
-                                    dateRangeValidation.validateFromDate(date, minDate, maxDate, formik.values.tom),
+                                validate: (value) =>
+                                    dateRangeValidation.validateFromDate(
+                                        value.date,
+                                        minDate,
+                                        maxDate,
+                                        formik.values.tom
+                                    ),
                                 onChange: () => {
                                     setTimeout(() => {
                                         formik.validateField(FerieuttakFormFields.tom);
@@ -122,8 +127,8 @@ const FerieuttakForm = ({
                                 fullscreenOverlay: true,
                                 minDate: minDate || formik.values.fom,
                                 maxDate,
-                                validate: (date: Date) =>
-                                    dateRangeValidation.validateToDate(date, minDate, maxDate, formik.values.fom),
+                                validate: (value) =>
+                                    dateRangeValidation.validateToDate(value.date, minDate, maxDate, formik.values.fom),
                                 onChange: () => {
                                     setTimeout(() => {
                                         formik.validateField(FerieuttakFormFields.fom);
