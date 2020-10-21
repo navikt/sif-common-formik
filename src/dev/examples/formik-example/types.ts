@@ -30,8 +30,8 @@ export interface CompletedFormValues {
     [FormFields.hasBeenAbroadWithKids]?: YesOrNo;
     [FormFields.countries]: string[];
     [FormFields.time]?: Time;
-    [FormFields.daterange_from]?: Date;
-    [FormFields.daterange_to]?: Date;
+    [FormFields.daterange_from]?: FormikDatepickerValue;
+    [FormFields.daterange_to]?: FormikDatepickerValue;
     [FormFields.files]?: any;
     [FormFields.ferieuttak]?: Ferieuttak[];
 }

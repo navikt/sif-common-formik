@@ -30,7 +30,7 @@ import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDial
 import { FormFields, FormValues } from '../types';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
-const fullForm = false;
+const fullForm = true;
 
 const TypedFormExample = () => {
     const intl = useIntl();
@@ -99,13 +99,13 @@ const TypedFormExample = () => {
                             fromDatepickerProps={{
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
-                                maxDate: values.daterange_to,
+                                maxDate: values.daterange_to?.date,
                                 validate: validateRequiredField,
                             }}
                             toDatepickerProps={{
                                 name: FormFields.daterange_to,
                                 label: 'Til',
-                                minDate: values.daterange_from,
+                                minDate: values.daterange_from?.date,
                                 validate: validateRequiredField,
                             }}
                         />

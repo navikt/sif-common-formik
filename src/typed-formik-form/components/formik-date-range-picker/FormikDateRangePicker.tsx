@@ -5,6 +5,7 @@ import FormikDatepicker, {
     DatePickerBaseProps,
     DatepickerLimitiations,
     DatePickerPresentationProps,
+    FormikDatepickerValue,
 } from '../formik-datepicker/FormikDatepicker';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { getDateRangePickerLimitations } from './dateRangePickerUtils';
@@ -42,11 +43,11 @@ function FormikDateRangePicker<FieldName>({
     info,
 }: FormikDateRangePickerProps<FieldName>) {
     const { values } = useFormikContext<any>();
-    const fromDate: Date | undefined = values[fromInputProps.name];
-    const toDate: Date | undefined = values[toInputProps.name];
+    const fromDate: FormikDatepickerValue | undefined = values[fromInputProps.name];
+    const toDate: FormikDatepickerValue | undefined = values[toInputProps.name];
     const { fromDateLimitations, toDateLimitations } = getDateRangePickerLimitations({
-        fromDate,
-        toDate,
+        fromDate: fromDate?.date,
+        toDate: toDate?.date,
         minDate,
         maxDate,
         dateRanges: disabledDateRanges,
