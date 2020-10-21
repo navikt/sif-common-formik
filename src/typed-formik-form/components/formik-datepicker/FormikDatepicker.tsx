@@ -30,6 +30,7 @@ export interface DatePickerBaseProps<FieldName> {
     label: string;
     disabled?: boolean;
     feil?: NavFrontendSkjemaFeil;
+    inputTitle?: string;
     dayPickerProps?: DayPickerProps;
     invalidFormatErrorKey?: string;
     disableFormatValidation?: boolean;
@@ -67,6 +68,7 @@ function FormikDatepicker<FieldName>({
     maxDate,
     disableWeekend,
     disabledDateRanges,
+    inputTitle,
     onChange,
     description,
     disableFormatValidation = false,
@@ -114,7 +116,7 @@ function FormikDatepicker<FieldName>({
                         <Datepicker
                             inputId={elementId}
                             {...restProps}
-                            inputProps={{ name: inputName, placeholder, 'aria-invalid': isInvalid }}
+                            inputProps={{ name: inputName, placeholder, 'aria-invalid': isInvalid, title: inputTitle }}
                             value={fieldValue.dateString}
                             limitations={datepickerUtils.parseDateLimitations({
                                 minDate,
