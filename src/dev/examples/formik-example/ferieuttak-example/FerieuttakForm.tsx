@@ -7,6 +7,7 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { getTypedFormComponents } from '../../../../typed-formik-form';
 import { Ferieuttak, isFerieuttak, Ferieland } from './types';
 import { validateRequiredList } from '../../../validation/fieldValidations';
+import { parseDateString } from '../../../../typed-formik-form/components/formik-datepicker/datepickerUtils';
 
 export interface FerieuttakFormLabels {
     title: string;
@@ -110,7 +111,7 @@ const FerieuttakForm = ({
                                     .map((f) => ({ from: f.fom, to: f.tom })),
                                 validate: (value) =>
                                     dateRangeValidation.validateFromDate(
-                                        value?.date,
+                                        parseDateString(value),
                                         minDate,
                                         maxDate,
                                         formik.values.tom
@@ -129,7 +130,7 @@ const FerieuttakForm = ({
                                 maxDate,
                                 validate: (value) =>
                                     dateRangeValidation.validateToDate(
-                                        value?.date,
+                                        parseDateString(value),
                                         minDate,
                                         maxDate,
                                         formik.values.fom

@@ -10,9 +10,10 @@ import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
-import datepickerUtils, { createFormikDatepickerValue } from './datepickerUtils';
-import { validateAll, validateFormikDatepickerDate } from './validateFormikDatepickerDate';
+import datepickerUtils from './datepickerUtils';
+import { validateAll } from './validateFormikDatepickerDate';
 import './datepicker.less';
+import { validateDateString } from '../../../dev/validation/fieldValidations';
 
 export interface DatepickerLimitiations {
     minDate?: Date;
@@ -21,10 +22,6 @@ export interface DatepickerLimitiations {
     disableWeekend?: boolean;
 }
 
-export type FormikDatepickerValue = {
-    date: Date | undefined;
-    dateString: string;
-};
 export interface DatePickerBaseProps<FieldName> {
     name: FieldName;
     label: string;
@@ -34,8 +31,8 @@ export interface DatePickerBaseProps<FieldName> {
     dayPickerProps?: DayPickerProps;
     invalidFormatErrorKey?: string;
     disableFormatValidation?: boolean;
-    onChange?: (date: FormikDatepickerValue) => void;
-    validate?: FormikValidateFunction<FormikDatepickerValue | undefined>;
+    onChange?: (date: string) => void;
+    validate?: FormikValidateFunction<string | undefined>;
 }
 export interface DatePickerPresentationProps {
     showYearSelector?: boolean;
@@ -72,7 +69,7 @@ function FormikDatepicker<FieldName>({
     onChange,
     description,
     disableFormatValidation = false,
-    invalidFormatErrorKey = 'datepicker.invalidFormat',
+    invalidFormatErrorKey = 'common.fieldvalidation.dato.ugyldigFormat',
     ...restProps
 }: FormikDatepickerProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -82,24 +79,21 @@ function FormikDatepicker<FieldName>({
         fullscreenOverlay || (fullScreenOnMobile && isWide === false) ? 'fullscreen' : undefined;
     const inputName = (name || '') as string;
 
-    const validations = disableFormatValidation
-        ? []
-        : [(value) => validateFormikDatepickerDate(value, invalidFormatErrorKey)];
+    const validations = disableFormatValidation ? [] : [(value) => validateDateString(value, invalidFormatErrorKey)];
     if (validate) {
         validations.push(validate);
     }
 
     return (
         <Field validate={validateAll(validations)} name={name}>
-            {({ field, form }: FieldProps<FormikDatepickerValue>) => {
+            {({ field, form }: FieldProps<string>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
-                const fieldValue = field.value || {};
+                // const fieldValue = field.value || {};
                 const handleOnDatepickerChange: DatepickerChange = (dateString) => {
-                    const value = createFormikDatepickerValue(dateString);
-                    if (fieldValue.dateString !== value.dateString) {
-                        form.setFieldValue(field.name, value);
+                    if (field.value !== dateString) {
+                        form.setFieldValue(field.name, dateString);
                         if (onChange) {
-                            onChange(value);
+                            onChange(dateString);
                         }
                         if (context) {
                             context.onAfterFieldValueSet();
@@ -117,7 +111,7 @@ function FormikDatepicker<FieldName>({
                             inputId={elementId}
                             {...restProps}
                             inputProps={{ name: inputName, placeholder, 'aria-invalid': isInvalid, title: inputTitle }}
-                            value={fieldValue.dateString}
+                            value={field.value}
                             limitations={datepickerUtils.parseDateLimitations({
                                 minDate,
                                 maxDate,

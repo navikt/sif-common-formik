@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { DatepickerLimitations, DatepickerDateRange, isISODateString } from 'nav-datovelger';
-import { DatepickerLimitiations, FormikDatepickerValue } from './FormikDatepicker';
+import { DatepickerLimitiations } from './FormikDatepicker';
 
 const apiDateFormat = 'YYYY-MM-DD';
 
@@ -46,32 +46,12 @@ const getDateFromDateString = (dateString: string): Date | undefined => {
     return undefined;
 };
 
-const isDate = (input: any): input is Date => {
-    return typeof input === 'object' && Object.prototype.toString.call(input) === '[object Date]' ? true : false;
-};
+export const parseDateString = (dateString = ''): Date | undefined => getDateFromDateString(dateString);
 
 const datepickerUtils = {
     getDateStringFromValue,
     getDateFromDateString,
     parseDateLimitations,
-};
-
-export const createFormikDatepickerValue = (value: string | Date | undefined): FormikDatepickerValue => {
-    let date: Date | undefined;
-    let dateString = '';
-
-    if (isDate(value)) {
-        date = value;
-        dateString = dateToISOFormattedDateString(value);
-    }
-    if (typeof value === 'string') {
-        date = getDateFromDateString(value);
-        dateString = date ? dateToISOFormattedDateString(date) : value;
-    }
-    return {
-        date,
-        dateString,
-    };
 };
 
 export default datepickerUtils;

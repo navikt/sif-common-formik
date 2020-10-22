@@ -5,13 +5,13 @@ import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import {
-    createFormikDatepickerValue,
     FormikDateIntervalPicker,
     FormikFileInput,
     FormikInput,
     FormikInputGroup,
 } from '../../../../typed-formik-form';
 import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
+import { parseDateString } from '../../../../typed-formik-form/components/formik-datepicker/datepickerUtils';
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import Question from '../../../components/question/Question';
@@ -21,7 +21,7 @@ import {
     renderIntlFieldValidationError,
 } from '../../../modules/validation/fieldValidationRenderUtils';
 import {
-    validateFormikDate,
+    validateDateString,
     validateRequiredField,
     validateRequiredList,
     validateYesOrNoIsAnswered,
@@ -54,7 +54,7 @@ const TypedFormExample = () => {
                             info={'sdfsdf'}
                             name={FormFields.birthdate}
                             label="Fødselsdato"
-                            validate={validateFormikDate}
+                            validate={validateDateString}
                         />
                     </Question>
                     <Question>
@@ -99,13 +99,13 @@ const TypedFormExample = () => {
                             fromDatepickerProps={{
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
-                                maxDate: values.daterange_to?.date,
+                                maxDate: parseDateString(values.daterange_to),
                                 validate: validateRequiredField,
                             }}
                             toDatepickerProps={{
                                 name: FormFields.daterange_to,
                                 label: 'Til',
-                                minDate: values.daterange_from?.date,
+                                minDate: parseDateString(values.daterange_from),
                                 validate: validateRequiredField,
                             }}
                         />
@@ -154,15 +154,13 @@ const TypedFormExample = () => {
                         <Form.DatePicker
                             name={FormFields.birthdate}
                             label="Fødselsdato"
-                            validate={(value) => {
-                                return validateFormikDate(value, true);
-                            }}
+                            validate={validateDateString}
                         />
                     </Question>
                     <Knapp
                         htmlType="button"
                         onClick={() => {
-                            setFieldValue(FormFields.birthdate, createFormikDatepickerValue('2000-10-2'));
+                            setFieldValue(FormFields.birthdate, '2000-10-2');
                         }}>
                         Sett ugyldig dato
                     </Knapp>

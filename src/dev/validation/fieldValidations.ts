@@ -1,5 +1,5 @@
 import { isISODateString } from 'nav-datovelger';
-import { FormikDatepickerValue, YesOrNo } from '../../typed-formik-form';
+import { YesOrNo } from '../../typed-formik-form';
 import { FieldValidationResult } from '../modules/validation/types';
 import { erGyldigNorskOrgnummer } from './erGyldigNorskOrgnummer';
 import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
@@ -54,26 +54,23 @@ export const validateRequiredField = (value: any): FieldValidationResult => {
     return undefined;
 };
 
-export const validateDate = (value: string | Date | undefined): FieldValidationResult => {
-    if (typeof value === 'string') {
-        return createFieldValidationError(FieldValidationErrors.dato_ugyldig);
+export const validateDateString = (dateString = '', errorIntlKey?: string): FieldValidationResult => {
+    if (hasValue(dateString) && isISODateString(dateString) === false) {
+        return createFieldValidationError(errorIntlKey || FieldValidationErrors.dato_ugyldig);
     }
     return undefined;
 };
 
-export const validateFormikDate = (
-    value: FormikDatepickerValue | undefined,
-    isRequired?: boolean
-): FieldValidationResult => {
-    const { dateString = '' } = value || {};
-    if (isRequired && (value === undefined || dateString === '')) {
-        return fieldIsRequiredError();
-    }
-    if (isISODateString(dateString) === false) {
-        return createFieldValidationError(FieldValidationErrors.dato_ugyldig);
-    }
-    return undefined;
-};
+// export const validateFormikDate = (value: string | undefined, isRequired?: boolean): FieldValidationResult => {
+//     const { dateString = '' } = value || {};
+//     if (isRequired && (value === undefined || dateString === '')) {
+//         return fieldIsRequiredError();
+//     }
+//     if (isISODateString(dateString) === false) {
+//         return createFieldValidationError(FieldValidationErrors.dato_ugyldig);
+//     }
+//     return undefined;
+// };
 
 export const validateTruthyCheckbox = (value: any): FieldValidationResult => {
     if (value !== true) {
