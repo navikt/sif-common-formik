@@ -4,10 +4,9 @@ import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
 import dateRangeValidation from '@navikt/sif-common-core/lib/validation/dateRangeValidation';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { getTypedFormComponents } from '../../../../typed-formik-form';
-import { Ferieuttak, isFerieuttak, Ferieland } from './types';
+import { getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
 import { validateRequiredList } from '../../../validation/fieldValidations';
-import { parseDateString } from '../../../../typed-formik-form/components/formik-datepicker/datepickerUtils';
+import { Ferieland, Ferieuttak, isFerieuttak } from './types';
 
 export interface FerieuttakFormLabels {
     title: string;
@@ -111,7 +110,7 @@ const FerieuttakForm = ({
                                     .map((f) => ({ from: f.fom, to: f.tom })),
                                 validate: (value) =>
                                     dateRangeValidation.validateFromDate(
-                                        parseDateString(value),
+                                        ISOStringToDate(value),
                                         minDate,
                                         maxDate,
                                         formik.values.tom
@@ -130,7 +129,7 @@ const FerieuttakForm = ({
                                 maxDate,
                                 validate: (value) =>
                                     dateRangeValidation.validateToDate(
-                                        parseDateString(value),
+                                        ISOStringToDate(value),
                                         minDate,
                                         maxDate,
                                         formik.values.fom

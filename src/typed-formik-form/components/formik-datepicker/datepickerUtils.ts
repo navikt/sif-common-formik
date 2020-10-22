@@ -2,9 +2,10 @@ import moment from 'moment';
 import { DatepickerLimitations, DatepickerDateRange, isISODateString } from 'nav-datovelger';
 import { DatepickerLimitiations } from './FormikDatepicker';
 
-const apiDateFormat = 'YYYY-MM-DD';
+const isoStringFormat = 'YYYY-MM-DD';
 
-const dateToISOFormattedDateString = (date: Date) => moment(date).format(apiDateFormat);
+export const dateToISOString = (date?: Date) => (date ? moment(date).format(isoStringFormat) : '');
+export const ISOStringToDate = (dateString = ''): Date | undefined => getDateFromDateString(dateString);
 
 const parseDateLimitations = ({
     minDate,
@@ -13,12 +14,12 @@ const parseDateLimitations = ({
     disableWeekend,
 }: DatepickerLimitiations): DatepickerLimitations => {
     const invalidDateRanges: DatepickerDateRange[] = disabledDateRanges.map((d) => ({
-        from: dateToISOFormattedDateString(d.from),
-        to: dateToISOFormattedDateString(d.to),
+        from: dateToISOString(d.from),
+        to: dateToISOString(d.to),
     }));
     return {
-        minDate: minDate ? dateToISOFormattedDateString(minDate) : undefined,
-        maxDate: maxDate ? dateToISOFormattedDateString(maxDate) : undefined,
+        minDate: minDate ? dateToISOString(minDate) : undefined,
+        maxDate: maxDate ? dateToISOString(maxDate) : undefined,
         weekendsNotSelectable: disableWeekend,
         invalidDateRanges,
     };
@@ -36,7 +37,7 @@ const getDateStringFromValue = (value?: Date | string): string | undefined => {
     } else if (typeof value === 'object') {
         date = value;
     }
-    return date ? dateToISOFormattedDateString(date) : undefined;
+    return date ? dateToISOString(date) : undefined;
 };
 
 const getDateFromDateString = (dateString: string): Date | undefined => {
@@ -45,8 +46,6 @@ const getDateFromDateString = (dateString: string): Date | undefined => {
     }
     return undefined;
 };
-
-export const parseDateString = (dateString = ''): Date | undefined => getDateFromDateString(dateString);
 
 const datepickerUtils = {
     getDateStringFromValue,

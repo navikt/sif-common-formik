@@ -9,9 +9,9 @@ import {
     FormikFileInput,
     FormikInput,
     FormikInputGroup,
+    ISOStringToDate,
 } from '../../../../typed-formik-form';
 import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
-import { parseDateString } from '../../../../typed-formik-form/components/formik-datepicker/datepickerUtils';
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import Question from '../../../components/question/Question';
@@ -21,7 +21,6 @@ import {
     renderIntlFieldValidationError,
 } from '../../../modules/validation/fieldValidationRenderUtils';
 import {
-    validateDateString,
     validateRequiredField,
     validateRequiredList,
     validateYesOrNoIsAnswered,
@@ -54,7 +53,7 @@ const TypedFormExample = () => {
                             info={'sdfsdf'}
                             name={FormFields.birthdate}
                             label="Fødselsdato"
-                            validate={validateDateString}
+                            validate={validateRequiredField}
                         />
                     </Question>
                     <Question>
@@ -99,13 +98,13 @@ const TypedFormExample = () => {
                             fromDatepickerProps={{
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
-                                maxDate: parseDateString(values.daterange_to),
+                                maxDate: ISOStringToDate(values.daterange_to),
                                 validate: validateRequiredField,
                             }}
                             toDatepickerProps={{
                                 name: FormFields.daterange_to,
                                 label: 'Til',
-                                minDate: parseDateString(values.daterange_from),
+                                minDate: ISOStringToDate(values.daterange_from),
                                 validate: validateRequiredField,
                             }}
                         />
@@ -151,11 +150,7 @@ const TypedFormExample = () => {
             ) : (
                 <>
                     <Question>
-                        <Form.DatePicker
-                            name={FormFields.birthdate}
-                            label="Fødselsdato"
-                            validate={validateDateString}
-                        />
+                        <Form.DatePicker name={FormFields.birthdate} label="Fødselsdato" />
                     </Question>
                     <Knapp
                         htmlType="button"

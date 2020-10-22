@@ -26,4 +26,5 @@ export * from './utils/countryUtils';
 export * from './utils/formikUtils';
 export * from './utils/typedFormErrorUtils';
 export * from './components/getTypedFormComponents';
+export { ISOStringToDate, dateToISOString } from './components/formik-datepicker/datepickerUtils';
 export * from './components/formik-modal-form-and-list/types';
