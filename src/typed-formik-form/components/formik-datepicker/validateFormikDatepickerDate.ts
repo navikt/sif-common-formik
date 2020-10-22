@@ -1,6 +1,5 @@
 import { isISODateString } from 'nav-datovelger';
 import { IntlShape } from 'react-intl';
-import { FormikDatepickerValue } from './FormikDatepicker';
 
 /**
  * Midlertidig plassering av kode
@@ -40,25 +39,12 @@ export const validateAll: FieldValidationArray = (validations: FormikValidateFun
     return result;
 };
 
-const createFieldValidationError = <T extends string>(key: T | undefined, values?: any): FieldValidationResult => {
-    return key
-        ? {
-              key,
-              values,
-          }
-        : undefined;
-};
-
-export const validateFormikDatepickerDate = (
-    value: FormikDatepickerValue | undefined,
-    errorKey: string
-): FieldValidationResult => {
-    const { dateString = '' } = value || {};
-    if (dateString.trim() === '') {
-        return undefined;
-    }
-    if (isISODateString(dateString) === false) {
-        return createFieldValidationError(errorKey);
+export const validateDateString = (dateString = '', errorIntlKey: string): FieldValidationResult => {
+    if (dateString !== undefined && dateString !== '' && isISODateString(dateString) === false) {
+        return {
+            key: errorIntlKey,
+            values: { dateString },
+        };
     }
     return undefined;
 };

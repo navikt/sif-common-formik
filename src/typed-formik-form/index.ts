@@ -4,8 +4,6 @@ export { default as FormikConfirmationCheckboxPanel } from './components/formik-
 export { default as FormikCountrySelect } from './components/formik-country-select/FormikCountrySelect';
 export { default as FormikDateIntervalPicker } from './components/formik-date-interval-picker/FormikDateIntervalPicker';
 export { default as FormikDatepicker } from './components/formik-datepicker/FormikDatepicker';
-export type { FormikDatepickerValue } from './components/formik-datepicker/FormikDatepicker';
-export { createFormikDatepickerValue } from './components/formik-datepicker/datepickerUtils';
 export { default as FormikFileInput } from './components/formik-file-input/FormikFileInput';
 export { default as FormikInput } from './components/formik-input/FormikInput';
 export { default as FormikInputGroup } from './components/formik-input-group/FormikInputGroup';
@@ -28,4 +26,5 @@ export * from './utils/countryUtils';
 export * from './utils/formikUtils';
 export * from './utils/typedFormErrorUtils';
 export * from './components/getTypedFormComponents';
+export { ISOStringToDate, dateToISOString } from './components/formik-datepicker/datepickerUtils';
 export * from './components/formik-modal-form-and-list/types';
