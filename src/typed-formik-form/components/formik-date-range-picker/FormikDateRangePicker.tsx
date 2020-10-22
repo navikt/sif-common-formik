@@ -9,6 +9,7 @@ import FormikDatepicker, {
 import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { getDateRangePickerLimitations } from './dateRangePickerUtils';
 import './dateRangePicker.less';
+import { ISOStringToDate } from '../formik-datepicker/datepickerUtils';
 
 interface OwnProps<FieldName> {
     legend?: string;
@@ -42,11 +43,11 @@ function FormikDateRangePicker<FieldName>({
     info,
 }: FormikDateRangePickerProps<FieldName>) {
     const { values } = useFormikContext<any>();
-    const fromDate = values[fromInputProps.name];
-    const toDate = values[toInputProps.name];
+    const fromDate = ISOStringToDate(values[fromInputProps.name]);
+    const toDate = ISOStringToDate(values[toInputProps.name]);
     const { fromDateLimitations, toDateLimitations } = getDateRangePickerLimitations({
-        fromDate: fromDate?.date,
-        toDate: toDate?.date,
+        fromDate,
+        toDate,
         minDate,
         maxDate,
         dateRanges: disabledDateRanges,
