@@ -11,9 +11,8 @@ import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
-import { validateAll } from './validateFormikDatepickerDate';
+import { validateAll, validateDateString } from './validateFormikDatepickerDate';
 import './datepicker.less';
-import { validateDateString } from '../../../dev/validation/fieldValidations';
 
 export interface DatepickerLimitiations {
     minDate?: Date;

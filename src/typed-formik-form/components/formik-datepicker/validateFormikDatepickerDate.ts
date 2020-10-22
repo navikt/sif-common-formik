@@ -1,3 +1,4 @@
+import { isISODateString } from 'nav-datovelger';
 import { IntlShape } from 'react-intl';
 
 /**
@@ -36,4 +37,14 @@ export const validateAll: FieldValidationArray = (validations: FormikValidateFun
         return false;
     });
     return result;
+};
+
+export const validateDateString = (dateString = '', errorIntlKey: string): FieldValidationResult => {
+    if (dateString !== undefined && dateString !== '' && isISODateString(dateString) === false) {
+        return {
+            key: errorIntlKey,
+            values: { dateString },
+        };
+    }
+    return undefined;
 };
