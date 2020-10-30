@@ -40,7 +40,10 @@ const getDateStringFromValue = (value?: Date | string): string | undefined => {
     return date ? dateToISOString(date) : undefined;
 };
 
-const getDateFromDateString = (dateString: string): Date | undefined => {
+const getDateFromDateString = (dateString: string | undefined): Date | undefined => {
+    if (dateString === undefined) {
+        return undefined;
+    }
     if (isISODateString(dateString)) {
         return new Date(dateString);
     }
