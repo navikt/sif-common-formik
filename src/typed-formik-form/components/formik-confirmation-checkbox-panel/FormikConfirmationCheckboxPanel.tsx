@@ -17,6 +17,7 @@ function FormikConfirmationCheckboxPanel<FieldName>({
     name,
     feil,
     validate,
+    inputProps,
     ...restProps
 }: FormikConfirmationCheckboxPanelProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -26,6 +27,7 @@ function FormikConfirmationCheckboxPanel<FieldName>({
                 return (
                     <BekreftCheckboksPanel
                         {...restProps}
+                        inputProps={{ ...inputProps, autoComplete: 'false' }}
                         {...field}
                         checked={field.value === true}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
