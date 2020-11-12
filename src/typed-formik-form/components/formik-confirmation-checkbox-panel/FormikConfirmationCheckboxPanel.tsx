@@ -27,7 +27,7 @@ function FormikConfirmationCheckboxPanel<FieldName>({
                 return (
                     <BekreftCheckboksPanel
                         {...restProps}
-                        inputProps={{ ...inputProps, autoComplete: 'false' }}
+                        inputProps={{ ...inputProps, autoComplete: 'off' }}
                         {...field}
                         checked={field.value === true}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
