@@ -33,6 +33,7 @@ function FormikCheckbox<FieldName>({
                         label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         checked={field.value === true}
+                        autoComplete="off"
                         onChange={(evt) => {
                             const newValue = evt.target.checked;
                             form.setFieldValue(field.name, newValue);

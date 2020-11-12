@@ -44,6 +44,7 @@ function FormikRadioPanelGroup<FieldName>({
                         }}
                         radios={radios.map((rb) => ({
                             name: `${name}`,
+                            autoComplete: 'off',
                             ...rb,
                         }))}
                     />

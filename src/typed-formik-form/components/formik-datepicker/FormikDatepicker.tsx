@@ -48,7 +48,7 @@ export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> &
     DatePickerPresentationProps &
     DatepickerLimitiations;
 
-const placeholder = 'dd.mm.åååå';
+const placeholder = undefined; //'dd.mm.åååå';
 
 function FormikDatepicker<FieldName>({
     validate,

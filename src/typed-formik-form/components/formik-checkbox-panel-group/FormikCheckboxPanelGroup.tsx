@@ -45,6 +45,7 @@ function FormikCheckboxPanelGroup<FieldName>({
                         checkboxes={checkboxes.map((cb) => ({
                             ...cb,
                             checked: isCheckboxChecked(field.value, cb.value),
+                            autoComplete: 'off',
                         }))}
                         className={useTwoColumns ? 'twoColumnPanelGruppe' : undefined}
                         onChange={(evt, value) => {

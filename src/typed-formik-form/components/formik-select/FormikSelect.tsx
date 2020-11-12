@@ -31,6 +31,7 @@ function FormikSelect<FieldName>({
                         {...field}
                         {...restProps}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
+                        autoComplete="off"
                         value={field.value === undefined ? '' : field.value}>
                         {children}
                     </Select>
