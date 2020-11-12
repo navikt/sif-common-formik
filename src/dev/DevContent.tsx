@@ -13,9 +13,9 @@ const DevContent = ({ history }: Props) => {
     const routeConfig = getRouteConfig(pathname);
     return (
         <>
-            <aside className="asideContent">
+            <nav className="asideContent">
                 <LeftMenu />
-            </aside>
+            </nav>
             <article style={{ maxWidth: '1000px' }} className="mainContent">
                 {routeConfig ? routeConfig.renderContent() : <Intro />}
             </article>

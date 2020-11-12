@@ -111,7 +111,7 @@ const TypedFormExample = () => {
                     </Question>
                     <Question>
                         <FormikDateRangePicker
-                            legend="Tidsrom"
+                            legend="Tidsrom - kopi"
                             disableWeekend={true}
                             minDate={moment().subtract(4, 'months').toDate()}
                             maxDate={moment().add(4, 'months').toDate()}
