@@ -18,6 +18,7 @@ export { default as FormikYesOrNoQuestion } from './components/formik-yes-or-no-
 export { default as TypedFormikForm, TypedFormikFormContext } from './components/typed-formik-form/TypedFormikForm';
 export { default as TypedFormikWrapper } from './components/typed-formik-wrapper/TypedFormikWrapper';
 
+export { default as UnansweredQuestionsInfo } from './components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
 export { default as LabelWithInfo } from './components/helpers/label-with-info/LabelWithInfo';
 export { default as SkjemagruppeQuestion } from './components/helpers/skjemagruppe-question/SkjemagruppeQuestion';
 
