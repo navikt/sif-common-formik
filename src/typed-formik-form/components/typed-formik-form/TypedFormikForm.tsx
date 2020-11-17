@@ -13,6 +13,7 @@ export interface TypedFormikFormProps<FormValues> {
     className?: string;
     includeValidationSummary?: boolean;
     includeButtons?: boolean;
+    noButtonsContentRenderer?: () => React.ReactNode;
     fieldErrorRenderer: FormikErrorRender<FormValues>;
     resetFormOnCancel?: boolean;
     submitButtonLabel?: string;
@@ -50,6 +51,7 @@ function TypedFormikForm<FormValues>({
     cancelButtonLabel,
     fieldErrorRenderer,
     onValidSubmit,
+    noButtonsContentRenderer,
     id,
     cleanup,
     includeButtons = true,
@@ -159,6 +161,9 @@ function TypedFormikForm<FormValues>({
                             )}
                         </ButtonRow>
                     </div>
+                )}
+                {includeButtons === false && noButtonsContentRenderer && (
+                    <div style={{ marginTop: '2rem' }}>{noButtonsContentRenderer()}</div>
                 )}
             </TypedFormikFormContext.Provider>
         </form>
