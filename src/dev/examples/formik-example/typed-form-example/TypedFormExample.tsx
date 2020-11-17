@@ -27,6 +27,7 @@ import {
 } from '../../../validation/fieldValidations';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
+import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 const fullForm = true;
@@ -39,7 +40,10 @@ const TypedFormExample = () => {
         <Form.Form
             submitButtonLabel="Ok"
             includeValidationSummary={true}
-            noButtonsContentRenderer={() => <span>Du må fylle ut alle </span>}
+            includeButtons={false}
+            noButtonsContentRenderer={() => (
+                <UnansweredQuestionsInfo>Du har ubesvarte spørsmål</UnansweredQuestionsInfo>
+            )}
             fieldErrorRenderer={(error) => {
                 if (isIntlFieldValidationErrorType(error)) {
                     return renderIntlFieldValidationError(intl, error);
