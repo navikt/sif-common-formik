@@ -39,6 +39,7 @@ const TypedFormExample = () => {
         <Form.Form
             submitButtonLabel="Ok"
             includeValidationSummary={true}
+            noButtonsContentRenderer={() => <span>Du må fylle ut alle </span>}
             fieldErrorRenderer={(error) => {
                 if (isIntlFieldValidationErrorType(error)) {
                     return renderIntlFieldValidationError(intl, error);
