@@ -150,7 +150,7 @@ function TypedFormikForm<FormValues>({
                             </Knapp>
                             {onCancel && (
                                 <Knapp
-                                    type={cancelButtonType}
+                                    type={cancelButtonType || 'flat'}
                                     htmlType="button"
                                     onClick={() => {
                                         if (resetFormOnCancel) {
