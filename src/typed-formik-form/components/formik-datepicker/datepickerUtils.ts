@@ -1,10 +1,10 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { DatepickerLimitations, DatepickerDateRange, isISODateString } from 'nav-datovelger';
 import { DatepickerLimitiations } from './FormikDatepicker';
 
 const isoStringFormat = 'YYYY-MM-DD';
 
-export const dateToISOString = (date?: Date) => (date ? moment(date).format(isoStringFormat) : '');
+export const dateToISOString = (date?: Date) => (date ? dayjs(date).format(isoStringFormat) : '');
 export const ISOStringToDate = (dateString = ''): Date | undefined => getDateFromDateString(dateString);
 
 const parseDateLimitations = ({
@@ -31,8 +31,8 @@ const getDateStringFromValue = (value?: Date | string): string | undefined => {
         if (isISODateString(value) === false) {
             return value;
         }
-        if (moment(value, moment.ISO_8601, true).isValid()) {
-            date = moment(value).toDate();
+        if (dayjs(value, isoStringFormat, true).isValid()) {
+            date = dayjs(value).toDate();
         }
     } else if (typeof value === 'object') {
         date = value;

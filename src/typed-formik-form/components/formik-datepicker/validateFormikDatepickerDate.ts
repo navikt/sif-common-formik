@@ -1,24 +1,5 @@
 import { isISODateString } from 'nav-datovelger';
-import { IntlShape } from 'react-intl';
-
-/**
- * Midlertidig plassering av kode
- * Todo - flytte all validation til sif-common-soknad
- *
- * */
-
-type valueFunction = (intl: IntlShape) => string;
-
-interface FieldValidationResultValues {
-    [key: string]: string | number | Date | valueFunction | undefined;
-}
-
-interface IntlFieldValidationError {
-    key: string;
-    values?: FieldValidationResultValues;
-}
-
-type FieldValidationResult = IntlFieldValidationError | undefined | void;
+import { FieldValidationResult } from '../../types';
 
 declare type FormikValidateFunction = (value: any) => any;
 
