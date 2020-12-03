@@ -1,5 +1,5 @@
 import { isISODateString } from 'nav-datovelger';
-import { FieldValidationResult } from '../../types';
+import { FieldValidationResult } from '../../types/fieldValidation';
 
 declare type FormikValidateFunction = (value: any) => any;
 
