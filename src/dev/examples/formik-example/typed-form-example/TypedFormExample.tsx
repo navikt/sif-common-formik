@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
+import dayjs from 'dayjs';
 import { useFormikContext } from 'formik';
-import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import {
@@ -14,6 +14,7 @@ import {
 import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
+import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
 import Question from '../../../components/question/Question';
 import Tiles from '../../../components/tiles/Tiles';
 import {
@@ -27,7 +28,6 @@ import {
 } from '../../../validation/fieldValidations';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
-import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 const fullForm = true;
@@ -118,8 +118,8 @@ const TypedFormExample = () => {
                         <FormikDateRangePicker
                             legend="Tidsrom - kopi"
                             disableWeekend={true}
-                            minDate={moment().subtract(4, 'months').toDate()}
-                            maxDate={moment().add(4, 'months').toDate()}
+                            minDate={dayjs().subtract(4, 'month').toDate()}
+                            maxDate={dayjs().add(4, 'month').toDate()}
                             fromInputProps={{
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
@@ -138,8 +138,8 @@ const TypedFormExample = () => {
                                 modalTitle: 'Ferieuttak',
                                 listTitle: 'Ferieuttak',
                             }}
-                            minDate={moment().subtract(1, 'year').toDate()}
-                            maxDate={moment().add(1, 'year').toDate()}
+                            minDate={dayjs().subtract(1, 'year').toDate()}
+                            maxDate={dayjs().add(1, 'year').toDate()}
                             validate={validateRequiredList}
                         />
                     </Question>

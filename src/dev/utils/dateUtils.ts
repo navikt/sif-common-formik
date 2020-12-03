@@ -1,4 +1,10 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(isSameOrBefore);
+dayjs.extend(utc);
+
 import { ApiStringDate } from '../types/ApiStringDate';
 
 const apiDateFormat = 'YYYY-MM-DD';
@@ -6,40 +12,39 @@ const prettyDateFormat = 'DD.MM.YYYY';
 const prettyDateFormatExtended = 'DD. MMM YYYY';
 
 export const formatDateToApiFormat = (date: Date): ApiStringDate => {
-    const apiFormattedDate = moment(date).format(apiDateFormat);
+    const apiFormattedDate = dayjs(date).format(apiDateFormat);
     return apiFormattedDate;
 };
-export const prettifyDate = (date: Date): string => moment(date).format(prettyDateFormat);
-export const prettifyDateExtended = (date: Date) => moment(date).format(prettyDateFormatExtended);
-export const apiStringDateToDate = (date: ApiStringDate): Date => moment(date, apiDateFormat).toDate();
+export const prettifyDate = (date: Date): string => dayjs(date).format(prettyDateFormat);
+export const prettifyDateExtended = (date: Date) => dayjs(date).format(prettyDateFormatExtended);
+export const apiStringDateToDate = (date: ApiStringDate): Date => dayjs(date, apiDateFormat).toDate();
 
-export const isMoreThan3YearsAgo = (date: Date) => moment(date).isBefore(date3YearsAgo);
+export const isMoreThan3YearsAgo = (date: Date) => dayjs(date).isBefore(date3YearsAgo);
 
-export const dateToISOFormattedDateString = (date?: Date) =>
-    date ? moment.utc(date).format(apiDateFormat) : undefined;
+export const dateToISOFormattedDateString = (date?: Date) => (date ? dayjs.utc(date).format(apiDateFormat) : undefined);
 
-export const date10MonthsAgo = moment().subtract(10, 'months').startOf('day').toDate();
+export const date10MonthsAgo = dayjs().subtract(10, 'month').startOf('day').toDate();
 
-export const date1YearAgo = moment().subtract(1, 'years').startOf('day').toDate();
+export const date1YearAgo = dayjs().subtract(1, 'year').startOf('day').toDate();
 
-export const date4YearsAgo = moment().subtract(4, 'years').startOf('day').toDate();
+export const date4YearsAgo = dayjs().subtract(4, 'year').startOf('day').toDate();
 
-export const date3YearsAgo = moment().subtract(3, 'years').startOf('day').toDate();
+export const date3YearsAgo = dayjs().subtract(3, 'year').startOf('day').toDate();
 
-export const date4WeeksAgo = moment().subtract(4, 'weeks').startOf('day').toDate();
+export const date4WeeksAgo = dayjs().subtract(4, 'week').startOf('day').toDate();
 
-export const date1YearFromNow = moment().add(1, 'years').endOf('day').toDate();
+export const date1YearFromNow = dayjs().add(1, 'year').endOf('day').toDate();
 
-export const dateToday = moment().toDate();
+export const dateToday = dayjs().toDate();
 
 export const sortDateRange = (d1: DateRange, d2: DateRange): number => {
-    if (moment(d1.from).isSameOrBefore(d2.from)) {
+    if (dayjs(d1.from).isSameOrBefore(d2.from)) {
         return -1;
     }
     return 1;
 };
 export const sortOpenDateRange = (d1: OpenDateRange, d2: OpenDateRange): number => {
-    if (moment(d1.from).isSameOrBefore(d2.from)) {
+    if (dayjs(d1.from).isSameOrBefore(d2.from)) {
         return -1;
     }
     return 1;
@@ -60,7 +65,7 @@ export const dateRangesCollide = (ranges: DateRange[]): boolean => {
         const sortedDates = ranges.sort(sortDateRange);
         const hasOverlap = ranges.find((d, idx) => {
             if (idx < sortedDates.length - 1) {
-                return moment(d.to).isAfter(sortedDates[idx + 1].from);
+                return dayjs(d.to).isAfter(sortedDates[idx + 1].from);
             }
             return false;
         });
@@ -78,8 +83,8 @@ export const dateRangesExceedsRange = (ranges: DateRange[], allowedRange: DateRa
     const to = sortedRanges[sortedRanges.length - 1].to;
 
     if (
-        !moment(from).isBetween(allowedRange.from, allowedRange.to, 'day', '[]') ||
-        !moment(to).isBetween(allowedRange.from, allowedRange.to, 'day', '[]')
+        !dayjs(from).isBetween(allowedRange.from, allowedRange.to, 'day', '[]') ||
+        !dayjs(to).isBetween(allowedRange.from, allowedRange.to, 'day', '[]')
     ) {
         return true;
     }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { getAllErrors } from '../typedFormErrorUtils';
 
 const formikTemplate = {
@@ -177,45 +176,38 @@ const dyptObjectInniListeErrors = {
 describe('teste getAllErrors', () => {
     it('test1', () => {
         const formikInput = { ...formikTemplate, errors: simple };
-        // @ts-ignore
-        const input = getAllErrors(formikInput);
-        expect(input).toStrictEqual(simpleErrors);
+        const input = getAllErrors(formikInput as any);
+        expect(input).toStrictEqual(simpleErrors as any);
     });
     it('test2', () => {
         const formikInput = { ...formikTemplate, errors: complexWorking };
-        // @ts-ignore
-        const input = getAllErrors(formikInput);
-        expect(input).toStrictEqual(complexWorkingErrors);
+        const input = getAllErrors(formikInput as any);
+        expect(input).toStrictEqual(complexWorkingErrors as any);
     });
     it('test3', () => {
         const formikInput = { ...formikTemplate, errors: complex2 };
-        // @ts-ignore
-        const input = getAllErrors(formikInput);
-        expect(input).toStrictEqual(complex2Errors);
+        const input = getAllErrors(formikInput as any);
+        expect(input).toStrictEqual(complex2Errors as any);
     });
     it('test4', () => {
         const formikInput = { ...formikTemplate, errors: listWithNullValue };
-        // @ts-ignore
-        const input = getAllErrors(formikInput);
-        expect(input).toStrictEqual(listWithNullValueErrors);
+        const input = getAllErrors(formikInput as any);
+        expect(input).toStrictEqual(listWithNullValueErrors as any);
     });
     it('test5', () => {
         const formikInput = { ...formikTemplate, errors: combiStor };
-        // @ts-ignore
-        const input = getAllErrors(formikInput);
-        expect(input).toStrictEqual(combiStorErrors);
+        const input = getAllErrors(formikInput as any);
+        expect(input).toStrictEqual(combiStorErrors as any);
     });
 
     it('test6', () => {
         const formikInput = { ...formikTemplate, errors: dyptObjectInniListe };
-        // @ts-ignore
-        const input = getAllErrors(formikInput);
-        expect(input).toStrictEqual(dyptObjectInniListeErrors);
+        const input = getAllErrors(formikInput as any);
+        expect(input).toStrictEqual(dyptObjectInniListeErrors as any);
     });
     it('test7', () => {
         const formikInput = { ...formikTemplate, errors: listInList };
-        // @ts-ignore
-        const input = getAllErrors(formikInput);
-        expect(input).toStrictEqual(listInListErrors);
+        const input = getAllErrors(formikInput as any);
+        expect(input).toStrictEqual(listInListErrors as any);
     });
 });

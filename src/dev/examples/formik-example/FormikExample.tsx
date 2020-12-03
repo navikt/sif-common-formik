@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import Panel from 'nav-frontend-paneler';
 import 'nav-frontend-tabs-style';
 import TypedFormikWrapper from '../../../typed-formik-form/components/typed-formik-wrapper/TypedFormikWrapper';
@@ -12,13 +12,13 @@ const initialValues: FormValues = {
         {
             id: '1',
             fom: new Date(),
-            tom: moment().add(1, 'month').toDate(),
+            tom: dayjs().add(1, 'month').toDate(),
             land: [],
         },
         {
             id: '2',
-            fom: moment().add(1, 'month').toDate(),
-            tom: moment().add(2, 'month').toDate(),
+            fom: dayjs().add(1, 'month').toDate(),
+            tom: dayjs().add(2, 'month').toDate(),
             land: [],
         },
     ],

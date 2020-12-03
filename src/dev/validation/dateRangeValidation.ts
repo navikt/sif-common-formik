@@ -1,14 +1,18 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
+
+import { FieldValidationResult } from '../../typed-formik-form/types/fieldValidation';
 import { prettifyDateExtended } from '../utils/dateUtils';
 
-const dateIsWithinRange = (date: Date, minDate: Date, maxDate: Date) => {
-    return moment(date).isBetween(minDate, maxDate, 'day', '[]');
+export const dateIsWithinRange = (date: Date, minDate: Date, maxDate: Date): boolean => {
+    dayjs.extend(isBetween);
+    return dayjs(date).isBetween(minDate, maxDate, 'day', '[]');
 };
 
 const validateDateInRange = (date: Date | undefined, minDate: Date, maxDate: Date) => {
     if (date === undefined) {
         return {
-            key: 'dataRangeValidation.form.validation.required'
+            key: 'dataRangeValidation.form.validation.required',
         };
     }
     if (!dateIsWithinRange(date, minDate, maxDate)) {
@@ -16,21 +20,26 @@ const validateDateInRange = (date: Date | undefined, minDate: Date, maxDate: Dat
             key: 'dataRangeValidation.form.validation.dateOutsideRange',
             values: {
                 fom: prettifyDateExtended(minDate),
-                tom: prettifyDateExtended(maxDate)
-            }
+                tom: prettifyDateExtended(maxDate),
+            },
         };
     }
     return undefined;
 };
 
-const validateFromDate = (date: Date | undefined, minDate: Date, maxDate: Date, toDate?: Date) => {
+const validateFromDate = (
+    date: Date | undefined,
+    minDate: Date,
+    maxDate: Date,
+    toDate?: Date
+): FieldValidationResult => {
     const error = validateDateInRange(date, minDate, maxDate);
     if (error !== undefined) {
         return error;
     }
-    if (toDate && moment(date).isAfter(toDate, 'day')) {
+    if (toDate && dayjs(date).isAfter(toDate, 'day')) {
         return {
-            key: 'dataRangeValidation.form.validation.fromDateAfterToDate'
+            key: 'dataRangeValidation.form.validation.fromDateAfterToDate',
         };
     }
     return undefined;
@@ -41,9 +50,9 @@ const validateToDate = (date: Date | undefined, minDate: Date, maxDate: Date, fr
     if (error !== undefined) {
         return error;
     }
-    if (fromDate && moment(date).isBefore(fromDate, 'day')) {
+    if (fromDate && dayjs(date).isBefore(fromDate, 'day')) {
         return {
-            key: 'dataRangeValidation.form.validation.toDateBeforeFromDate'
+            key: 'dataRangeValidation.form.validation.toDateBeforeFromDate',
         };
     }
     return undefined;
@@ -51,7 +60,7 @@ const validateToDate = (date: Date | undefined, minDate: Date, maxDate: Date, fr
 
 const dateRangeValidation = {
     validateToDate,
-    validateFromDate
+    validateFromDate,
 };
 
 export default dateRangeValidation;

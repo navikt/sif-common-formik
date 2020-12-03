@@ -1,42 +1,47 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import minMax from 'dayjs/plugin/minMax';
 import { DateRange } from '../../types';
 import { DatepickerLimitiations } from '../formik-datepicker/FormikDatepicker';
 
+dayjs.extend(isSameOrBefore);
+dayjs.extend(minMax);
+
 const sortDateRange = (d1: DateRange, d2: DateRange): number => {
-    if (moment(d1.from).isSameOrBefore(d2.from)) {
+    if (dayjs(d1.from).isSameOrBefore(d2.from)) {
         return -1;
     }
     return 1;
 };
 
 const sortDateRangeByToDate = (d1: DateRange, d2: DateRange): number => {
-    if (moment(d1.to).isSameOrBefore(d2.to)) {
+    if (dayjs(d1.to).isSameOrBefore(d2.to)) {
         return -1;
     }
     return 1;
 };
 export const getRangesStartingAfterDate = (date: Date, dateRanges: DateRange[] = []): DateRange[] => {
-    return dateRanges.filter((dateRange) => moment(dateRange.from).isAfter(date, 'day'));
+    return dateRanges.filter((dateRange) => dayjs(dateRange.from).isAfter(date, 'day'));
 };
 
 export const getRangesEndingBeforeDate = (date: Date, dateRanges: DateRange[] = []): DateRange[] => {
-    return dateRanges.filter((dateRange) => moment(dateRange.to).isBefore(date, 'day'));
+    return dateRanges.filter((dateRange) => dayjs(dateRange.to).isBefore(date, 'day'));
 };
 
 export const findClosestDateAfterDate = (fromDate: Date, dates: Date[]): Date | undefined => {
-    const moments = dates.map((d) => moment(d)).filter((m) => m.isAfter(fromDate, 'day'));
-    return moments.length > 0 ? moment.min(moments).toDate() : undefined;
+    const dayjss = dates.map((d) => dayjs(d)).filter((m) => m.isAfter(fromDate, 'day'));
+    return dayjss.length > 0 ? dayjs.min(dayjss).toDate() : undefined;
 };
 
 export const findClosestDateBeforeDate = (fromDate: Date, dates: Date[]): Date | undefined => {
-    const moments = dates.map((d) => moment(d)).filter((m) => m.isBefore(fromDate, 'day'));
-    const maxDate = moments.length > 0 ? moment.max(moments).toDate() : undefined;
+    const dayjss = dates.map((d) => dayjs(d)).filter((m) => m.isBefore(fromDate, 'day'));
+    const maxDate = dayjss.length > 0 ? dayjs.max(dayjss).toDate() : undefined;
     return maxDate;
 };
 
 export const findClosestDateBeforeOrEqualDate = (fromDate: Date, dates: Date[]): Date | undefined => {
-    const moments = dates.map((d) => moment(d)).filter((m) => m.isSameOrBefore(fromDate, 'day'));
-    const maxDate = moments.length > 0 ? moment.max(moments).toDate() : undefined;
+    const dayjss = dates.map((d) => dayjs(d)).filter((m) => m.isSameOrBefore(fromDate, 'day'));
+    const maxDate = dayjss.length > 0 ? dayjs.max(dayjss).toDate() : undefined;
     return maxDate;
 };
 
@@ -57,7 +62,7 @@ const getFollowingDate = (
     if (!dateRange) {
         return undefined;
     }
-    return allowRangesToStartAndStopOnSameDate ? dateRange.from : moment(dateRange.from).subtract(1, 'day').toDate();
+    return allowRangesToStartAndStopOnSameDate ? dateRange.from : dayjs(dateRange.from).subtract(1, 'day').toDate();
 };
 
 export const getMaxDateForRangeStart = ({
@@ -115,7 +120,7 @@ const getPreceedingDate = (
     if (!dateRange) {
         return undefined;
     }
-    return allowRangesToStartAndStopOnSameDate ? dateRange.to : moment(dateRange.to).add(1, 'day').toDate();
+    return allowRangesToStartAndStopOnSameDate ? dateRange.to : dayjs(dateRange.to).add(1, 'day').toDate();
 };
 
 export const getMinDateForRangeStart = ({
