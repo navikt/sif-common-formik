@@ -14,6 +14,8 @@ export interface DateRange {
     to: Date;
 }
 
+export type CancelButtonTypes = 'standard' | 'hoved' | 'fare' | 'flat';
+
 export type FormikValidateFunction<ValueType = any> = (value: ValueType) => any;
 
 export type NavFrontendSkjemaFeil = React.ReactNode | boolean;

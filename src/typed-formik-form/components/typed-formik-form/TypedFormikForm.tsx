@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import { FieldInputProps, FormikErrors, FormikProps, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
-import { NavFrontendSkjemaFeil } from '../../types';
+import { CancelButtonTypes, NavFrontendSkjemaFeil } from '../../types';
 import { getErrorsForField, isValidationErrorsVisible } from '../../utils/typedFormErrorUtils';
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 import ButtonRow from '../helpers/button-row/ButtonRow';
@@ -22,6 +22,7 @@ export interface TypedFormikFormProps<FormValues> {
     cleanup?: (values: FormValues) => FormValues;
     onValidSubmit?: () => void;
     onCancel?: () => void;
+    cancelButtonType?: CancelButtonTypes;
     runDelayedFormValidation?: boolean;
 }
 
@@ -56,6 +57,7 @@ function TypedFormikForm<FormValues>({
     cleanup,
     includeButtons = true,
     runDelayedFormValidation,
+    cancelButtonType,
 }: TypedFormikFormProps<FormValues>) {
     const formik = useFormikContext<FormValues>();
     const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid, isValidating } = formik;
@@ -148,7 +150,7 @@ function TypedFormikForm<FormValues>({
                             </Knapp>
                             {onCancel && (
                                 <Knapp
-                                    type="flat"
+                                    type={cancelButtonType || 'flat'}
                                     htmlType="button"
                                     onClick={() => {
                                         if (resetFormOnCancel) {
