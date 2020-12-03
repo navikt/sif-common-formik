@@ -22,7 +22,7 @@ export interface TypedFormikFormProps<FormValues> {
     cleanup?: (values: FormValues) => FormValues;
     onValidSubmit?: () => void;
     onCancel?: () => void;
-    cancelButtonType: CancelButtonTypes;
+    cancelButtonType?: CancelButtonTypes;
     runDelayedFormValidation?: boolean;
 }
 
