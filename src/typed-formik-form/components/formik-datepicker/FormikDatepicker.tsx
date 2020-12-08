@@ -27,6 +27,7 @@ export interface DatePickerBaseProps<FieldName> {
     disabled?: boolean;
     feil?: NavFrontendSkjemaFeil;
     inputTitle?: string;
+    placeholder?: string;
     dayPickerProps?: DayPickerProps;
     invalidFormatErrorKey?: string;
     disableFormatValidation?: boolean;
@@ -48,8 +49,6 @@ export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> &
     DatePickerPresentationProps &
     DatepickerLimitiations;
 
-const placeholder = undefined; //'dd.mm.åååå';
-
 function FormikDatepicker<FieldName>({
     validate,
     label,
@@ -69,6 +68,7 @@ function FormikDatepicker<FieldName>({
     description,
     disableFormatValidation = false,
     invalidFormatErrorKey = 'common.fieldvalidation.dato.ugyldigFormat',
+    placeholder,
     ...restProps
 }: FormikDatepickerProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
