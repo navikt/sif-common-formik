@@ -42,11 +42,14 @@ function FormikRadioPanelGroup<FieldName>({
                                 context.onAfterFieldValueSet();
                             }
                         }}
-                        radios={radios.map((rb) => ({
-                            name: `${name}`,
-                            autoComplete: 'off',
-                            ...rb,
-                        }))}
+                        radios={radios.map((rb) => {
+                            return {
+                                name: `${name}`,
+                                autoComplete: 'off',
+                                'aria-invalid': undefined,
+                                ...rb,
+                            };
+                        })}
                     />
                 );
             }}

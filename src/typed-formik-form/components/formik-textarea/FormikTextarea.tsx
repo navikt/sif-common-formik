@@ -36,6 +36,7 @@ function FormikTextarea<FieldName>({
                                 context.onAfterFieldValueSet();
                             }
                         }}
+                        autoComplete="off"
                         value={field.value || ''}
                     />
                 );
