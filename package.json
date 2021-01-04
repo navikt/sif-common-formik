@@ -77,7 +77,7 @@
     "peerDependencies": {
         "classnames": "^2.2.6",
         "formik": "^2.2.0",
-        "nav-datovelger": "^8.0.x",
+        "nav-datovelger": "^8.1.x",
         "nav-frontend-alertstriper": "^3.0.35",
         "nav-frontend-core": "^5.0.10",
         "nav-frontend-hjelpetekst": "^2.0.37",
