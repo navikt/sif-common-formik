@@ -20,7 +20,8 @@
         "flat": "^5.0.2",
         "i18n-iso-countries": "^6.4.0",
         "nav-frontend-core": "^5.0.10",
-        "use-media": "^1.4.0"
+        "use-media": "^1.4.0",
+        "intl": "^1.2.5"
     },
     "devDependencies": {
         "@craco/craco": "^5.9.0",

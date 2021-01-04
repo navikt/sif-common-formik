@@ -13,6 +13,7 @@ import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
 import { validateAll, validateDateString } from './validateFormikDatepickerDate';
 import './datepicker.less';
+import { useIntl } from 'react-intl';
 
 export interface DatepickerLimitiations {
     minDate?: Date;
@@ -50,6 +51,19 @@ export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> &
     DatePickerPresentationProps &
     DatepickerLimitiations;
 
+const getLocaleToUse = (locale: string): 'nb' | 'nn' | 'en' | undefined => {
+    switch (locale) {
+        case 'nb':
+            return 'nb';
+        case 'nn':
+            return 'nn';
+        case 'en':
+            return 'en';
+        default:
+            return undefined;
+    }
+};
+
 function FormikDatepicker<FieldName>({
     validate,
     label,
@@ -70,6 +84,7 @@ function FormikDatepicker<FieldName>({
     disableFormatValidation = false,
     invalidFormatErrorKey = 'common.fieldvalidation.dato.ugyldigFormat',
     placeholder,
+    locale,
     ...restProps
 }: FormikDatepickerProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -78,6 +93,7 @@ function FormikDatepicker<FieldName>({
     const position: CalendarPlacement | undefined =
         fullscreenOverlay || (fullScreenOnMobile && isWide === false) ? 'fullscreen' : undefined;
     const inputName = (name || '') as string;
+    const intl = useIntl();
 
     const validations = disableFormatValidation ? [] : [(value) => validateDateString(value, invalidFormatErrorKey)];
     if (validate) {
@@ -109,6 +125,7 @@ function FormikDatepicker<FieldName>({
                         {description && <div className={'skjemaelement__description'}>{description}</div>}
                         <Datepicker
                             inputId={elementId}
+                            locale={getLocaleToUse(locale || intl.locale)}
                             {...restProps}
                             inputProps={{ name: inputName, placeholder, 'aria-invalid': isInvalid, title: inputTitle }}
                             value={field.value}
