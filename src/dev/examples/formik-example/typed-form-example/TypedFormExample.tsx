@@ -59,6 +59,7 @@ const TypedFormExample = () => {
                             name={FormFields.birthdate}
                             label="Fødselsdato"
                             validate={validateRequiredField}
+                            locale="nb"
                         />
                     </Question>
                     <Question>

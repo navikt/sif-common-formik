@@ -18,6 +18,7 @@ interface OwnProps<FieldName> {
     showYearSelector?: boolean;
     fullscreenOverlay?: boolean;
     fullScreenOnMobile?: boolean;
+    locale?: string;
     allowRangesToStartAndStopOnSameDate?: boolean;
     fromInputProps: DatePickerBaseProps<FieldName>;
     toInputProps: DatePickerBaseProps<FieldName>;
@@ -40,6 +41,7 @@ function FormikDateRangePicker<FieldName>({
     fullScreenOnMobile,
     fullscreenOverlay,
     allowRangesToStartAndStopOnSameDate,
+    locale,
     info,
 }: FormikDateRangePickerProps<FieldName>) {
     const { values } = useFormikContext<any>();
@@ -64,11 +66,13 @@ function FormikDateRangePicker<FieldName>({
                     {...fromInputProps}
                     {...{ fullscreenOverlay, fullScreenOnMobile, showYearSelector }}
                     {...fromDateLimitations}
+                    {...locale}
                 />
                 <FormikDatepicker<FieldName>
                     {...toInputProps}
                     {...{ fullscreenOverlay, fullScreenOnMobile, showYearSelector }}
                     {...toDateLimitations}
+                    {...locale}
                 />
             </div>
         </SkjemaGruppe>
