@@ -31,7 +31,7 @@ export interface DatePickerBaseProps<FieldName> {
     dayPickerProps?: DayPickerProps;
     invalidFormatErrorKey?: string;
     disableFormatValidation?: boolean;
-    locale?: string;
+    locale?: 'nb' | 'nn' | 'en';
     onChange?: (date: string) => void;
     validate?: FormikValidateFunction<string | undefined>;
 }
