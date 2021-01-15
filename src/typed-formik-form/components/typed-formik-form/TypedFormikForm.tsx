@@ -124,7 +124,7 @@ function TypedFormikForm<FormValues>({
                 return undefined;
             },
             onAfterFieldValueSet: () => {
-                if (runDelayedFormValidation && formik.status.showErrors) {
+                if (runDelayedFormValidation && formik.status && formik.status.showErrors) {
                     setTimeout(() => {
                         formik.validateForm();
                     });
