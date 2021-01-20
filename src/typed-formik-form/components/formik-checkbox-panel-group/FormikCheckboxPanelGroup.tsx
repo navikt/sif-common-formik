@@ -1,12 +1,11 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { CheckboksPanelGruppe, CheckboksPanelGruppeProps } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
 import { TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import '../../styles/nav-frontend-skjema-extension.less';
-import { Element } from 'nav-frontend-typografi';
 
 interface OwnProps<FieldName> extends Omit<CheckboksPanelGruppeProps, 'onChange'> {
     name: FieldName;

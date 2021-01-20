@@ -1,9 +1,8 @@
 import React from 'react';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import FormikDatepicker, { FormikDatepickerProps } from '../formik-datepicker/FormikDatepicker';
-
-import './dateIntervalPicker.less';
 import { Element } from 'nav-frontend-typografi';
+import FormikDatepicker, { FormikDatepickerProps } from '../formik-datepicker/FormikDatepicker';
+import './dateIntervalPicker.less';
 
 export interface DateIntervalPickerProps<FieldName> {
     legend?: string;

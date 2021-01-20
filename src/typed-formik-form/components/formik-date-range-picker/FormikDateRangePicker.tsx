@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
 import { ISOStringToDate } from '../formik-datepicker/datepickerUtils';
 import FormikDatepicker, {
     DatePickerBaseProps,
@@ -9,7 +10,6 @@ import FormikDatepicker, {
 } from '../formik-datepicker/FormikDatepicker';
 import { getDateRangePickerLimitations } from './dateRangePickerUtils';
 import './dateRangePicker.less';
-import { Element } from 'nav-frontend-typografi';
 
 interface OwnProps<FieldName> {
     legend?: string;
