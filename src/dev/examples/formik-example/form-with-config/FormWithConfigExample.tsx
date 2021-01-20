@@ -20,7 +20,7 @@ interface Props {
 
 const { Input, DatePicker, CountrySelect, Form } = getTypedFormComponents<FormFields, FormValues>();
 
-const FormWithConfigExample = ({ formik }: Props) => {
+const FormWithConfigExample: React.FunctionComponent<Props> = ({ formik }) => {
     const intl = useIntl();
     return (
         <QuestionVisibilityContext.Provider value={{ visibility: exampleFormQuestions.getVisbility(formik.values) }}>

@@ -55,13 +55,13 @@ const getNewTime = (
     return stateTime;
 };
 
-const TimeInput = ({
+const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     time = { hours: undefined, minutes: undefined },
     maxHours = MAX_HOURS,
     maxMinutes = MAX_MINUTES,
     onChange,
     layout = 'compact',
-}: TimeInputProps) => {
+}) => {
     const [stateTime, setStateTime] = useState<Partial<Time> | undefined>(time);
     const hours =
         !stateTime || stateTime.hours === undefined || isNaN(stateTime.hours)

@@ -1,17 +1,19 @@
 import React from 'react';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
-import LabelWithInfo from '../label-with-info/LabelWithInfo';
+import { Element } from 'nav-frontend-typografi';
 
-interface Props extends SkjemaGruppeProps {
-    info?: React.ReactNode;
-}
-
-const SkjemagruppeQuestion = ({ legend, feil, info, tag, children, className }: Props) => (
+const SkjemagruppeQuestion: React.FunctionComponent<SkjemaGruppeProps> = ({
+    legend,
+    feil,
+    tag,
+    children,
+    className,
+}) => (
     <SkjemaGruppe
         className={`${className ? className : ''} singleInputWrapper`}
         tag={tag ? tag : legend ? 'fieldset' : 'div'}
         feil={feil}
-        legend={legend ? <LabelWithInfo info={info}>{legend}</LabelWithInfo> : undefined}>
+        legend={legend ? <Element>{legend}</Element> : undefined}>
         {children}
     </SkjemaGruppe>
 );

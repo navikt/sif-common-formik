@@ -3,7 +3,6 @@ import { Field, FieldProps } from 'formik';
 import { SelectProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import CountrySelect from './CountrySelect';
 
@@ -16,11 +15,10 @@ interface OwnProps<FieldName> extends Omit<SelectProps, 'name' | 'children'> {
 export type FormikCountrySelectProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
 
 function FormikCountrySelect<FieldName>({
-    label,
     name,
     feil,
     validate,
-    info,
+    label,
     useAlpha3Code = true,
     showOnlyEuAndEftaCountries,
 }: FormikCountrySelectProps<FieldName>) {
@@ -30,8 +28,8 @@ function FormikCountrySelect<FieldName>({
             {({ field, form }: FieldProps) => {
                 return (
                     <CountrySelect
-                        label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         {...field}
+                        label={label}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         onChange={(value) => {
                             form.setFieldValue(field.name, value);

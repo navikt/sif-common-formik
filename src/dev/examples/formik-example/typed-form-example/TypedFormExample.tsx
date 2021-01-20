@@ -3,7 +3,6 @@ import { useIntl } from 'react-intl';
 import dayjs from 'dayjs';
 import { useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
-import { PopoverOrientering } from 'nav-frontend-popover';
 import {
     FormikDateIntervalPicker,
     FormikFileInput,
@@ -30,7 +29,7 @@ import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDial
 import { FormFields, FormValues } from '../types';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
-const fullForm = true;
+const fullForm = false;
 
 const TypedFormExample = () => {
     const intl = useIntl();
@@ -40,7 +39,7 @@ const TypedFormExample = () => {
         <Form.Form
             submitButtonLabel="Ok"
             includeValidationSummary={true}
-            includeButtons={false}
+            includeButtons={true}
             noButtonsContentRenderer={() => (
                 <UnansweredQuestionsInfo>Du har ubesvarte spørsmål</UnansweredQuestionsInfo>
             )}
@@ -55,7 +54,6 @@ const TypedFormExample = () => {
                 <>
                     <Question>
                         <Form.DatePicker
-                            info={'sdfsdf'}
                             name={FormFields.birthdate}
                             label="Fødselsdato"
                             validate={validateRequiredField}
@@ -68,7 +66,6 @@ const TypedFormExample = () => {
                         <Form.InputGroup
                             name={FormFields.birthCountry}
                             legend="Dette er legend"
-                            info="Hey"
                             validate={validateRequiredField}>
                             <FormikInput name="sdf" label="sdfsdf" />
                             sdf
@@ -83,8 +80,6 @@ const TypedFormExample = () => {
                     <Question>
                         <Form.YesOrNoQuestion
                             legend={'sdfjjsdfj'}
-                            info={'sdfsdf'}
-                            infoPlassering={PopoverOrientering.Under}
                             name={FormFields.hasKids}
                             validate={validateYesOrNoIsAnswered}
                         />
@@ -154,6 +149,18 @@ const TypedFormExample = () => {
                 </>
             ) : (
                 <>
+                    <Question>
+                        <Form.RadioGroup
+                            legend={'Velg en bokstav'}
+                            name={FormFields.letters}
+                            radios={[
+                                { label: 'a', value: 'a' },
+                                { label: 'b', value: 'b' },
+                                { label: 'c', value: 'c' },
+                            ]}
+                            validate={validateRequiredField}
+                        />
+                    </Question>
                     <Question>
                         <Form.DatePicker name={FormFields.birthdate} label="Fødselsdato" />
                     </Question>

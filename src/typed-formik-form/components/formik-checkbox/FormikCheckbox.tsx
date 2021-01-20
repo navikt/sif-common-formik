@@ -3,7 +3,6 @@ import { Field, FieldProps } from 'formik';
 import { Checkbox, CheckboxProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
 interface OwnProps<FieldName> extends Omit<CheckboxProps, 'name'> {
@@ -15,10 +14,8 @@ export type FormikCheckboxProps<FieldName> = OwnProps<FieldName> & TypedFormInpu
 
 function FormikCheckbox<FieldName>({
     name,
-    label,
     validate,
     afterOnChange,
-    info,
     feil,
     ...restProps
 }: FormikCheckboxProps<FieldName>) {
@@ -30,7 +27,6 @@ function FormikCheckbox<FieldName>({
                     <Checkbox
                         {...restProps}
                         {...field}
-                        label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         checked={field.value === true}
                         autoComplete="off"

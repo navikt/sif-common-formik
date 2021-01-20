@@ -16,6 +16,7 @@ export enum FormFields {
     'daterange_to' = 'daterange_to',
     'files' = 'files',
     'ferieuttak' = 'ferieuttak',
+    'letters' = 'letters',
 }
 
 export interface CompletedFormValues {
@@ -33,5 +34,6 @@ export interface CompletedFormValues {
     [FormFields.daterange_to]?: string;
     [FormFields.files]?: any;
     [FormFields.ferieuttak]?: Ferieuttak[];
+    [FormFields.letters]?: string;
 }
 export type FormValues = Partial<CompletedFormValues>;

@@ -3,7 +3,6 @@ import { Field, FieldProps } from 'formik';
 import { Input, InputProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
 type InputMode = 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
@@ -25,9 +24,7 @@ const getPatternForInputMode = (inputMode?: InputMode): string | undefined => {
 export type FormikInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
 
 function FormikInput<FieldName>({
-    label,
     name,
-    info,
     feil,
     validate,
     inputMode,
@@ -46,7 +43,6 @@ function FormikInput<FieldName>({
                         autoComplete={autoComplete || 'off'}
                         inputMode={inputMode}
                         pattern={getPatternForInputMode(inputMode)}
-                        label={<LabelWithInfo info={info}>{label}</LabelWithInfo>}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         value={field.value === undefined ? '' : field.value}
                     />

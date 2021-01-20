@@ -3,10 +3,9 @@ import React, { HTMLAttributes } from 'react';
 interface Props extends HTMLAttributes<HTMLDivElement> {
     isFormik?: boolean;
     isLayout?: boolean;
-    children: React.ReactNode;
 }
 
-const Code = ({ children, style, isFormik, isLayout }: Props) => (
+const Code: React.FunctionComponent<Props> = ({ children, style, isFormik, isLayout }) => (
     <div style={{ margin: '.5rem 0', ...style }}>
         <code
             style={{

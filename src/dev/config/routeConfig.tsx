@@ -12,13 +12,13 @@ export const routes: RouteConfig[] = [
     {
         path: 'frontpage',
         title: 'Forside',
-        renderContent: () => <Intro />
+        renderContent: () => <Intro />,
     },
     {
         path: 'formik-example',
         title: 'TypedFormExample',
-        renderContent: () => <FormikExample />
-    }
+        renderContent: () => <FormikExample />,
+    },
 ];
 
 export const getRouteConfig = (pathname: string): RouteConfig | undefined => {

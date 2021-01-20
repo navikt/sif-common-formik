@@ -24,6 +24,7 @@ import FormikYesOrNoQuestion, { FormikYesOrNoQuestionProps } from './formik-yes-
 import TypedFormikForm, { TypedFormikFormProps } from './typed-formik-form/TypedFormikForm';
 import TypedFormikWrapper, { TypedFormikWrapperProps } from './typed-formik-wrapper/TypedFormikWrapper';
 import '../styles/nav-frontend-skjema-extension.less';
+import FormikRadioGroup, { FormikRadioGroupProps } from './formik-radio-group/FormikRadioGroup';
 
 export function getTypedFormComponents<FieldNames, FormValues>() {
     return {
@@ -47,6 +48,7 @@ export function getTypedFormComponents<FieldNames, FormValues>() {
         FormikWrapper: (props: TypedFormikWrapperProps<FormValues>) => <TypedFormikWrapper {...props} />,
         Input: (props: FormikInputProps<FieldNames>) => <FormikInput<FieldNames> {...props} />,
         InputGroup: (props: FormikInputGroupProps<FieldNames>) => <FormikInputGroup<FieldNames> {...props} />,
+        RadioGroup: (props: FormikRadioGroupProps<FieldNames>) => <FormikRadioGroup<FieldNames> {...props} />,
         RadioPanelGroup: (props: FormikRadioPanelGroupProps<FieldNames>) => (
             <FormikRadioPanelGroup<FieldNames> {...props} />
         ),

@@ -7,5 +7,4 @@ export interface ModalFormAndListLabels {
     listTitle?: string;
     emptyListText?: string;
     addLabel: string;
-    info?: string;
 }

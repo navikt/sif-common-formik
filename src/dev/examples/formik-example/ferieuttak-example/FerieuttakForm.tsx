@@ -46,7 +46,7 @@ type FormValues = Partial<Ferieuttak>;
 
 const Form = getTypedFormComponents<FerieuttakFormFields, FormValues>();
 
-const FerieuttakForm = ({
+const FerieuttakForm: React.FunctionComponent<Props> = ({
     maxDate,
     minDate,
     labels,
@@ -54,7 +54,7 @@ const FerieuttakForm = ({
     alleFerieuttak = [],
     onSubmit,
     onCancel,
-}: Props) => {
+}) => {
     const intl = useIntl();
     const onFormikSubmit = (formValues: FormValues) => {
         if (isFerieuttak(formValues)) {

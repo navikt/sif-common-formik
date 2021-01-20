@@ -1,10 +1,9 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
-import { Feilmelding } from 'nav-frontend-typografi';
+import { Element, Feilmelding } from 'nav-frontend-typografi';
 import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import './formikInputGroup.less';
 
@@ -16,11 +15,10 @@ interface OwnProps<FieldName> extends SkjemaGruppeProps {
 export type FormikInputGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
 
 function FormikInputGroup<FieldName>({
-    name,
     legend,
+    name,
     feil,
     children,
-    info,
     validate,
     className,
     ...restProps
@@ -34,8 +32,8 @@ function FormikInputGroup<FieldName>({
                 return (
                     <SkjemaGruppe
                         {...restProps}
-                        className={`${className ? className : ''} singleInputWrapper`}
-                        legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}>
+                        legend={legend ? <Element>{legend}</Element> : undefined}
+                        className={`${className ? className : ''} singleInputWrapper`}>
                         {children}
 
                         {/** Må sette inn denne selv pga feil på SkjemaGruppe påvirker styling av alle elementer i gruppen*/}
