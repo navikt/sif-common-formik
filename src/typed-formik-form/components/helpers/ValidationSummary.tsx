@@ -8,7 +8,7 @@ interface Props {
     focusOnMount?: boolean;
 }
 
-const ValidationSummary = ({ title, errorMessages }: Props) => {
+const ValidationSummary: React.FunctionComponent<Props> = ({ title, errorMessages }) => {
     const summaryEl = useRef<HTMLDivElement>(null);
     useEffect(() => {
         const { current } = summaryEl;

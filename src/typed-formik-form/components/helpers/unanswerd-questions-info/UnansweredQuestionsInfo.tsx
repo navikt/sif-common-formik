@@ -2,11 +2,7 @@ import React from 'react';
 import Alertstripe from 'nav-frontend-alertstriper';
 import './unansweredQuestionsInfo.less';
 
-interface Props {
-    children: React.ReactNode;
-}
-
-const UnansweredQuestionsInfo = ({ children }: Props) => (
+const UnansweredQuestionsInfo: React.FunctionComponent = ({ children }) => (
     <div className="unansweredQuestionsInfo">
         <Alertstripe type="info" form="inline">
             {children}

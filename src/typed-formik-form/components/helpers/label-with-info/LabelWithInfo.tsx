@@ -5,12 +5,15 @@ import { Element } from 'nav-frontend-typografi';
 import './labelWithInfo.less';
 
 interface LabelWithHelperText {
-    children: React.ReactNode;
     info?: React.ReactNode;
     infoPlassering?: PopoverOrientering;
 }
 
-const LabelWithInfo = ({ children, info, infoPlassering = PopoverOrientering.Over }: LabelWithHelperText) => {
+const LabelWithInfo: React.FunctionComponent<LabelWithHelperText> = ({
+    children,
+    info,
+    infoPlassering = PopoverOrientering.Over,
+}) => {
     if (!children) {
         return null;
     }

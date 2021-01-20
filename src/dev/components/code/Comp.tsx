@@ -8,10 +8,9 @@ interface Props {
     actions?: string;
     isFormik?: boolean;
     isLayout?: boolean;
-    children: React.ReactNode;
 }
 
-const Comp = ({ title, children, actions, isFormik, isLayout }: Props) => (
+const Comp: React.FunctionComponent<Props> = ({ title, children, actions, isFormik, isLayout }) => (
     <div>
         <Code
             isFormik={isFormik}

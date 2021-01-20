@@ -1,7 +1,5 @@
 import React from 'react';
-
 import bemHelper from '../../utils/bemUtils';
-
 import './box.less';
 
 type BoxMargin = 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl' | 'none';
@@ -11,12 +9,11 @@ interface BoxProps {
     padBottom?: BoxMargin;
     textAlignCenter?: boolean;
     className?: string;
-    children: React.ReactNode;
 }
 
 const bem = bemHelper('box');
 
-const Box = ({ margin, padBottom, className, textAlignCenter, children }: BoxProps) => {
+const Box: React.FunctionComponent<BoxProps> = ({ margin, padBottom, className, textAlignCenter, children }) => {
     const classNames = bem.classNames(
         bem.block,
         bem.modifierConditional(margin, margin !== undefined),

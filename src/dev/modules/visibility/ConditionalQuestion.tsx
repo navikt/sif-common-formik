@@ -4,10 +4,9 @@ import VisibilityBlock from './VisibilityBlock';
 
 interface Props {
     forField: string;
-    children: React.ReactNode;
 }
 
-const ConditionalQuestion = ({ forField, children }: Props) => (
+const ConditionalQuestion: React.FunctionComponent<Props> = ({ forField, children }) => (
     <VisibilityBlock fieldName={forField}>
         <Question>{children}</Question>
     </VisibilityBlock>
