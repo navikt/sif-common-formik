@@ -22,5 +22,4 @@ export type NavFrontendSkjemaFeil = React.ReactNode | boolean;
 
 export interface TypedFormInputCommonProps<ValueType = any> {
     validate?: FormikValidateFunction<ValueType>;
-    info?: React.ReactNode;
 }

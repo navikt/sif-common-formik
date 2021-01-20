@@ -7,7 +7,7 @@ import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
 import { DateRange, FormikValidateFunction, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
+
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
@@ -69,7 +69,6 @@ function FormikDatepicker<FieldName>({
     label,
     name,
     id,
-    info,
     showYearSelector,
     fullscreenOverlay,
     fullScreenOnMobile,
@@ -119,9 +118,7 @@ function FormikDatepicker<FieldName>({
 
                 return (
                     <SkjemagruppeQuestion feil={getFeilPropForFormikInput({ field, form, context, feil })}>
-                        <Label htmlFor={elementId}>
-                            <LabelWithInfo info={info}>{label}</LabelWithInfo>
-                        </Label>
+                        <Label htmlFor={elementId}>{label}</Label>
                         {description && <div className={'skjemaelement__description'}>{description}</div>}
                         <Datepicker
                             inputId={elementId}

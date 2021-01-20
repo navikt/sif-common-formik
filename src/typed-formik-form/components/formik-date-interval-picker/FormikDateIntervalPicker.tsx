@@ -1,14 +1,14 @@
 import React from 'react';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import FormikDatepicker, { FormikDatepickerProps } from '../formik-datepicker/FormikDatepicker';
-import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
+
 import './dateIntervalPicker.less';
+import { Element } from 'nav-frontend-typografi';
 
 export interface DateIntervalPickerProps<FieldName> {
     legend?: string;
     fromDatepickerProps: FormikDatepickerProps<FieldName>;
     toDatepickerProps: FormikDatepickerProps<FieldName>;
-    info?: string;
     description?: React.ReactNode;
 }
 
@@ -17,11 +17,10 @@ function FormikDateIntervalPicker<FieldName>({
     fromDatepickerProps,
     toDatepickerProps,
     description,
-    info,
 }: DateIntervalPickerProps<FieldName>) {
     return (
         <SkjemaGruppe
-            legend={legend ? <LabelWithInfo info={info}>{legend}</LabelWithInfo> : undefined}
+            legend={legend ? <Element>{legend}</Element> : undefined}
             description={description}
             className="dateIntervalPicker">
             <div className="dateIntervalPicker__flexContainer">

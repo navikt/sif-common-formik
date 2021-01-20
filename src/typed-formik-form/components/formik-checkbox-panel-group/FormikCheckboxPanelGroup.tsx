@@ -3,9 +3,10 @@ import { Field, FieldProps } from 'formik';
 import { CheckboksPanelGruppe, CheckboksPanelGruppeProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
+
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import '../../styles/nav-frontend-skjema-extension.less';
+import { Element } from 'nav-frontend-typografi';
 
 interface OwnProps<FieldName> extends Omit<CheckboksPanelGruppeProps, 'onChange'> {
     name: FieldName;
@@ -29,7 +30,6 @@ function FormikCheckboxPanelGroup<FieldName>({
     legend,
     feil,
     checkboxes,
-    info,
     useTwoColumns,
     ...restProps
 }: FormikCheckboxPanelGroupProps<FieldName>) {
@@ -41,7 +41,7 @@ function FormikCheckboxPanelGroup<FieldName>({
                     <CheckboksPanelGruppe
                         {...restProps}
                         {...field}
-                        legend={<LabelWithInfo info={info}>{legend}</LabelWithInfo>}
+                        legend={legend ? <Element>{legend}</Element> : undefined}
                         checkboxes={checkboxes.map((cb) => ({
                             ...cb,
                             checked: isCheckboxChecked(field.value, cb.value),

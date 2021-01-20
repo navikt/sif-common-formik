@@ -16,6 +16,9 @@ export const fødselsnummerIsValid = (value: string): [boolean, FødselsnummerVa
     if (status === 'valid') {
         return [true, []];
     } else {
-        return [false, reasons!];
+        if (reasons) {
+            return [false, reasons];
+        }
+        return [false, []];
     }
 };

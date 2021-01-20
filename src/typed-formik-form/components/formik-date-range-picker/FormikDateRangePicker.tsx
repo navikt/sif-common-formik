@@ -1,19 +1,18 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
+import { ISOStringToDate } from '../formik-datepicker/datepickerUtils';
 import FormikDatepicker, {
     DatePickerBaseProps,
     DatepickerLimitiations,
     DatePickerPresentationProps,
 } from '../formik-datepicker/FormikDatepicker';
-import LabelWithInfo from '../helpers/label-with-info/LabelWithInfo';
 import { getDateRangePickerLimitations } from './dateRangePickerUtils';
 import './dateRangePicker.less';
-import { ISOStringToDate } from '../formik-datepicker/datepickerUtils';
+import { Element } from 'nav-frontend-typografi';
 
 interface OwnProps<FieldName> {
     legend?: string;
-    info?: string;
     description?: React.ReactNode;
     showYearSelector?: boolean;
     fullscreenOverlay?: boolean;
@@ -42,7 +41,6 @@ function FormikDateRangePicker<FieldName>({
     fullscreenOverlay,
     allowRangesToStartAndStopOnSameDate,
     locale,
-    info,
 }: FormikDateRangePickerProps<FieldName>) {
     const { values } = useFormikContext<any>();
     const fromDate = ISOStringToDate(values[fromInputProps.name]);
@@ -58,7 +56,7 @@ function FormikDateRangePicker<FieldName>({
     });
     return (
         <SkjemaGruppe
-            legend={legend ? <LabelWithInfo info={info}>{legend}</LabelWithInfo> : undefined}
+            legend={legend ? <Element>{legend}</Element> : undefined}
             description={description}
             className="dateRangePicker">
             <div className="dateRangePicker__flexContainer">
