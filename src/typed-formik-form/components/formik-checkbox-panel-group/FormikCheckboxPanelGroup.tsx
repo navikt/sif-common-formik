@@ -40,7 +40,7 @@ function FormikCheckboxPanelGroup<FieldName>({
                     <CheckboksPanelGruppe
                         {...restProps}
                         {...field}
-                        legend={legend ? <Element>{legend}</Element> : undefined}
+                        legend={legend ? <Element tag="div">{legend}</Element> : undefined}
                         checkboxes={checkboxes.map((cb) => ({
                             ...cb,
                             checked: isCheckboxChecked(field.value, cb.value),

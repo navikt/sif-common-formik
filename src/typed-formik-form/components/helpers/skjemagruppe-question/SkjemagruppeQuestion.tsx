@@ -13,7 +13,7 @@ const SkjemagruppeQuestion: React.FunctionComponent<SkjemaGruppeProps> = ({
         className={`${className ? className : ''} singleInputWrapper`}
         tag={tag ? tag : legend ? 'fieldset' : 'div'}
         feil={feil}
-        legend={legend ? <Element>{legend}</Element> : undefined}>
+        legend={legend ? <Element tag="div">{legend}</Element> : undefined}>
         {children}
     </SkjemaGruppe>
 );

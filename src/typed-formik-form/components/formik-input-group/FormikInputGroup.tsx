@@ -32,7 +32,7 @@ function FormikInputGroup<FieldName>({
                 return (
                     <SkjemaGruppe
                         {...restProps}
-                        legend={legend ? <Element>{legend}</Element> : undefined}
+                        legend={legend ? <Element tag="div">{legend}</Element> : undefined}
                         className={`${className ? className : ''} singleInputWrapper`}>
                         {children}
 

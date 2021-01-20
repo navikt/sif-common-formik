@@ -56,7 +56,7 @@ function FormikDateRangePicker<FieldName>({
     });
     return (
         <SkjemaGruppe
-            legend={legend ? <Element>{legend}</Element> : undefined}
+            legend={legend ? <Element tag="div">{legend}</Element> : undefined}
             description={description}
             className="dateRangePicker">
             <div className="dateRangePicker__flexContainer">

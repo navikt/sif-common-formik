@@ -19,7 +19,7 @@ function FormikDateIntervalPicker<FieldName>({
 }: DateIntervalPickerProps<FieldName>) {
     return (
         <SkjemaGruppe
-            legend={legend ? <Element>{legend}</Element> : undefined}
+            legend={legend ? <Element tag="div">{legend}</Element> : undefined}
             description={description}
             className="dateIntervalPicker">
             <div className="dateIntervalPicker__flexContainer">
