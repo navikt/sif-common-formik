@@ -8,10 +8,10 @@ import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 interface OwnProps<FieldName> extends Omit<InputProps, 'name'> {
     name: FieldName;
     integerValue?: boolean;
-    suffix?: string;
 }
 
-export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> & Omit<TypedFormInputCommonProps, 'inputMode'>;
+export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> &
+    Omit<TypedFormInputCommonProps, 'inputMode' | 'type' | 'pattern'>;
 
 function FormikNumberInput<FieldName>({
     name,
