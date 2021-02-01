@@ -5,13 +5,12 @@ import { TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
-interface OwnProps<FieldName> extends Omit<InputProps, 'name'> {
+interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'pattern'> {
     name: FieldName;
     integerValue?: boolean;
 }
 
-export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> &
-    Omit<TypedFormInputCommonProps, 'inputMode' | 'type' | 'pattern'>;
+export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> & Omit<TypedFormInputCommonProps, 'inputMode'>;
 
 function FormikNumberInput<FieldName>({
     name,
