@@ -3,10 +3,14 @@ import { Field, FieldProps } from 'formik';
 import { Input, InputProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
+import { validateAll } from '../../utils/validateAll';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
+import { validateFormikNumberInputValue } from './validateFormikNumberInputValue';
 
 interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'pattern'> {
     name: FieldName;
+    disableNumberValidation?: boolean;
+    invalidNumberErrorKey?: string;
     integerValue?: boolean;
 }
 
@@ -18,12 +22,22 @@ function FormikNumberInput<FieldName>({
     validate,
     autoComplete,
     bredde = 'S',
+    disableNumberValidation,
+    invalidNumberErrorKey = 'common.fieldvalidation.ugyldigTall',
     integerValue = false,
     ...restProps
 }: FormikNumberInputProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
+
+    const validations = disableNumberValidation
+        ? []
+        : [(value) => validateFormikNumberInputValue(value, invalidNumberErrorKey)];
+    if (validate) {
+        validations.push(validate);
+    }
+
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validateAll(validations)} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <Input

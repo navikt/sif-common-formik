@@ -1,12 +1,9 @@
 import { YesOrNo } from '../../typed-formik-form';
+import { FieldValidationArray, FormikValFunc } from '../../typed-formik-form/types/fieldValidation';
 import { FieldValidationResult } from '../modules/validation/types';
 import { erGyldigNorskOrgnummer } from './erGyldigNorskOrgnummer';
 import { fødselsnummerIsValid, FødselsnummerValidationErrorReason } from './fødselsnummerValidator';
 import { hasValue } from './hasValue';
-
-export declare type FormikValFunc = (value: any) => any;
-
-export type FieldValidationArray = (validations: FormikValFunc[]) => (value: any) => FieldValidationResult;
 
 export enum FieldValidationErrors {
     'påkrevd' = 'common.fieldvalidation.påkrevd',
@@ -83,14 +80,6 @@ export const validateOrgNumber = (orgnum: string, isNorwegian: boolean): FieldVa
         return undefined;
     }
     return validateRequiredField(orgnum);
-};
-
-export const validateNumber = (numString: string): FieldValidationResult => {
-    const value = (numString || '').replace(/\,/g, '.');
-    if (isNaN(Number(value))) {
-        return { key: FieldValidationErrors.ugyldig_tall };
-    }
-    return undefined;
 };
 
 export const validateAll: FieldValidationArray = (validations: FormikValFunc[]) => (

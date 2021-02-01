@@ -17,4 +17,8 @@ interface IntlFieldValidationError {
     values?: FieldValidationResultValues;
 }
 
+export declare type FormikValFunc = (value: any) => any;
+
+export type FieldValidationArray = (validations: FormikValFunc[]) => (value: any) => FieldValidationResult;
+
 export type FieldValidationResult = IntlFieldValidationError | undefined | void;

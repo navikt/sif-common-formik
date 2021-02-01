@@ -22,7 +22,6 @@ import {
     renderIntlFieldValidationError,
 } from '../../../modules/validation/fieldValidationRenderUtils';
 import {
-    validateNumber,
     validateRequiredField,
     validateRequiredList,
     validateYesOrNoIsAnswered,
@@ -152,15 +151,10 @@ const TypedFormExample = () => {
             ) : (
                 <>
                     <Question>
-                        <FormikNumberInput
-                            label="Et tall"
-                            name={'number'}
-                            integerValue={false}
-                            validate={validateNumber}
-                        />
+                        <FormikNumberInput label="Et tall" name={'number'} integerValue={false} />
                     </Question>
                     <Question>
-                        <FormikInput type="tel" label="Et tall" name={'number'} validate={validateNumber} />
+                        <FormikInput type="tel" label="Et tall" name={'number'} />
                     </Question>
                     <Question>
                         <Form.RadioGroup

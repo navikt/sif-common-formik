@@ -1,5 +1,6 @@
 import React from 'react';
 import { DayPickerProps } from 'react-day-picker';
+import { useIntl } from 'react-intl';
 import { Field, FieldProps } from 'formik';
 import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger';
 import useMedia from 'use-media';
@@ -7,13 +8,12 @@ import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
 import { DateRange, FormikValidateFunction, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
-import { validateAll, validateDateString } from './validateFormikDatepickerDate';
+import { validateDateString } from './validateFormikDatepickerDate';
 import './datepicker.less';
-import { useIntl } from 'react-intl';
+import { validateAll } from '../../utils/validateAll';
 
 export interface DatepickerLimitiations {
     minDate?: Date;
@@ -103,7 +103,6 @@ function FormikDatepicker<FieldName>({
         <Field validate={validateAll(validations)} name={name}>
             {({ field, form }: FieldProps<string>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
-                // const fieldValue = field.value || {};
                 const handleOnDatepickerChange: DatepickerChange = (dateString) => {
                     if (field.value !== dateString) {
                         form.setFieldValue(field.name, dateString);
