@@ -14,6 +14,7 @@ export enum FieldValidationErrors {
     'fødselsnummer_ugyldig' = 'common.fieldvalidation.fødselsnummer.ugyldig',
     'orgnum_ugyldig' = 'common.fieldvalidation.orgnum.ugyldig',
     'dato_ugyldig' = 'common.fieldvalidation.dato.ugyldig',
+    'ugyldig_tall' = 'common.fieldvalidation.ugyldig_tall',
 }
 export const createFieldValidationError = <T extends string>(
     key: T | undefined,
@@ -82,6 +83,14 @@ export const validateOrgNumber = (orgnum: string, isNorwegian: boolean): FieldVa
         return undefined;
     }
     return validateRequiredField(orgnum);
+};
+
+export const validateNumber = (numString: string): FieldValidationResult => {
+    const value = (numString || '').replace(/\,/g, '.');
+    if (isNaN(Number(value))) {
+        return { key: FieldValidationErrors.ugyldig_tall };
+    }
+    return undefined;
 };
 
 export const validateAll: FieldValidationArray = (validations: FormikValFunc[]) => (

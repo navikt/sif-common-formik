@@ -7,11 +7,21 @@ import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
 interface OwnProps<FieldName> extends Omit<InputProps, 'name'> {
     name: FieldName;
+    integerValue?: boolean;
+    suffix?: string;
 }
 
-export type FormikInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> & Omit<TypedFormInputCommonProps, 'inputMode'>;
 
-function FormikInput<FieldName>({ name, feil, validate, autoComplete, ...restProps }: FormikInputProps<FieldName>) {
+function FormikNumberInput<FieldName>({
+    name,
+    feil,
+    validate,
+    autoComplete,
+    bredde = 'S',
+    integerValue = false,
+    ...restProps
+}: FormikNumberInputProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field validate={validate} name={name}>
@@ -20,7 +30,11 @@ function FormikInput<FieldName>({ name, feil, validate, autoComplete, ...restPro
                     <Input
                         {...restProps}
                         {...field}
+                        type="text"
+                        bredde={bredde}
                         autoComplete={autoComplete || 'off'}
+                        inputMode={integerValue ? 'numeric' : 'text'}
+                        pattern={integerValue ? '[0-9]*' : undefined}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         value={field.value === undefined ? '' : field.value}
                     />
@@ -30,4 +44,4 @@ function FormikInput<FieldName>({ name, feil, validate, autoComplete, ...restPro
     );
 }
 
-export default FormikInput;
+export default FormikNumberInput;
