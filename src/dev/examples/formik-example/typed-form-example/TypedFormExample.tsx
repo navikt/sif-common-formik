@@ -11,6 +11,7 @@ import {
     ISOStringToDate,
 } from '../../../../typed-formik-form';
 import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
+import FormikNumberInput from '../../../../typed-formik-form/components/formik-number-input/FormikNumberInput';
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
@@ -21,6 +22,7 @@ import {
     renderIntlFieldValidationError,
 } from '../../../modules/validation/fieldValidationRenderUtils';
 import {
+    validateNumber,
     validateRequiredField,
     validateRequiredList,
     validateYesOrNoIsAnswered,
@@ -149,6 +151,17 @@ const TypedFormExample = () => {
                 </>
             ) : (
                 <>
+                    <Question>
+                        <FormikNumberInput
+                            label="Et tall"
+                            name={'number'}
+                            integerValue={false}
+                            validate={validateNumber}
+                        />
+                    </Question>
+                    <Question>
+                        <FormikInput type="tel" label="Et tall" name={'number'} validate={validateNumber} />
+                    </Question>
                     <Question>
                         <Form.RadioGroup
                             legend={'Velg en bokstav'}

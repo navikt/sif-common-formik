@@ -11,11 +11,13 @@ import FormikCountrySelect, { FormikCountrySelectProps } from './formik-country-
 import FormikDateIntervalPicker, {
     DateIntervalPickerProps,
 } from './formik-date-interval-picker/FormikDateIntervalPicker';
-import FormikDatepicker, { FormikDatepickerProps } from './formik-datepicker/FormikDatepicker';
 import FormikDateRangePicker, { FormikDateRangePickerProps } from './formik-date-range-picker/FormikDateRangePicker';
+import FormikDatepicker, { FormikDatepickerProps } from './formik-datepicker/FormikDatepicker';
 import FormikFileInput, { FormikFileInputProps } from './formik-file-input/FormikFileInput';
 import FormikInputGroup, { FormikInputGroupProps } from './formik-input-group/FormikInputGroup';
 import FormikInput, { FormikInputProps } from './formik-input/FormikInput';
+import FormikNumberInput, { FormikNumberInputProps } from './formik-number-input/FormikNumberInput';
+import FormikRadioGroup, { FormikRadioGroupProps } from './formik-radio-group/FormikRadioGroup';
 import FormikRadioPanelGroup, { FormikRadioPanelGroupProps } from './formik-radio-panel-group/FormikRadioPanelGroup';
 import FormikSelect, { FormikSelectProps } from './formik-select/FormikSelect';
 import FormikTextarea, { FormikTextareaProps } from './formik-textarea/FormikTextarea';
@@ -24,7 +26,6 @@ import FormikYesOrNoQuestion, { FormikYesOrNoQuestionProps } from './formik-yes-
 import TypedFormikForm, { TypedFormikFormProps } from './typed-formik-form/TypedFormikForm';
 import TypedFormikWrapper, { TypedFormikWrapperProps } from './typed-formik-wrapper/TypedFormikWrapper';
 import '../styles/nav-frontend-skjema-extension.less';
-import FormikRadioGroup, { FormikRadioGroupProps } from './formik-radio-group/FormikRadioGroup';
 
 export function getTypedFormComponents<FieldNames, FormValues>() {
     return {
@@ -47,6 +48,7 @@ export function getTypedFormComponents<FieldNames, FormValues>() {
         Form: (props: TypedFormikFormProps<FormValues>) => <TypedFormikForm {...props} />,
         FormikWrapper: (props: TypedFormikWrapperProps<FormValues>) => <TypedFormikWrapper {...props} />,
         Input: (props: FormikInputProps<FieldNames>) => <FormikInput<FieldNames> {...props} />,
+        NumberInput: (props: FormikNumberInputProps<FieldNames>) => <FormikNumberInput<FieldNames> {...props} />,
         InputGroup: (props: FormikInputGroupProps<FieldNames>) => <FormikInputGroup<FieldNames> {...props} />,
         RadioGroup: (props: FormikRadioGroupProps<FieldNames>) => <FormikRadioGroup<FieldNames> {...props} />,
         RadioPanelGroup: (props: FormikRadioPanelGroupProps<FieldNames>) => (

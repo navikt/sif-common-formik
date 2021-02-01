@@ -6,6 +6,7 @@ export { default as FormikDateIntervalPicker } from './components/formik-date-in
 export { default as FormikDatepicker } from './components/formik-datepicker/FormikDatepicker';
 export { default as FormikFileInput } from './components/formik-file-input/FormikFileInput';
 export { default as FormikInput } from './components/formik-input/FormikInput';
+export { default as FormikNumberInput } from './components/formik-number-input/FormikNumberInput';
 export { default as FormikInputGroup } from './components/formik-input-group/FormikInputGroup';
 export { default as FormikModalFormAndList } from './components/formik-modal-form-and-list/FormikModalFormAndList';
 export { default as FormikRadioPanelGroup } from './components/formik-radio-panel-group/FormikRadioPanelGroup';
