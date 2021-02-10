@@ -11,6 +11,7 @@ import bemUtils from '../../utils/bemUtils';
 interface OwnProps<FieldName> extends Omit<InputProps, 'name'> {
     name: FieldName;
     suffix?: string;
+    suffixStyle?: 'box' | 'text';
 }
 
 export type FormikInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
@@ -22,6 +23,7 @@ function FormikInput<FieldName>({
     feil,
     id = guid(),
     suffix,
+    suffixStyle = 'box',
     label,
     description,
     validate,
@@ -65,7 +67,7 @@ function FormikInput<FieldName>({
                                 value={field.value === undefined ? '' : field.value}
                             />
                             {suffix && (
-                                <span className={bem.element('suffix')} aria-hidden={true}>
+                                <span className={bem.element('suffix', suffixStyle)} aria-hidden={true}>
                                     {suffix}
                                 </span>
                             )}

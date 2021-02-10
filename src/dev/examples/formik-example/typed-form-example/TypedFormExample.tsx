@@ -152,6 +152,7 @@ const TypedFormExample = () => {
                     <Question>
                         <FormikInput
                             suffix="timer i snitt per uke"
+                            suffixStyle="text"
                             label="Et tall"
                             name={FormFields.firstname}
                             bredde="fullbredde"
