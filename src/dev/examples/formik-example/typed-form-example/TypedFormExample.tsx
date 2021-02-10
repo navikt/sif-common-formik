@@ -11,7 +11,6 @@ import {
     ISOStringToDate,
 } from '../../../../typed-formik-form';
 import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
-import FormikNumberInput from '../../../../typed-formik-form/components/formik-number-input/FormikNumberInput';
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
@@ -151,7 +150,16 @@ const TypedFormExample = () => {
             ) : (
                 <>
                     <Question>
-                        <FormikNumberInput label="Et tall" name={'number'} integerValue={false} />
+                        <FormikInput
+                            suffix="timer i snitt per uke"
+                            label="Et tall"
+                            name={FormFields.firstname}
+                            bredde="fullbredde"
+                            description={
+                                'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat sunt vel unde, iste nostrum labore, modi explicabo repellat laboriosam eos laudantium obcaecati assumenda commodi porro ex asperiores omnis? Nesciunt, ipsa.'
+                            }
+                            validate={validateRequiredField}
+                        />
                     </Question>
                     <Question>
                         <FormikInput type="tel" label="Et tall" name={'number'} />
