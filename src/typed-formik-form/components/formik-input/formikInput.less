@@ -1,0 +1,37 @@
+@import 'nav-frontend-core/less/core.less';
+@import 'nav-frontend-skjema-style/src/input.less';
+
+.formikInput {
+    &__inputWrapper {
+        display: flex;
+        justify-content: flex-start;
+    }
+    &--fullbredde {
+        .skjemaelement {
+            width: 100%;
+        }
+    }
+    &--withSuffix {
+        .skjemaelement__input {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            position: relative;
+            &:focus {
+                z-index: 1;
+            }
+        }
+    }
+    &__suffix {
+        .skjemaelement__input();
+        white-space: nowrap;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        display: block;
+        border-left: 0;
+        background-color: transparent;
+        border-color: @navGra60 !important;
+        &--text {
+            border-color: transparent !important;
+        }
+    }
+}
