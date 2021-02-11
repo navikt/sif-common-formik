@@ -13,14 +13,19 @@
     }
     &--withSuffix {
         .skjemaelement__input {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
             position: relative;
             &:focus {
                 z-index: 1;
             }
         }
     }
+    &--suffixStyle--box {
+        .skjemaelement__input {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
     &__suffix {
         .skjemaelement__input();
         white-space: nowrap;
