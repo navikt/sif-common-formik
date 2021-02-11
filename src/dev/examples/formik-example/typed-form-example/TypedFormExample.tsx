@@ -151,14 +151,10 @@ const TypedFormExample = () => {
                 <>
                     <Question>
                         <FormikInput
-                            suffix="timer i snitt per uke"
-                            suffixStyle="text"
-                            label="Et tall"
+                            label="Oppgi hvor mange timer i snitt per uke, har barnet tilsyn?"
                             name={FormFields.firstname}
-                            bredde="fullbredde"
-                            description={
-                                'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat sunt vel unde, iste nostrum labore, modi explicabo repellat laboriosam eos laudantium obcaecati assumenda commodi porro ex asperiores omnis? Nesciunt, ipsa.'
-                            }
+                            suffixStyle="text"
+                            bredde="XXS"
                             validate={validateRequiredField}
                         />
                     </Question>
