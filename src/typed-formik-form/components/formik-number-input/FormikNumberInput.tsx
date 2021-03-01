@@ -16,7 +16,7 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'patter
 }
 
 export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> &
-    Omit<TypedFormInputCommonProps, 'inputMode'> &
+    Omit<TypedFormInputCommonProps, 'inputMode' | 'type' | 'min' | 'max'> &
     InputWithSuffix;
 
 function FormikNumberInput<FieldName>({
