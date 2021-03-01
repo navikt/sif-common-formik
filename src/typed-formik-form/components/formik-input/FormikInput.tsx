@@ -7,15 +7,16 @@ import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import { guid } from 'nav-frontend-js-utils';
 import './formikInput.less';
 import bemUtils from '../../utils/bemUtils';
-import { Feilmelding } from 'nav-frontend-typografi';
 
-interface OwnProps<FieldName> extends Omit<InputProps, 'name'> {
-    name: FieldName;
+export interface InputWithSuffix {
     suffix?: string;
     suffixStyle?: 'box' | 'text';
 }
+interface OwnProps<FieldName> extends Omit<InputProps, 'name'> {
+    name: FieldName;
+}
 
-export type FormikInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps & InputWithSuffix;
 
 const bem = bemUtils('formikInput');
 

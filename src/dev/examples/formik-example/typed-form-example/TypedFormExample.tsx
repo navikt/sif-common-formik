@@ -8,6 +8,7 @@ import {
     FormikFileInput,
     FormikInput,
     FormikInputGroup,
+    FormikNumberInput,
     ISOStringToDate,
 } from '../../../../typed-formik-form';
 import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
@@ -150,11 +151,13 @@ const TypedFormExample = () => {
             ) : (
                 <>
                     <Question>
-                        <FormikInput
+                        <FormikNumberInput
                             label="Oppgi hvor mange timer i snitt per uke, har barnet tilsyn?"
                             name={FormFields.firstname}
                             suffixStyle="text"
-                            bredde="XXS"
+                            suffix="Timer"
+                            bredde="S"
+                            maxLength={5}
                             validate={validateRequiredField}
                         />
                     </Question>

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
-import { Input, InputProps } from 'nav-frontend-skjema';
+import { InputProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { validateAll } from '../../utils/validateAll';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import { validateFormikNumberInputValue } from './validateFormikNumberInputValue';
+import FormikInput, { InputWithSuffix } from '../formik-input/FormikInput';
 
 interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'pattern'> {
     name: FieldName;
@@ -14,7 +15,9 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'patter
     integerValue?: boolean;
 }
 
-export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> & Omit<TypedFormInputCommonProps, 'inputMode'>;
+export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> &
+    Omit<TypedFormInputCommonProps, 'inputMode'> &
+    InputWithSuffix;
 
 function FormikNumberInput<FieldName>({
     name,
@@ -40,7 +43,7 @@ function FormikNumberInput<FieldName>({
         <Field validate={validateAll(validations)} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
-                    <Input
+                    <FormikInput
                         {...restProps}
                         {...field}
                         type="text"
