@@ -8,16 +8,14 @@ import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import { validateFormikNumberInputValue } from './validateFormikNumberInputValue';
 import FormikInput, { InputWithSuffix } from '../formik-input/FormikInput';
 
-interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'pattern'> {
+interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'pattern' | 'inputMode' | 'min' | 'max'> {
     name: FieldName;
     disableNumberValidation?: boolean;
     invalidNumberErrorKey?: string;
     integerValue?: boolean;
 }
 
-export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> &
-    Omit<TypedFormInputCommonProps, 'inputMode' | 'type' | 'min' | 'max'> &
-    InputWithSuffix;
+export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps & InputWithSuffix;
 
 function FormikNumberInput<FieldName>({
     name,
