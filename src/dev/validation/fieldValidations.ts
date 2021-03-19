@@ -12,6 +12,7 @@ export enum FieldValidationErrors {
     'orgnum_ugyldig' = 'common.fieldvalidation.orgnum.ugyldig',
     'dato_ugyldig' = 'common.fieldvalidation.dato.ugyldig',
     'ugyldig_tall' = 'common.fieldvalidation.ugyldig_tall',
+    'alltid_feil' = 'common.fieldvalidation.alltid_feil',
 }
 export const createFieldValidationError = <T extends string>(
     key: T | undefined,
@@ -35,6 +36,10 @@ export const validateFødselsnummer = (v: string): FieldValidationResult => {
             return createFieldValidationError(FieldValidationErrors.fødselsnummer_ugyldig);
         }
     }
+};
+
+export const validateAlltidFeil = (): FieldValidationResult => {
+    return createFieldValidationError(FieldValidationErrors.alltid_feil);
 };
 
 export const validateYesOrNoIsAnswered = (answer: YesOrNo): FieldValidationResult => {

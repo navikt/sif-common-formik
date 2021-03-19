@@ -22,6 +22,7 @@ import {
     renderIntlFieldValidationError,
 } from '../../../modules/validation/fieldValidationRenderUtils';
 import {
+    validateAlltidFeil,
     validateRequiredField,
     validateRequiredList,
     validateYesOrNoIsAnswered,
@@ -153,6 +154,7 @@ const TypedFormExample = () => {
                     <Question>
                         <FormikDateIntervalPicker
                             legend="Tidsrom"
+                            validate={validateAlltidFeil}
                             fromDatepickerProps={{
                                 name: FormFields.daterange_from,
                                 label: 'Fra',

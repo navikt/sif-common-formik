@@ -1,11 +1,11 @@
 import React from 'react';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
+import { TypedFormInputCommonProps } from '../../types';
 import FormikDatepicker, { FormikDatepickerProps } from '../formik-datepicker/FormikDatepicker';
-import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
+import FormikInputGroup from '../formik-input-group/FormikInputGroup';
 import './dateIntervalPicker.less';
 
-export interface DateIntervalPickerProps<FieldName> {
+export interface DateIntervalPickerProps<FieldName> extends TypedFormInputCommonProps {
     legend?: string;
     fromDatepickerProps: FormikDatepickerProps<FieldName>;
     toDatepickerProps: FormikDatepickerProps<FieldName>;
@@ -18,20 +18,21 @@ function FormikDateIntervalPicker<FieldName>({
     fromDatepickerProps,
     toDatepickerProps,
     description,
-    feil,
+    validate,
 }: DateIntervalPickerProps<FieldName>) {
-    const context = React.useContext(TypedFormikFormContext);
+    const name = `${fromDatepickerProps.name}_${toDatepickerProps.name}`;
     return (
-        <SkjemaGruppe
+        <FormikInputGroup
+            name={name}
+            validate={validate}
             legend={legend ? <Element tag="div">{legend}</Element> : undefined}
             description={description}
-            feil={context?.showErrors ? feil : undefined}
             className="dateIntervalPicker">
             <div className="dateIntervalPicker__flexContainer">
                 <FormikDatepicker<FieldName> {...fromDatepickerProps} />
                 <FormikDatepicker<FieldName> {...toDatepickerProps} />
             </div>
-        </SkjemaGruppe>
+        </FormikInputGroup>
     );
 }
 

@@ -82,6 +82,8 @@ export const flattenFieldErrors = (errors: any) => {
 
 export function getAllErrors<FormValues>(formik: FormikProps<FormValues>): FormikErrors<FormValues> | undefined {
     const errors = formik && formik.errors && Object.keys(formik.errors).length > 0 ? formik.errors : undefined;
+    console.log(errors);
+
     if (errors) {
         const numberOfErrors = Object.keys(errors).length;
         if (numberOfErrors > 0 && isValidationErrorsVisible(formik)) {

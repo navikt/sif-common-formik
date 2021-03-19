@@ -35,11 +35,14 @@ function FormikInputGroup<FieldName>({
                         legend={legend ? <Element tag="div">{legend}</Element> : undefined}
                         className={`${className ? className : ''} singleInputWrapper`}>
                         {children}
-
                         {/** Må sette inn denne selv pga feil på SkjemaGruppe påvirker styling av alle elementer i gruppen*/}
                         <div aria-live="polite">
                             <div tabIndex={-1} id={field.name} className="focusable-feilmelding">
-                                {isRenderableErrorMsgType && <Feilmelding>{errorMsg}</Feilmelding>}
+                                {isRenderableErrorMsgType && (
+                                    <div style={{ marginTop: '0.5rem' }}>
+                                        <Feilmelding>{errorMsg}</Feilmelding>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </SkjemaGruppe>
