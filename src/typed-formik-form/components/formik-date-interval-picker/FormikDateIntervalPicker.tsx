@@ -9,6 +9,7 @@ export interface DateIntervalPickerProps<FieldName> {
     fromDatepickerProps: FormikDatepickerProps<FieldName>;
     toDatepickerProps: FormikDatepickerProps<FieldName>;
     description?: React.ReactNode;
+    feil?: React.ReactNode;
 }
 
 function FormikDateIntervalPicker<FieldName>({
@@ -16,11 +17,13 @@ function FormikDateIntervalPicker<FieldName>({
     fromDatepickerProps,
     toDatepickerProps,
     description,
+    feil,
 }: DateIntervalPickerProps<FieldName>) {
     return (
         <SkjemaGruppe
             legend={legend ? <Element tag="div">{legend}</Element> : undefined}
             description={description}
+            feil={feil}
             className="dateIntervalPicker">
             <div className="dateIntervalPicker__flexContainer">
                 <FormikDatepicker<FieldName> {...fromDatepickerProps} />
