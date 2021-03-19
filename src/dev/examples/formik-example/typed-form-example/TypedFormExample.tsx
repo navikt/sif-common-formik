@@ -151,6 +151,23 @@ const TypedFormExample = () => {
             ) : (
                 <>
                     <Question>
+                        <FormikDateIntervalPicker
+                            legend="Tidsrom"
+                            fromDatepickerProps={{
+                                name: FormFields.daterange_from,
+                                label: 'Fra',
+                                maxDate: ISOStringToDate(values.daterange_to),
+                                validate: validateRequiredField,
+                            }}
+                            toDatepickerProps={{
+                                name: FormFields.daterange_to,
+                                label: 'Til',
+                                minDate: ISOStringToDate(values.daterange_from),
+                                validate: validateRequiredField,
+                            }}
+                        />
+                    </Question>
+                    <Question>
                         <FormikNumberInput
                             label="Oppgi hvor mange timer i snitt per uke, har barnet tilsyn?"
                             name={FormFields.firstname}
