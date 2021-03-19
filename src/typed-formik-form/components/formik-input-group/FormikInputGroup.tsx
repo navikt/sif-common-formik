@@ -27,8 +27,8 @@ function FormikInputGroup<FieldName>({
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
-                const errorMsg = getFeilPropForFormikInput({ field, form, context, feil });
-                const isRenderableErrorMsgType = ['string', 'object'].includes(typeof errorMsg);
+                const feilProp = getFeilPropForFormikInput({ field, form, context, feil });
+                const isRenderableErrorMsgType = ['string', 'object'].includes(typeof feilProp);
                 return (
                     <SkjemaGruppe
                         {...restProps}
@@ -36,11 +36,15 @@ function FormikInputGroup<FieldName>({
                         className={`${className ? className : ''} singleInputWrapper`}>
                         {children}
                         {/** Må sette inn denne selv pga feil på SkjemaGruppe påvirker styling av alle elementer i gruppen*/}
-                        <div aria-live="polite">
+                        <div
+                            aria-live="polite"
+                            className={`formikInputGroup__error ${
+                                isRenderableErrorMsgType ? 'formikInputGroup__error--with-message' : ''
+                            }`}>
                             <div tabIndex={-1} id={field.name} className="focusable-feilmelding">
                                 {isRenderableErrorMsgType && (
-                                    <div style={{ marginTop: '0.5rem' }}>
-                                        <Feilmelding>{errorMsg}</Feilmelding>
+                                    <div>
+                                        <Feilmelding>{feilProp}</Feilmelding>
                                     </div>
                                 )}
                             </div>
