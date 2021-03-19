@@ -10,7 +10,6 @@ export interface DateIntervalPickerProps<FieldName> extends TypedFormInputCommon
     fromDatepickerProps: FormikDatepickerProps<FieldName>;
     toDatepickerProps: FormikDatepickerProps<FieldName>;
     description?: React.ReactNode;
-    feil?: React.ReactNode;
 }
 
 function FormikDateIntervalPicker<FieldName>({
