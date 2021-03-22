@@ -1,6 +1,6 @@
 {
     "name": "@navikt/sif-common-formik",
-    "version": "15.4.9",
+    "version": "15.4.10",
     "private": false,
     "scripts": {
         "dev": "craco start",
