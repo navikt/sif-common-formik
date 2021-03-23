@@ -16,7 +16,9 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name'> {
     name: FieldName;
 }
 
-export type FormikInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps & InputWithSuffix;
+export type FormikInputProps<FieldName> = OwnProps<FieldName> &
+    TypedFormInputCommonProps<any, FieldName> &
+    InputWithSuffix;
 
 const bem = bemUtils('formikInput');
 
@@ -34,7 +36,7 @@ function FormikInput<FieldName>({
 }: FormikInputProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 const feilProp = getFeilPropForFormikInput({ field, form, context, feil });
                 const harFeil = feilProp !== undefined;

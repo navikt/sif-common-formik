@@ -29,9 +29,17 @@ import {
 } from '../../../validation/fieldValidations';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
+import validationUtils from '../../../../typed-formik-form/validation/validation';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 const fullForm = false;
+
+const validateRequiredFieldNew = (value: any, field: any) => {
+    debugger;
+    console.log(field);
+
+    return validateRequiredField(value);
+};
 
 const TypedFormExample = () => {
     const intl = useIntl();
@@ -49,11 +57,15 @@ const TypedFormExample = () => {
                 if (isIntlFieldValidationErrorType(error)) {
                     return renderIntlFieldValidationError(intl, error);
                 }
-                return error;
+                return undefined;
             }}>
             <h3>Noen skjemaelementer</h3>
             {fullForm ? (
                 <>
+                    {' '}
+                    <Question>
+                        <FormikInput label="En verdi" name="string_verdi" validate={validationUtils.requiredField} />
+                    </Question>
                     <Question>
                         <Form.DatePicker
                             name={FormFields.birthdate}
@@ -152,6 +164,14 @@ const TypedFormExample = () => {
             ) : (
                 <>
                     <Question>
+                        <FormikInput
+                            type="tel"
+                            label="Et tall"
+                            name="tilfeldig_tall"
+                            validate={validateRequiredFieldNew}
+                        />
+                    </Question>
+                    <Question>
                         <FormikDateIntervalPicker
                             legend="Tidsrom"
                             validate={validateAlltidFeil}
@@ -179,9 +199,6 @@ const TypedFormExample = () => {
                             maxLength={5}
                             validate={validateRequiredField}
                         />
-                    </Question>
-                    <Question>
-                        <FormikInput type="tel" label="Et tall" name={'number'} />
                     </Question>
                     <Question>
                         <Form.RadioGroup

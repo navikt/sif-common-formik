@@ -6,14 +6,14 @@ import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger'
 import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
-import { DateRange, FormikValidateFunction, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
+import { DateRange, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
+import { validateAll } from '../../utils/validateAll';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
 import { validateDateString } from './validateFormikDatepickerDate';
 import './datepicker.less';
-import { validateAll } from '../../utils/validateAll';
 
 export interface DatepickerLimitiations {
     minDate?: Date;
@@ -22,7 +22,7 @@ export interface DatepickerLimitiations {
     disableWeekend?: boolean;
 }
 
-export interface DatePickerBaseProps<FieldName> {
+export interface DatePickerBaseProps<FieldName> extends TypedFormInputCommonProps {
     name: FieldName;
     label: string;
     disabled?: boolean;
@@ -34,7 +34,6 @@ export interface DatePickerBaseProps<FieldName> {
     disableFormatValidation?: boolean;
     locale?: 'nb' | 'nn' | 'en';
     onChange?: (date: string) => void;
-    validate?: FormikValidateFunction<string | undefined>;
 }
 export interface DatePickerPresentationProps {
     showYearSelector?: boolean;

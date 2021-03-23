@@ -88,11 +88,12 @@ export const validateOrgNumber = (orgnum: string, isNorwegian: boolean): FieldVa
 };
 
 export const validateAll: FieldValidationArray = (validations: FormikValFunc[]) => (
-    value: any
+    value: any,
+    field?: string
 ): FieldValidationResult => {
     let result: FieldValidationResult;
     validations.some((validate) => {
-        const r = validate(value);
+        const r = validate(value, field);
         if (r) {
             result = r;
             return true;

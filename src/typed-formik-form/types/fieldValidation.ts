@@ -14,11 +14,14 @@ interface FieldValidationResultValues {
 
 interface IntlFieldValidationError {
     key: string;
+    field?: string;
     values?: FieldValidationResultValues;
 }
 
-export declare type FormikValFunc = (value: any) => any;
+export declare type FormikValFunc = (value: any, field?: string) => any;
 
-export type FieldValidationArray = (validations: FormikValFunc[]) => (value: any) => FieldValidationResult;
+export type FieldValidationArray = (
+    validations: FormikValFunc[]
+) => (value: any, field?: string) => FieldValidationResult;
 
 export type FieldValidationResult = IntlFieldValidationError | undefined | void;

@@ -16,10 +16,10 @@ export interface DateRange {
 
 export type CancelButtonTypes = 'standard' | 'hoved' | 'fare' | 'flat';
 
-export type FormikValidateFunction<ValueType = any> = (value: ValueType) => any;
+export type FormikValidateFunction<ValueType = any, FieldName = string> = (value: ValueType, field?: FieldName) => any;
 
 export type NavFrontendSkjemaFeil = React.ReactNode | boolean;
 
-export interface TypedFormInputCommonProps<ValueType = any> {
-    validate?: FormikValidateFunction<ValueType>;
+export interface TypedFormInputCommonProps<ValueType = any, FieldName = string> {
+    validate?: FormikValidateFunction<ValueType, FieldName>;
 }
