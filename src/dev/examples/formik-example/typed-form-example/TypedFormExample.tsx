@@ -30,7 +30,7 @@ import {
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import FerieuttakInfoAndDialog from '../ferieuttakinfo-and-form-example/FerieuttakInfoAndDialog';
 import { FormFields, FormValues } from '../types';
-import validationUtils from '../../../../typed-formik-form/validation/validation';
+import formikValidation from '../../../../typed-formik-form/validation/formikValidation';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 const fullForm = true;
@@ -64,7 +64,7 @@ const TypedFormExample = () => {
             {fullForm ? (
                 <>
                     <Question>
-                        <FormikInput label="En verdi" name="string_verdi" validate={validationUtils.requiredField} />
+                        <FormikInput label="En verdi" name="string_verdi" validate={formikValidation.fieldHasValue} />
                     </Question>
                     <Question>
                         <FerieuttakInfoAndDialog

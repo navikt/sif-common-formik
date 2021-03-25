@@ -4,7 +4,8 @@
     "private": false,
     "scripts": {
         "dev": "craco start",
-        "test": "jest --maxWorkers=2 --config ./jest/jest.config.js --watch",
+        "test": "jest --maxWorkers=2 --config ./jest/jest.config.js",
+        "test-w": "jest --maxWorkers=2 --config ./jest/jest.config.js --watch",
         "eject": "react-scripts eject",
         "build-lib": "npm-run-all clean-lib compile-lib-script copy-files-to-lib",
         "clean-lib": "rimraf ./lib",
