@@ -6,18 +6,18 @@ import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
 import { FormikValidationError, FormikValidationFunction, FormikValidationResult } from './types';
 import {
     isAnswerdYesOrNo,
-    isFieldWithValue,
     isArrayWithItems,
+    isFieldWithValue,
     isValidDatePickerDateString,
     isValidNumber,
     isValidOrgNumber,
-} from './validation';
+} from './validationFunctions';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
 export type FieldHasValueErrors = { noValue: FormikValidationError };
-const fieldHasValue: FormikValidationFunction<FieldHasValueErrors> = (
+export const validateFieldHasValue: FormikValidationFunction<FieldHasValueErrors> = (
     value: any,
     errors: FieldHasValueErrors
 ): FormikValidationResult => {
@@ -25,7 +25,7 @@ const fieldHasValue: FormikValidationFunction<FieldHasValueErrors> = (
 };
 
 export type EmptyListErrors = { listIsEmpty: FormikValidationResult };
-const listHasItems: FormikValidationFunction<EmptyListErrors> = (
+export const validateListHasItems: FormikValidationFunction<EmptyListErrors> = (
     value: any,
     errors: EmptyListErrors
 ): FormikValidationResult => {
@@ -33,7 +33,7 @@ const listHasItems: FormikValidationFunction<EmptyListErrors> = (
 };
 
 export type DateIsValidErrors = { dateHasInvalidFormat: FormikValidationError };
-const dateIsValid: FormikValidationFunction<DateIsValidErrors> = (
+export const validateDatePickerString: FormikValidationFunction<DateIsValidErrors> = (
     value: any,
     errors: DateIsValidErrors
 ): FormikValidationResult => {
@@ -41,7 +41,7 @@ const dateIsValid: FormikValidationFunction<DateIsValidErrors> = (
 };
 
 export type YesOrNoIsAnsweredErrors = { yesOrNoUnanswered: FormikValidationError };
-const yesOrNoIsAnswered: FormikValidationFunction<YesOrNoIsAnsweredErrors> = (
+export const validateYesOrNoIsAnswered: FormikValidationFunction<YesOrNoIsAnsweredErrors> = (
     value: any,
     errors: YesOrNoIsAnsweredErrors
 ): FormikValidationResult => {
@@ -49,7 +49,7 @@ const yesOrNoIsAnswered: FormikValidationFunction<YesOrNoIsAnsweredErrors> = (
 };
 
 export type NumberIsValidErrors = { invalidNumber: FormikValidationError };
-const numberIsValid: FormikValidationFunction<NumberIsValidErrors> = (
+export const validateNumber: FormikValidationFunction<NumberIsValidErrors> = (
     value: any,
     error: NumberIsValidErrors
 ): FormikValidationResult => {
@@ -61,7 +61,7 @@ export type NumberIsValidAndWithinRangeErrors = {
     numberToSmall: FormikValidationError;
     numberToLarge: FormikValidationError;
 };
-const numberIsValidAndWithinRange = ({
+export const validateNumberIsWithinRange = ({
     min,
     max,
 }: {
@@ -71,7 +71,7 @@ const numberIsValidAndWithinRange = ({
     value: any,
     error: NumberIsValidAndWithinRangeErrors
 ): FormikValidationResult => {
-    const requiredNumberError = numberIsValid(value, { invalidNumber: error.invalidNumber });
+    const requiredNumberError = validateNumber(value, { invalidNumber: error.invalidNumber });
     if (requiredNumberError) {
         return requiredNumberError;
     }
@@ -89,7 +89,7 @@ export type DateIsWithinRangeError = {
     dateBeforeMin: FormikValidationError;
     dateAfterMax: FormikValidationError;
 };
-const dateIsWithinRange = ({
+export const validateDateIsWithinRange = ({
     min,
     max,
 }: {
@@ -116,7 +116,7 @@ export type OrgNumberIsValidErrors = {
     invalidNorwegianOrgNumber: FormikValidationError;
 };
 
-const orgNumberIsValid: FormikValidationFunction<OrgNumberIsValidErrors> = (
+export const validateOrgNumber: FormikValidationFunction<OrgNumberIsValidErrors> = (
     value: any,
     error: OrgNumberIsValidErrors
 ): FormikValidationResult => {
@@ -128,7 +128,7 @@ export type FødselsnummerIsValidErrors = {
     fødselsnummerChecksumError: FormikValidationError;
     invalidFødselsnummer: FormikValidationError;
 };
-const fødselsnummerIsValid: FormikValidationFunction<FødselsnummerIsValidErrors> = (
+export const validateFødselsnummer: FormikValidationFunction<FødselsnummerIsValidErrors> = (
     value: any,
     error: FødselsnummerIsValidErrors
 ): FormikValidationResult => {
@@ -148,17 +148,3 @@ const fødselsnummerIsValid: FormikValidationFunction<FødselsnummerIsValidError
     }
     return undefined;
 };
-
-const formikFieldValidation = {
-    fieldHasValue,
-    listHasItems,
-    yesOrNoIsAnswered,
-    dateIsValid,
-    dateIsWithinRange,
-    numberIsValid,
-    numberIsValidAndWithinRange,
-    orgNumberIsValid,
-    fødselsnummerIsValid,
-};
-
-export default formikFieldValidation;

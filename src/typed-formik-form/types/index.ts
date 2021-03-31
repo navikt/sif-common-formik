@@ -1,3 +1,5 @@
+import { FormikFieldValidation } from './fieldValidation';
+
 export enum YesOrNo {
     'YES' = 'yes',
     'NO' = 'no',
@@ -16,10 +18,7 @@ export interface DateRange {
 
 export type CancelButtonTypes = 'standard' | 'hoved' | 'fare' | 'flat';
 
-export type FormikValidateFunction<ValueType = any> = (value: ValueType) => any;
-
 export type NavFrontendSkjemaFeil = React.ReactNode | boolean;
-
 export interface TypedFormInputCommonProps<ValueType = any> {
-    validate?: FormikValidateFunction<ValueType>;
+    validate?: FormikFieldValidation<ValueType>;
 }

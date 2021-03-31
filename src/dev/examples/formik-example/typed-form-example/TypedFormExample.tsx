@@ -21,14 +21,12 @@ import {
     isIntlFieldValidationErrorType,
     renderIntlFieldValidationError,
 } from '../../../modules/validation/fieldValidationRenderUtils';
-import {
-    validateAlltidFeil,
-    validateRequiredField,
-    validateRequiredList,
-    validateYesOrNoIsAnswered,
-} from '../../../validation/fieldValidations';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
+import {
+    validateFieldHasValue,
+    validateYesOrNoIsAnswered,
+} from '../../../../typed-formik-form/validation/formikFieldValidation';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 const fullForm = false;
@@ -37,6 +35,11 @@ const TypedFormExample = () => {
     const intl = useIntl();
     const { values } = useFormikContext<FormValues>();
     const { setFieldValue } = useFormikContext<FormValues>();
+
+    const localValidateRequired = (value) => validateFieldHasValue(value, { noValue: 'Feltet har ikke noe verdi' });
+
+    const localValidateYesOrNo = (value) =>
+        validateYesOrNoIsAnswered(value, { yesOrNoUnanswered: 'Du må svare på spørsmålet' });
     return (
         <Form.Form
             submitButtonLabel="Ok"
@@ -58,7 +61,7 @@ const TypedFormExample = () => {
                         <Form.DatePicker
                             name={FormFields.birthdate}
                             label="Fødselsdato"
-                            validate={validateRequiredField}
+                            validate={localValidateRequired}
                         />
                     </Question>
                     <Question>
@@ -68,22 +71,22 @@ const TypedFormExample = () => {
                         <Form.InputGroup
                             name={FormFields.birthCountry}
                             legend="Dette er legend"
-                            validate={validateRequiredField}>
+                            validate={localValidateRequired}>
                             <FormikInput name="sdf" label="sdfsdf" />
                             sdf
                         </Form.InputGroup>
                     </Question>
                     <Question>
                         <Tiles columns={2}>
-                            <Form.Input name={FormFields.firstname} label="Fornavn" validate={validateRequiredField} />
-                            <Form.Input name={FormFields.lastname} label="Etternavn" validate={validateRequiredField} />
+                            <Form.Input name={FormFields.firstname} label="Fornavn" validate={localValidateRequired} />
+                            <Form.Input name={FormFields.lastname} label="Etternavn" validate={localValidateRequired} />
                         </Tiles>
                     </Question>
                     <Question>
                         <Form.YesOrNoQuestion
                             legend={'sdfjjsdfj'}
                             name={FormFields.hasKids}
-                            validate={validateYesOrNoIsAnswered}
+                            validate={localValidateYesOrNo}
                         />
                     </Question>
                     <Question>
@@ -91,7 +94,7 @@ const TypedFormExample = () => {
                             <FormikTimeInput name={FormFields.time} label="Tidspunkt" />
                         </div>
                     </Question>
-                    <FormikInputGroup name={FormFields.nameGroup} legend="Test me" validate={validateRequiredField}>
+                    <FormikInputGroup name={FormFields.nameGroup} legend="Test me" validate={localValidateRequired}>
                         Content in group
                     </FormikInputGroup>
                     <Question>
@@ -101,13 +104,13 @@ const TypedFormExample = () => {
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
                                 maxDate: ISOStringToDate(values.daterange_to),
-                                validate: validateRequiredField,
+                                validate: localValidateRequired,
                             }}
                             toDatepickerProps={{
                                 name: FormFields.daterange_to,
                                 label: 'Til',
                                 minDate: ISOStringToDate(values.daterange_from),
-                                validate: validateRequiredField,
+                                validate: localValidateRequired,
                             }}
                         />
                     </Question>
@@ -137,7 +140,7 @@ const TypedFormExample = () => {
                             }}
                             minDate={dayjs().subtract(1, 'year').toDate()}
                             maxDate={dayjs().add(1, 'year').toDate()}
-                            validate={validateRequiredList}
+                            validate={(value) => validateFieldHasValue(value, { noValue: 'Field has no value' })}
                         />
                     </Question>
                     <Question>
@@ -152,24 +155,6 @@ const TypedFormExample = () => {
             ) : (
                 <>
                     <Question>
-                        <FormikDateIntervalPicker
-                            legend="Tidsrom"
-                            validate={validateAlltidFeil}
-                            fromDatepickerProps={{
-                                name: FormFields.daterange_from,
-                                label: 'Fra',
-                                maxDate: ISOStringToDate(values.daterange_to),
-                                validate: validateRequiredField,
-                            }}
-                            toDatepickerProps={{
-                                name: FormFields.daterange_to,
-                                label: 'Til',
-                                minDate: ISOStringToDate(values.daterange_from),
-                                validate: validateRequiredField,
-                            }}
-                        />
-                    </Question>
-                    <Question>
                         <FormikNumberInput
                             label="Oppgi hvor mange timer i snitt per uke, har barnet tilsyn?"
                             name={FormFields.firstname}
@@ -177,7 +162,7 @@ const TypedFormExample = () => {
                             suffix="Timer"
                             bredde="S"
                             maxLength={5}
-                            validate={validateRequiredField}
+                            validate={localValidateRequired}
                         />
                     </Question>
                     <Question>
@@ -192,7 +177,7 @@ const TypedFormExample = () => {
                                 { label: 'b', value: 'b' },
                                 { label: 'c', value: 'c' },
                             ]}
-                            validate={validateRequiredField}
+                            validate={localValidateRequired}
                         />
                     </Question>
                     <Question>
@@ -205,7 +190,7 @@ const TypedFormExample = () => {
                         }}>
                         Sett ugyldig dato
                     </Knapp>
-                    <FormikInputGroup name={FormFields.nameGroup} legend="Test me" validate={validateRequiredField}>
+                    <FormikInputGroup name={FormFields.nameGroup} legend="Test me" validate={localValidateRequired}>
                         Content in group
                     </FormikInputGroup>
                 </>

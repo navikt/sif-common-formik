@@ -3,15 +3,15 @@ import { Field, FieldProps } from 'formik';
 import { InputProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import { validateAll } from '../../utils/validateAll';
-import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
-import { validateFormikNumberInputValue } from './validateFormikNumberInputValue';
+import { validateFormikField } from '../../utils/validateFormikField';
 import FormikInput, { InputWithSuffix } from '../formik-input/FormikInput';
+import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
+import { validateNumber } from '../../validation/formikFieldValidation';
 
 interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'pattern' | 'inputMode' | 'min' | 'max'> {
     name: FieldName;
     disableNumberValidation?: boolean;
-    invalidNumberErrorKey?: string;
+    invalidNumberError?: string;
     integerValue?: boolean;
 }
 
@@ -24,7 +24,7 @@ function FormikNumberInput<FieldName>({
     autoComplete,
     bredde = 'S',
     disableNumberValidation,
-    invalidNumberErrorKey = 'common.fieldvalidation.ugyldigTall',
+    invalidNumberError = 'Feltet inneholder ikke et gyldig tall',
     integerValue = false,
     ...restProps
 }: FormikNumberInputProps<FieldName>) {
@@ -32,13 +32,17 @@ function FormikNumberInput<FieldName>({
 
     const validations = disableNumberValidation
         ? []
-        : [(value) => validateFormikNumberInputValue(value, invalidNumberErrorKey)];
+        : [(value) => validateNumber(value, { invalidNumber: invalidNumberError })];
     if (validate) {
-        validations.push(validate);
+        if (Array.isArray(validate)) {
+            validations.push(...validate);
+        } else {
+            validations.push(validate);
+        }
     }
 
     return (
-        <Field validate={validateAll(validations)} name={name}>
+        <Field validate={validateFormikField(validations)} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <FormikInput

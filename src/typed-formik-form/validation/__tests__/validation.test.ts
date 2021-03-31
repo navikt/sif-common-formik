@@ -7,7 +7,7 @@ import {
     isValidDatePickerDateString,
     isNumberWithinRange,
     isValidOrgNumber,
-} from '../validation';
+} from '../validationFunctions';
 
 describe('validation', () => {
     describe('isFieldWithValue', () => {

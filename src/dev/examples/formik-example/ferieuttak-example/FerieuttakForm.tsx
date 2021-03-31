@@ -5,7 +5,7 @@ import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/comm
 import dateRangeValidation from '@navikt/sif-common-core/lib/validation/dateRangeValidation';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
-import { validateRequiredList } from '../../../validation/fieldValidations';
+import { validateListHasItems } from '../../../../typed-formik-form/validation/formikFieldValidation';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
 
 export interface FerieuttakFormLabels {
@@ -95,7 +95,11 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                     label: 'Danmark',
                                 },
                             ]}
-                            validate={validateRequiredList}
+                            validate={(value) =>
+                                validateListHasItems(value, {
+                                    listIsEmpty: 'The list is missing items',
+                                })
+                            }
                         />
                         <Form.DateIntervalPicker
                             legend={formLabels.intervalTitle}

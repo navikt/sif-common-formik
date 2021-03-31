@@ -1,24 +1,9 @@
-/**
- * Midlertidig plassering av kode
- * Todo - flytte all validation til sif-common-soknad
- *
- * */
+export type FormikFieldValidationResult = React.ReactNode | undefined;
+export type FormikValidateFieldFunction<ValueType = any> = (value: ValueType) => any;
+export type FormikFieldValidation<ValueType = any> =
+    | FormikValidateFieldFunction<ValueType>
+    | FormikValidateFieldFunction<ValueType>[];
 
-import { IntlShape } from 'react-intl';
-
-type valueFunction = (intl: IntlShape) => string;
-
-interface FieldValidationResultValues {
-    [key: string]: string | number | Date | valueFunction | undefined;
+export interface TypedFormInputCommonProps<ValueType = any> {
+    validate?: FormikFieldValidation<ValueType>;
 }
-
-interface IntlFieldValidationError {
-    key: string;
-    values?: FieldValidationResultValues;
-}
-
-export declare type FormikValFunc = (value: any) => any;
-
-export type FieldValidationArray = (validations: FormikValFunc[]) => (value: any) => FieldValidationResult;
-
-export type FieldValidationResult = IntlFieldValidationError | undefined | void;
