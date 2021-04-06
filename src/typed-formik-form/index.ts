@@ -9,6 +9,7 @@ export { default as FormikInput } from './components/formik-input/FormikInput';
 export { default as FormikNumberInput } from './components/formik-number-input/FormikNumberInput';
 export { default as FormikInputGroup } from './components/formik-input-group/FormikInputGroup';
 export { default as FormikModalFormAndList } from './components/formik-modal-form-and-list/FormikModalFormAndList';
+export { default as FormikModalFormAndInfo } from './components/formik-modal-form-and-list/FormikModalFormAndInfo';
 export { default as FormikRadioPanelGroup } from './components/formik-radio-panel-group/FormikRadioPanelGroup';
 export { default as FormikRadioGroup } from './components/formik-radio-group/FormikRadioGroup';
 export { default as FormikSelect } from './components/formik-select/FormikSelect';
