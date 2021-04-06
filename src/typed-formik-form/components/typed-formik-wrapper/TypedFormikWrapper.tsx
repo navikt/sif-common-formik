@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikProps, FormikConfig } from 'formik';
 
 export interface TypedFormikWrapperProps<FormValues> extends Omit<Partial<FormikProps<FormValues>>, 'initialValues'> {
     initialValues: Partial<FormValues>;
@@ -7,7 +7,9 @@ export interface TypedFormikWrapperProps<FormValues> extends Omit<Partial<Formik
     onSubmit: (values: Partial<FormValues>) => void;
 }
 
-function TypedFormikWrapper<FormValues>(props: TypedFormikWrapperProps<FormValues>) {
+type Props<FormValues> = TypedFormikWrapperProps<FormValues> & FormikConfig<Partial<FormValues>>;
+
+function TypedFormikWrapper<FormValues>(props: Props<FormValues>) {
     const { onSubmit, initialValues, renderForm: renderFormContent, ...restProps } = props;
     return (
         <Formik<Partial<FormValues>>

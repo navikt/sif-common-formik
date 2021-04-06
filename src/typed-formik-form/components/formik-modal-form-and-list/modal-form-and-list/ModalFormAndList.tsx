@@ -23,6 +23,7 @@ type ListRenderer<ItemType> = (props: {
 
 export interface ModalFormAndListProps<ItemType extends ModalFormAndListListItemBase> {
     labels: ModalFormAndListLabels;
+    maxItems?: number;
     listRenderer: ListRenderer<ItemType>;
     formRenderer: ModalFormRenderer<ItemType>;
     dialogWidth?: DialogFormWrapperWidths;
@@ -42,6 +43,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
     labels,
     error,
     dialogWidth,
+    maxItems,
     onChange,
 }: Props<ItemType>) {
     const [modalState, setModalState] = React.useState<{ isVisible: boolean; selectedItem?: ItemType }>({
@@ -93,13 +95,15 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
                         <AlertStripeInfo>{labels.emptyListText}</AlertStripeInfo>
                     </div>
                 )}
-                <div
-                    style={showListTitle ? { marginTop: '1rem' } : undefined}
-                    className={'modalFormAndList__addButton'}>
-                    <Knapp htmlType="button" onClick={() => setModalState({ isVisible: true })} mini={true}>
-                        {labels.addLabel}
-                    </Knapp>
-                </div>
+                {(maxItems === undefined || maxItems > items.length) && (
+                    <div
+                        style={showListTitle ? { marginTop: '1rem' } : undefined}
+                        className={'modalFormAndList__addButton'}>
+                        <Knapp htmlType="button" onClick={() => setModalState({ isVisible: true })} mini={true}>
+                            {labels.addLabel}
+                        </Knapp>
+                    </div>
+                )}
             </SkjemagruppeQuestion>
         </>
     );
