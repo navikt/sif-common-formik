@@ -31,7 +31,6 @@ import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDial
 import { FormFields, FormValues } from '../types';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
-const fullForm = false;
 
 const TypedFormExample = () => {
     const intl = useIntl();
@@ -52,7 +51,22 @@ const TypedFormExample = () => {
                 return error;
             }}>
             <h3>Noen skjemaelementer</h3>
-            {fullForm ? (
+            {1 + 1 == 2 && (
+                <Question>
+                    <FerieuttakListAndDialog
+                        name={FormFields.ferieuttak}
+                        labels={{
+                            addLabel: 'Legg til',
+                            modalTitle: 'Ferieuttak',
+                            listTitle: 'Ferieuttak',
+                        }}
+                        minDate={dayjs().subtract(1, 'year').toDate()}
+                        maxDate={dayjs().add(1, 'year').toDate()}
+                        validate={validateRequiredList}
+                    />
+                </Question>
+            )}
+            {1 + 1 === 3 && (
                 <>
                     <Question>
                         <Form.DatePicker
@@ -91,9 +105,6 @@ const TypedFormExample = () => {
                             <FormikTimeInput name={FormFields.time} label="Tidspunkt" />
                         </div>
                     </Question>
-                    <FormikInputGroup name={FormFields.nameGroup} legend="Test me" validate={validateRequiredField}>
-                        Content in group
-                    </FormikInputGroup>
                     <Question>
                         <FormikDateIntervalPicker
                             legend="Tidsrom"
@@ -128,19 +139,6 @@ const TypedFormExample = () => {
                         />
                     </Question>
                     <Question>
-                        <FerieuttakListAndDialog
-                            name={FormFields.ferieuttak}
-                            labels={{
-                                addLabel: 'Legg til',
-                                modalTitle: 'Ferieuttak',
-                                listTitle: 'Ferieuttak',
-                            }}
-                            minDate={dayjs().subtract(1, 'year').toDate()}
-                            maxDate={dayjs().add(1, 'year').toDate()}
-                            validate={validateRequiredList}
-                        />
-                    </Question>
-                    <Question>
                         <FormikFileInput
                             name={FormFields.files}
                             label="Legg til filer"
@@ -149,7 +147,8 @@ const TypedFormExample = () => {
                         />
                     </Question>
                 </>
-            ) : (
+            )}
+            {1 + 1 === 3 && (
                 <>
                     <Question>
                         <FormikDateIntervalPicker
