@@ -11,7 +11,6 @@ export interface ModalFormAndListLabels {
 export interface ModalFormAndInfoLabels {
     modalTitle: string;
     infoTitle?: string;
-    emptyInfoText?: string;
     addLabel: string;
     editLabel: string;
     deleteLabel: string;
