@@ -1,11 +1,11 @@
 import React from 'react';
 import { Knapp } from 'nav-frontend-knapper';
+import Panel from 'nav-frontend-paneler';
 import SkjemagruppeQuestion from '../../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import DialogFormWrapper, { DialogFormWrapperWidths } from '../dialog-form-wrapper/DialogFormWrapper';
 import Modal from '../modal/Modal';
 import { ModalFormAndInfoLabels } from '../types';
 import './modalFormAndInfo.less';
-import Panel from 'nav-frontend-paneler';
 
 type ModalFormRenderer<DataType> = (props: {
     data?: DataType;
