@@ -29,6 +29,7 @@ import {
 } from '../../../validation/fieldValidations';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
+import FerieuttakInfoAndDialog from '../ferieuttakinfo-and-form-example-/FerieuttakInfoAndDialog';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 
@@ -66,8 +67,22 @@ const TypedFormExample = () => {
                     />
                 </Question>
             )}
-            {1 + 1 === 3 && (
+            {1 + 1 === 2 && (
                 <>
+                    <Question>
+                        <FerieuttakInfoAndDialog
+                            name={'sfd'}
+                            labels={{
+                                addLabel: 'Legg til',
+                                editLabel: 'Endre',
+                                deleteLabel: 'Fjern',
+                                modalTitle: 'Ferieuttak',
+                                infoTitle: 'Ferieuttak',
+                            }}
+                            minDate={dayjs().subtract(1, 'year').toDate()}
+                            maxDate={dayjs().add(1, 'year').toDate()}
+                        />
+                    </Question>
                     <Question>
                         <Form.DatePicker
                             name={FormFields.birthdate}
