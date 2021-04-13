@@ -1,35 +1,31 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
-import { FieldInputProps, FormikErrors, FormikProps, useFormikContext } from 'formik';
+import { FieldInputProps, FormikProps, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import { CancelButtonTypes, NavFrontendSkjemaFeil } from '../../types';
 import { getErrorsForField, isValidationErrorsVisible } from '../../utils/typedFormErrorUtils';
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 import ButtonRow from '../helpers/button-row/ButtonRow';
 
-export type FormikErrorRender<FormValues> = (error: FormikErrors<FormValues>) => NavFrontendSkjemaFeil;
-
 export interface TypedFormikFormProps<FormValues> {
     children: React.ReactNode;
     className?: string;
     includeValidationSummary?: boolean;
     includeButtons?: boolean;
-    noButtonsContentRenderer?: () => React.ReactNode;
-    fieldErrorRenderer: FormikErrorRender<FormValues>;
     resetFormOnCancel?: boolean;
     submitButtonLabel?: string;
     cancelButtonLabel?: string;
     id?: string;
+    cancelButtonType?: CancelButtonTypes;
+    runDelayedFormValidation?: boolean;
+    noButtonsContentRenderer?: () => React.ReactNode;
     cleanup?: (values: FormValues) => FormValues;
     onValidSubmit?: () => void;
     onCancel?: () => void;
-    cancelButtonType?: CancelButtonTypes;
-    runDelayedFormValidation?: boolean;
 }
 
 export interface TypedFormikFormContextType {
     showErrors: boolean;
     getAndRenderFieldErrorMessage: (field: FieldInputProps<any>, form: FormikProps<any>) => NavFrontendSkjemaFeil;
-    fieldErrorRenderer?: FormikErrorRender<any>;
     onAfterFieldValueSet: () => void;
 }
 
@@ -44,20 +40,19 @@ export const TypedFormikFormContext = createContext<TypedFormikFormContextType |
 
 function TypedFormikForm<FormValues>({
     children,
-    onCancel,
     resetFormOnCancel,
     className,
     includeValidationSummary,
     submitButtonLabel,
     cancelButtonLabel,
-    fieldErrorRenderer,
-    onValidSubmit,
-    noButtonsContentRenderer,
     id,
-    cleanup,
     includeButtons = true,
     runDelayedFormValidation,
     cancelButtonType,
+    onCancel,
+    onValidSubmit,
+    noButtonsContentRenderer,
+    cleanup,
 }: TypedFormikFormProps<FormValues>) {
     const formik = useFormikContext<FormValues>();
     const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid, isValidating } = formik;
@@ -112,14 +107,10 @@ function TypedFormikForm<FormValues>({
     const createTypedFormikFormContext = (): TypedFormikFormContextType => {
         const showErrors = isValidationErrorsVisible(formik);
         return {
-            fieldErrorRenderer,
             showErrors,
             getAndRenderFieldErrorMessage: (field, form) => {
                 if (showErrors) {
-                    const errors = getErrorsForField(field.name, form.errors);
-                    if (errors) {
-                        return fieldErrorRenderer ? fieldErrorRenderer(errors) : true;
-                    }
+                    return getErrorsForField(field.name, form.errors);
                 }
                 return undefined;
             },

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
+// import { useIntl } from 'react-intl';
 import dayjs from 'dayjs';
 import { useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
@@ -7,7 +7,6 @@ import {
     FormikDateIntervalPicker,
     FormikFileInput,
     FormikInput,
-    FormikInputGroup,
     FormikNumberInput,
     ISOStringToDate,
 } from '../../../../typed-formik-form';
@@ -15,31 +14,26 @@ import FormikDateRangePicker from '../../../../typed-formik-form/components/form
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
-import Question from '../../../components/question/Question';
-import Tiles from '../../../components/tiles/Tiles';
-import {
-    isIntlFieldValidationErrorType,
-    renderIntlFieldValidationError,
-} from '../../../modules/validation/fieldValidationRenderUtils';
-import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
-import { FormFields, FormValues } from '../types';
 import {
     validateFieldHasValue,
     validateYesOrNoIsAnswered,
 } from '../../../../typed-formik-form/validation/formikFieldValidation';
+import Question from '../../../components/question/Question';
+import Tiles from '../../../components/tiles/Tiles';
+import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import FerieuttakInfoAndDialog from '../ferieuttakinfo-and-form-example-/FerieuttakInfoAndDialog';
+import { FormFields, FormValues } from '../types';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 
 const TypedFormExample = () => {
-    const intl = useIntl();
     const { values } = useFormikContext<FormValues>();
     const { setFieldValue } = useFormikContext<FormValues>();
 
     const localValidateRequired = (value) => validateFieldHasValue(value, { noValue: 'Feltet har ikke noe verdi' });
-
     const localValidateYesOrNo = (value) =>
         validateYesOrNoIsAnswered(value, { yesOrNoUnanswered: 'Du må svare på spørsmålet' });
+
     return (
         <Form.Form
             submitButtonLabel="Ok"
@@ -47,13 +41,7 @@ const TypedFormExample = () => {
             includeButtons={true}
             noButtonsContentRenderer={() => (
                 <UnansweredQuestionsInfo>Du har ubesvarte spørsmål</UnansweredQuestionsInfo>
-            )}
-            fieldErrorRenderer={(error) => {
-                if (isIntlFieldValidationErrorType(error)) {
-                    return renderIntlFieldValidationError(intl, error);
-                }
-                return error;
-            }}>
+            )}>
             <h3>Noen skjemaelementer</h3>
             {1 + 1 == 2 && (
                 <Question>
