@@ -21,6 +21,7 @@ function FormikModalFormAndList<FieldName, ItemType>({
     sortFunc,
     onAfterChange,
     feil,
+    maxItems,
     validate,
 }: FormikModalFormAndListProps<FieldName, ItemType>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -32,6 +33,7 @@ function FormikModalFormAndList<FieldName, ItemType>({
                         labels={labels}
                         items={field.value}
                         error={feil || (context ? context.getAndRenderFieldErrorMessage(field, form) : undefined)}
+                        maxItems={maxItems}
                         onChange={(values) => {
                             const updatedValues = sortFunc ? values.sort(sortFunc) : values;
                             form.setFieldValue(field.name, updatedValues);

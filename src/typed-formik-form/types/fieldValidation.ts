@@ -3,7 +3,3 @@ export type FormikValidateFieldFunction<ValueType = any> = (value: ValueType) =>
 export type FormikFieldValidation<ValueType = any> =
     | FormikValidateFieldFunction<ValueType>
     | FormikValidateFieldFunction<ValueType>[];
-
-export interface TypedFormInputCommonProps<ValueType = any> {
-    validate?: FormikFieldValidation<ValueType>;
-}

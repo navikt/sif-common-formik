@@ -8,3 +8,10 @@ export interface ModalFormAndListLabels {
     emptyListText?: string;
     addLabel: string;
 }
+export interface ModalFormAndInfoLabels {
+    modalTitle: string;
+    infoTitle?: string;
+    addLabel: string;
+    editLabel: string;
+    deleteLabel: string;
+}

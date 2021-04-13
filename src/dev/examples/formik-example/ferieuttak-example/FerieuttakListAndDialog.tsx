@@ -23,6 +23,7 @@ function FerieuttakListAndDialog<FieldNames>({ name, minDate, maxDate, validate,
                 dialogWidth="narrow"
                 validate={validate}
                 sortFunc={sortItemsByFom}
+                maxItems={1}
                 formRenderer={({ onSubmit, onCancel, item, allItems }) => (
                     <FerieuttakForm
                         ferieuttak={item}

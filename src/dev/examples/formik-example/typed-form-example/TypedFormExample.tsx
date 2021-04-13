@@ -27,9 +27,9 @@ import {
     validateFieldHasValue,
     validateYesOrNoIsAnswered,
 } from '../../../../typed-formik-form/validation/formikFieldValidation';
+import FerieuttakInfoAndDialog from '../ferieuttakinfo-and-form-example-/FerieuttakInfoAndDialog';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
-const fullForm = false;
 
 const TypedFormExample = () => {
     const intl = useIntl();
@@ -55,8 +55,36 @@ const TypedFormExample = () => {
                 return error;
             }}>
             <h3>Noen skjemaelementer</h3>
-            {fullForm ? (
+            {1 + 1 == 2 && (
+                <Question>
+                    <FerieuttakListAndDialog
+                        name={FormFields.ferieuttak}
+                        labels={{
+                            addLabel: 'Legg til',
+                            modalTitle: 'Ferieuttak',
+                            listTitle: 'Ferieuttak',
+                        }}
+                        minDate={dayjs().subtract(1, 'year').toDate()}
+                        maxDate={dayjs().add(1, 'year').toDate()}
+                    />
+                </Question>
+            )}
+            {1 + 1 === 2 && (
                 <>
+                    <Question>
+                        <FerieuttakInfoAndDialog
+                            name={'sfd'}
+                            labels={{
+                                addLabel: 'Legg til',
+                                editLabel: 'Endre',
+                                deleteLabel: 'Fjern',
+                                modalTitle: 'Ferieuttak',
+                                infoTitle: 'Ferieuttak',
+                            }}
+                            minDate={dayjs().subtract(1, 'year').toDate()}
+                            maxDate={dayjs().add(1, 'year').toDate()}
+                        />
+                    </Question>
                     <Question>
                         <Form.DatePicker
                             name={FormFields.birthdate}
@@ -94,9 +122,6 @@ const TypedFormExample = () => {
                             <FormikTimeInput name={FormFields.time} label="Tidspunkt" />
                         </div>
                     </Question>
-                    <FormikInputGroup name={FormFields.nameGroup} legend="Test me" validate={localValidateRequired}>
-                        Content in group
-                    </FormikInputGroup>
                     <Question>
                         <FormikDateIntervalPicker
                             legend="Tidsrom"
@@ -131,19 +156,6 @@ const TypedFormExample = () => {
                         />
                     </Question>
                     <Question>
-                        <FerieuttakListAndDialog
-                            name={FormFields.ferieuttak}
-                            labels={{
-                                addLabel: 'Legg til',
-                                modalTitle: 'Ferieuttak',
-                                listTitle: 'Ferieuttak',
-                            }}
-                            minDate={dayjs().subtract(1, 'year').toDate()}
-                            maxDate={dayjs().add(1, 'year').toDate()}
-                            validate={(value) => validateFieldHasValue(value, { noValue: 'Field has no value' })}
-                        />
-                    </Question>
-                    <Question>
                         <FormikFileInput
                             name={FormFields.files}
                             label="Legg til filer"
@@ -152,7 +164,8 @@ const TypedFormExample = () => {
                         />
                     </Question>
                 </>
-            ) : (
+            )}
+            {1 + 1 === 3 && (
                 <>
                     <Question>
                         <FormikNumberInput
@@ -190,9 +203,6 @@ const TypedFormExample = () => {
                         }}>
                         Sett ugyldig dato
                     </Knapp>
-                    <FormikInputGroup name={FormFields.nameGroup} legend="Test me" validate={localValidateRequired}>
-                        Content in group
-                    </FormikInputGroup>
                 </>
             )}
         </Form.Form>

@@ -101,50 +101,52 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                 })
                             }
                         />
-                        <Form.DateIntervalPicker
-                            legend={formLabels.intervalTitle}
-                            fromDatepickerProps={{
-                                label: formLabels.fromDate,
-                                name: FerieuttakFormFields.fom,
-                                fullscreenOverlay: true,
-                                minDate,
-                                maxDate: maxDate || formik.values.tom,
-                                disabledDateRanges: alleFerieuttak
-                                    .filter((f) => (ferieuttak ? ferieuttak.id !== f.id : true))
-                                    .map((f) => ({ from: f.fom, to: f.tom })),
-                                validate: (value) =>
-                                    dateRangeValidation.validateFromDate(
-                                        ISOStringToDate(value),
-                                        minDate,
-                                        maxDate,
-                                        formik.values.tom
-                                    ),
-                                onChange: () => {
-                                    setTimeout(() => {
-                                        formik.validateField(FerieuttakFormFields.tom);
-                                    });
-                                },
-                            }}
-                            toDatepickerProps={{
-                                label: formLabels.toDate,
-                                name: FerieuttakFormFields.tom,
-                                fullscreenOverlay: true,
-                                minDate: minDate || formik.values.fom,
-                                maxDate,
-                                validate: (value) =>
-                                    dateRangeValidation.validateToDate(
-                                        ISOStringToDate(value),
-                                        minDate,
-                                        maxDate,
-                                        formik.values.fom
-                                    ),
-                                onChange: () => {
-                                    setTimeout(() => {
-                                        formik.validateField(FerieuttakFormFields.fom);
-                                    });
-                                },
-                            }}
-                        />
+                        <Box margin="xl">
+                            <Form.DateIntervalPicker
+                                legend={formLabels.intervalTitle}
+                                fromDatepickerProps={{
+                                    label: formLabels.fromDate,
+                                    name: FerieuttakFormFields.fom,
+                                    fullscreenOverlay: true,
+                                    minDate,
+                                    maxDate: maxDate || formik.values.tom,
+                                    disabledDateRanges: alleFerieuttak
+                                        .filter((f) => (ferieuttak ? ferieuttak.id !== f.id : true))
+                                        .map((f) => ({ from: f.fom, to: f.tom })),
+                                    validate: (value) =>
+                                        dateRangeValidation.validateFromDate(
+                                            ISOStringToDate(value),
+                                            minDate,
+                                            maxDate,
+                                            formik.values.tom
+                                        ),
+                                    onChange: () => {
+                                        setTimeout(() => {
+                                            formik.validateField(FerieuttakFormFields.tom);
+                                        });
+                                    },
+                                }}
+                                toDatepickerProps={{
+                                    label: formLabels.toDate,
+                                    name: FerieuttakFormFields.tom,
+                                    fullscreenOverlay: true,
+                                    minDate: minDate || formik.values.fom,
+                                    maxDate,
+                                    validate: (value) =>
+                                        dateRangeValidation.validateToDate(
+                                            ISOStringToDate(value),
+                                            minDate,
+                                            maxDate,
+                                            formik.values.fom
+                                        ),
+                                    onChange: () => {
+                                        setTimeout(() => {
+                                            formik.validateField(FerieuttakFormFields.fom);
+                                        });
+                                    },
+                                }}
+                            />
+                        </Box>
                     </Form.Form>
                 )}
             />
