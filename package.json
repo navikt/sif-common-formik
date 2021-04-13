@@ -1,6 +1,6 @@
 {
     "name": "@navikt/sif-common-formik",
-    "version": "16.0.0-beta.0",
+    "version": "16.0.0-beta.1",
     "private": false,
     "scripts": {
         "dev": "craco start",
@@ -34,8 +34,8 @@
         "@types/react": "^17.0.3",
         "@types/react-dom": "^17.0.3",
         "@types/react-router-dom": "^5.1.7",
-        "@typescript-eslint/eslint-plugin": "4.21.0",
-        "@typescript-eslint/parser": "4.21.0",
+        "@typescript-eslint/eslint-plugin": "4.22.0",
+        "@typescript-eslint/parser": "4.22.0",
         "axios": "^0.21.1",
         "canvas": "^2.7.0",
         "classnames": "^2.3.1",

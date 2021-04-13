@@ -8,12 +8,12 @@ import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
 import { DateRange, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import { validateFormikField } from '../../utils/validateFormikField';
-import { validateDatePickerString } from '../../validation/formikFieldValidation';
+import { validateDatePickerString } from '../../validation/validations';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
 import './datepicker.less';
+import { validateAll } from '../../validation/validateAll';
 
 export interface DatepickerLimitiations {
     minDate?: Date;
@@ -105,7 +105,7 @@ function FormikDatepicker<FieldName>({
     }
 
     return (
-        <Field validate={validateFormikField(validations)} name={name}>
+        <Field validate={validateAll(validations)} name={name}>
             {({ field, form }: FieldProps<string>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
                 const handleOnDatepickerChange: DatepickerChange = (dateString) => {

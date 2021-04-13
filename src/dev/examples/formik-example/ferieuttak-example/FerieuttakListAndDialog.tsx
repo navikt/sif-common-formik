@@ -4,11 +4,11 @@ import { FormikModalFormAndList, ModalFormAndListLabels } from '../../../../type
 import FerieuttakForm from './FerieuttakForm';
 import FerieuttakList from './FerieuttakList';
 import { Ferieuttak } from './types';
-import { FormikValidationFunction } from '../../../../typed-formik-form/validation/types';
+import { ValidationFunction } from '../../../../typed-formik-form/validation/types';
 
 interface Props<FieldNames> {
     name: FieldNames;
-    validate?: FormikValidationFunction;
+    validate?: ValidationFunction;
     minDate: Date;
     maxDate: Date;
     labels: ModalFormAndListLabels;

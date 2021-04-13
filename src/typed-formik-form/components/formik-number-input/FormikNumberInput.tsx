@@ -3,10 +3,10 @@ import { Field, FieldProps } from 'formik';
 import { InputProps } from 'nav-frontend-skjema';
 import { TypedFormInputCommonProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import { validateFormikField } from '../../utils/validateFormikField';
 import FormikInput, { InputWithSuffix } from '../formik-input/FormikInput';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
-import { validateNumber } from '../../validation/formikFieldValidation';
+import { validateNumber } from '../../validation/validations';
+import { validateAll } from '../../validation/validateAll';
 
 interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'pattern' | 'inputMode' | 'min' | 'max'> {
     name: FieldName;
@@ -29,7 +29,6 @@ function FormikNumberInput<FieldName>({
     ...restProps
 }: FormikNumberInputProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
-
     const validations = disableNumberValidation
         ? []
         : [(value) => validateNumber(value, { invalidNumber: invalidNumberError })];
@@ -42,7 +41,7 @@ function FormikNumberInput<FieldName>({
     }
 
     return (
-        <Field validate={validateFormikField(validations)} name={name}>
+        <Field validate={validateAll(validations)} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <FormikInput

@@ -1,10 +1,8 @@
 import { ReactNode } from 'react';
 
-type FormikValidationErrors = { [key: string]: FormikValidationResult };
-
-export type FormikValidationError = ReactNode;
-export type FormikValidationResult = FormikValidationError | undefined;
-export type FormikValidationFunction<ErrorType = FormikValidationErrors> = (
+export type ValidationError = ReactNode;
+export type ValidationResult = ValidationError | undefined;
+export type ValidationFunction<ErrorType = { [key: string]: ValidationResult }> = (
     value: any,
     errors: ErrorType
-) => FormikValidationResult;
+) => ValidationResult;

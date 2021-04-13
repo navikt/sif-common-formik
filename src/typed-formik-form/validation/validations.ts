@@ -3,63 +3,93 @@ import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
-import { FormikValidationError, FormikValidationFunction, FormikValidationResult } from './types';
-import {
+import { ValidationError, ValidationFunction, ValidationResult } from './types';
+import validationUtils from './validationUtils';
+
+const {
     isAnswerdYesOrNo,
     isArrayWithItems,
     isFieldWithValue,
     isValidDatePickerDateString,
     isValidNumber,
     isValidOrgNumber,
-} from './validationFunctions';
+} = validationUtils;
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
-export type FieldHasValueErrors = { noValue: FormikValidationError };
-export const validateFieldHasValue: FormikValidationFunction<FieldHasValueErrors> = (
+export type FieldHasValueErrors = { noValue: ValidationError };
+export const validateFieldHasValue: ValidationFunction<FieldHasValueErrors> = (
     value: any,
     errors: FieldHasValueErrors
-): FormikValidationResult => {
+): ValidationResult => {
     return !isFieldWithValue(value) ? errors.noValue : undefined;
 };
 
-export type EmptyListErrors = { listIsEmpty: FormikValidationResult };
-export const validateListHasItems: FormikValidationFunction<EmptyListErrors> = (
+export type StringValueErrors = {
+    noValue: ValidationError;
+    invalidType: ValidationError;
+    tooShort: ValidationError;
+    tooLong: ValidationError;
+};
+export const validateStringValue = ({
+    min,
+    max,
+}: {
+    min?: number;
+    max?: number;
+}): ValidationFunction<StringValueErrors> => (value: any, errors: StringValueErrors): ValidationResult => {
+    if (!isFieldWithValue(value)) {
+        return errors.noValue;
+    }
+    if (typeof value !== 'string') {
+        return errors.invalidType;
+    }
+    if (min !== undefined && value.length < min) {
+        return errors.tooShort;
+    }
+    if (max !== undefined && value.length > max) {
+        return errors.tooLong;
+    }
+    return undefined;
+};
+
+export type EmptyListErrors = { listIsEmpty: ValidationResult };
+export const validateListHasItems: ValidationFunction<EmptyListErrors> = (
     value: any,
     errors: EmptyListErrors
-): FormikValidationResult => {
+): ValidationResult => {
     return isArrayWithItems(value) ? undefined : errors.listIsEmpty;
 };
 
-export type DateIsValidErrors = { dateHasInvalidFormat: FormikValidationError };
-export const validateDatePickerString: FormikValidationFunction<DateIsValidErrors> = (
+export type DateIsValidErrors = { dateHasInvalidFormat: ValidationError };
+export const validateDatePickerString: ValidationFunction<DateIsValidErrors> = (
     value: any,
     errors: DateIsValidErrors
-): FormikValidationResult => {
+): ValidationResult => {
     return isValidDatePickerDateString(value) ? undefined : errors.dateHasInvalidFormat;
 };
 
-export type YesOrNoIsAnsweredErrors = { yesOrNoUnanswered: FormikValidationError };
-export const validateYesOrNoIsAnswered: FormikValidationFunction<YesOrNoIsAnsweredErrors> = (
+export type YesOrNoIsAnsweredErrors = { yesOrNoUnanswered: ValidationError };
+export const validateYesOrNoIsAnswered: ValidationFunction<YesOrNoIsAnsweredErrors> = (
     value: any,
     errors: YesOrNoIsAnsweredErrors
-): FormikValidationResult => {
+): ValidationResult => {
     return isAnswerdYesOrNo(value) ? undefined : errors.yesOrNoUnanswered;
 };
 
-export type NumberIsValidErrors = { invalidNumber: FormikValidationError };
-export const validateNumber: FormikValidationFunction<NumberIsValidErrors> = (
+export type NumberIsValidErrors = { invalidNumber: ValidationError };
+export const validateNumber: ValidationFunction<NumberIsValidErrors> = (
     value: any,
     error: NumberIsValidErrors
-): FormikValidationResult => {
+): ValidationResult => {
     return isValidNumber(value) ? undefined : error.invalidNumber;
 };
 
 export type NumberIsValidAndWithinRangeErrors = {
-    invalidNumber: FormikValidationError;
-    numberToSmall: FormikValidationError;
-    numberToLarge: FormikValidationError;
+    invalidNumber: ValidationError;
+    numberToSmall: ValidationError;
+    numberToLarge: ValidationError;
 };
 export const validateNumberIsWithinRange = ({
     min,
@@ -67,10 +97,10 @@ export const validateNumberIsWithinRange = ({
 }: {
     min?: number;
     max?: number;
-}): FormikValidationFunction<NumberIsValidAndWithinRangeErrors> => (
+}): ValidationFunction<NumberIsValidAndWithinRangeErrors> => (
     value: any,
     error: NumberIsValidAndWithinRangeErrors
-): FormikValidationResult => {
+): ValidationResult => {
     const requiredNumberError = validateNumber(value, { invalidNumber: error.invalidNumber });
     if (requiredNumberError) {
         return requiredNumberError;
@@ -85,9 +115,9 @@ export const validateNumberIsWithinRange = ({
 };
 
 export type DateIsWithinRangeError = {
-    dateHasInvalidFormat: FormikValidationError;
-    dateBeforeMin: FormikValidationError;
-    dateAfterMax: FormikValidationError;
+    dateHasInvalidFormat: ValidationError;
+    dateBeforeMin: ValidationError;
+    dateAfterMax: ValidationError;
 };
 export const validateDateIsWithinRange = ({
     min,
@@ -95,10 +125,7 @@ export const validateDateIsWithinRange = ({
 }: {
     min?: Date;
     max?: Date;
-}): FormikValidationFunction<DateIsWithinRangeError> => (
-    value: any,
-    error: DateIsWithinRangeError
-): FormikValidationResult => {
+}): ValidationFunction<DateIsWithinRangeError> => (value: any, error: DateIsWithinRangeError): ValidationResult => {
     const date = datepickerUtils.getDateFromDateString(value);
     if (!date) {
         return error.dateHasInvalidFormat;
@@ -113,25 +140,25 @@ export const validateDateIsWithinRange = ({
 };
 
 export type OrgNumberIsValidErrors = {
-    invalidNorwegianOrgNumber: FormikValidationError;
+    invalidNorwegianOrgNumber: ValidationError;
 };
 
-export const validateOrgNumber: FormikValidationFunction<OrgNumberIsValidErrors> = (
+export const validateOrgNumber: ValidationFunction<OrgNumberIsValidErrors> = (
     value: any,
     error: OrgNumberIsValidErrors
-): FormikValidationResult => {
+): ValidationResult => {
     return isValidOrgNumber(value) ? undefined : error.invalidNorwegianOrgNumber;
 };
 
 export type FødselsnummerIsValidErrors = {
-    fødselsnummerNot11Chars: FormikValidationError;
-    fødselsnummerChecksumError: FormikValidationError;
-    invalidFødselsnummer: FormikValidationError;
+    fødselsnummerNot11Chars: ValidationError;
+    fødselsnummerChecksumError: ValidationError;
+    invalidFødselsnummer: ValidationError;
 };
-export const validateFødselsnummer: FormikValidationFunction<FødselsnummerIsValidErrors> = (
+export const validateFødselsnummer: ValidationFunction<FødselsnummerIsValidErrors> = (
     value: any,
     error: FødselsnummerIsValidErrors
-): FormikValidationResult => {
+): ValidationResult => {
     /** Errors from @navikt/fnrvalidator */
     const LENGTH_ERROR = 'fnr or dnr must consist of 11 digits';
     const CHECKSUM_ERROR = "checksums don't match";

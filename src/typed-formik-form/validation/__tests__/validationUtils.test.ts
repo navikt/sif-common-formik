@@ -1,13 +1,15 @@
 import { YesOrNo } from '../../types';
-import {
-    isValidNumber,
+import validationUtils from '../validationUtils';
+
+const {
     isAnswerdYesOrNo,
+    isValidDatePickerDateString,
+    isValidNumber,
+    isValidOrgNumber,
     isFieldWithValue,
     isArrayWithItems,
-    isValidDatePickerDateString,
     isNumberWithinRange,
-    isValidOrgNumber,
-} from '../validationFunctions';
+} = validationUtils;
 
 describe('validation', () => {
     describe('isFieldWithValue', () => {

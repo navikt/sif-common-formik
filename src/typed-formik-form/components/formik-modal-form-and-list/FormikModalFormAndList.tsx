@@ -3,12 +3,12 @@ import { Field, FieldProps } from 'formik';
 import { NavFrontendSkjemaFeil } from '../../types';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import ModalFormAndList, { ModalFormAndListProps } from './modal-form-and-list/ModalFormAndList';
-import { FormikValidationFunction } from '../../validation/types';
+import { ValidationFunction } from '../../validation/types';
 
 export interface FormikModalFormAndListProps<FieldName, ItemType> extends ModalFormAndListProps<ItemType> {
     name: FieldName;
     feil?: NavFrontendSkjemaFeil;
-    validate?: FormikValidationFunction;
+    validate?: ValidationFunction;
     sortFunc?: (a: ItemType, b: ItemType) => number;
     onAfterChange?: (values: ItemType[]) => void;
 }

@@ -1,4 +1,4 @@
-import { FormikFieldValidation } from './fieldValidation';
+import { ValidationResult } from '../validation/types';
 
 export enum YesOrNo {
     'YES' = 'yes',
@@ -20,6 +20,6 @@ export type CancelButtonTypes = 'standard' | 'hoved' | 'fare' | 'flat';
 
 export type NavFrontendSkjemaFeil = React.ReactNode | boolean;
 
-export interface TypedFormInputCommonProps<ValueType = any> {
-    validate?: FormikFieldValidation<ValueType>;
+export interface TypedFormInputCommonProps {
+    validate?: (value: any) => ValidationResult;
 }

@@ -3,7 +3,7 @@ import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import dateRangeValidation from '@navikt/sif-common-core/lib/validation/dateRangeValidation';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
-import { validateListHasItems } from '../../../../typed-formik-form/validation/formikFieldValidation';
+import { validateListHasItems } from '../../../../typed-formik-form/validation/validations';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
 
 export interface FerieuttakFormLabels {

@@ -19,7 +19,7 @@ import {
     validateOrgNumber,
     validateFødselsnummer,
     NumberIsValidAndWithinRangeErrors,
-} from '../formikFieldValidation';
+} from '../validations';
 
 describe('formikValidation', () => {
     describe('validateFieldHasValue', () => {
