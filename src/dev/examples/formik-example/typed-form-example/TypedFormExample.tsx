@@ -14,7 +14,11 @@ import FormikTimeInput from '../../../../typed-formik-form/components/formik-tim
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
 import { validateAll } from '../../../../typed-formik-form/validation/validateAll';
-import { validateRequiredField, validateYesOrNoIsAnswered } from '../../../../typed-formik-form/validation/validations';
+import {
+    RequiredFieldErrors,
+    validateRequiredField,
+    validateYesOrNoIsAnswered,
+} from '../../../../typed-formik-form/validation/validations';
 import Question from '../../../components/question/Question';
 import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
@@ -62,7 +66,12 @@ const TypedFormExample = () => {
                                 localValidateRequired,
                                 (value) => {
                                     const error = validateRequiredField(value);
-                                    return error ? 'Feltet er påkrevd' : undefined;
+                                    switch (error) {
+                                        case RequiredFieldErrors.noValue:
+                                            return 'Feltet x må ha verdi';
+                                        default:
+                                            return undefined;
+                                    }
                                 },
                             ])}
                         />
