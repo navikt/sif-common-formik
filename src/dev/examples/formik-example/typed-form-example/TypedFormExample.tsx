@@ -36,6 +36,7 @@ const TypedFormExample = () => {
             submitButtonLabel="Ok"
             includeValidationSummary={true}
             includeButtons={true}
+            fieldErrorRenderer={() => 'asd'}
             noButtonsContentRenderer={() => (
                 <UnansweredQuestionsInfo>Du har ubesvarte spørsmål</UnansweredQuestionsInfo>
             )}>

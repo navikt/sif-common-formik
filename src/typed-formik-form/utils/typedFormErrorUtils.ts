@@ -25,7 +25,7 @@ export const getErrorsForField = <FormValues>(
     elementName: string,
     errors: FormikErrors<FormValues>
 ): FormikErrors<FormValues> | undefined => {
-    const fieldErrors = getIn(errors, elementName);
+    const fieldErrors: FormikErrors<FormValues> = getIn(errors, elementName);
     if (Array.isArray(fieldErrors) && fieldErrors.length === 1 && fieldErrors[0] === null) {
         // Filter out fieldArray errors containing only null item
         return undefined;
