@@ -3,7 +3,6 @@ import { Field, FieldProps } from 'formik';
 import { Checkbox, CheckboxProps } from 'nav-frontend-skjema';
 import { TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import { validateAll } from '../../validation/validateAll';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
 interface OwnProps<FieldName> extends Omit<CheckboxProps, 'name'> {
@@ -22,7 +21,7 @@ function FormikCheckbox<FieldName>({
 }: FormikCheckboxProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate ? validateAll(validate) : undefined} name={name}>
+        <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <Checkbox

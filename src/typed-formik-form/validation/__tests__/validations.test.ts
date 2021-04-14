@@ -3,13 +3,13 @@ import { YesOrNo } from '../../types';
 import {
     DateIsValidErrors,
     ListHasItemsErrors,
-    FieldHasValueErrors,
+    RequiredFieldErrors,
     YesOrNoIsAnsweredErrors,
     NumberIsValidErrors,
     DateIsWithinRangeError,
     OrgNumberIsValidErrors,
     FødselsnummerIsValidErrors,
-    validateFieldHasValue,
+    validateRequiredField,
     validateListHasItems,
     validateDatePickerString,
     validateYesOrNoIsAnswered,
@@ -22,16 +22,16 @@ import {
 } from '../validations';
 
 describe('formikValidation', () => {
-    describe('validateFieldHasValue', () => {
+    describe('validateRequiredField', () => {
         it('returns undefined when value is defined', () => {
-            expect(validateFieldHasValue('a')).toBeUndefined();
-            expect(validateFieldHasValue(1)).toBeUndefined();
-            expect(validateFieldHasValue({})).toBeUndefined();
+            expect(validateRequiredField('a')).toBeUndefined();
+            expect(validateRequiredField(1)).toBeUndefined();
+            expect(validateRequiredField({})).toBeUndefined();
         });
         it('returns error when value is not empty, undefined or null', () => {
-            expect(validateFieldHasValue('')).toEqual(FieldHasValueErrors.noValue);
-            expect(validateFieldHasValue(null)).toEqual(FieldHasValueErrors.noValue);
-            expect(validateFieldHasValue(undefined)).toEqual(FieldHasValueErrors.noValue);
+            expect(validateRequiredField('')).toEqual(RequiredFieldErrors.noValue);
+            expect(validateRequiredField(null)).toEqual(RequiredFieldErrors.noValue);
+            expect(validateRequiredField(undefined)).toEqual(RequiredFieldErrors.noValue);
         });
     });
 

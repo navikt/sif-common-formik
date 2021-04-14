@@ -18,12 +18,12 @@ const {
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
-export enum FieldHasValueErrors {
+export enum RequiredFieldErrors {
     'noValue' = 'noValue',
 }
 
-export const validateFieldHasValue: ValidationFunction<FieldHasValueErrors> = (value: any) => {
-    return isFieldWithValue(value) === false ? FieldHasValueErrors.noValue : undefined;
+export const validateRequiredField: ValidationFunction<RequiredFieldErrors> = (value: any) => {
+    return isFieldWithValue(value) === false ? RequiredFieldErrors.noValue : undefined;
 };
 
 export enum StringValueErrors {

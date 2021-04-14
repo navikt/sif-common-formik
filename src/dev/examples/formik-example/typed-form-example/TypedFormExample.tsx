@@ -13,7 +13,8 @@ import FormikDateRangePicker from '../../../../typed-formik-form/components/form
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
-import { validateFieldHasValue, validateYesOrNoIsAnswered } from '../../../../typed-formik-form/validation/validations';
+import { validateAll } from '../../../../typed-formik-form/validation/validateAll';
+import { validateRequiredField, validateYesOrNoIsAnswered } from '../../../../typed-formik-form/validation/validations';
 import Question from '../../../components/question/Question';
 import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
@@ -26,7 +27,7 @@ const TypedFormExample = () => {
     const { values } = useFormikContext<FormValues>();
     const { setFieldValue } = useFormikContext<FormValues>();
 
-    const localValidateRequired = (value) => validateFieldHasValue(value);
+    const localValidateRequired = (value) => validateRequiredField(value);
     const localValidateYesOrNo = (value) => validateYesOrNoIsAnswered(value);
 
     return (
@@ -34,26 +35,41 @@ const TypedFormExample = () => {
             submitButtonLabel="Ok"
             includeValidationSummary={true}
             includeButtons={true}
-            // fieldErrorRenderer={() => 'asd'}
             noButtonsContentRenderer={() => (
                 <UnansweredQuestionsInfo>Du har ubesvarte spørsmål</UnansweredQuestionsInfo>
             )}>
             <h3>Noen skjemaelementer</h3>
             {1 + 1 == 2 && (
-                <Question>
-                    <FerieuttakListAndDialog
-                        name={FormFields.ferieuttak}
-                        labels={{
-                            addLabel: 'Legg til',
-                            modalTitle: 'Ferieuttak',
-                            listTitle: 'Ferieuttak',
-                        }}
-                        minDate={dayjs().subtract(1, 'year').toDate()}
-                        maxDate={dayjs().add(1, 'year').toDate()}
-                    />
-                </Question>
+                <>
+                    <Question>
+                        <FerieuttakListAndDialog
+                            name={FormFields.ferieuttak}
+                            labels={{
+                                addLabel: 'Legg til',
+                                modalTitle: 'Ferieuttak',
+                                listTitle: 'Ferieuttak',
+                            }}
+                            minDate={dayjs().subtract(1, 'year').toDate()}
+                            maxDate={dayjs().add(1, 'year').toDate()}
+                        />
+                    </Question>
+                    <Question>
+                        <FormikInput
+                            type="text"
+                            label="En tekst"
+                            name={'number'}
+                            validate={validateAll([
+                                localValidateRequired,
+                                (value) => {
+                                    const error = validateRequiredField(value);
+                                    return error ? 'Feltet er påkrevd' : undefined;
+                                },
+                            ])}
+                        />
+                    </Question>
+                </>
             )}
-            {1 + 1 === 2 && (
+            {1 + 1 === 3 && (
                 <>
                     <Question>
                         <FerieuttakInfoAndDialog
