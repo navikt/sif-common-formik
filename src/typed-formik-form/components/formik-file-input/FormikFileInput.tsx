@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrayHelpers, Field, FieldArray, FieldProps } from 'formik';
-import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
+import { NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import FileInput from './file-input/FileInput';
@@ -22,7 +22,7 @@ function FormikFileInput<FieldName>({
     onFilesSelect,
     feil,
     onClick,
-}: FormikFileInputProps<FieldName> & TypedFormInputCommonProps) {
+}: FormikFileInputProps<FieldName> & TypedFormInputValidationProps) {
     const context = React.useContext(TypedFormikFormContext);
 
     return (

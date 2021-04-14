@@ -1,21 +1,17 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { InputProps } from 'nav-frontend-skjema';
-import { TypedFormInputCommonProps } from '../../types';
+import { TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import FormikInput, { InputWithSuffix } from '../formik-input/FormikInput';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
-import { validateNumber } from '../../validation/validations';
-import { validateAll } from '../../validation/validateAll';
 
 interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'pattern' | 'inputMode' | 'min' | 'max'> {
     name: FieldName;
-    disableNumberValidation?: boolean;
-    invalidNumberError?: string;
     integerValue?: boolean;
 }
 
-export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps & InputWithSuffix;
+export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps & InputWithSuffix;
 
 function FormikNumberInput<FieldName>({
     name,
@@ -23,25 +19,13 @@ function FormikNumberInput<FieldName>({
     validate,
     autoComplete,
     bredde = 'S',
-    disableNumberValidation,
-    invalidNumberError = 'Feltet inneholder ikke et gyldig tall',
     integerValue = false,
     ...restProps
 }: FormikNumberInputProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
-    const validations = disableNumberValidation
-        ? []
-        : [(value) => validateNumber(value, { invalidNumber: invalidNumberError })];
-    if (validate) {
-        if (Array.isArray(validate)) {
-            validations.push(...validate);
-        } else {
-            validations.push(validate);
-        }
-    }
 
     return (
-        <Field validate={validateAll(validations)} name={name}>
+        <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <FormikInput

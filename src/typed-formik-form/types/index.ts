@@ -1,5 +1,3 @@
-import { ValidationResult } from '../validation/types';
-
 export enum YesOrNo {
     'YES' = 'yes',
     'NO' = 'no',
@@ -19,7 +17,6 @@ export interface DateRange {
 export type CancelButtonTypes = 'standard' | 'hoved' | 'fare' | 'flat';
 
 export type NavFrontendSkjemaFeil = React.ReactNode | boolean;
-
-export interface TypedFormInputCommonProps {
-    validate?: (value: any) => ValidationResult;
+export interface TypedFormInputValidationProps {
+    validate?: (value: any) => React.ReactNode | undefined;
 }

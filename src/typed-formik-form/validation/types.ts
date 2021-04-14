@@ -1,8 +1,2 @@
-import { ReactNode } from 'react';
-
-export type ValidationError = ReactNode;
-export type ValidationResult = ValidationError | undefined;
-export type ValidationFunction<ErrorType = { [key: string]: ValidationResult }> = (
-    value: any,
-    errors: ErrorType
-) => ValidationResult;
+export type ValidationResult<ValidationErrors> = ValidationErrors | undefined;
+export type ValidationFunction<ValidationErrors> = (value: any) => ValidationResult<ValidationErrors>;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Element } from 'nav-frontend-typografi';
-import { TypedFormInputCommonProps } from '../../types';
+import { TypedFormInputValidationProps } from '../../types';
 import FormikDatepicker, { FormikDatepickerProps } from '../formik-datepicker/FormikDatepicker';
 import FormikInputGroup from '../formik-input-group/FormikInputGroup';
 import './dateIntervalPicker.less';
 
-export interface DateIntervalPickerProps<FieldName> extends TypedFormInputCommonProps {
+export interface DateIntervalPickerProps<FieldName> extends TypedFormInputValidationProps {
     legend?: string;
     fromDatepickerProps: FormikDatepickerProps<FieldName>;
     toDatepickerProps: FormikDatepickerProps<FieldName>;

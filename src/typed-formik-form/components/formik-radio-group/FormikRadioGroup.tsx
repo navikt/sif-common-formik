@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Radio, RadioGruppe, RadioPanelGruppeProps } from 'nav-frontend-skjema';
-import { TypedFormInputCommonProps } from '../../types';
+import { TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import '../../styles/nav-frontend-skjema-extension.less';
@@ -10,7 +10,7 @@ interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onCh
     name: FieldName;
 }
 
-export type FormikRadioGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikRadioGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
 
 function FormikRadioGroup<FieldName>({ name, validate, radios, feil, ...restProps }: FormikRadioGroupProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);

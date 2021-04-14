@@ -90,11 +90,15 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                     label: 'Danmark',
                                 },
                             ]}
-                            validate={(value) =>
-                                validateListHasItems(value, {
-                                    listIsEmpty: 'The list is missing items',
-                                })
-                            }
+                            validate={(value) => {
+                                const error = validateListHasItems(value);
+                                switch (error) {
+                                    case undefined:
+                                        return undefined;
+                                    case 'listIsEmpty':
+                                        return 'Listen trenger en verdi';
+                                }
+                            }}
                         />
                         <Box margin="xl">
                             <Form.DateIntervalPicker

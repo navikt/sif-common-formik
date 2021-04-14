@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { FnrInput, FnrInputProps } from 'nav-frontend-skjema';
-import { TypedFormInputCommonProps } from '../../types';
+import { TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
@@ -22,7 +22,7 @@ const getPatternForInputMode = (inputMode?: InputMode): string | undefined => {
     }
 };
 
-export type FormikInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
 
 function FormikFnrInput<FieldName>({
     name,

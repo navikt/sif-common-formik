@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
-import { ValidationError, ValidationFunction, ValidationResult } from './types';
+import { ValidationFunction } from './types';
 import validationUtils from './validationUtils';
 
 const {
@@ -18,147 +18,134 @@ const {
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
-export type FieldHasValueErrors = { noValue: ValidationError };
-export const validateFieldHasValue: ValidationFunction<FieldHasValueErrors> = (
-    value: any,
-    errors: FieldHasValueErrors
-): ValidationResult => {
-    return !isFieldWithValue(value) ? errors.noValue : undefined;
+export enum FieldHasValueErrors {
+    'noValue' = 'noValue',
+}
+
+export const validateFieldHasValue: ValidationFunction<FieldHasValueErrors> = (value: any) => {
+    return isFieldWithValue(value) === false ? FieldHasValueErrors.noValue : undefined;
 };
 
-export type StringValueErrors = {
-    noValue: ValidationError;
-    invalidType: ValidationError;
-    tooShort: ValidationError;
-    tooLong: ValidationError;
-};
+export enum StringValueErrors {
+    noValue = 'noValue',
+    invalidType = 'invalidType',
+    tooShort = 'tooShort',
+    tooLong = 'tooLong',
+}
 export const validateStringValue = ({
     min,
     max,
 }: {
     min?: number;
     max?: number;
-}): ValidationFunction<StringValueErrors> => (value: any, errors: StringValueErrors): ValidationResult => {
+}): ValidationFunction<StringValueErrors> => (value: any) => {
     if (!isFieldWithValue(value)) {
-        return errors.noValue;
+        return StringValueErrors.noValue;
     }
     if (typeof value !== 'string') {
-        return errors.invalidType;
+        return StringValueErrors.invalidType;
     }
     if (min !== undefined && value.length < min) {
-        return errors.tooShort;
+        return StringValueErrors.tooShort;
     }
     if (max !== undefined && value.length > max) {
-        return errors.tooLong;
+        return StringValueErrors.tooLong;
     }
     return undefined;
 };
 
-export type EmptyListErrors = { listIsEmpty: ValidationResult };
-export const validateListHasItems: ValidationFunction<EmptyListErrors> = (
-    value: any,
-    errors: EmptyListErrors
-): ValidationResult => {
-    return isArrayWithItems(value) ? undefined : errors.listIsEmpty;
+export enum ListHasItemsErrors {
+    listIsEmpty = 'listIsEmpty',
+}
+export const validateListHasItems: ValidationFunction<ListHasItemsErrors> = (value: any) => {
+    return isArrayWithItems(value) ? undefined : ListHasItemsErrors.listIsEmpty;
 };
 
-export type DateIsValidErrors = { dateHasInvalidFormat: ValidationError };
-export const validateDatePickerString: ValidationFunction<DateIsValidErrors> = (
-    value: any,
-    errors: DateIsValidErrors
-): ValidationResult => {
-    return isValidDatePickerDateString(value) ? undefined : errors.dateHasInvalidFormat;
+export enum DateIsValidErrors {
+    dateHasInvalidFormat = 'dateHasInvalidFormat',
+}
+export const validateDatePickerString: ValidationFunction<DateIsValidErrors> = (value: any) => {
+    return isValidDatePickerDateString(value) ? undefined : DateIsValidErrors.dateHasInvalidFormat;
 };
 
-export type YesOrNoIsAnsweredErrors = { yesOrNoUnanswered: ValidationError };
-export const validateYesOrNoIsAnswered: ValidationFunction<YesOrNoIsAnsweredErrors> = (
-    value: any,
-    errors: YesOrNoIsAnsweredErrors
-): ValidationResult => {
-    return isAnswerdYesOrNo(value) ? undefined : errors.yesOrNoUnanswered;
+export enum YesOrNoIsAnsweredErrors {
+    'yesOrNoUnanswered' = 'yesOrNoUnanswered',
+}
+export const validateYesOrNoIsAnswered: ValidationFunction<YesOrNoIsAnsweredErrors> = (value: any) => {
+    return isAnswerdYesOrNo(value) ? undefined : YesOrNoIsAnsweredErrors.yesOrNoUnanswered;
 };
 
-export type NumberIsValidErrors = { invalidNumber: ValidationError };
-export const validateNumber: ValidationFunction<NumberIsValidErrors> = (
-    value: any,
-    error: NumberIsValidErrors
-): ValidationResult => {
-    return isValidNumber(value) ? undefined : error.invalidNumber;
+export enum NumberIsValidErrors {
+    'invalidNumber' = 'invalidNumber',
+}
+export const validateNumber: ValidationFunction<NumberIsValidErrors> = (value: any) => {
+    return isValidNumber(value) ? undefined : NumberIsValidErrors.invalidNumber;
 };
 
-export type NumberIsValidAndWithinRangeErrors = {
-    invalidNumber: ValidationError;
-    numberToSmall: ValidationError;
-    numberToLarge: ValidationError;
-};
+export enum NumberIsValidAndWithinRangeErrors {
+    numberToSmall = 'numberToSmall',
+    numberToLarge = 'numberToLarge',
+}
+
 export const validateNumberIsWithinRange = ({
     min,
     max,
 }: {
     min?: number;
     max?: number;
-}): ValidationFunction<NumberIsValidAndWithinRangeErrors> => (
-    value: any,
-    error: NumberIsValidAndWithinRangeErrors
-): ValidationResult => {
-    const requiredNumberError = validateNumber(value, { invalidNumber: error.invalidNumber });
+}): ValidationFunction<NumberIsValidAndWithinRangeErrors | NumberIsValidErrors> => (value: any) => {
+    const requiredNumberError = validateNumber(value);
     if (requiredNumberError) {
         return requiredNumberError;
     }
     if (min !== undefined && value < min) {
-        return error.numberToSmall;
+        return NumberIsValidAndWithinRangeErrors.numberToSmall;
     }
     if (max !== undefined && value > max) {
-        return error.numberToLarge;
+        return NumberIsValidAndWithinRangeErrors.numberToLarge;
     }
     return undefined;
 };
 
-export type DateIsWithinRangeError = {
-    dateHasInvalidFormat: ValidationError;
-    dateBeforeMin: ValidationError;
-    dateAfterMax: ValidationError;
-};
+export enum DateIsWithinRangeError {
+    dateHasInvalidFormat = 'dateHasInvalidFormat',
+    dateBeforeMin = 'dateBeforeMin',
+    dateAfterMax = 'dateAfterMax',
+}
 export const validateDateIsWithinRange = ({
     min,
     max,
 }: {
     min?: Date;
     max?: Date;
-}): ValidationFunction<DateIsWithinRangeError> => (value: any, error: DateIsWithinRangeError): ValidationResult => {
+}): ValidationFunction<DateIsWithinRangeError> => (value: any) => {
     const date = datepickerUtils.getDateFromDateString(value);
     if (!date) {
-        return error.dateHasInvalidFormat;
+        return DateIsWithinRangeError.dateHasInvalidFormat;
     }
     if (min && dayjs(date).isBefore(min, 'day')) {
-        return error.dateBeforeMin;
+        return DateIsWithinRangeError.dateBeforeMin;
     }
     if (max && dayjs(date).isAfter(max, 'day')) {
-        return error.dateAfterMax;
+        return DateIsWithinRangeError.dateAfterMax;
     }
     return undefined;
 };
 
-export type OrgNumberIsValidErrors = {
-    invalidNorwegianOrgNumber: ValidationError;
+export enum OrgNumberIsValidErrors {
+    invalidNorwegianOrgNumber = 'invalidNorwegianOrgNumber',
+}
+
+export const validateOrgNumber: ValidationFunction<OrgNumberIsValidErrors> = (value: any) => {
+    return isValidOrgNumber(value) ? undefined : OrgNumberIsValidErrors.invalidNorwegianOrgNumber;
 };
 
-export const validateOrgNumber: ValidationFunction<OrgNumberIsValidErrors> = (
-    value: any,
-    error: OrgNumberIsValidErrors
-): ValidationResult => {
-    return isValidOrgNumber(value) ? undefined : error.invalidNorwegianOrgNumber;
-};
-
-export type FødselsnummerIsValidErrors = {
-    fødselsnummerNot11Chars: ValidationError;
-    fødselsnummerChecksumError: ValidationError;
-    invalidFødselsnummer: ValidationError;
-};
-export const validateFødselsnummer: ValidationFunction<FødselsnummerIsValidErrors> = (
-    value: any,
-    error: FødselsnummerIsValidErrors
-): ValidationResult => {
+export enum FødselsnummerIsValidErrors {
+    fødselsnummerNot11Chars = 'fødselsnummerNot11Chars',
+    fødselsnummerChecksumError = 'fødselsnummerChecksumError',
+    invalidFødselsnummer = 'invalidFødselsnummer',
+}
+export const validateFødselsnummer: ValidationFunction<FødselsnummerIsValidErrors> = (value: any) => {
     /** Errors from @navikt/fnrvalidator */
     const LENGTH_ERROR = 'fnr or dnr must consist of 11 digits';
     const CHECKSUM_ERROR = "checksums don't match";
@@ -166,12 +153,12 @@ export const validateFødselsnummer: ValidationFunction<FødselsnummerIsValidErr
     if (result.status === 'invalid') {
         const { reasons } = result;
         if (reasons.includes(LENGTH_ERROR)) {
-            return error.fødselsnummerNot11Chars;
+            return FødselsnummerIsValidErrors.fødselsnummerNot11Chars;
         }
         if (reasons.includes(CHECKSUM_ERROR)) {
-            return error.fødselsnummerChecksumError;
+            return FødselsnummerIsValidErrors.fødselsnummerChecksumError;
         }
-        return error.invalidFødselsnummer;
+        return FødselsnummerIsValidErrors.invalidFødselsnummer;
     }
     return undefined;
 };

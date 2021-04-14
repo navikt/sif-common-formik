@@ -1,5 +1,5 @@
 import React from 'react';
-import { TypedFormInputCommonProps, YesOrNo } from '../../types';
+import { TypedFormInputValidationProps, YesOrNo } from '../../types';
 import FormikRadioPanelGroup, { FormikRadioPanelGroupProps } from '../formik-radio-panel-group/FormikRadioPanelGroup';
 
 export interface FormikYesOrNoQuestionProps<FieldName> extends Omit<FormikRadioPanelGroupProps<FieldName>, 'radios'> {
@@ -18,7 +18,7 @@ function FormikYesOrNoQuestion<FieldName>({
     labels,
     useTwoColumns = true,
     ...restProps
-}: FormikYesOrNoQuestionProps<FieldName> & TypedFormInputCommonProps) {
+}: FormikYesOrNoQuestionProps<FieldName> & TypedFormInputValidationProps) {
     const { yes: yesLabel = 'Ja', no: noLabel = 'Nei', doNotKnow: doNotKnowLabel = 'Vet ikke' } = labels || {};
     return (
         <FormikRadioPanelGroup<FieldName>

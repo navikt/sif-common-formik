@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useIntl } from 'react-intl';
 import dayjs from 'dayjs';
 import { useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
@@ -27,16 +26,15 @@ const TypedFormExample = () => {
     const { values } = useFormikContext<FormValues>();
     const { setFieldValue } = useFormikContext<FormValues>();
 
-    const localValidateRequired = (value) => validateFieldHasValue(value, { noValue: 'Feltet har ikke noe verdi' });
-    const localValidateYesOrNo = (value) =>
-        validateYesOrNoIsAnswered(value, { yesOrNoUnanswered: 'Du må svare på spørsmålet' });
+    const localValidateRequired = (value) => validateFieldHasValue(value);
+    const localValidateYesOrNo = (value) => validateYesOrNoIsAnswered(value);
 
     return (
         <Form.Form
             submitButtonLabel="Ok"
             includeValidationSummary={true}
             includeButtons={true}
-            fieldErrorRenderer={() => 'asd'}
+            // fieldErrorRenderer={() => 'asd'}
             noButtonsContentRenderer={() => (
                 <UnansweredQuestionsInfo>Du har ubesvarte spørsmål</UnansweredQuestionsInfo>
             )}>
