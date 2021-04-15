@@ -7,6 +7,12 @@ describe(`validateFødselsnummer`, () => {
         expect(validateFødselsnummer()(generatedFnr)).toBeUndefined();
     });
 
+    it('returns undefined when the fødselsnummer is not required and ha noe value', () => {
+        expect(validateFødselsnummer({ required: false })(undefined)).toBeUndefined();
+        expect(validateFødselsnummer({ required: false })(null)).toBeUndefined();
+        expect(validateFødselsnummer({ required: false })('')).toBeUndefined();
+    });
+
     it(`returns ${ValidateFødselsnummerErrors.fødselsnummerNot11Chars} when the fødselsnummer is not 11 chars`, () => {
         expect(validateFødselsnummer()('1234567890')).toEqual(ValidateFødselsnummerErrors.fødselsnummerNot11Chars);
         expect(validateFødselsnummer()('123456789012')).toEqual(ValidateFødselsnummerErrors.fødselsnummerNot11Chars);

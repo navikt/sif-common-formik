@@ -17,10 +17,12 @@ const validateFødselsnummer = (options: Options = {}): ValidationFunction<Valid
     value: any
 ) => {
     const { required } = options;
+    if (hasValue(value) === false && required === false) {
+        return undefined;
+    }
     if (hasValue(value) === false && required) {
         return ValidateFødselsnummerErrors.noValue;
     }
-
     const result = fnrvalidator.fnr(value);
     if (result.status === 'invalid') {
         /** Errors from @navikt/fnrvalidator */
