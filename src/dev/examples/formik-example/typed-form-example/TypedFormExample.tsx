@@ -13,17 +13,14 @@ import FormikDateRangePicker from '../../../../typed-formik-form/components/form
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
-import { validateAll } from '../../../../typed-formik-form/validation/validateAll';
-import {
-    RequiredFieldErrors,
-    validateRequiredField,
-    validateYesOrNoIsAnswered,
-} from '../../../../typed-formik-form/validation/validations';
 import Question from '../../../components/question/Question';
 import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import FerieuttakInfoAndDialog from '../ferieuttakinfo-and-form-example-/FerieuttakInfoAndDialog';
 import { FormFields, FormValues } from '../types';
+import validateRequiredValue from '../../../../typed-formik-form/validation/validateRequiredValue';
+import validateYesOrNoIsAnswered from '../../../../typed-formik-form/validation/validateYesOrNo';
+import { validateAll } from '../../../../typed-formik-form/validation/utils/validateAll';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 
@@ -31,8 +28,18 @@ const TypedFormExample = () => {
     const { values } = useFormikContext<FormValues>();
     const { setFieldValue } = useFormikContext<FormValues>();
 
-    const localValidateRequired = (value) => validateRequiredField(value);
-    const localValidateYesOrNo = (value) => validateYesOrNoIsAnswered(value);
+    const localValidateRequired = (fieldTitle: string) => (value: any) => {
+        const error = validateRequiredValue(value);
+        if (error) {
+            return `${fieldTitle} mangler verdi`;
+        }
+    };
+    const localValidateYesOrNo = (fieldTitle) => (value) => {
+        const error = validateYesOrNoIsAnswered(value);
+        if (error) {
+            return `Du må svare på ${fieldTitle}`;
+        }
+    };
 
     return (
         <Form.Form
@@ -63,17 +70,21 @@ const TypedFormExample = () => {
                             label="En tekst"
                             name={'number'}
                             validate={validateAll([
-                                localValidateRequired,
+                                localValidateRequired('En tekst'),
                                 (value) => {
-                                    const error = validateRequiredField(value);
-                                    switch (error) {
-                                        case RequiredFieldErrors.noValue:
-                                            return 'Feltet x må ha verdi';
-                                        default:
-                                            return undefined;
+                                    const error = validateRequiredValue(value);
+                                    if (error) {
+                                        return 'Feltet x må ha verdi';
                                     }
                                 },
                             ])}
+                        />
+                    </Question>
+                    <Question>
+                        <Form.YesOrNoQuestion
+                            legend={'sdfjjsdfj'}
+                            name={FormFields.hasKids}
+                            validate={localValidateYesOrNo('abc')}
                         />
                     </Question>
                 </>
@@ -98,7 +109,7 @@ const TypedFormExample = () => {
                         <Form.DatePicker
                             name={FormFields.birthdate}
                             label="Fødselsdato"
-                            validate={localValidateRequired}
+                            validate={localValidateRequired('Feltet')}
                         />
                     </Question>
                     <Question>
@@ -108,23 +119,24 @@ const TypedFormExample = () => {
                         <Form.InputGroup
                             name={FormFields.birthCountry}
                             legend="Dette er legend"
-                            validate={localValidateRequired}>
+                            validate={localValidateRequired('Feltet')}>
                             <FormikInput name="sdf" label="sdfsdf" />
                             sdf
                         </Form.InputGroup>
                     </Question>
                     <Question>
                         <Tiles columns={2}>
-                            <Form.Input name={FormFields.firstname} label="Fornavn" validate={localValidateRequired} />
-                            <Form.Input name={FormFields.lastname} label="Etternavn" validate={localValidateRequired} />
+                            <Form.Input
+                                name={FormFields.firstname}
+                                label="Fornavn"
+                                validate={localValidateRequired('Feltet')}
+                            />
+                            <Form.Input
+                                name={FormFields.lastname}
+                                label="Etternavn"
+                                validate={localValidateRequired('Feltet')}
+                            />
                         </Tiles>
-                    </Question>
-                    <Question>
-                        <Form.YesOrNoQuestion
-                            legend={'sdfjjsdfj'}
-                            name={FormFields.hasKids}
-                            validate={localValidateYesOrNo}
-                        />
                     </Question>
                     <Question>
                         <div style={{ display: 'flex', flex: 'flex-start' }}>
@@ -138,13 +150,13 @@ const TypedFormExample = () => {
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
                                 maxDate: ISOStringToDate(values.daterange_to),
-                                validate: localValidateRequired,
+                                validate: localValidateRequired('Fra dato'),
                             }}
                             toDatepickerProps={{
                                 name: FormFields.daterange_to,
                                 label: 'Til',
                                 minDate: ISOStringToDate(values.daterange_from),
-                                validate: localValidateRequired,
+                                validate: localValidateRequired('Til dato'),
                             }}
                         />
                     </Question>
@@ -184,7 +196,7 @@ const TypedFormExample = () => {
                             suffix="Timer"
                             bredde="S"
                             maxLength={5}
-                            validate={localValidateRequired}
+                            validate={localValidateRequired('Feltet')}
                         />
                     </Question>
                     <Question>
@@ -199,7 +211,7 @@ const TypedFormExample = () => {
                                 { label: 'b', value: 'b' },
                                 { label: 'c', value: 'c' },
                             ]}
-                            validate={localValidateRequired}
+                            validate={localValidateRequired('Feltet')}
                         />
                     </Question>
                     <Question>

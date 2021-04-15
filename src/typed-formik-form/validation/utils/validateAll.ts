@@ -1,4 +1,4 @@
-import { ValidationFunction, ValidationResult } from './types';
+import { ValidationFunction, ValidationResult } from '../types';
 
 export const validateAll = (validation: ValidationFunction<any>[]) => (value) => {
     let result: ValidationResult<any>;
