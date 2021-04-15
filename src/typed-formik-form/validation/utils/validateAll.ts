@@ -1,14 +1,16 @@
-import { ValidationFunction, ValidationResult } from '../types';
+import { ValidationResult } from '../types';
 
-export const validateAll = (validation: ValidationFunction<any>[]) => (value) => {
+const validateAll = (validations: Array<() => ValidationResult<any>>) => {
     let result: ValidationResult<any>;
-    validation.some((validate) => {
-        const r = validate(value);
-        if (r) {
-            result = r;
+    validations.some((validateFunc) => {
+        const validationResult = validateFunc();
+        if (validationResult) {
+            result = validationResult;
             return true;
         }
         return false;
     });
     return result;
 };
+
+export default validateAll;

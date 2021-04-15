@@ -20,7 +20,7 @@ import FerieuttakInfoAndDialog from '../ferieuttakinfo-and-form-example-/Ferieut
 import { FormFields, FormValues } from '../types';
 import validateRequiredValue from '../../../../typed-formik-form/validation/validateRequiredValue';
 import validateYesOrNoIsAnswered from '../../../../typed-formik-form/validation/validateYesOrNo';
-import { validateAll } from '../../../../typed-formik-form/validation/utils/validateAll';
+import validateAll from '../../../../typed-formik-form/validation/utils/validateAll';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 
@@ -33,6 +33,7 @@ const TypedFormExample = () => {
         if (error) {
             return `${fieldTitle} mangler verdi`;
         }
+        return undefined;
     };
     const localValidateYesOrNo = (fieldTitle) => (value) => {
         const error = validateYesOrNoIsAnswered(value);
@@ -69,15 +70,16 @@ const TypedFormExample = () => {
                             type="text"
                             label="En tekst"
                             name={'number'}
-                            validate={validateAll([
-                                localValidateRequired('En tekst'),
-                                (value) => {
-                                    const error = validateRequiredValue(value);
-                                    if (error) {
-                                        return 'Feltet x må ha verdi';
-                                    }
-                                },
-                            ])}
+                            validate={(value) => {
+                                const error = validateAll([
+                                    () => localValidateRequired('abc')(value),
+                                    () => {
+                                        const error = validateRequiredValue(value);
+                                        return error ? 'Feltet x må ha verdi' : undefined;
+                                    },
+                                ]);
+                                return error;
+                            }}
                         />
                     </Question>
                     <Question>
