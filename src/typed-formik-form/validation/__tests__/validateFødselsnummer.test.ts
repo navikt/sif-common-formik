@@ -2,6 +2,7 @@ import validateFødselsnummer, { ValidateFødselsnummerErrors } from '../validat
 
 describe(`validateFødselsnummer`, () => {
     const generatedFnr = '24090014427';
+    const generatedFnr2 = '19035114443';
 
     it('returns undefined when the fødselsnummer is valid', () => {
         expect(validateFødselsnummer()(generatedFnr)).toBeUndefined();
@@ -20,5 +21,14 @@ describe(`validateFødselsnummer`, () => {
 
     it(`returns ${ValidateFødselsnummerErrors.fødselsnummerChecksumError} when the fødselsnummer has invalid checksum`, () => {
         expect(validateFødselsnummer()('24090014428')).toEqual(ValidateFødselsnummerErrors.fødselsnummerChecksumError);
+    });
+
+    it(`returns ${ValidateFødselsnummerErrors.disallowedFødselsnummer} when the fødselsnummer is same as disallowedFødselsnummer`, () => {
+        expect(validateFødselsnummer({ disallowedValues: [generatedFnr] })(generatedFnr)).toEqual(
+            ValidateFødselsnummerErrors.disallowedFødselsnummer
+        );
+    });
+    it(`does not returns ${ValidateFødselsnummerErrors.disallowedFødselsnummer} when the fødselsnummer is not in disallowedFødselsnummer`, () => {
+        expect(validateFødselsnummer({ disallowedValues: [generatedFnr2] })(generatedFnr)).toBeUndefined();
     });
 });
