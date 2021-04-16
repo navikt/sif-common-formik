@@ -20,7 +20,6 @@ import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import FerieuttakInfoAndDialog from '../ferieuttakinfo-and-form-example-/FerieuttakInfoAndDialog';
 import { FormFields, FormValues } from '../types';
-import { useIntl } from 'react-intl';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 
@@ -43,20 +42,18 @@ const TypedFormExample = () => {
         }
     };
 
-    const intl = useIntl();
-
     return (
         <Form.Form
             submitButtonLabel="Ok"
             includeValidationSummary={true}
             includeButtons={true}
             fieldErrorRenderer={(error) => {
-                return intl.formatMessage({ id: error });
+                return error;
             }}
             summaryFieldErrorRenderer={(skjemaelementId, error) => {
                 return {
                     skjemaelementId,
-                    feilmelding: intl.formatMessage({ id: error }),
+                    feilmelding: error,
                 };
             }}
             noButtonsContentRenderer={() => (
