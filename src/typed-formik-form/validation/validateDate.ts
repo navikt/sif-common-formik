@@ -3,39 +3,48 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
 import { ValidationFunction } from './types';
-import { hasValue } from './utils/hasValue';
+import { ValidateRequiredValueError } from './validateRequiredValue';
+import { hasValue } from './validationUtils';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
-export enum ValidateDateErrors {
-    noValue = 'validateDate.noValue',
-    invalidFormat = 'validateDate.invalidFormat',
-    dateBeforeMin = 'validateDate.dateBeforeMin',
-    dateAfterMax = 'validateDate.dateAfterMax',
+export enum ValidateDateError {
+    invalidDateFormat = 'invalidDateFormat',
+    dateBeforeMin = 'dateBeforeMin',
+    dateAfterMax = 'dateAfterMax',
 }
+
+type DateValidationResult =
+    | ValidateRequiredValueError.noValue
+    | ValidateDateError.invalidDateFormat
+    | ValidateDateError.dateBeforeMin
+    | ValidateDateError.dateAfterMax
+    | undefined;
 
 interface Options {
     required?: boolean;
     min?: Date;
     max?: Date;
 }
-const validateDate = (options: Options = {}): ValidationFunction<ValidateDateErrors> => (value: any) => {
+const validateDate = (options: Options = {}): ValidationFunction<DateValidationResult> => (
+    value: any
+): DateValidationResult => {
     const { required, min, max } = options;
     const date = datepickerUtils.getDateFromDateString(value);
 
     if (hasValue(value) === false && required) {
-        return ValidateDateErrors.noValue;
+        return ValidateRequiredValueError.noValue;
     }
     if (hasValue(value)) {
         if (date === undefined) {
-            return ValidateDateErrors.invalidFormat;
+            return ValidateDateError.invalidDateFormat;
         }
         if (min && dayjs(date).isBefore(min, 'day')) {
-            return ValidateDateErrors.dateBeforeMin;
+            return ValidateDateError.dateBeforeMin;
         }
         if (max && dayjs(date).isAfter(max, 'day')) {
-            return ValidateDateErrors.dateAfterMax;
+            return ValidateDateError.dateAfterMax;
         }
     }
     return undefined;

@@ -3,7 +3,7 @@ import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { dateToISOString, getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
 import validateDate from '../../../../typed-formik-form/validation/validateDate';
-import validateList, { ValidateListErrors } from '../../../../typed-formik-form/validation/validateList';
+import validateList, { ValidateListError } from '../../../../typed-formik-form/validation/validateList';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
 
 export interface FerieuttakFormLabels {
@@ -121,7 +121,7 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                 switch (error) {
                                     case undefined:
                                         return undefined;
-                                    case ValidateListErrors.isEmpty:
+                                    case ValidateListError.listIsEmpty:
                                         return 'Listen trenger en verdi';
                                 }
                             }}

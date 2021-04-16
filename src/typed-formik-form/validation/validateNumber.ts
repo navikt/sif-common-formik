@@ -1,12 +1,19 @@
 import { ValidationFunction } from './types';
-import { hasValue } from './utils/hasValue';
+import { hasValue } from './validationUtils';
+import { ValidateRequiredValueError } from './validateRequiredValue';
 
-export enum ValidateNumberErrors {
-    noValue = 'validateNumber.noValue',
-    invalidFormat = 'validateNumber.invalidFormat',
-    tooSmall = 'validateNumber.tooSmall',
-    tooLarge = 'validateNumber.tooLarge',
+export enum ValidateNumberError {
+    invalidNumberFormat = 'invalidNumberFormat',
+    numberIsTooSmall = 'numberIsTooSmall',
+    numberIsTooLarge = 'numberIsTooLarge',
 }
+
+type NumberValidationResult =
+    | undefined
+    | ValidateRequiredValueError.noValue
+    | ValidateNumberError.invalidNumberFormat
+    | ValidateNumberError.numberIsTooLarge
+    | ValidateNumberError.numberIsTooSmall;
 
 interface Options {
     required?: boolean;
@@ -29,23 +36,23 @@ const getNumberFromStringInput = (inputValue: string | undefined): number | unde
     return numValue;
 };
 
-const validateNumber = (options: Options = {}): ValidationFunction<ValidateNumberErrors> => (value: any) => {
+const validateNumber = (options: Options = {}): ValidationFunction<NumberValidationResult> => (value: any) => {
     const { required, min, max } = options;
     const numberValue = getNumberFromStringInput(value);
 
     if (hasValue(value) === false && required) {
-        return ValidateNumberErrors.noValue;
+        return ValidateRequiredValueError.noValue;
     }
 
     if (hasValue(value)) {
         if (numberValue === undefined) {
-            return ValidateNumberErrors.invalidFormat;
+            return ValidateNumberError.invalidNumberFormat;
         }
         if (min !== undefined && numberValue < min) {
-            return ValidateNumberErrors.tooSmall;
+            return ValidateNumberError.numberIsTooSmall;
         }
         if (max !== undefined && numberValue > max) {
-            return ValidateNumberErrors.tooLarge;
+            return ValidateNumberError.numberIsTooLarge;
         }
     }
     return undefined;

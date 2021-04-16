@@ -1,29 +1,37 @@
 import fnrvalidator from '@navikt/fnrvalidator';
 import { ValidationFunction } from './types';
-import { hasValue } from './utils/hasValue';
+import { hasValue } from './validationUtils';
+import { ValidateRequiredValueError } from './validateRequiredValue';
 
-export enum ValidateFødselsnummerErrors {
-    noValue = 'validateFødselsnummer.noValue',
+export enum ValidateFødselsnummerError {
     fødselsnummerNot11Chars = 'validateFødselsnummer.fødselsnummerNot11Chars',
     fødselsnummerChecksumError = 'validateFødselsnummer.fødselsnummerChecksumError',
     invalidFødselsnummer = 'validateFødselsnummer.invalidFødselsnummer',
     disallowedFødselsnummer = 'validateFødselsnummer.fødselsnummerInConflict',
 }
 
+type FødselsnummerValidationResult =
+    | ValidateRequiredValueError.noValue
+    | ValidateFødselsnummerError.disallowedFødselsnummer
+    | ValidateFødselsnummerError.fødselsnummerChecksumError
+    | ValidateFødselsnummerError.fødselsnummerNot11Chars
+    | ValidateFødselsnummerError.invalidFødselsnummer
+    | undefined;
+
 interface Options {
     required?: boolean;
     disallowedValues?: string[];
 }
 
-const validateFødselsnummer = (options: Options = {}): ValidationFunction<ValidateFødselsnummerErrors> => (
+const validateFødselsnummer = (options: Options = {}): ValidationFunction<FødselsnummerValidationResult> => (
     value: any
-) => {
+): FødselsnummerValidationResult => {
     const { required, disallowedValues } = options;
     if (hasValue(value) === false && required === false) {
         return undefined;
     }
     if (hasValue(value) === false && required) {
-        return ValidateFødselsnummerErrors.noValue;
+        return ValidateRequiredValueError.noValue;
     }
     if (hasValue(value)) {
         const result = fnrvalidator.fnr(value);
@@ -33,17 +41,17 @@ const validateFødselsnummer = (options: Options = {}): ValidationFunction<Valid
             const CHECKSUM_ERROR = "checksums don't match";
             const { reasons } = result;
             if (reasons.includes(LENGTH_ERROR)) {
-                return ValidateFødselsnummerErrors.fødselsnummerNot11Chars;
+                return ValidateFødselsnummerError.fødselsnummerNot11Chars;
             }
             if (reasons.includes(CHECKSUM_ERROR)) {
-                return ValidateFødselsnummerErrors.fødselsnummerChecksumError;
+                return ValidateFødselsnummerError.fødselsnummerChecksumError;
             }
-            return ValidateFødselsnummerErrors.invalidFødselsnummer;
+            return ValidateFødselsnummerError.invalidFødselsnummer;
         }
         if (disallowedValues) {
             const hasConflict = disallowedValues.some((f) => f === value);
             if (hasConflict) {
-                return ValidateFødselsnummerErrors.disallowedFødselsnummer;
+                return ValidateFødselsnummerError.disallowedFødselsnummer;
             }
         }
     }

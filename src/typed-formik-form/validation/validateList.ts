@@ -1,11 +1,18 @@
 import { ValidationFunction } from './types';
 
-export enum ValidateListErrors {
-    isEmpty = 'validateNumber.isEmpty',
-    invalidType = 'validateNumber.invalidType',
-    tooFewItems = 'validateNumber.tooFewItems',
-    tooManyItems = 'validateNumber.tooManyItems',
+export enum ValidateListError {
+    listIsEmpty = 'listIsEmpty',
+    invalidType = 'invalidType',
+    listHasTooFewItems = 'listHasTooFewItems',
+    listHasTooManyItems = 'listHastooManyItems',
 }
+
+type ListValidationResult =
+    | undefined
+    | ValidateListError.invalidType
+    | ValidateListError.listHasTooFewItems
+    | ValidateListError.listHasTooManyItems
+    | ValidateListError.listIsEmpty;
 
 interface Options {
     required?: boolean;
@@ -13,23 +20,23 @@ interface Options {
     maxItems?: number;
 }
 
-const validateList = (options: Options = {}): ValidationFunction<ValidateListErrors> => (value: any) => {
+const validateList = (options: Options = {}): ValidationFunction<ListValidationResult> => (value: any) => {
     const { required = false, minItems = undefined, maxItems = undefined } = options;
     if (Array.isArray(value)) {
         const numItems = value.length;
         if (required && numItems === 0) {
-            return ValidateListErrors.isEmpty;
+            return ValidateListError.listIsEmpty;
         }
         if (minItems !== undefined && minItems > numItems) {
-            return ValidateListErrors.tooFewItems;
+            return ValidateListError.listHasTooFewItems;
         }
         if (maxItems !== undefined && maxItems < numItems) {
-            return ValidateListErrors.tooManyItems;
+            return ValidateListError.listHasTooManyItems;
         }
         return undefined;
     }
     if (required) {
-        return ValidateListErrors.invalidType;
+        return ValidateListError.invalidType;
     }
     return undefined;
 };

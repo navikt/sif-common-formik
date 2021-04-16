@@ -1,12 +1,19 @@
 import { ValidationFunction } from './types';
-import { hasValue } from './utils/hasValue';
+import { hasValue } from './validationUtils';
+import { ValidateRequiredValueError } from './validateRequiredValue';
 
-export enum ValidateStringErrors {
-    noValue = 'validateString.noValue',
-    invalidType = 'validateString.invalidType',
-    tooShort = 'validateString.tooShort',
-    tooLong = 'validateString.tooLong',
+export enum ValidateStringError {
+    notAString = 'notAString',
+    stringIsTooShort = 'stringIsTooShort',
+    stringIsTooLong = 'stringIsTooLong',
 }
+
+type StringValidationResult =
+    | undefined
+    | ValidateRequiredValueError.noValue
+    | ValidateStringError.notAString
+    | ValidateStringError.stringIsTooLong
+    | ValidateStringError.stringIsTooShort;
 
 interface Options {
     required?: boolean;
@@ -14,20 +21,20 @@ interface Options {
     maxLength?: number;
 }
 
-const validateString = (options: Options = {}): ValidationFunction<ValidateStringErrors> => (value: any) => {
+const validateString = (options: Options = {}): ValidationFunction<StringValidationResult> => (value: any) => {
     const { required, minLength, maxLength } = options;
     if (hasValue(value) === false && required) {
-        return ValidateStringErrors.noValue;
+        return ValidateRequiredValueError.noValue;
     }
     if (hasValue(value)) {
         if (typeof value !== 'string') {
-            return ValidateStringErrors.invalidType;
+            return ValidateStringError.notAString;
         }
         if (minLength !== undefined && value.length < minLength) {
-            return ValidateStringErrors.tooShort;
+            return ValidateStringError.stringIsTooShort;
         }
         if (maxLength !== undefined && value.length > maxLength) {
-            return ValidateStringErrors.tooLong;
+            return ValidateStringError.stringIsTooLong;
         }
     }
     return undefined;

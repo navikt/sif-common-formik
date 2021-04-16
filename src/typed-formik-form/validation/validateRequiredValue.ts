@@ -1,13 +1,13 @@
 import { ValidationFunction } from './types';
-import { hasValue } from './utils/hasValue';
+import { hasValue } from './validationUtils';
 
-export enum ValidateRequiredValueErrors {
-    'noValue' = 'validateRequiredValue.noValue',
+export enum ValidateRequiredValueError {
+    'noValue' = 'noValue',
 }
 
-const validateRequiredValue: ValidationFunction<ValidateRequiredValueErrors> = (value: any) => {
+const validateRequiredValue: ValidationFunction<ValidateRequiredValueError> = (value: any) => {
     if (hasValue(value) === false) {
-        return ValidateRequiredValueErrors.noValue;
+        return ValidateRequiredValueError.noValue;
     }
     return undefined;
 };
