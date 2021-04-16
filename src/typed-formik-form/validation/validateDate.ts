@@ -9,10 +9,10 @@ dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
 export enum ValidateDateErrors {
-    noValue = 'noValue',
-    invalidFormat = 'invalidFormat',
-    dateBeforeMin = 'dateBeforeMin',
-    dateAfterMax = 'dateAfterMax',
+    noValue = 'validateDate.noValue',
+    invalidFormat = 'validateDate.invalidFormat',
+    dateBeforeMin = 'validateDate.dateBeforeMin',
+    dateAfterMax = 'validateDate.dateAfterMax',
 }
 
 interface Options {

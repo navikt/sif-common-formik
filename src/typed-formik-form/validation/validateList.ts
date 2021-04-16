@@ -1,10 +1,10 @@
 import { ValidationFunction } from './types';
 
 export enum ValidateListErrors {
-    isEmpty = 'isEmpty',
-    invalidType = 'invalidType',
-    tooFewItems = 'tooFewItems',
-    tooManyItems = 'tooManyItems',
+    isEmpty = 'validateNumber.isEmpty',
+    invalidType = 'validateNumber.invalidType',
+    tooFewItems = 'validateNumber.tooFewItems',
+    tooManyItems = 'validateNumber.tooManyItems',
 }
 
 interface Options {

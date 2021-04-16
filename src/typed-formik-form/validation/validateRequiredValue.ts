@@ -2,7 +2,7 @@ import { ValidationFunction } from './types';
 import { hasValue } from './utils/hasValue';
 
 export enum ValidateRequiredValueErrors {
-    'noValue' = 'noValue',
+    'noValue' = 'validateRequiredValue.noValue',
 }
 
 const validateRequiredValue: ValidationFunction<ValidateRequiredValueErrors> = (value: any) => {

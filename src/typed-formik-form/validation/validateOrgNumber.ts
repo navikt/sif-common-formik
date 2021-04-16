@@ -2,8 +2,8 @@ import { ValidationFunction } from './types';
 import { hasValue } from './utils/hasValue';
 
 export enum ValidateOrgNumberErrors {
-    noValue = 'noValue',
-    invalidFormat = 'invalidFormat',
+    noValue = 'validateOrgNumber.noValue',
+    invalidFormat = 'validateOrgNumber.invalidFormat',
 }
 
 interface Options {

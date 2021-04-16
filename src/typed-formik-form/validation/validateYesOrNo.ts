@@ -2,7 +2,7 @@ import { YesOrNo } from '../types';
 import { ValidationFunction } from './types';
 
 export enum ValidateYesOrNoErrors {
-    'unanswered' = 'yesOrNoUnanswered',
+    'unanswered' = 'validateYesOrNoIsAnswered.yesOrNoUnanswered',
 }
 
 const validateYesOrNoIsAnswered: ValidationFunction<ValidateYesOrNoErrors> = (value: any) => {

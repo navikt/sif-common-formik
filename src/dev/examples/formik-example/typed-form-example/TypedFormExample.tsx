@@ -20,6 +20,7 @@ import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import FerieuttakInfoAndDialog from '../ferieuttakinfo-and-form-example-/FerieuttakInfoAndDialog';
 import { FormFields, FormValues } from '../types';
+import { useIntl } from 'react-intl';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 
@@ -27,33 +28,20 @@ const TypedFormExample = () => {
     const { values } = useFormikContext<FormValues>();
     const { setFieldValue } = useFormikContext<FormValues>();
 
-    const localValidateRequired = (field: FormFields) => (value: any): string | undefined => {
-        const error = validateRequiredValue(value);
-        if (error) {
-            return `validation.${field}.${error}`;
-        }
-        return undefined;
-    };
-
-    const localValidateYesOrNo = (field: FormFields) => (value) => {
-        const error = validateYesOrNoIsAnswered(value);
-        if (error) {
-            return `validation.${field}.${error}`;
-        }
-    };
+    const intl = useIntl();
 
     return (
         <Form.Form
             submitButtonLabel="Ok"
             includeValidationSummary={true}
             includeButtons={true}
-            fieldErrorRenderer={(error) => {
-                return error;
+            fieldErrorRenderer={(error, fieldName) => {
+                return intl.formatMessage({ id: `validation.${fieldName}.${error}` });
             }}
             summaryFieldErrorRenderer={(skjemaelementId, error) => {
                 return {
                     skjemaelementId,
-                    feilmelding: error,
+                    feilmelding: intl.formatMessage({ id: `validation.${skjemaelementId}.${error}` }),
                 };
             }}
             noButtonsContentRenderer={() => (
@@ -77,19 +65,16 @@ const TypedFormExample = () => {
                     <Question>
                         <FormikInput
                             type="text"
-                            label="En tekst"
-                            name={'number'}
-                            validate={(value) => {
-                                const error = localValidateRequired('abc' as FormFields)(value);
-                                return error;
-                            }}
+                            label="Skriv nøkkelord"
+                            name={'nøkkelord'}
+                            validate={validateRequiredValue}
                         />
                     </Question>
                     <Question>
                         <Form.YesOrNoQuestion
                             legend={'Har du kids'}
                             name={FormFields.hasKids}
-                            validate={localValidateYesOrNo(FormFields.hasKids)}
+                            validate={validateYesOrNoIsAnswered}
                         />
                     </Question>
                 </>
@@ -114,7 +99,7 @@ const TypedFormExample = () => {
                         <Form.DatePicker
                             name={FormFields.birthdate}
                             label="Fødselsdato"
-                            validate={localValidateRequired(FormFields.birthdate)}
+                            validate={validateRequiredValue}
                         />
                     </Question>
                     <Question>
@@ -124,23 +109,15 @@ const TypedFormExample = () => {
                         <Form.InputGroup
                             name={FormFields.birthCountry}
                             legend="Dette er legend"
-                            validate={localValidateRequired(FormFields.birthCountry)}>
+                            validate={validateRequiredValue}>
                             <FormikInput name="sdf" label="sdfsdf" />
                             sdf
                         </Form.InputGroup>
                     </Question>
                     <Question>
                         <Tiles columns={2}>
-                            <Form.Input
-                                name={FormFields.firstname}
-                                label="Fornavn"
-                                validate={localValidateRequired(FormFields.firstname)}
-                            />
-                            <Form.Input
-                                name={FormFields.lastname}
-                                label="Etternavn"
-                                validate={localValidateRequired(FormFields.lastname)}
-                            />
+                            <Form.Input name={FormFields.firstname} label="Fornavn" validate={validateRequiredValue} />
+                            <Form.Input name={FormFields.lastname} label="Etternavn" validate={validateRequiredValue} />
                         </Tiles>
                     </Question>
                     <Question>
@@ -155,13 +132,13 @@ const TypedFormExample = () => {
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
                                 maxDate: ISOStringToDate(values.daterange_to),
-                                validate: localValidateRequired(FormFields.daterange_from),
+                                validate: validateRequiredValue,
                             }}
                             toDatepickerProps={{
                                 name: FormFields.daterange_to,
                                 label: 'Til',
                                 minDate: ISOStringToDate(values.daterange_from),
-                                validate: localValidateRequired(FormFields.daterange_to),
+                                validate: validateRequiredValue,
                             }}
                         />
                     </Question>
@@ -201,7 +178,7 @@ const TypedFormExample = () => {
                             suffix="Timer"
                             bredde="S"
                             maxLength={5}
-                            validate={localValidateRequired(FormFields.birthdate)}
+                            validate={validateRequiredValue}
                         />
                     </Question>
                     <Question>
@@ -216,7 +193,7 @@ const TypedFormExample = () => {
                                 { label: 'b', value: 'b' },
                                 { label: 'c', value: 'c' },
                             ]}
-                            validate={localValidateRequired(FormFields.birthdate)}
+                            validate={validateRequiredValue}
                         />
                     </Question>
                     <Question>

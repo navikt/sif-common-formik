@@ -14,7 +14,7 @@ function FormikValidationErrorSummary() {
             ? Object.keys(allErrors).map((key) => {
                   const error = allErrors[key];
                   const feil: FeiloppsummeringFeil = context.summaryFieldErrorRenderer
-                      ? context.summaryFieldErrorRenderer(key, error)
+                      ? context.summaryFieldErrorRenderer(error, key)
                       : {
                             feilmelding: error,
                             skjemaelementId: key,

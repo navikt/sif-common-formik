@@ -7,8 +7,8 @@ import FormikValidationErrorSummary from '../formik-validation-error-summary/For
 import ButtonRow from '../helpers/button-row/ButtonRow';
 import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
 
-export type FormikFieldErrorRender = (error: string) => NavFrontendSkjemaFeil;
-export type FormikSummaryFieldErrorRender = (fieldKey: string, error: string) => FeiloppsummeringFeil;
+export type FormikFieldErrorRender = (error: string, fieldName: string) => NavFrontendSkjemaFeil;
+export type FormikSummaryFieldErrorRender = (error: string, fieldName: string) => FeiloppsummeringFeil;
 
 export interface TypedFormikFormProps<FormValues> {
     children: React.ReactNode;
@@ -124,7 +124,7 @@ function TypedFormikForm<FormValues>({
                 if (showErrors) {
                     const error = getErrorForField(field.name, form.errors);
                     if (error) {
-                        return fieldErrorRenderer ? fieldErrorRenderer(error) : error;
+                        return fieldErrorRenderer ? fieldErrorRenderer(error, field.name) : error;
                     }
                 }
                 return undefined;

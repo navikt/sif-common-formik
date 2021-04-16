@@ -2,10 +2,10 @@ import { ValidationFunction } from './types';
 import { hasValue } from './utils/hasValue';
 
 export enum ValidateStringErrors {
-    noValue = 'noValue',
-    invalidType = 'invalidType',
-    tooShort = 'tooShort',
-    tooLong = 'tooLong',
+    noValue = 'validateString.noValue',
+    invalidType = 'validateString.invalidType',
+    tooShort = 'validateString.tooShort',
+    tooLong = 'validateString.tooLong',
 }
 
 interface Options {

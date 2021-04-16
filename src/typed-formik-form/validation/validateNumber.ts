@@ -2,10 +2,10 @@ import { ValidationFunction } from './types';
 import { hasValue } from './utils/hasValue';
 
 export enum ValidateNumberErrors {
-    noValue = 'noValue',
-    invalidFormat = 'invalidFormat',
-    tooSmall = 'tooSmall',
-    tooLarge = 'tooLarge',
+    noValue = 'validateNumber.noValue',
+    invalidFormat = 'validateNumber.invalidFormat',
+    tooSmall = 'validateNumber.tooSmall',
+    tooLarge = 'validateNumber.tooLarge',
 }
 
 interface Options {

@@ -3,11 +3,11 @@ import { ValidationFunction } from './types';
 import { hasValue } from './utils/hasValue';
 
 export enum ValidateFødselsnummerErrors {
-    noValue = 'noValue',
-    fødselsnummerNot11Chars = 'fødselsnummerNot11Chars',
-    fødselsnummerChecksumError = 'fødselsnummerChecksumError',
-    invalidFødselsnummer = 'invalidFødselsnummer',
-    disallowedFødselsnummer = 'fødselsnummerInConflict',
+    noValue = 'validateFødselsnummer.noValue',
+    fødselsnummerNot11Chars = 'validateFødselsnummer.fødselsnummerNot11Chars',
+    fødselsnummerChecksumError = 'validateFødselsnummer.fødselsnummerChecksumError',
+    invalidFødselsnummer = 'validateFødselsnummer.invalidFødselsnummer',
+    disallowedFødselsnummer = 'validateFødselsnummer.fødselsnummerInConflict',
 }
 
 interface Options {
