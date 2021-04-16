@@ -1,7 +1,11 @@
-import flatten, { unflatten } from 'flat';
+import flatten from 'flat';
 import { FieldInputProps, FormikErrors, FormikProps, getIn } from 'formik';
 import { TypedFormikFormContextType } from '../components/typed-formik-form/TypedFormikForm';
 import { NavFrontendSkjemaFeil } from '../types';
+
+interface FlattendErrors {
+    [key: string]: string;
+}
 
 export const getFeilPropForFormikInput = ({
     feil,
@@ -21,9 +25,9 @@ export const getErrorsForField = <FormValues>(
     elementName: string,
     errors: FormikErrors<FormValues>
 ): FormikErrors<FormValues> | undefined => {
-    const fieldErrors = getIn(errors, elementName);
+    const fieldErrors: FormikErrors<FormValues> = getIn(errors, elementName);
     if (Array.isArray(fieldErrors) && fieldErrors.length === 1 && fieldErrors[0] === null) {
-        // Filter out fieldArray errors containing only null item
+        /** Filter out fieldArray errors containing only null item */
         return undefined;
     }
     return fieldErrors;
@@ -34,7 +38,7 @@ export const isValidationErrorsVisible = (formik: FormikProps<any>): boolean => 
 };
 
 export const returnAllInFrontOfKey = (flattenedKey: string): string | undefined => {
-    const searchString = '.key';
+    const searchString = '.';
     if (flattenedKey.indexOf(searchString) >= 0) {
         const a = flattenedKey.slice().split(searchString);
         if (a[0]) {
@@ -44,49 +48,30 @@ export const returnAllInFrontOfKey = (flattenedKey: string): string | undefined 
     return undefined;
 };
 
-interface FlattendErrors {
-    [key: string]: any;
-}
-
-const getValuesForFlattenedKey = (flatErrors: FlattendErrors, errorKey: string): any => {
-    const allErrorKeys = Object.keys(flatErrors);
-    const valueKeys = allErrorKeys.filter((key) => key.indexOf(`${errorKey}.values`) >= 0);
-    if (valueKeys.length > 0) {
-        const values = {};
-        valueKeys.forEach((key) => {
-            const valueKey = key.substr(key.indexOf(`.values`) + 8);
-            // const valueKey = valueKeyWithIndex.substr(valueKeyWithIndex.indexOf('.') + 1); // Remove index added by flatten
-            values[valueKey] = unflatten(flatErrors[key]);
-        });
-        return values;
-    }
-    return undefined;
-};
-
 export const flattenFieldErrors = (errors: any) => {
     const flatErrors = flatten(errors) as FlattendErrors;
     const allErrorKeys = Object.keys(flatErrors);
     const flattendFieldErrors = {};
     allErrorKeys.forEach((key) => {
-        const errorKey = returnAllInFrontOfKey(key);
-        if (errorKey) {
-            const values = getValuesForFlattenedKey(flatErrors, errorKey);
-            flattendFieldErrors[errorKey] = {
-                key: flatErrors[errorKey + '.key'],
-                values,
-            };
+        if (flatErrors[key] && flatErrors[key] !== null) {
+            flattendFieldErrors[key] = flatErrors[key];
         }
     });
     return flattendFieldErrors;
 };
 
-export function getAllErrors<FormValues>(formik: FormikProps<FormValues>): FormikErrors<FormValues> | undefined {
-    const errors = formik && formik.errors && Object.keys(formik.errors).length > 0 ? formik.errors : undefined;
+export function getAndFlattenAllErrors<FormValues>(
+    errors: FormikErrors<FormValues>
+): FormikErrors<FormValues> | undefined {
     if (errors) {
         const numberOfErrors = Object.keys(errors).length;
-        if (numberOfErrors > 0 && isValidationErrorsVisible(formik)) {
+        if (numberOfErrors > 0) {
             return flattenFieldErrors(errors);
         }
     }
     return undefined;
+}
+
+export function getAllErrors<FormValues>(formik: FormikProps<FormValues>): FormikErrors<FormValues> | undefined {
+    return isValidationErrorsVisible(formik) ? getAndFlattenAllErrors(formik.errors) : undefined;
 }

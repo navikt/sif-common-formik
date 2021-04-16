@@ -1,9 +1,11 @@
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import isBetween from 'dayjs/plugin/isBetween';
 import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(isSameOrBefore);
 dayjs.extend(utc);
+dayjs.extend(isBetween);
 
 import { ApiStringDate } from '../types/ApiStringDate';
 

@@ -1,21 +1,17 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { InputProps } from 'nav-frontend-skjema';
-import { TypedFormInputCommonProps } from '../../types';
+import { TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-import { validateAll } from '../../utils/validateAll';
-import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
-import { validateFormikNumberInputValue } from './validateFormikNumberInputValue';
 import FormikInput, { InputWithSuffix } from '../formik-input/FormikInput';
+import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
 interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'pattern' | 'inputMode' | 'min' | 'max'> {
     name: FieldName;
-    disableNumberValidation?: boolean;
-    invalidNumberErrorKey?: string;
     integerValue?: boolean;
 }
 
-export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps & InputWithSuffix;
+export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps & InputWithSuffix;
 
 function FormikNumberInput<FieldName>({
     name,
@@ -23,22 +19,13 @@ function FormikNumberInput<FieldName>({
     validate,
     autoComplete,
     bredde = 'S',
-    disableNumberValidation,
-    invalidNumberErrorKey = 'common.fieldvalidation.ugyldigTall',
     integerValue = false,
     ...restProps
 }: FormikNumberInputProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
 
-    const validations = disableNumberValidation
-        ? []
-        : [(value) => validateFormikNumberInputValue(value, invalidNumberErrorKey)];
-    if (validate) {
-        validations.push(validate);
-    }
-
     return (
-        <Field validate={validateAll(validations)} name={name}>
+        <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <FormikInput

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Checkbox, CheckboxProps } from 'nav-frontend-skjema';
-import { TypedFormInputCommonProps } from '../../types';
+import { TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -10,7 +10,7 @@ interface OwnProps<FieldName> extends Omit<CheckboxProps, 'name'> {
     afterOnChange?: (newValue: boolean) => void;
 }
 
-export type FormikCheckboxProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikCheckboxProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
 
 function FormikCheckbox<FieldName>({
     name,

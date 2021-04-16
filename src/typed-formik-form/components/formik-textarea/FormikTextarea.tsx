@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Textarea, TextareaControlledProps } from 'nav-frontend-skjema';
-import { TypedFormInputCommonProps } from '../../types';
+import { TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -9,7 +9,7 @@ interface OwnProps<FieldName> extends Omit<TextareaControlledProps, 'name' | 'de
     name: FieldName;
 }
 
-export type FormikTextareaProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikTextareaProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
 
 function FormikTextarea<FieldName>({ name, validate, feil, ...restProps }: FormikTextareaProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);

@@ -1,13 +1,13 @@
 import React from 'react';
 import { sortItemsByFom } from '@navikt/sif-common-core/lib/utils/dateUtils';
-import { FormikModalFormAndList, FormikValidateFunction, ModalFormAndListLabels } from '../../../../typed-formik-form';
+import { FormikModalFormAndList, ModalFormAndListLabels } from '../../../../typed-formik-form';
 import FerieuttakForm from './FerieuttakForm';
 import FerieuttakList from './FerieuttakList';
 import { Ferieuttak } from './types';
+import { TypedFormInputValidationProps } from '../../../../typed-formik-form/types';
 
-interface Props<FieldNames> {
+interface Props<FieldNames> extends TypedFormInputValidationProps {
     name: FieldNames;
-    validate?: FormikValidateFunction;
     minDate: Date;
     maxDate: Date;
     labels: ModalFormAndListLabels;

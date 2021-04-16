@@ -1,168 +1,94 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
-import { getAllErrors } from '../typedFormErrorUtils';
+import { getAndFlattenAllErrors } from '../typedFormErrorUtils';
 
-const formikTemplate = {
-    errors: {},
-    status: {
-        showErrors: true,
-    },
-};
+const errorMsg = 'feil';
 
 const formikErrors1 = {
-    ...formikTemplate,
-    errors: {
-        annetArbeidsforhold: {
-            harHattFraværHosArbeidsgiver: {
-                key: 'common.fieldvalidation.påkrevd',
-                values: { valueKey: 'a value' },
-            },
-        },
-        harFosterbarn: {
-            key: 'common.fieldvalidation.påkrevd',
-            values: { valueKey: 'a value' },
-        },
-        arbeidsforhold: [
-            {
-                harHattFraværHosArbeidsgiver: {
-                    key: 'common.fieldvalidation.påkrevd',
-                    values: { valueKey: 'a value' },
-                },
-            },
-            {
-                harHattFraværHosArbeidsgiver: {
-                    key: 'common.fieldvalidation.påkrevd',
-                    values: { valueKey: 'a value' },
-                },
-            },
-        ],
+    annetArbeidsforhold: {
+        harHattFraværHosArbeidsgiver: errorMsg,
     },
+    harFosterbarn: errorMsg,
+    arbeidsforhold: [
+        {
+            harHattFraværHosArbeidsgiver: errorMsg,
+        },
+        {
+            harHattFraværHosArbeidsgiver: errorMsg,
+        },
+    ],
 };
 
 const expectedErrors1 = {
-    'annetArbeidsforhold.harHattFraværHosArbeidsgiver': {
-        key: 'common.fieldvalidation.påkrevd',
-        values: { valueKey: 'a value' },
-    },
-    harFosterbarn: {
-        key: 'common.fieldvalidation.påkrevd',
-        values: { valueKey: 'a value' },
-    },
-    'arbeidsforhold.0.harHattFraværHosArbeidsgiver': {
-        key: 'common.fieldvalidation.påkrevd',
-        values: { valueKey: 'a value' },
-    },
-    'arbeidsforhold.1.harHattFraværHosArbeidsgiver': {
-        key: 'common.fieldvalidation.påkrevd',
-        values: { valueKey: 'a value' },
-    },
+    'annetArbeidsforhold.harHattFraværHosArbeidsgiver': errorMsg,
+    harFosterbarn: errorMsg,
+    'arbeidsforhold.0.harHattFraværHosArbeidsgiver': errorMsg,
+    'arbeidsforhold.1.harHattFraværHosArbeidsgiver': errorMsg,
 };
 
 const formikErrors2 = {
-    ...formikTemplate,
-    errors: {
-        arbeidsforhold: [
-            {
-                arbeidsgiverHarUtbetaltLønn: {
-                    key: 'common.fieldvalidation.påkrevd',
-                    values: { valueKey: 'a value' },
-                },
-            },
-        ],
-    },
+    arbeidsforhold: [
+        {
+            arbeidsgiverHarUtbetaltLønn: errorMsg,
+        },
+    ],
 };
 
 const expectedErrors2 = {
-    'arbeidsforhold.0.arbeidsgiverHarUtbetaltLønn': {
-        key: 'common.fieldvalidation.påkrevd',
-        values: { valueKey: 'a value' },
-    },
+    'arbeidsforhold.0.arbeidsgiverHarUtbetaltLønn': errorMsg,
 };
 
 const formikErrors3 = {
-    ...formikTemplate,
-    errors: {
-        arbeidsforhold: [
-            {
-                ansettelseslengde: {
-                    ingenAvSituasjoneneForklaring: {
-                        key: 'common.fieldvalidation.påkrevd',
-                        values: { valueKey: 'a value' },
-                    },
-                },
+    arbeidsforhold: [
+        {
+            ansettelseslengde: {
+                ingenAvSituasjoneneForklaring: errorMsg,
             },
-        ],
-    },
+        },
+    ],
 };
 
 const expectedErrors3 = {
-    'arbeidsforhold.0.ansettelseslengde.ingenAvSituasjoneneForklaring': {
-        key: 'common.fieldvalidation.påkrevd',
-        values: { valueKey: 'a value' },
-    },
+    'arbeidsforhold.0.ansettelseslengde.ingenAvSituasjoneneForklaring': errorMsg,
 };
 
 const formikErrors4 = {
-    ...formikTemplate,
-    errors: {
-        arbeidsforhold: [
-            null,
-            {
-                arbeidsgiverHarUtbetaltLønn: {
-                    key: 'common.fieldvalidation.påkrevd',
-                    values: { valueKey: 'a value' },
-                },
-            },
-        ],
-    },
+    arbeidsforhold: [
+        null,
+        {
+            arbeidsgiverHarUtbetaltLønn: errorMsg,
+        },
+    ],
 };
 
 const expectedErrors4 = {
-    'arbeidsforhold.1.arbeidsgiverHarUtbetaltLønn': {
-        key: 'common.fieldvalidation.påkrevd',
-        values: { valueKey: 'a value' },
-    },
+    'arbeidsforhold.1.arbeidsgiverHarUtbetaltLønn': errorMsg,
 };
 
 const formikErrors5 = {
-    ...formikTemplate,
-    errors: {
-        annetArbeidsforhold: {
-            arbeidsgiverHarUtbetaltLønn: {
-                key: 'common.fieldvalidation.påkrevd',
-                values: { valueKey: 'a value' },
-            },
-        },
+    annetArbeidsforhold: {
+        arbeidsgiverHarUtbetaltLønn: errorMsg,
     },
 };
 
 const expectedErrors5 = {
-    'annetArbeidsforhold.arbeidsgiverHarUtbetaltLønn': {
-        key: 'common.fieldvalidation.påkrevd',
-        values: { valueKey: 'a value' },
-    },
+    'annetArbeidsforhold.arbeidsgiverHarUtbetaltLønn': errorMsg,
 };
 
-describe('teste getAllErrors med gode eksempelverdier', () => {
+describe('teste getAndFlattenAllErrors med gode eksempelverdier', () => {
     it('example 1', () => {
-        // @ts-ignore
-        expect(getAllErrors(formikErrors1)).toStrictEqual(expectedErrors1);
+        expect(getAndFlattenAllErrors<any>(formikErrors1)).toStrictEqual(expectedErrors1);
     });
     it('example 2', () => {
-        // @ts-ignore
-        expect(getAllErrors(formikErrors2)).toStrictEqual(expectedErrors2);
+        expect(getAndFlattenAllErrors<any>(formikErrors2)).toStrictEqual(expectedErrors2);
     });
 
     it('example 3', () => {
-        // @ts-ignore
-        expect(getAllErrors(formikErrors3)).toStrictEqual(expectedErrors3);
+        expect(getAndFlattenAllErrors<any>(formikErrors3)).toStrictEqual(expectedErrors3);
     });
 
     it('example 4', () => {
-        // @ts-ignore
-        expect(getAllErrors(formikErrors4)).toStrictEqual(expectedErrors4);
+        expect(getAndFlattenAllErrors<any>(formikErrors4 as any)).toStrictEqual(expectedErrors4);
     });
     it('example 5', () => {
-        // @ts-ignore
-        expect(getAllErrors(formikErrors5)).toStrictEqual(expectedErrors5);
+        expect(getAndFlattenAllErrors<any>(formikErrors5)).toStrictEqual(expectedErrors5);
     });
 });

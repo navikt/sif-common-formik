@@ -5,7 +5,7 @@ export interface Ferieuttak {
     land: Ferieland[];
 }
 
-export const isFerieuttak = (ferieuttak: Partial<Ferieuttak>): ferieuttak is Ferieuttak => {
+export const isFerieuttak = (ferieuttak: Ferieuttak): ferieuttak is Ferieuttak => {
     return ferieuttak.fom !== undefined && ferieuttak.tom !== undefined && ferieuttak.land !== undefined;
 };
 

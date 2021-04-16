@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { CheckboksPanelGruppe, CheckboksPanelGruppeProps } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { TypedFormInputCommonProps } from '../../types';
+import { TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import '../../styles/nav-frontend-skjema-extension.less';
@@ -12,7 +12,7 @@ interface OwnProps<FieldName> extends Omit<CheckboksPanelGruppeProps, 'onChange'
     useTwoColumns?: boolean;
 }
 
-export type FormikCheckboxPanelGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikCheckboxPanelGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
 
 const removeElementFromArray = (element: any, array: any[], keyProp?: string) =>
     array.filter((el) => {

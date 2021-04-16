@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Select, SelectProps } from 'nav-frontend-skjema';
-import { TypedFormInputCommonProps } from '../../types';
+import { TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -9,7 +9,7 @@ interface OwnProps<FieldName> extends Omit<SelectProps, 'name'> {
     name: FieldName;
 }
 
-export type FormikSelectProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikSelectProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
 
 function FormikSelect<FieldName>({ name, children, validate, feil, ...restProps }: FormikSelectProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);

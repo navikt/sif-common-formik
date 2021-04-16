@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { SelectProps } from 'nav-frontend-skjema';
-import { TypedFormInputCommonProps } from '../../types';
+import { TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import CountrySelect from './CountrySelect';
@@ -12,7 +12,7 @@ interface OwnProps<FieldName> extends Omit<SelectProps, 'name' | 'children'> {
     useAlpha3Code?: boolean;
 }
 
-export type FormikCountrySelectProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikCountrySelectProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
 
 function FormikCountrySelect<FieldName>({
     name,

@@ -6,14 +6,12 @@ import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger'
 import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
-import { DateRange, FormikValidateFunction, NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
+import { DateRange, NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
-import { validateDateString } from './validateFormikDatepickerDate';
 import './datepicker.less';
-import { validateAll } from '../../utils/validateAll';
 
 export interface DatepickerLimitiations {
     minDate?: Date;
@@ -22,7 +20,7 @@ export interface DatepickerLimitiations {
     disableWeekend?: boolean;
 }
 
-export interface DatePickerBaseProps<FieldName> {
+export interface DatePickerBaseProps<FieldName> extends TypedFormInputValidationProps {
     name: FieldName;
     label: string;
     disabled?: boolean;
@@ -30,11 +28,9 @@ export interface DatePickerBaseProps<FieldName> {
     inputTitle?: string;
     placeholder?: string;
     dayPickerProps?: DayPickerProps;
-    invalidFormatErrorKey?: string;
-    disableFormatValidation?: boolean;
+    invalidFormatError?: string;
     locale?: 'nb' | 'nn' | 'en';
     onChange?: (date: string) => void;
-    validate?: FormikValidateFunction<string | undefined>;
 }
 export interface DatePickerPresentationProps {
     showYearSelector?: boolean;
@@ -47,7 +43,7 @@ interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
 }
 
 export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> &
-    Omit<TypedFormInputCommonProps, 'validate'> &
+    Omit<TypedFormInputValidationProps, 'validate'> &
     DatePickerPresentationProps &
     DatepickerLimitiations;
 
@@ -80,8 +76,6 @@ function FormikDatepicker<FieldName>({
     inputTitle,
     onChange,
     description,
-    disableFormatValidation = false,
-    invalidFormatErrorKey = 'common.fieldvalidation.dato.ugyldigFormat',
     placeholder,
     locale,
     ...restProps
@@ -94,13 +88,8 @@ function FormikDatepicker<FieldName>({
     const inputName = (name || '') as string;
     const intl = useIntl();
 
-    const validations = disableFormatValidation ? [] : [(value) => validateDateString(value, invalidFormatErrorKey)];
-    if (validate) {
-        validations.push(validate);
-    }
-
     return (
-        <Field validate={validateAll(validations)} name={name}>
+        <Field validate={validate} name={name}>
             {({ field, form }: FieldProps<string>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
                 const handleOnDatepickerChange: DatepickerChange = (dateString) => {

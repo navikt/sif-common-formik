@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { InputProps, Label } from 'nav-frontend-skjema';
-import { Time, TypedFormInputCommonProps } from '../../types';
+import { Time, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
@@ -14,7 +14,7 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange'> {
     maxMinutes?: number;
 }
 
-export type FormikTimeInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikTimeInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
 
 function FormikTimeInput<FieldName>({ label, name, validate, feil, ...restProps }: FormikTimeInputProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);

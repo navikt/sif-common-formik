@@ -1,13 +1,14 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
-import { FormikValidateFunction, NavFrontendSkjemaFeil } from '../../types';
+import { NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../types';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import ModalFormAndList, { ModalFormAndListProps } from './modal-form-and-list/ModalFormAndList';
 
-export interface FormikModalFormAndListProps<FieldName, ItemType> extends ModalFormAndListProps<ItemType> {
+export interface FormikModalFormAndListProps<FieldName, ItemType>
+    extends ModalFormAndListProps<ItemType>,
+        TypedFormInputValidationProps {
     name: FieldName;
     feil?: NavFrontendSkjemaFeil;
-    validate?: FormikValidateFunction;
     sortFunc?: (a: ItemType, b: ItemType) => number;
     onAfterChange?: (values: ItemType[]) => void;
 }

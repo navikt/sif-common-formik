@@ -1,10 +1,7 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
-import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { getTypedFormComponents } from '../../../../typed-formik-form';
-import { validateRequiredList } from '../../../validation/fieldValidations';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
 
 export interface FerieuttakFormLabels {
@@ -46,7 +43,6 @@ type FormValues = Partial<Ferieuttak>;
 const Form = getTypedFormComponents<FerieuttakFormFields, FormValues>();
 
 const FerieuttakForm: React.FunctionComponent<Props> = ({ labels, ferieuttak = { land: [] }, onSubmit, onCancel }) => {
-    const intl = useIntl();
     const onFormikSubmit = (formValues: FormValues) => {
         if (isFerieuttak(formValues)) {
             onSubmit(formValues);
@@ -63,9 +59,7 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({ labels, ferieuttak = {
                 initialValues={ferieuttak}
                 onSubmit={onFormikSubmit}
                 renderForm={() => (
-                    <Form.Form
-                        onCancel={onCancel}
-                        fieldErrorRenderer={(error) => commonFieldErrorRenderer(intl, error)}>
+                    <Form.Form onCancel={onCancel}>
                         <Box padBottom="l">
                             <Systemtittel tag="h1">{formLabels.title}</Systemtittel>
                         </Box>
@@ -86,7 +80,6 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({ labels, ferieuttak = {
                                     label: 'Danmark',
                                 },
                             ]}
-                            validate={validateRequiredList}
                         />
                     </Form.Form>
                 )}

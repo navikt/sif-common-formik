@@ -1,11 +1,9 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
-import { commonFieldErrorRenderer } from '@navikt/sif-common-core/lib/utils/commonFieldErrorRenderer';
-import dateRangeValidation from '@navikt/sif-common-core/lib/validation/dateRangeValidation';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
-import { validateRequiredList } from '../../../validation/fieldValidations';
+import { dateToISOString, getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
+import validateDate from '../../../../typed-formik-form/validation/validateDate';
+import validateList, { ValidateListErrors } from '../../../../typed-formik-form/validation/validateList';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
 
 export interface FerieuttakFormLabels {
@@ -20,7 +18,7 @@ export interface FerieuttakFormLabels {
 interface Props {
     minDate: Date;
     maxDate: Date;
-    ferieuttak?: Partial<Ferieuttak>;
+    ferieuttak?: Ferieuttak;
     alleFerieuttak?: Ferieuttak[];
     labels?: Partial<FerieuttakFormLabels>;
     onSubmit: (values: Ferieuttak) => void;
@@ -42,23 +40,47 @@ export enum FerieuttakFormFields {
     land = 'land',
 }
 
-type FormValues = Partial<Ferieuttak>;
+interface FormValues extends Omit<Ferieuttak, 'fom' | 'tom'> {
+    fom: string;
+    tom: string;
+}
 
 const Form = getTypedFormComponents<FerieuttakFormFields, FormValues>();
+
+const mapFerieuttakToFormValues = (ferieuttak: Ferieuttak): FormValues => ({
+    ...ferieuttak,
+    land: [...(ferieuttak.land || [])],
+    fom: dateToISOString(ferieuttak.fom),
+    tom: dateToISOString(ferieuttak.tom),
+});
+
+const mapFormValuesToFerieuttak = (values: Partial<FormValues>): Ferieuttak | undefined => {
+    const fom = ISOStringToDate(values.fom);
+    const tom = ISOStringToDate(values.tom);
+    if (fom && tom) {
+        return {
+            ...values,
+            land: [...(values.land || [])],
+            fom,
+            tom,
+        };
+    }
+    return undefined;
+};
 
 const FerieuttakForm: React.FunctionComponent<Props> = ({
     maxDate,
     minDate,
     labels,
-    ferieuttak = { fom: undefined, tom: undefined, land: [] },
+    ferieuttak,
     alleFerieuttak = [],
     onSubmit,
     onCancel,
 }) => {
-    const intl = useIntl();
-    const onFormikSubmit = (formValues: FormValues) => {
-        if (isFerieuttak(formValues)) {
-            onSubmit(formValues);
+    const onFormikSubmit = (formValues: Partial<FormValues>) => {
+        const ferieuttak = mapFormValuesToFerieuttak(formValues);
+        if (ferieuttak && isFerieuttak(ferieuttak)) {
+            onSubmit(ferieuttak);
         } else {
             throw new Error('FerieuttakForm: Formvalues is not a valid Ferieuttak on submit.');
         }
@@ -66,15 +88,14 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
 
     const formLabels: FerieuttakFormLabels = { ...defaultLabels, ...labels };
 
+    const initialValues = ferieuttak ? mapFerieuttakToFormValues(ferieuttak) : undefined;
     return (
         <>
             <Form.FormikWrapper
-                initialValues={ferieuttak}
+                initialValues={initialValues || {}}
                 onSubmit={onFormikSubmit}
                 renderForm={(formik) => (
-                    <Form.Form
-                        onCancel={onCancel}
-                        fieldErrorRenderer={(error) => commonFieldErrorRenderer(intl, error)}>
+                    <Form.Form onCancel={onCancel}>
                         <Box padBottom="l">
                             <Systemtittel tag="h1">{formLabels.title}</Systemtittel>
                         </Box>
@@ -95,7 +116,15 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                     label: 'Danmark',
                                 },
                             ]}
-                            validate={validateRequiredList}
+                            validate={(value) => {
+                                const error = validateList({ required: true })(value);
+                                switch (error) {
+                                    case undefined:
+                                        return undefined;
+                                    case ValidateListErrors.isEmpty:
+                                        return 'Listen trenger en verdi';
+                                }
+                            }}
                         />
                         <Box margin="xl">
                             <Form.DateIntervalPicker
@@ -109,13 +138,16 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                     disabledDateRanges: alleFerieuttak
                                         .filter((f) => (ferieuttak ? ferieuttak.id !== f.id : true))
                                         .map((f) => ({ from: f.fom, to: f.tom })),
-                                    validate: (value) =>
-                                        dateRangeValidation.validateFromDate(
-                                            ISOStringToDate(value),
-                                            minDate,
-                                            maxDate,
-                                            formik.values.tom
-                                        ),
+                                    validate: (value) => {
+                                        const error = validateDate({
+                                            required: true,
+                                            min: minDate,
+                                            max: maxDate,
+                                        })(value);
+                                        if (error) {
+                                            return 'Fra dato er ugyldig';
+                                        }
+                                    },
                                     onChange: () => {
                                         setTimeout(() => {
                                             formik.validateField(FerieuttakFormFields.tom);
@@ -128,13 +160,22 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                     fullscreenOverlay: true,
                                     minDate: minDate || formik.values.fom,
                                     maxDate,
-                                    validate: (value) =>
-                                        dateRangeValidation.validateToDate(
-                                            ISOStringToDate(value),
-                                            minDate,
-                                            maxDate,
-                                            formik.values.fom
-                                        ),
+                                    validate: (value) => {
+                                        const error = validateDate({
+                                            required: true,
+                                            min: minDate,
+                                            max: maxDate,
+                                        })(value);
+                                        if (error) {
+                                            return 'Fra dato er ugyldig';
+                                        }
+                                    },
+                                    // dateRangeValidation.validateToDate(
+                                    //     ISOStringToDate(value),
+                                    //     minDate,
+                                    //     maxDate,
+                                    //     formik.values.fom
+                                    // ),
                                     onChange: () => {
                                         setTimeout(() => {
                                             formik.validateField(FerieuttakFormFields.fom);

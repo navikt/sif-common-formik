@@ -1,10 +1,11 @@
 {
     "name": "@navikt/sif-common-formik",
-    "version": "15.5.2",
+    "version": "16.0.1",
     "private": false,
     "scripts": {
         "dev": "craco start",
-        "test": "jest --maxWorkers=2 --config ./jest/jest.config.js --watch",
+        "test": "jest --maxWorkers=2 --config ./jest/jest.config.js",
+        "test-w": "jest --maxWorkers=2 --config ./jest/jest.config.js --watch",
         "eject": "react-scripts eject",
         "build-lib": "npm-run-all clean-lib compile-lib-script copy-files-to-lib",
         "clean-lib": "rimraf ./lib",
@@ -25,6 +26,7 @@
         "@formatjs/intl-pluralrules": "^4.0.14",
         "@navikt/fnrvalidator": "^1.1.3",
         "@navikt/sif-common-core": "^8.5.0",
+        "@navikt/sif-common-question-config": "0.0.7",
         "@testing-library/jest-dom": "^5.11.10",
         "@testing-library/react": "^11.2.6",
         "@testing-library/user-event": "^13.1.2",
@@ -33,8 +35,8 @@
         "@types/react": "^17.0.3",
         "@types/react-dom": "^17.0.3",
         "@types/react-router-dom": "^5.1.7",
-        "@typescript-eslint/eslint-plugin": "4.21.0",
-        "@typescript-eslint/parser": "4.21.0",
+        "@typescript-eslint/eslint-plugin": "4.22.0",
+        "@typescript-eslint/parser": "4.22.0",
         "axios": "^0.21.1",
         "canvas": "^2.7.0",
         "classnames": "^2.3.1",
@@ -106,9 +108,6 @@
     },
     "jest": {
         "testEnvironment": "node"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
     },
     "browserslist": {
         "production": [

@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { QuestionVisibility } from './questions/Questions';
+import { QuestionVisibility } from '@navikt/sif-common-question-config';
 
 interface VisibilityContext<FieldName> {
     visibility: QuestionVisibility<FieldName>;

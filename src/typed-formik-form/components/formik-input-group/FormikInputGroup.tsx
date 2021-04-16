@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
 import { Element, Feilmelding } from 'nav-frontend-typografi';
-import { NavFrontendSkjemaFeil, TypedFormInputCommonProps } from '../../types';
+import { NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import './formikInputGroup.less';
@@ -12,7 +12,7 @@ interface OwnProps<FieldName> extends SkjemaGruppeProps {
     feil?: NavFrontendSkjemaFeil;
 }
 
-export type FormikInputGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputCommonProps;
+export type FormikInputGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
 
 function FormikInputGroup<FieldName>({
     legend,

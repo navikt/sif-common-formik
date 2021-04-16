@@ -1,23 +1,12 @@
-import { getAllErrors } from '../typedFormErrorUtils';
+import { getAndFlattenAllErrors } from '../typedFormErrorUtils';
 
-const formikTemplate = {
-    errors: {},
-    status: {
-        showErrors: true,
-    },
-};
+const errorMsg = 'feil';
 
 const simple = {
-    a: {
-        key: 'key1',
-        values: { valueKey: 'a value' },
-    },
+    a: errorMsg,
 };
 const simpleErrors = {
-    a: {
-        key: 'key1',
-        values: { valueKey: 'a value' },
-    },
+    a: errorMsg,
 };
 
 const complexWorking = {
@@ -27,8 +16,7 @@ const complexWorking = {
                 d: {
                     e: {
                         f: {
-                            key: 'key2',
-                            values: { valueKey: 'a value' },
+                            key2: errorMsg,
                         },
                     },
                 },
@@ -37,27 +25,20 @@ const complexWorking = {
     },
 };
 const complexWorkingErrors = {
-    'a.b.c.d.e.f': {
-        key: 'key2',
-        values: { valueKey: 'a value' },
-    },
+    'a.b.c.d.e.f.key2': errorMsg,
 };
 
 const complex2 = {
     a: [
         {
             b: {
-                key: 'key3',
-                values: { valueKey: 'a value' },
+                key3: errorMsg,
             },
         },
     ],
 };
 const complex2Errors = {
-    'a.0.b': {
-        key: 'key3',
-        values: { valueKey: 'a value' },
-    },
+    'a.0.b.key3': errorMsg,
 };
 
 const listWithNullValue = {
@@ -65,31 +46,25 @@ const listWithNullValue = {
         null,
         {
             b: {
-                key: 'key421341',
-                values: { valueKey: 'a value' },
+                key421341: errorMsg,
             },
         },
     ],
 };
 const listWithNullValueErrors = {
-    'a.1.b': {
-        key: 'key421341',
-        values: { valueKey: 'a value' },
-    },
+    'a.1.b.key421341': errorMsg,
 };
 
 const combiStor = {
     a: {
-        key: 'aksjdb',
-        values: { valueKey: 'a value' },
+        aksjdb: errorMsg,
     },
     b: {
         c: {
             d: {
                 e: {
                     f: {
-                        key: 'pasfvfe',
-                        values: { valueKey: 'a value' },
+                        pasfvfe: errorMsg,
                     },
                 },
             },
@@ -100,40 +75,28 @@ const combiStor = {
         null,
         {
             h: {
-                key: 'dfoqbnfbf',
-                values: { valueKey: 'a value' },
+                dfoqbnfbf: errorMsg,
             },
         },
     ],
 };
 const combiStorErrors = {
-    a: {
-        key: 'aksjdb',
-        values: { valueKey: 'a value' },
-    },
-    'b.c.d.e.f': {
-        key: 'pasfvfe',
-        values: { valueKey: 'a value' },
-    },
-    'g.2.h': {
-        key: 'dfoqbnfbf',
-        values: { valueKey: 'a value' },
-    },
+    'a.aksjdb': errorMsg,
+    'b.c.d.e.f.pasfvfe': errorMsg,
+    'g.2.h.dfoqbnfbf': errorMsg,
 };
 
 const listInList = {
     a: [
         {
             b: {
-                key: 'key4',
-                values: { valueKey: 'a value' },
+                key4: errorMsg,
             },
             c: {
                 d: [
                     {
                         e: {
-                            key: 'key4',
-                            values: { valueKey: 'a value' },
+                            key4: errorMsg,
                         },
                     },
                 ],
@@ -142,14 +105,8 @@ const listInList = {
     ],
 };
 const listInListErrors = {
-    'a.0.b': {
-        key: 'key4',
-        values: { valueKey: 'a value' },
-    },
-    'a.0.c.d.0.e': {
-        key: 'key4',
-        values: { valueKey: 'a value' },
-    },
+    'a.0.b.key4': errorMsg,
+    'a.0.c.d.0.e.key4': errorMsg,
 };
 
 const dyptObjectInniListe = {
@@ -158,8 +115,7 @@ const dyptObjectInniListe = {
             b: {
                 c: {
                     d: {
-                        key: 'asflfnqnbfn',
-                        values: { valueKey: 'a value' },
+                        asflfnqnbfn: errorMsg,
                     },
                 },
             },
@@ -167,47 +123,36 @@ const dyptObjectInniListe = {
     ],
 };
 const dyptObjectInniListeErrors = {
-    'a.0.b.c.d': {
-        key: 'asflfnqnbfn',
-        values: { valueKey: 'a value' },
-    },
+    'a.0.b.c.d.asflfnqnbfn': errorMsg,
 };
 
 describe('teste getAllErrors', () => {
     it('test1', () => {
-        const formikInput = { ...formikTemplate, errors: simple };
-        const input = getAllErrors(formikInput as any);
-        expect(input).toStrictEqual(simpleErrors as any);
+        const input = getAndFlattenAllErrors(simple as any);
+        expect(input).toStrictEqual(simpleErrors);
     });
     it('test2', () => {
-        const formikInput = { ...formikTemplate, errors: complexWorking };
-        const input = getAllErrors(formikInput as any);
-        expect(input).toStrictEqual(complexWorkingErrors as any);
+        const input = getAndFlattenAllErrors(complexWorking as any);
+        expect(input).toStrictEqual(complexWorkingErrors);
     });
     it('test3', () => {
-        const formikInput = { ...formikTemplate, errors: complex2 };
-        const input = getAllErrors(formikInput as any);
-        expect(input).toStrictEqual(complex2Errors as any);
+        const input = getAndFlattenAllErrors(complex2 as any);
+        expect(input).toStrictEqual(complex2Errors);
     });
     it('test4', () => {
-        const formikInput = { ...formikTemplate, errors: listWithNullValue };
-        const input = getAllErrors(formikInput as any);
-        expect(input).toStrictEqual(listWithNullValueErrors as any);
+        const input = getAndFlattenAllErrors(listWithNullValue as any);
+        expect(input).toStrictEqual(listWithNullValueErrors);
     });
     it('test5', () => {
-        const formikInput = { ...formikTemplate, errors: combiStor };
-        const input = getAllErrors(formikInput as any);
-        expect(input).toStrictEqual(combiStorErrors as any);
+        const input = getAndFlattenAllErrors(combiStor as any);
+        expect(input).toStrictEqual(combiStorErrors);
     });
-
     it('test6', () => {
-        const formikInput = { ...formikTemplate, errors: dyptObjectInniListe };
-        const input = getAllErrors(formikInput as any);
-        expect(input).toStrictEqual(dyptObjectInniListeErrors as any);
+        const input = getAndFlattenAllErrors(dyptObjectInniListe as any);
+        expect(input).toStrictEqual(dyptObjectInniListeErrors);
     });
     it('test7', () => {
-        const formikInput = { ...formikTemplate, errors: listInList };
-        const input = getAllErrors(formikInput as any);
-        expect(input).toStrictEqual(listInListErrors as any);
+        const input = getAndFlattenAllErrors(listInList as any);
+        expect(input).toStrictEqual(listInListErrors);
     });
 });
