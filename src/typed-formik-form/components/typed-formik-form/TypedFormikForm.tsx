@@ -2,9 +2,13 @@ import React, { createContext, useEffect, useRef, useState } from 'react';
 import { FieldInputProps, FormikProps, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import { CancelButtonTypes, NavFrontendSkjemaFeil } from '../../types';
-import { getErrorsForField, isValidationErrorsVisible } from '../../utils/typedFormErrorUtils';
+import { getErrorForField, isValidationErrorsVisible } from '../../utils/typedFormErrorUtils';
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 import ButtonRow from '../helpers/button-row/ButtonRow';
+import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
+
+export type FormikFieldErrorRender = (error: string) => NavFrontendSkjemaFeil;
+export type FormikSummaryFieldErrorRender = (fieldKey: string, error: string) => FeiloppsummeringFeil;
 
 export interface TypedFormikFormProps<FormValues> {
     children: React.ReactNode;
@@ -17,6 +21,8 @@ export interface TypedFormikFormProps<FormValues> {
     id?: string;
     cancelButtonType?: CancelButtonTypes;
     runDelayedFormValidation?: boolean;
+    fieldErrorRenderer?: FormikFieldErrorRender;
+    summaryFieldErrorRenderer?: FormikSummaryFieldErrorRender;
     noButtonsContentRenderer?: () => React.ReactNode;
     cleanup?: (values: FormValues) => FormValues;
     onValidSubmit?: () => void;
@@ -25,6 +31,8 @@ export interface TypedFormikFormProps<FormValues> {
 
 export interface TypedFormikFormContextType {
     showErrors: boolean;
+    fieldErrorRenderer?: FormikFieldErrorRender;
+    summaryFieldErrorRenderer?: FormikSummaryFieldErrorRender;
     getAndRenderFieldErrorMessage: (field: FieldInputProps<any>, form: FormikProps<any>) => NavFrontendSkjemaFeil;
     onAfterFieldValueSet: () => void;
 }
@@ -49,6 +57,8 @@ function TypedFormikForm<FormValues>({
     includeButtons = true,
     runDelayedFormValidation,
     cancelButtonType,
+    fieldErrorRenderer,
+    summaryFieldErrorRenderer,
     onCancel,
     onValidSubmit,
     noButtonsContentRenderer,
@@ -108,8 +118,16 @@ function TypedFormikForm<FormValues>({
         const showErrors = isValidationErrorsVisible(formik);
         return {
             showErrors,
+            fieldErrorRenderer,
+            summaryFieldErrorRenderer,
             getAndRenderFieldErrorMessage: (field, form) => {
-                return showErrors ? getErrorsForField(field.name, form.errors) : undefined;
+                if (showErrors) {
+                    const error = getErrorForField(field.name, form.errors);
+                    if (error) {
+                        return fieldErrorRenderer ? fieldErrorRenderer(error) : error;
+                    }
+                }
+                return undefined;
             },
             onAfterFieldValueSet: () => {
                 if (runDelayedFormValidation && formik.status && formik.status.showErrors) {
