@@ -4,10 +4,10 @@ import { hasValue } from './validationUtils';
 import { ValidateRequiredValueError } from './validateRequiredValue';
 
 export enum ValidateFødselsnummerError {
-    fødselsnummerNot11Chars = 'validateFødselsnummer.fødselsnummerNot11Chars',
-    fødselsnummerChecksumError = 'validateFødselsnummer.fødselsnummerChecksumError',
-    invalidFødselsnummer = 'validateFødselsnummer.invalidFødselsnummer',
-    disallowedFødselsnummer = 'validateFødselsnummer.fødselsnummerInConflict',
+    fødselsnummerNot11Chars = 'fødselsnummerNot11Chars',
+    fødselsnummerChecksumError = 'fødselsnummerChecksumError',
+    invalidFødselsnummer = 'invalidFødselsnummer',
+    disallowedFødselsnummer = 'fødselsnummerInConflict',
 }
 
 type FødselsnummerValidationResult =
