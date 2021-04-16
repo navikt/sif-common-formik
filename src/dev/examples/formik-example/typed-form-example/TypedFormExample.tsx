@@ -84,8 +84,6 @@ const TypedFormExample = () => {
                             name={'number'}
                             validate={(value) => {
                                 const error = localValidateRequired('abc' as FormFields)(value);
-                                console.log(error);
-
                                 return error;
                             }}
                         />
