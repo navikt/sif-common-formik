@@ -21,16 +21,22 @@ export const getFeilPropForFormikInput = ({
     return feil || (context ? context.getAndRenderFieldErrorMessage(field, form) : undefined);
 };
 
-export const getErrorsForField = <FormValues>(
+export const getErrorForField = <FormValues>(
     elementName: string,
     errors: FormikErrors<FormValues>
-): FormikErrors<FormValues> | undefined => {
-    const fieldErrors: FormikErrors<FormValues> = getIn(errors, elementName);
-    if (Array.isArray(fieldErrors) && fieldErrors.length === 1 && fieldErrors[0] === null) {
-        /** Filter out fieldArray errors containing only null item */
-        return undefined;
+): string | undefined => {
+    const fieldErrors: Array<string> | string = getIn(errors, elementName);
+    if (Array.isArray(fieldErrors)) {
+        if (fieldErrors.length === 1 && fieldErrors[0] === null) {
+            /** Filter out fieldArray errors containing only null item */
+            return undefined;
+        }
+        if (fieldErrors.length >= 1) {
+            return fieldErrors[0];
+        }
+    } else {
+        return fieldErrors;
     }
-    return fieldErrors;
 };
 
 export const isValidationErrorsVisible = (formik: FormikProps<any>): boolean => {
@@ -65,6 +71,8 @@ export function getAndFlattenAllErrors<FormValues>(
 ): FormikErrors<FormValues> | undefined {
     if (errors) {
         const numberOfErrors = Object.keys(errors).length;
+        console.log(errors);
+
         if (numberOfErrors > 0) {
             return flattenFieldErrors(errors);
         }

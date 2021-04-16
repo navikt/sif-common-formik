@@ -17,6 +17,7 @@ export interface DateRange {
 export type CancelButtonTypes = 'standard' | 'hoved' | 'fare' | 'flat';
 
 export type NavFrontendSkjemaFeil = React.ReactNode | boolean;
+
 export interface TypedFormInputValidationProps {
-    validate?: (value: any) => string | JSX.Element | undefined;
+    validate?: (value: any) => string | undefined;
 }

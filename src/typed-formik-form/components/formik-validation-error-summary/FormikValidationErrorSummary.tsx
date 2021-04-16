@@ -13,10 +13,12 @@ function FormikValidationErrorSummary() {
         const errorMessages: FeiloppsummeringFeil[] | undefined = allErrors
             ? Object.keys(allErrors).map((key) => {
                   const error = allErrors[key];
-                  const feil: FeiloppsummeringFeil = {
-                      feilmelding: error,
-                      skjemaelementId: key,
-                  };
+                  const feil: FeiloppsummeringFeil = context.summaryFieldErrorRenderer
+                      ? context.summaryFieldErrorRenderer(key, error)
+                      : {
+                            feilmelding: error,
+                            skjemaelementId: key,
+                        };
                   return feil;
               })
             : undefined;
