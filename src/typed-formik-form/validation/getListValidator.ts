@@ -21,7 +21,7 @@ interface Options {
     validateType?: boolean;
 }
 
-const validateList = (options: Options = {}): ValidationFunction<ListValidationResult> => (value: any) => {
+const getListValidator = (options: Options = {}): ValidationFunction<ListValidationResult> => (value: any) => {
     const { required = false, minItems = undefined, maxItems = undefined, validateType = false } = options;
     if (Array.isArray(value)) {
         const numItems = value.length;
@@ -45,4 +45,4 @@ const validateList = (options: Options = {}): ValidationFunction<ListValidationR
     return undefined;
 };
 
-export default validateList;
+export default getListValidator;

@@ -13,8 +13,8 @@ import FormikDateRangePicker from '../../../../typed-formik-form/components/form
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
-import validateRequiredValue from '../../../../typed-formik-form/validation/validateRequiredValue';
-import validateYesOrNoIsAnswered from '../../../../typed-formik-form/validation/validateYesOrNoIsAnswered';
+import getRequiredFieldValidator from '../../../../typed-formik-form/validation/getRequiredFieldValidator';
+import validateYesOrNoIsAnswered from '../../../../typed-formik-form/validation/getYesOrNoValidator';
 import Question from '../../../components/question/Question';
 import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
@@ -67,14 +67,14 @@ const TypedFormExample = () => {
                             type="text"
                             label="Skriv nøkkelord"
                             name={'nøkkelord'}
-                            validate={validateRequiredValue}
+                            validate={getRequiredFieldValidator()}
                         />
                     </Question>
                     <Question>
                         <Form.YesOrNoQuestion
                             legend={'Har du kids'}
                             name={FormFields.hasKids}
-                            validate={validateYesOrNoIsAnswered}
+                            validate={validateYesOrNoIsAnswered()}
                         />
                     </Question>
                 </>
@@ -99,7 +99,7 @@ const TypedFormExample = () => {
                         <Form.DatePicker
                             name={FormFields.birthdate}
                             label="Fødselsdato"
-                            validate={validateRequiredValue}
+                            validate={getRequiredFieldValidator()}
                         />
                     </Question>
                     <Question>
@@ -109,15 +109,23 @@ const TypedFormExample = () => {
                         <Form.InputGroup
                             name={FormFields.birthCountry}
                             legend="Dette er legend"
-                            validate={validateRequiredValue}>
+                            validate={getRequiredFieldValidator()}>
                             <FormikInput name="sdf" label="sdfsdf" />
                             sdf
                         </Form.InputGroup>
                     </Question>
                     <Question>
                         <Tiles columns={2}>
-                            <Form.Input name={FormFields.firstname} label="Fornavn" validate={validateRequiredValue} />
-                            <Form.Input name={FormFields.lastname} label="Etternavn" validate={validateRequiredValue} />
+                            <Form.Input
+                                name={FormFields.firstname}
+                                label="Fornavn"
+                                validate={getRequiredFieldValidator()}
+                            />
+                            <Form.Input
+                                name={FormFields.lastname}
+                                label="Etternavn"
+                                validate={getRequiredFieldValidator()}
+                            />
                         </Tiles>
                     </Question>
                     <Question>
@@ -132,13 +140,13 @@ const TypedFormExample = () => {
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
                                 maxDate: ISOStringToDate(values.daterange_to),
-                                validate: validateRequiredValue,
+                                validate: getRequiredFieldValidator(),
                             }}
                             toDatepickerProps={{
                                 name: FormFields.daterange_to,
                                 label: 'Til',
                                 minDate: ISOStringToDate(values.daterange_from),
-                                validate: validateRequiredValue,
+                                validate: getRequiredFieldValidator(),
                             }}
                         />
                     </Question>
@@ -178,7 +186,7 @@ const TypedFormExample = () => {
                             suffix="Timer"
                             bredde="S"
                             maxLength={5}
-                            validate={validateRequiredValue}
+                            validate={getRequiredFieldValidator()}
                         />
                     </Question>
                     <Question>
@@ -193,7 +201,7 @@ const TypedFormExample = () => {
                                 { label: 'b', value: 'b' },
                                 { label: 'c', value: 'c' },
                             ]}
-                            validate={validateRequiredValue}
+                            validate={getRequiredFieldValidator()}
                         />
                     </Question>
                     <Question>

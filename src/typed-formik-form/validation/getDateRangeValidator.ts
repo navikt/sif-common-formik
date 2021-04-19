@@ -3,7 +3,7 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
 import { ValidationFunction } from './types';
-import validateDate, { DateValidationOptions, DateValidationResult } from './validateDate';
+import getDateValidator, { DateValidationOptions, DateValidationResult } from './getDateValidator';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -27,7 +27,7 @@ interface ToDateOptions extends DateValidationOptions {
 }
 
 const validateFromDate = (options: FromDateOptions): ValidationFunction<DateRangeValidationResult> => (value: any) => {
-    const error = validateDate(options)(value);
+    const error = getDateValidator(options)(value);
     if (error) {
         return error;
     }
@@ -40,7 +40,7 @@ const validateFromDate = (options: FromDateOptions): ValidationFunction<DateRang
 };
 
 const validateToDate = (options: ToDateOptions): ValidationFunction<DateRangeValidationResult> => (value: any) => {
-    const error = validateDate(options)(value);
+    const error = getDateValidator(options)(value);
     if (error) {
         return error;
     }
@@ -55,9 +55,9 @@ const validateToDate = (options: ToDateOptions): ValidationFunction<DateRangeVal
     return undefined;
 };
 
-const dateRangeValidation = {
+const getDateRangeValidator = {
     validateFromDate,
     validateToDate,
 };
 
-export default dateRangeValidation;
+export default getDateRangeValidator;

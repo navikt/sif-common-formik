@@ -1,6 +1,6 @@
 import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
-import { ValidateRequiredValueError } from './validateRequiredValue';
+import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
 export enum ValidateStringError {
     notAString = 'notAString',
@@ -10,7 +10,7 @@ export enum ValidateStringError {
 
 type StringValidationResult =
     | undefined
-    | ValidateRequiredValueError.noValue
+    | ValidateRequiredFieldError.noValue
     | ValidateStringError.notAString
     | ValidateStringError.stringIsTooLong
     | ValidateStringError.stringIsTooShort;
@@ -21,10 +21,10 @@ interface Options {
     maxLength?: number;
 }
 
-const validateString = (options: Options = {}): ValidationFunction<StringValidationResult> => (value: any) => {
+const getStringValidator = (options: Options = {}): ValidationFunction<StringValidationResult> => (value: any) => {
     const { required, minLength, maxLength } = options;
     if (hasValue(value) === false && required) {
-        return ValidateRequiredValueError.noValue;
+        return ValidateRequiredFieldError.noValue;
     }
     if (hasValue(value)) {
         if (typeof value !== 'string') {
@@ -40,4 +40,4 @@ const validateString = (options: Options = {}): ValidationFunction<StringValidat
     return undefined;
 };
 
-export default validateString;
+export default getStringValidator;

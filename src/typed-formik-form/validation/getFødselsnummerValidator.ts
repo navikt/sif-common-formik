@@ -1,7 +1,7 @@
 import fnrvalidator from '@navikt/fnrvalidator';
 import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
-import { ValidateRequiredValueError } from './validateRequiredValue';
+import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
 export enum ValidateFødselsnummerError {
     fødselsnummerNot11Chars = 'fødselsnummerNot11Chars',
@@ -11,7 +11,7 @@ export enum ValidateFødselsnummerError {
 }
 
 type FødselsnummerValidationResult =
-    | ValidateRequiredValueError.noValue
+    | ValidateRequiredFieldError.noValue
     | ValidateFødselsnummerError.disallowedFødselsnummer
     | ValidateFødselsnummerError.fødselsnummerChecksumError
     | ValidateFødselsnummerError.fødselsnummerNot11Chars
@@ -23,7 +23,7 @@ interface Options {
     disallowedValues?: string[];
 }
 
-const validateFødselsnummer = (options: Options = {}): ValidationFunction<FødselsnummerValidationResult> => (
+const getFødselsnummerValidator = (options: Options = {}): ValidationFunction<FødselsnummerValidationResult> => (
     value: any
 ): FødselsnummerValidationResult => {
     const { required, disallowedValues } = options;
@@ -31,7 +31,7 @@ const validateFødselsnummer = (options: Options = {}): ValidationFunction<Føds
         return undefined;
     }
     if (hasValue(value) === false && required) {
-        return ValidateRequiredValueError.noValue;
+        return ValidateRequiredFieldError.noValue;
     }
     if (hasValue(value)) {
         const result = fnrvalidator.fnr(value);
@@ -58,4 +58,4 @@ const validateFødselsnummer = (options: Options = {}): ValidationFunction<Føds
     return undefined;
 };
 
-export default validateFødselsnummer;
+export default getFødselsnummerValidator;

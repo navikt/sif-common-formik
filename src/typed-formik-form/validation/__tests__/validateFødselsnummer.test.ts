@@ -1,34 +1,36 @@
-import validateFødselsnummer, { ValidateFødselsnummerError } from '../validateFødselsnummer';
+import getFødselsnummerValidator, { ValidateFødselsnummerError } from '../getFødselsnummerValidator';
 
 describe(`validateFødselsnummer`, () => {
     const generatedFnr = '24090014427';
     const generatedFnr2 = '19035114443';
 
     it('returns undefined when the fødselsnummer is valid', () => {
-        expect(validateFødselsnummer()(generatedFnr)).toBeUndefined();
+        expect(getFødselsnummerValidator()(generatedFnr)).toBeUndefined();
     });
 
     it('returns undefined when the fødselsnummer is not required and ha noe value', () => {
-        expect(validateFødselsnummer({ required: false })(undefined)).toBeUndefined();
-        expect(validateFødselsnummer({ required: false })(null)).toBeUndefined();
-        expect(validateFødselsnummer({ required: false })('')).toBeUndefined();
+        expect(getFødselsnummerValidator({ required: false })(undefined)).toBeUndefined();
+        expect(getFødselsnummerValidator({ required: false })(null)).toBeUndefined();
+        expect(getFødselsnummerValidator({ required: false })('')).toBeUndefined();
     });
 
     it(`returns ${ValidateFødselsnummerError.fødselsnummerNot11Chars} when the fødselsnummer is not 11 chars`, () => {
-        expect(validateFødselsnummer()('1234567890')).toEqual(ValidateFødselsnummerError.fødselsnummerNot11Chars);
-        expect(validateFødselsnummer()('123456789012')).toEqual(ValidateFødselsnummerError.fødselsnummerNot11Chars);
+        expect(getFødselsnummerValidator()('1234567890')).toEqual(ValidateFødselsnummerError.fødselsnummerNot11Chars);
+        expect(getFødselsnummerValidator()('123456789012')).toEqual(ValidateFødselsnummerError.fødselsnummerNot11Chars);
     });
 
     it(`returns ${ValidateFødselsnummerError.fødselsnummerChecksumError} when the fødselsnummer has invalid checksum`, () => {
-        expect(validateFødselsnummer()('24090014428')).toEqual(ValidateFødselsnummerError.fødselsnummerChecksumError);
+        expect(getFødselsnummerValidator()('24090014428')).toEqual(
+            ValidateFødselsnummerError.fødselsnummerChecksumError
+        );
     });
 
     it(`returns ${ValidateFødselsnummerError.disallowedFødselsnummer} when the fødselsnummer is same as disallowedFødselsnummer`, () => {
-        expect(validateFødselsnummer({ disallowedValues: [generatedFnr] })(generatedFnr)).toEqual(
+        expect(getFødselsnummerValidator({ disallowedValues: [generatedFnr] })(generatedFnr)).toEqual(
             ValidateFødselsnummerError.disallowedFødselsnummer
         );
     });
     it(`does not returns ${ValidateFødselsnummerError.disallowedFødselsnummer} when the fødselsnummer is not in disallowedFødselsnummer`, () => {
-        expect(validateFødselsnummer({ disallowedValues: [generatedFnr2] })(generatedFnr)).toBeUndefined();
+        expect(getFødselsnummerValidator({ disallowedValues: [generatedFnr2] })(generatedFnr)).toBeUndefined();
     });
 });
