@@ -14,7 +14,7 @@ import FormikTimeInput from '../../../../typed-formik-form/components/formik-tim
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
 import validateRequiredValue from '../../../../typed-formik-form/validation/validateRequiredValue';
-import validateYesOrNoIsAnswered from '../../../../typed-formik-form/validation/validateYesOrNo';
+import validateYesOrNoIsAnswered from '../../../../typed-formik-form/validation/validateYesOrNoIsAnswered';
 import Question from '../../../components/question/Question';
 import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';

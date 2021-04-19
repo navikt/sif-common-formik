@@ -5,7 +5,7 @@ export { default as validateList } from './validateList';
 export { default as validateNumber } from './validateNumber';
 export { default as validateOrgNumber } from './validateOrgNumber';
 export { default as validateString } from './validateString';
-export { default as validateYesOrNo } from './validateYesOrNo';
+export { default as validateYesOrNoIsAnswered } from './validateYesOrNoIsAnswered';
 export { default as validateRequiredValue } from './validateRequiredValue';
 
 export * from './validateChecked';
@@ -15,5 +15,5 @@ export * from './validateList';
 export * from './validateNumber';
 export * from './validateOrgNumber';
 export * from './validateString';
-export * from './validateYesOrNo';
+export * from './validateYesOrNoIsAnswered';
 export * from './validateRequiredValue';
