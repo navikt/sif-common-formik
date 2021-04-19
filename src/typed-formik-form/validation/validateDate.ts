@@ -15,19 +15,19 @@ export enum ValidateDateError {
     dateAfterMax = 'dateAfterMax',
 }
 
-type DateValidationResult =
+export type DateValidationResult =
     | ValidateRequiredValueError.noValue
     | ValidateDateError.invalidDateFormat
     | ValidateDateError.dateBeforeMin
     | ValidateDateError.dateAfterMax
     | undefined;
 
-interface Options {
+export interface DateValidationOptions {
     required?: boolean;
     min?: Date;
     max?: Date;
 }
-const validateDate = (options: Options = {}): ValidationFunction<DateValidationResult> => (
+const validateDate = (options: DateValidationOptions = {}): ValidationFunction<DateValidationResult> => (
     value: any
 ): DateValidationResult => {
     const { required, min, max } = options;
