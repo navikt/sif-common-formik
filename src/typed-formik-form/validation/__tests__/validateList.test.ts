@@ -15,9 +15,15 @@ describe(`validateList`, () => {
         expect(validateList({ required: false })(null)).toBeUndefined();
         expect(validateList({ required: false })([])).toBeUndefined();
     });
+    it(`returns ${ValidateListError.invalidType} when list is required, validateType=true and value is not array`, () => {
+        expect(validateList({ required: true, validateType: true })(undefined)).toEqual(ValidateListError.invalidType);
+        expect(validateList({ required: true, validateType: true })(null)).toEqual(ValidateListError.invalidType);
+    });
+    it(`returns ${ValidateListError.listIsEmpty} when list is required, validateType === false and value is not array`, () => {
+        expect(validateList({ required: true, validateType: false })(undefined)).toEqual(ValidateListError.listIsEmpty);
+        expect(validateList({ required: true })(null)).toEqual(ValidateListError.listIsEmpty);
+    });
     it('returns error when list is required and the list is undefined or has no items', () => {
-        expect(validateList({ required: true })(undefined)).toEqual(ValidateListError.invalidType);
-        expect(validateList({ required: true })(null)).toEqual(ValidateListError.invalidType);
         expect(validateList({ required: true })([])).toEqual(ValidateListError.listIsEmpty);
     });
     it(`returns ${ValidateListError.listHasTooFewItems} when list contains too feew items`, () => {

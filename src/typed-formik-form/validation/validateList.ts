@@ -18,10 +18,11 @@ interface Options {
     required?: boolean;
     minItems?: number;
     maxItems?: number;
+    validateType?: boolean;
 }
 
 const validateList = (options: Options = {}): ValidationFunction<ListValidationResult> => (value: any) => {
-    const { required = false, minItems = undefined, maxItems = undefined } = options;
+    const { required = false, minItems = undefined, maxItems = undefined, validateType = false } = options;
     if (Array.isArray(value)) {
         const numItems = value.length;
         if (required && numItems === 0) {
@@ -36,7 +37,10 @@ const validateList = (options: Options = {}): ValidationFunction<ListValidationR
         return undefined;
     }
     if (required) {
-        return ValidateListError.invalidType;
+        if (validateType) {
+            return ValidateListError.invalidType;
+        }
+        return ValidateListError.listIsEmpty;
     }
     return undefined;
 };
