@@ -3,7 +3,7 @@ import { isFunction } from 'formik';
 import { FormikFieldErrorRender, FormikSummaryFieldErrorRender } from '../components/typed-formik-form/TypedFormikForm';
 import { FieldErrorType } from '../types';
 
-const constructIntlValidationErrorKey = (error: FieldErrorType, fieldName: string, formName?: string): string =>
+export const createFieldErrorIntlKey = (error: FieldErrorType, fieldName: string, formName?: string): string =>
     `${formName ? `${formName}.` : ''}validation.${fieldName}.${error}`;
 
 export const getFieldErrorRenderer = (intl: IntlShape, formName?: string): FormikFieldErrorRender => (
@@ -12,7 +12,7 @@ export const getFieldErrorRenderer = (intl: IntlShape, formName?: string): Formi
 ) => {
     return isFunction(error)
         ? error()
-        : intl.formatMessage({ id: constructIntlValidationErrorKey(error, fieldName, formName) });
+        : intl.formatMessage({ id: createFieldErrorIntlKey(error, fieldName, formName) });
 };
 
 export const getSummaryFieldErrorRenderer = (intl: IntlShape, formName?: string): FormikSummaryFieldErrorRender => (
@@ -23,6 +23,6 @@ export const getSummaryFieldErrorRenderer = (intl: IntlShape, formName?: string)
         skjemaelementId: fieldName,
         feilmelding: isFunction(error)
             ? error()
-            : intl.formatMessage({ id: constructIntlValidationErrorKey(error, fieldName, formName) }),
+            : intl.formatMessage({ id: createFieldErrorIntlKey(error, fieldName, formName) }),
     };
 };
