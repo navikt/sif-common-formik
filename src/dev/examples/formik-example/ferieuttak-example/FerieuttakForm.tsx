@@ -2,8 +2,8 @@ import React from 'react';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { dateToISOString, getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
-import validateDate from '../../../../typed-formik-form/validation/validateDate';
-import validateList, { ValidateListError } from '../../../../typed-formik-form/validation/validateList';
+import getDateValidator from '../../../../typed-formik-form/validation/getDateValidator';
+import getListValidator, { ValidateListError } from '../../../../typed-formik-form/validation/getListValidator';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
 
 export interface FerieuttakFormLabels {
@@ -117,7 +117,7 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                 },
                             ]}
                             validate={(value) => {
-                                const error = validateList({ required: true })(value);
+                                const error = getListValidator({ required: true })(value);
                                 switch (error) {
                                     case undefined:
                                         return undefined;
@@ -139,7 +139,7 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                         .filter((f) => (ferieuttak ? ferieuttak.id !== f.id : true))
                                         .map((f) => ({ from: f.fom, to: f.tom })),
                                     validate: (value) => {
-                                        const error = validateDate({
+                                        const error = getDateValidator({
                                             required: true,
                                             min: minDate,
                                             max: maxDate,
@@ -161,7 +161,7 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                     minDate: minDate || formik.values.fom,
                                     maxDate,
                                     validate: (value) => {
-                                        const error = validateDate({
+                                        const error = getDateValidator({
                                             required: true,
                                             min: minDate,
                                             max: maxDate,

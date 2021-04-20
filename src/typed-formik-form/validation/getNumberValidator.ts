@@ -1,6 +1,6 @@
 import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
-import { ValidateRequiredValueError } from './validateRequiredValue';
+import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
 export enum ValidateNumberError {
     invalidNumberFormat = 'invalidNumberFormat',
@@ -10,7 +10,7 @@ export enum ValidateNumberError {
 
 type NumberValidationResult =
     | undefined
-    | ValidateRequiredValueError.noValue
+    | ValidateRequiredFieldError.noValue
     | ValidateNumberError.invalidNumberFormat
     | ValidateNumberError.numberIsTooLarge
     | ValidateNumberError.numberIsTooSmall;
@@ -36,12 +36,12 @@ const getNumberFromStringInput = (inputValue: string | undefined): number | unde
     return numValue;
 };
 
-const validateNumber = (options: Options = {}): ValidationFunction<NumberValidationResult> => (value: any) => {
+const getNumberValidator = (options: Options = {}): ValidationFunction<NumberValidationResult> => (value: any) => {
     const { required, min, max } = options;
     const numberValue = getNumberFromStringInput(value);
 
     if (hasValue(value) === false && required) {
-        return ValidateRequiredValueError.noValue;
+        return ValidateRequiredFieldError.noValue;
     }
 
     if (hasValue(value)) {
@@ -58,4 +58,4 @@ const validateNumber = (options: Options = {}): ValidationFunction<NumberValidat
     return undefined;
 };
 
-export default validateNumber;
+export default getNumberValidator;

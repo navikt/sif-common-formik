@@ -3,7 +3,7 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
 import { ValidationFunction } from './types';
-import { ValidateRequiredValueError } from './validateRequiredValue';
+import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 import { hasValue } from './validationUtils';
 
 dayjs.extend(isSameOrAfter);
@@ -16,7 +16,7 @@ export enum ValidateDateError {
 }
 
 export type DateValidationResult =
-    | ValidateRequiredValueError.noValue
+    | ValidateRequiredFieldError.noValue
     | ValidateDateError.invalidDateFormat
     | ValidateDateError.dateBeforeMin
     | ValidateDateError.dateAfterMax
@@ -27,14 +27,14 @@ export interface DateValidationOptions {
     min?: Date;
     max?: Date;
 }
-const validateDate = (options: DateValidationOptions = {}): ValidationFunction<DateValidationResult> => (
+const getDateValidator = (options: DateValidationOptions = {}): ValidationFunction<DateValidationResult> => (
     value: any
 ): DateValidationResult => {
     const { required, min, max } = options;
     const date = datepickerUtils.getDateFromDateString(value);
 
     if (hasValue(value) === false && required) {
-        return ValidateRequiredValueError.noValue;
+        return ValidateRequiredFieldError.noValue;
     }
     if (hasValue(value)) {
         if (date === undefined) {
@@ -50,4 +50,4 @@ const validateDate = (options: DateValidationOptions = {}): ValidationFunction<D
     return undefined;
 };
 
-export default validateDate;
+export default getDateValidator;

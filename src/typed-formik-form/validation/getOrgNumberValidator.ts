@@ -1,6 +1,6 @@
 import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
-import { ValidateRequiredValueError } from './validateRequiredValue';
+import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
 export enum ValidateOrgNumberError {
     invalidOrgNumberFormat = 'invalidOrgNumberFormat',
@@ -8,7 +8,7 @@ export enum ValidateOrgNumberError {
 
 type OrgNumberValidationResult =
     | undefined
-    | ValidateRequiredValueError.noValue
+    | ValidateRequiredFieldError.noValue
     | ValidateOrgNumberError.invalidOrgNumberFormat;
 
 interface Options {
@@ -42,11 +42,13 @@ const isValidOrgNumber = (value: any): boolean => {
     return false;
 };
 
-const validateOrgNumber = (options: Options = {}): ValidationFunction<OrgNumberValidationResult> => (value: any) => {
+const getOrgNumberValidator = (options: Options = {}): ValidationFunction<OrgNumberValidationResult> => (
+    value: any
+) => {
     const { required } = options;
     const isValidFormat = isValidOrgNumber(value);
     if (hasValue(value) === false && required) {
-        return ValidateRequiredValueError.noValue;
+        return ValidateRequiredFieldError.noValue;
     }
     if (hasValue(value) && isValidFormat === false) {
         return ValidateOrgNumberError.invalidOrgNumberFormat;
@@ -54,4 +56,4 @@ const validateOrgNumber = (options: Options = {}): ValidationFunction<OrgNumberV
     return undefined;
 };
 
-export default validateOrgNumber;
+export default getOrgNumberValidator;

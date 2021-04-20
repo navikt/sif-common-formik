@@ -1,13 +1,13 @@
-import validateRequiredValue, { ValidateRequiredValueError } from '../validateRequiredValue';
+import getRequiredFieldValidator, { ValidateRequiredFieldError } from '../getRequiredFieldValidator';
 
 describe(`validateRequiredValue`, () => {
     it(`returns undefined when the field has  value`, () => {
-        expect(validateRequiredValue('1')).toBeUndefined();
-        expect(validateRequiredValue(123)).toBeUndefined();
+        expect(getRequiredFieldValidator()('1')).toBeUndefined();
+        expect(getRequiredFieldValidator()(123)).toBeUndefined();
     });
-    it(`returns ${ValidateRequiredValueError.noValue} when the field has no value`, () => {
-        expect(validateRequiredValue(undefined)).toBe(ValidateRequiredValueError.noValue);
-        expect(validateRequiredValue('')).toBe(ValidateRequiredValueError.noValue);
-        expect(validateRequiredValue(null)).toBe(ValidateRequiredValueError.noValue);
+    it(`returns ${ValidateRequiredFieldError.noValue} when the field has no value`, () => {
+        expect(getRequiredFieldValidator()(undefined)).toBe(ValidateRequiredFieldError.noValue);
+        expect(getRequiredFieldValidator()('')).toBe(ValidateRequiredFieldError.noValue);
+        expect(getRequiredFieldValidator()(null)).toBe(ValidateRequiredFieldError.noValue);
     });
 });
