@@ -72,10 +72,7 @@ const TypedFormExample = () => {
                             type="text"
                             label="Skriv nøkkelord"
                             name={'nøkkelord'}
-                            validate={() => {
-                                // getRequiredFieldValidator()
-                                return () => 'abc';
-                            }}
+                            validate={getRequiredFieldValidator()}
                         />
                     </Question>
                     <Question>
