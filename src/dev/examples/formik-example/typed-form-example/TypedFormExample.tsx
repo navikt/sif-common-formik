@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { useFormikContext } from 'formik';
+import { isFunction, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import {
     FormikDateIntervalPicker,
@@ -21,6 +21,11 @@ import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDial
 import FerieuttakInfoAndDialog from '../ferieuttakinfo-and-form-example-/FerieuttakInfoAndDialog';
 import { FormFields, FormValues } from '../types';
 import { useIntl } from 'react-intl';
+import { getFødselsnummerValidator } from '../../../../typed-formik-form/validation';
+import {
+    getFieldErrorRenderer,
+    getSummaryFieldErrorRenderer,
+} from '@navikt/sif-common-core/lib/validation/renderUtils';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 
@@ -35,14 +40,21 @@ const TypedFormExample = () => {
             submitButtonLabel="Ok"
             includeValidationSummary={true}
             includeButtons={true}
-            fieldErrorRenderer={(error, fieldName) => {
-                return intl.formatMessage({ id: `validation.${fieldName}.${error}` });
+            fieldErrorRenderer={(error, field) => {
+                if (isFunction(error)) {
+                    console.log('func');
+                    return error();
+                }
+                return getFieldErrorRenderer(intl)(error, field);
             }}
-            summaryFieldErrorRenderer={(skjemaelementId, error) => {
-                return {
-                    skjemaelementId,
-                    feilmelding: intl.formatMessage({ id: `validation.${skjemaelementId}.${error}` }),
-                };
+            summaryFieldErrorRenderer={(error, field) => {
+                if (isFunction(error)) {
+                    return {
+                        skjemaelementId: field,
+                        feilmelding: error(),
+                    };
+                }
+                return getSummaryFieldErrorRenderer(intl)(error, field);
             }}
             noButtonsContentRenderer={() => (
                 <UnansweredQuestionsInfo>Du har ubesvarte spørsmål</UnansweredQuestionsInfo>
@@ -75,6 +87,16 @@ const TypedFormExample = () => {
                             legend={'Har du kids'}
                             name={FormFields.hasKids}
                             validate={validateYesOrNoIsAnswered()}
+                        />
+                    </Question>
+                    <Question>
+                        <Form.Input
+                            name={FormFields.fødselsnummer}
+                            label="Fødselsnummer"
+                            validate={getFødselsnummerValidator(
+                                { required: true },
+                                { fødselsnummerNot11Chars: () => 'asjkhsdhf' }
+                            )}
                         />
                     </Question>
                 </>

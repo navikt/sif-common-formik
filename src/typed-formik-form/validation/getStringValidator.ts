@@ -1,4 +1,4 @@
-import { ValidationFunction } from './types';
+import { ValidationErrorRenderFunc, ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
@@ -13,28 +13,49 @@ type StringValidationResult =
     | ValidateRequiredFieldError.noValue
     | ValidateStringError.notAString
     | ValidateStringError.stringIsTooLong
-    | ValidateStringError.stringIsTooShort;
+    | ValidateStringError.stringIsTooShort
+    | ValidationErrorRenderFunc;
 
+type Errors = {
+    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationErrorRenderFunc;
+    [ValidateStringError.notAString]: ValidateStringError.notAString | ValidationErrorRenderFunc;
+    [ValidateStringError.stringIsTooLong]: ValidateStringError.stringIsTooLong | ValidationErrorRenderFunc;
+    [ValidateStringError.stringIsTooShort]: ValidateStringError.stringIsTooShort | ValidationErrorRenderFunc;
+};
+
+const defaultErrors: Errors = {
+    noValue: ValidateRequiredFieldError.noValue,
+    notAString: ValidateStringError.notAString,
+    stringIsTooLong: ValidateStringError.stringIsTooLong,
+    stringIsTooShort: ValidateStringError.stringIsTooShort,
+};
 interface Options {
     required?: boolean;
     minLength?: number;
     maxLength?: number;
 }
 
-const getStringValidator = (options: Options = {}): ValidationFunction<StringValidationResult> => (value: any) => {
+const getStringValidator = (
+    options: Options = {},
+    customErrors?: Errors
+): ValidationFunction<StringValidationResult> => (value: any) => {
     const { required, minLength, maxLength } = options;
+    const errors: Errors = {
+        ...defaultErrors,
+        ...customErrors,
+    };
     if (hasValue(value) === false && required) {
-        return ValidateRequiredFieldError.noValue;
+        return errors[ValidateRequiredFieldError.noValue];
     }
     if (hasValue(value)) {
         if (typeof value !== 'string') {
-            return ValidateStringError.notAString;
+            return errors[ValidateStringError.notAString];
         }
         if (minLength !== undefined && value.length < minLength) {
-            return ValidateStringError.stringIsTooShort;
+            return errors[ValidateStringError.stringIsTooShort];
         }
         if (maxLength !== undefined && value.length > maxLength) {
-            return ValidateStringError.stringIsTooLong;
+            return errors[ValidateStringError.stringIsTooLong];
         }
     }
     return undefined;

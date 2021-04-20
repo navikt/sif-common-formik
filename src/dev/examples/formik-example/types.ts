@@ -17,6 +17,7 @@ export enum FormFields {
     'files' = 'files',
     'ferieuttak' = 'ferieuttak',
     'letters' = 'letters',
+    'fødselsnummer' = 'fødselsnummer',
 }
 
 export interface CompletedFormValues {

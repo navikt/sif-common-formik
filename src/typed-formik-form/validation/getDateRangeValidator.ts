@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
-import { ValidationFunction } from './types';
+import { ValidationFunction, ValidationErrorRenderFunc } from './types';
 import getDateValidator, { DateValidationOptions, DateValidationResult } from './getDateValidator';
 
 dayjs.extend(isSameOrAfter);
@@ -16,7 +16,8 @@ export enum ValidateDateInRangeError {
 type DateRangeValidationResult =
     | DateValidationResult
     | ValidateDateInRangeError.fromDateIsAfterToDate
-    | ValidateDateInRangeError.toDateIsBeforeFromDate;
+    | ValidateDateInRangeError.toDateIsBeforeFromDate
+    | ValidationErrorRenderFunc;
 
 interface FromDateOptions extends DateValidationOptions {
     toDate?: Date;
@@ -26,23 +27,44 @@ interface ToDateOptions extends DateValidationOptions {
     fromDate?: Date;
 }
 
-const validateFromDate = (options: FromDateOptions): ValidationFunction<DateRangeValidationResult> => (value: any) => {
-    const error = getDateValidator(options)(value);
-    if (error) {
-        return error;
+const validateFromDate = (
+    options: FromDateOptions,
+    customErrors?: {
+        [ValidateDateInRangeError.fromDateIsAfterToDate]:
+            | ValidateDateInRangeError.fromDateIsAfterToDate
+            | ValidationErrorRenderFunc;
+    }
+): ValidationFunction<DateRangeValidationResult> => (value: any) => {
+    const dateError = getDateValidator(options)(value);
+    if (dateError) {
+        return dateError;
     }
     const { toDate } = options;
     const date = datepickerUtils.getDateFromDateString(value);
     if (!date || !toDate) {
         return undefined;
     }
-    return dayjs(date).isAfter(toDate, 'day') ? ValidateDateInRangeError.fromDateIsAfterToDate : undefined;
+
+    if (dayjs(date).isAfter(toDate, 'day')) {
+        return (
+            (customErrors || {})[ValidateDateInRangeError.fromDateIsAfterToDate] ||
+            ValidateDateInRangeError.fromDateIsAfterToDate
+        );
+    }
+    return undefined;
 };
 
-const validateToDate = (options: ToDateOptions): ValidationFunction<DateRangeValidationResult> => (value: any) => {
-    const error = getDateValidator(options)(value);
-    if (error) {
-        return error;
+const validateToDate = (
+    options: ToDateOptions,
+    customErrors?: {
+        [ValidateDateInRangeError.toDateIsBeforeFromDate]:
+            | ValidateDateInRangeError.toDateIsBeforeFromDate
+            | ValidationErrorRenderFunc;
+    }
+): ValidationFunction<DateRangeValidationResult> => (value: any) => {
+    const dateError = getDateValidator(options)(value);
+    if (dateError) {
+        return dateError;
     }
     const { fromDate } = options;
     const date = datepickerUtils.getDateFromDateString(value);
@@ -50,7 +72,10 @@ const validateToDate = (options: ToDateOptions): ValidationFunction<DateRangeVal
         return undefined;
     }
     if (dayjs(date).isBefore(fromDate, 'day')) {
-        return ValidateDateInRangeError.toDateIsBeforeFromDate;
+        return (
+            (customErrors || {})[ValidateDateInRangeError.toDateIsBeforeFromDate] ||
+            ValidateDateInRangeError.toDateIsBeforeFromDate
+        );
     }
     return undefined;
 };

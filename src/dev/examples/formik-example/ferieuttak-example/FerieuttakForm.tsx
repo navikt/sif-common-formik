@@ -1,10 +1,17 @@
 import React from 'react';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import {
+    getFieldErrorRenderer,
+    getSummaryFieldErrorRenderer,
+} from '@navikt/sif-common-core/lib/validation/renderUtils';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { dateToISOString, getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
 import getDateValidator from '../../../../typed-formik-form/validation/getDateValidator';
 import getListValidator, { ValidateListError } from '../../../../typed-formik-form/validation/getListValidator';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
+import { useIntl } from 'react-intl';
+import { isFunction } from 'formik';
+import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
 
 export interface FerieuttakFormLabels {
     title: string;
@@ -87,15 +94,32 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
     };
 
     const formLabels: FerieuttakFormLabels = { ...defaultLabels, ...labels };
-
     const initialValues = ferieuttak ? mapFerieuttakToFormValues(ferieuttak) : undefined;
+    const intl = useIntl();
     return (
         <>
             <Form.FormikWrapper
                 initialValues={initialValues || {}}
                 onSubmit={onFormikSubmit}
                 renderForm={(formik) => (
-                    <Form.Form onCancel={onCancel}>
+                    <Form.Form
+                        onCancel={onCancel}
+                        fieldErrorRenderer={(error, field) => {
+                            if (isFunction(error)) {
+                                console.log('func');
+                                return error();
+                            }
+                            return getFieldErrorRenderer(intl)(error, field);
+                        }}
+                        summaryFieldErrorRenderer={(error, field) => {
+                            if (isFunction(error)) {
+                                return {
+                                    skjemaelementId: field,
+                                    feilmelding: error(),
+                                };
+                            }
+                            return getSummaryFieldErrorRenderer(intl)(error, field);
+                        }}>
                         <Box padBottom="l">
                             <Systemtittel tag="h1">{formLabels.title}</Systemtittel>
                         </Box>
@@ -122,7 +146,7 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                     case undefined:
                                         return undefined;
                                     case ValidateListError.listIsEmpty:
-                                        return 'Listen trenger en verdi';
+                                        return 'listIsEmpty';
                                 }
                             }}
                         />
@@ -139,14 +163,18 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                         .filter((f) => (ferieuttak ? ferieuttak.id !== f.id : true))
                                         .map((f) => ({ from: f.fom, to: f.tom })),
                                     validate: (value) => {
-                                        const error = getDateValidator({
-                                            required: true,
-                                            min: minDate,
-                                            max: maxDate,
-                                        })(value);
-                                        if (error) {
-                                            return 'Fra dato er ugyldig';
-                                        }
+                                        const error = getDateValidator(
+                                            {
+                                                required: true,
+                                                min: minDate,
+                                                max: maxDate,
+                                            },
+                                            {
+                                                noValue: () => `Tataaa`,
+                                                dateAfterMax: () => `Dato kan ikke være etter ${prettifyDate(maxDate)}`,
+                                            }
+                                        )(value);
+                                        return error;
                                     },
                                     onChange: () => {
                                         setTimeout(() => {

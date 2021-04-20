@@ -1,4 +1,4 @@
-import { ValidationFunction } from './types';
+import { ValidationErrorRenderFunc, ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
@@ -13,8 +13,22 @@ type NumberValidationResult =
     | ValidateRequiredFieldError.noValue
     | ValidateNumberError.invalidNumberFormat
     | ValidateNumberError.numberIsTooLarge
-    | ValidateNumberError.numberIsTooSmall;
+    | ValidateNumberError.numberIsTooSmall
+    | ValidationErrorRenderFunc;
 
+type Errors = {
+    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationErrorRenderFunc;
+    [ValidateNumberError.invalidNumberFormat]: ValidateNumberError.invalidNumberFormat | ValidationErrorRenderFunc;
+    [ValidateNumberError.numberIsTooLarge]: ValidateNumberError.numberIsTooLarge | ValidationErrorRenderFunc;
+    [ValidateNumberError.numberIsTooSmall]: ValidateNumberError.numberIsTooSmall | ValidationErrorRenderFunc;
+};
+
+const defaultErros: Errors = {
+    noValue: ValidateRequiredFieldError.noValue,
+    invalidNumberFormat: ValidateNumberError.invalidNumberFormat,
+    numberIsTooLarge: ValidateNumberError.numberIsTooLarge,
+    numberIsTooSmall: ValidateNumberError.numberIsTooSmall,
+};
 interface Options {
     required?: boolean;
     min?: number;
@@ -36,23 +50,31 @@ const getNumberFromStringInput = (inputValue: string | undefined): number | unde
     return numValue;
 };
 
-const getNumberValidator = (options: Options = {}): ValidationFunction<NumberValidationResult> => (value: any) => {
+const getNumberValidator = (
+    options: Options = {},
+    customErrors?: Errors
+): ValidationFunction<NumberValidationResult> => (value: any) => {
     const { required, min, max } = options;
     const numberValue = getNumberFromStringInput(value);
 
+    const errors: Errors = {
+        ...defaultErros,
+        ...customErrors,
+    };
+
     if (hasValue(value) === false && required) {
-        return ValidateRequiredFieldError.noValue;
+        return errors[ValidateRequiredFieldError.noValue];
     }
 
     if (hasValue(value)) {
         if (numberValue === undefined) {
-            return ValidateNumberError.invalidNumberFormat;
+            return errors[ValidateNumberError.invalidNumberFormat];
         }
         if (min !== undefined && numberValue < min) {
-            return ValidateNumberError.numberIsTooSmall;
+            return errors[ValidateNumberError.numberIsTooSmall];
         }
         if (max !== undefined && numberValue > max) {
-            return ValidateNumberError.numberIsTooLarge;
+            return errors[ValidateNumberError.numberIsTooLarge];
         }
     }
     return undefined;
