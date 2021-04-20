@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { useFormikContext } from 'formik';
+import { isFunction, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import {
     FormikDateIntervalPicker,
@@ -36,12 +36,17 @@ const TypedFormExample = () => {
             includeValidationSummary={true}
             includeButtons={true}
             fieldErrorRenderer={(error, fieldName) => {
+                if (isFunction(error)) {
+                    return error();
+                }
                 return intl.formatMessage({ id: `validation.${fieldName}.${error}` });
             }}
-            summaryFieldErrorRenderer={(skjemaelementId, error) => {
+            summaryFieldErrorRenderer={(error, skjemaelementId) => {
                 return {
                     skjemaelementId,
-                    feilmelding: intl.formatMessage({ id: `validation.${skjemaelementId}.${error}` }),
+                    feilmelding: isFunction(error)
+                        ? error()
+                        : intl.formatMessage({ id: `validation.${skjemaelementId}.${error}` }),
                 };
             }}
             noButtonsContentRenderer={() => (
@@ -67,7 +72,10 @@ const TypedFormExample = () => {
                             type="text"
                             label="Skriv nøkkelord"
                             name={'nøkkelord'}
-                            validate={getRequiredFieldValidator()}
+                            validate={() => {
+                                // getRequiredFieldValidator()
+                                return () => 'abc';
+                            }}
                         />
                     </Question>
                     <Question>
