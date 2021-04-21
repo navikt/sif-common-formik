@@ -1,14 +1,14 @@
 import { YesOrNo } from '../types';
-import { ValidationErrorRenderFunc, ValidationFunction } from './types';
+import { ValidationError, ValidationFunction } from './types';
 
 export enum ValidateYesOrNoError {
     'yesOrNoIsUnanswered' = 'yesOrNoIsUnanswered',
 }
 
-type YesOrNoValidationResult = ValidateYesOrNoError.yesOrNoIsUnanswered | ValidationErrorRenderFunc;
+type YesOrNoValidationResult = ValidateYesOrNoError.yesOrNoIsUnanswered | ValidationError;
 
 type Errors = {
-    [ValidateYesOrNoError.yesOrNoIsUnanswered]: ValidateYesOrNoError.yesOrNoIsUnanswered | ValidationErrorRenderFunc;
+    [ValidateYesOrNoError.yesOrNoIsUnanswered]: ValidateYesOrNoError.yesOrNoIsUnanswered | ValidationError;
 };
 
 const defaultErrors: Errors = {

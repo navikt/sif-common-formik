@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
-import { ValidationFunction, ValidationErrorRenderFunc } from './types';
+import { ValidationFunction, ValidationError } from './types';
 import getDateValidator, { DateValidationOptions, DateValidationResult } from './getDateValidator';
 
 dayjs.extend(isSameOrAfter);
@@ -17,7 +17,7 @@ type DateRangeValidationResult =
     | DateValidationResult
     | ValidateDateInRangeError.fromDateIsAfterToDate
     | ValidateDateInRangeError.toDateIsBeforeFromDate
-    | ValidationErrorRenderFunc;
+    | ValidationError;
 
 interface FromDateOptions extends DateValidationOptions {
     toDate?: Date;
@@ -32,7 +32,7 @@ const validateFromDate = (
     customErrors?: {
         [ValidateDateInRangeError.fromDateIsAfterToDate]:
             | ValidateDateInRangeError.fromDateIsAfterToDate
-            | ValidationErrorRenderFunc;
+            | ValidationError;
     }
 ): ValidationFunction<DateRangeValidationResult> => (value: any) => {
     const dateError = getDateValidator(options)(value);
@@ -59,7 +59,7 @@ const validateToDate = (
     customErrors?: {
         [ValidateDateInRangeError.toDateIsBeforeFromDate]:
             | ValidateDateInRangeError.toDateIsBeforeFromDate
-            | ValidationErrorRenderFunc;
+            | ValidationError;
     }
 ): ValidationFunction<DateRangeValidationResult> => (value: any) => {
     const dateError = getDateValidator(options)(value);

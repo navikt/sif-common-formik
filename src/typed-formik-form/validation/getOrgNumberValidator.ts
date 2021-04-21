@@ -1,4 +1,4 @@
-import { ValidationErrorRenderFunc, ValidationFunction } from './types';
+import { ValidationError, ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
@@ -10,13 +10,11 @@ type OrgNumberValidationResult =
     | undefined
     | ValidateRequiredFieldError.noValue
     | ValidateOrgNumberError.invalidOrgNumberFormat
-    | ValidationErrorRenderFunc;
+    | ValidationError;
 
 type Errors = {
-    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationErrorRenderFunc;
-    [ValidateOrgNumberError.invalidOrgNumberFormat]:
-        | ValidateOrgNumberError.invalidOrgNumberFormat
-        | ValidationErrorRenderFunc;
+    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationError;
+    [ValidateOrgNumberError.invalidOrgNumberFormat]: ValidateOrgNumberError.invalidOrgNumberFormat | ValidationError;
 };
 
 const defaultErrors: Errors = {

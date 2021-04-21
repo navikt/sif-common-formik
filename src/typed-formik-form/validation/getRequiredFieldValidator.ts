@@ -1,14 +1,14 @@
-import { ValidationFunction, ValidationErrorRenderFunc } from './types';
+import { ValidationFunction, ValidationError } from './types';
 import { hasValue } from './validationUtils';
 
 export enum ValidateRequiredFieldError {
     'noValue' = 'noValue',
 }
 
-type RequiredFieldValidationResult = ValidateRequiredFieldError | ValidationErrorRenderFunc;
+type RequiredFieldValidationResult = ValidateRequiredFieldError | ValidationError;
 
 type Errors = {
-    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationErrorRenderFunc;
+    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationError;
 };
 
 const defaultErrors: Errors = {

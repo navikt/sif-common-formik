@@ -1,5 +1,5 @@
 import fnrvalidator from '@navikt/fnrvalidator';
-import { ValidationErrorRenderFunc, ValidationFunction } from './types';
+import { ValidationError, ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
@@ -16,23 +16,23 @@ type FødselsnummerValidationResult =
     | ValidateFødselsnummerError.fødselsnummerChecksumError
     | ValidateFødselsnummerError.fødselsnummerNot11Chars
     | ValidateFødselsnummerError.invalidFødselsnummer
-    | ValidationErrorRenderFunc
+    | ValidationError
     | undefined;
 
 type Errors = {
-    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationErrorRenderFunc;
+    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
     [ValidateFødselsnummerError.disallowedFødselsnummer]?:
         | ValidateFødselsnummerError.disallowedFødselsnummer
-        | ValidationErrorRenderFunc;
+        | ValidationError;
     [ValidateFødselsnummerError.fødselsnummerChecksumError]?:
         | ValidateFødselsnummerError.fødselsnummerChecksumError
-        | ValidationErrorRenderFunc;
+        | ValidationError;
     [ValidateFødselsnummerError.fødselsnummerNot11Chars]?:
         | ValidateFødselsnummerError.fødselsnummerNot11Chars
-        | ValidationErrorRenderFunc;
+        | ValidationError;
     [ValidateFødselsnummerError.invalidFødselsnummer]?:
         | ValidateFødselsnummerError.invalidFødselsnummer
-        | ValidationErrorRenderFunc;
+        | ValidationError;
 };
 
 const defaultErrors: Errors = {

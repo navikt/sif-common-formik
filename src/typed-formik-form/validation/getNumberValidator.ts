@@ -1,4 +1,4 @@
-import { ValidationErrorRenderFunc, ValidationFunction } from './types';
+import { ValidationError, ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
@@ -14,13 +14,13 @@ type NumberValidationResult =
     | ValidateNumberError.invalidNumberFormat
     | ValidateNumberError.numberIsTooLarge
     | ValidateNumberError.numberIsTooSmall
-    | ValidationErrorRenderFunc;
+    | ValidationError;
 
 type Errors = {
-    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationErrorRenderFunc;
-    [ValidateNumberError.invalidNumberFormat]: ValidateNumberError.invalidNumberFormat | ValidationErrorRenderFunc;
-    [ValidateNumberError.numberIsTooLarge]: ValidateNumberError.numberIsTooLarge | ValidationErrorRenderFunc;
-    [ValidateNumberError.numberIsTooSmall]: ValidateNumberError.numberIsTooSmall | ValidationErrorRenderFunc;
+    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationError;
+    [ValidateNumberError.invalidNumberFormat]: ValidateNumberError.invalidNumberFormat | ValidationError;
+    [ValidateNumberError.numberIsTooLarge]: ValidateNumberError.numberIsTooLarge | ValidationError;
+    [ValidateNumberError.numberIsTooSmall]: ValidateNumberError.numberIsTooSmall | ValidationError;
 };
 
 const defaultErros: Errors = {

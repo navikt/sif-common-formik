@@ -1,4 +1,4 @@
-import { ValidationErrorRenderFunc, ValidationFunction } from './types';
+import { ValidationError, ValidationFunction } from './types';
 
 export enum ValidateListError {
     listIsEmpty = 'listIsEmpty',
@@ -13,13 +13,13 @@ type ListValidationResult =
     | ValidateListError.listHasTooFewItems
     | ValidateListError.listHasTooManyItems
     | ValidateListError.listIsEmpty
-    | ValidationErrorRenderFunc;
+    | ValidationError;
 
 type Errors = {
-    [ValidateListError.invalidType]: ValidateListError.invalidType | ValidationErrorRenderFunc;
-    [ValidateListError.listHasTooFewItems]: ValidateListError.listHasTooFewItems | ValidationErrorRenderFunc;
-    [ValidateListError.listHasTooManyItems]: ValidateListError.listHasTooManyItems | ValidationErrorRenderFunc;
-    [ValidateListError.listIsEmpty]: ValidateListError.listIsEmpty | ValidationErrorRenderFunc;
+    [ValidateListError.invalidType]: ValidateListError.invalidType | ValidationError;
+    [ValidateListError.listHasTooFewItems]: ValidateListError.listHasTooFewItems | ValidationError;
+    [ValidateListError.listHasTooManyItems]: ValidateListError.listHasTooManyItems | ValidationError;
+    [ValidateListError.listIsEmpty]: ValidateListError.listIsEmpty | ValidationError;
 };
 
 const defaultErrors: Errors = {

@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
-import { ValidationFunction, ValidationErrorRenderFunc } from './types';
+import { ValidationFunction, ValidationError } from './types';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 import { hasValue } from './validationUtils';
 
@@ -20,14 +20,14 @@ export type DateValidationResult =
     | ValidateDateError.invalidDateFormat
     | ValidateDateError.dateBeforeMin
     | ValidateDateError.dateAfterMax
-    | ValidationErrorRenderFunc
+    | ValidationError
     | undefined;
 
 type Errors = {
-    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationErrorRenderFunc;
-    [ValidateDateError.invalidDateFormat]?: ValidateDateError.invalidDateFormat | ValidationErrorRenderFunc;
-    [ValidateDateError.dateBeforeMin]?: ValidateDateError.dateBeforeMin | ValidationErrorRenderFunc;
-    [ValidateDateError.dateAfterMax]?: ValidateDateError.dateAfterMax | ValidationErrorRenderFunc;
+    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
+    [ValidateDateError.invalidDateFormat]?: ValidateDateError.invalidDateFormat | ValidationError;
+    [ValidateDateError.dateBeforeMin]?: ValidateDateError.dateBeforeMin | ValidationError;
+    [ValidateDateError.dateAfterMax]?: ValidateDateError.dateAfterMax | ValidationError;
 };
 
 const defaultErrors: Errors = {

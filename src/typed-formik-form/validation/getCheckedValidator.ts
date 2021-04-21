@@ -1,13 +1,13 @@
-import { ValidationErrorRenderFunc, ValidationFunction } from './types';
+import { ValidationError, ValidationFunction } from './types';
 
 export enum ValidateCheckedError {
     'notChecked' = 'notChecked',
 }
 
-type CheckedValidationResult = ValidateCheckedError.notChecked | ValidationErrorRenderFunc;
+type CheckedValidationResult = ValidateCheckedError.notChecked | ValidationError;
 
 type Errors = {
-    [ValidateCheckedError.notChecked]: ValidateCheckedError.notChecked | ValidationErrorRenderFunc;
+    [ValidateCheckedError.notChecked]: ValidateCheckedError.notChecked | ValidationError;
 };
 
 const defaultErrors: Errors = {

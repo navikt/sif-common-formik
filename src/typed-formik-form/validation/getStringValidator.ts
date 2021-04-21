@@ -1,4 +1,4 @@
-import { ValidationErrorRenderFunc, ValidationFunction } from './types';
+import { ValidationError, ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
@@ -14,13 +14,13 @@ type StringValidationResult =
     | ValidateStringError.notAString
     | ValidateStringError.stringIsTooLong
     | ValidateStringError.stringIsTooShort
-    | ValidationErrorRenderFunc;
+    | ValidationError;
 
 type Errors = {
-    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationErrorRenderFunc;
-    [ValidateStringError.notAString]: ValidateStringError.notAString | ValidationErrorRenderFunc;
-    [ValidateStringError.stringIsTooLong]: ValidateStringError.stringIsTooLong | ValidationErrorRenderFunc;
-    [ValidateStringError.stringIsTooShort]: ValidateStringError.stringIsTooShort | ValidationErrorRenderFunc;
+    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationError;
+    [ValidateStringError.notAString]: ValidateStringError.notAString | ValidationError;
+    [ValidateStringError.stringIsTooLong]: ValidateStringError.stringIsTooLong | ValidationError;
+    [ValidateStringError.stringIsTooShort]: ValidateStringError.stringIsTooShort | ValidationError;
 };
 
 const defaultErrors: Errors = {
