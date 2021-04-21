@@ -40,8 +40,8 @@ const validateFromDate = (
             | ValidationError;
     }
 ): ValidationFunction<DateRangeValidationResult> => (value: any) => {
-    const { dateAfterMax, dateBeforeMin, invalidDateFormat, noValue } = customErrors || {};
-    const dateError = getDateValidator(options, { dateAfterMax, dateBeforeMin, invalidDateFormat, noValue })(value);
+    const { fromDateIsAfterToDate, ...dateCustomErrors } = customErrors || {};
+    const dateError = getDateValidator(options, dateCustomErrors)(value);
     if (dateError) {
         return dateError;
     }
@@ -72,8 +72,8 @@ const validateToDate = (
             | ValidationError;
     }
 ): ValidationFunction<DateRangeValidationResult> => (value: any) => {
-    const { dateAfterMax, dateBeforeMin, invalidDateFormat, noValue } = customErrors || {};
-    const dateError = getDateValidator(options, { dateAfterMax, dateBeforeMin, invalidDateFormat, noValue })(value);
+    const { toDateIsBeforeFromDate, ...dateCustomErrors } = customErrors || {};
+    const dateError = getDateValidator(options, dateCustomErrors)(value);
     if (dateError) {
         return dateError;
     }

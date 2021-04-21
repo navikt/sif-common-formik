@@ -32,7 +32,7 @@ function FormikRadioPanelGroup<FieldName>({
                         className={useTwoColumns ? 'twoColumnPanelGruppe' : undefined}
                         checked={field.value}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
-                        onChange={(evt, value) => {
+                        onChange={(_evt, value) => {
                             form.setFieldValue(field.name, value);
                             if (context) {
                                 context.onAfterFieldValueSet();

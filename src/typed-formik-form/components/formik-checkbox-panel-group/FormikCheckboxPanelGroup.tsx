@@ -47,7 +47,7 @@ function FormikCheckboxPanelGroup<FieldName>({
                             autoComplete: 'off',
                         }))}
                         className={useTwoColumns ? 'twoColumnPanelGruppe' : undefined}
-                        onChange={(evt, value) => {
+                        onChange={(_evt, value) => {
                             if (isCheckboxChecked(field.value, value)) {
                                 form.setFieldValue(`${name}`, removeElementFromArray(value, field.value));
                             } else {
