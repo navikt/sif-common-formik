@@ -8,7 +8,7 @@ export enum ValidateYesOrNoError {
 type YesOrNoValidationResult = ValidateYesOrNoError.yesOrNoIsUnanswered | ValidationError;
 
 type Errors = {
-    [ValidateYesOrNoError.yesOrNoIsUnanswered]: ValidateYesOrNoError.yesOrNoIsUnanswered | ValidationError;
+    [ValidateYesOrNoError.yesOrNoIsUnanswered]?: ValidateYesOrNoError.yesOrNoIsUnanswered | ValidationError;
 };
 
 const defaultErrors: Errors = {

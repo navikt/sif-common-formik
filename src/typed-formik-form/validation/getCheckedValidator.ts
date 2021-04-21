@@ -7,7 +7,7 @@ export enum ValidateCheckedError {
 type CheckedValidationResult = ValidateCheckedError.notChecked | ValidationError;
 
 type Errors = {
-    [ValidateCheckedError.notChecked]: ValidateCheckedError.notChecked | ValidationError;
+    [ValidateCheckedError.notChecked]?: ValidateCheckedError.notChecked | ValidationError;
 };
 
 const defaultErrors: Errors = {

@@ -13,8 +13,8 @@ type OrgNumberValidationResult =
     | ValidationError;
 
 type Errors = {
-    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationError;
-    [ValidateOrgNumberError.invalidOrgNumberFormat]: ValidateOrgNumberError.invalidOrgNumberFormat | ValidationError;
+    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
+    [ValidateOrgNumberError.invalidOrgNumberFormat]?: ValidateOrgNumberError.invalidOrgNumberFormat | ValidationError;
 };
 
 const defaultErrors: Errors = {

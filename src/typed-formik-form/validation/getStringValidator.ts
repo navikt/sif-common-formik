@@ -17,10 +17,10 @@ type StringValidationResult =
     | ValidationError;
 
 type Errors = {
-    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationError;
-    [ValidateStringError.notAString]: ValidateStringError.notAString | ValidationError;
-    [ValidateStringError.stringIsTooLong]: ValidateStringError.stringIsTooLong | ValidationError;
-    [ValidateStringError.stringIsTooShort]: ValidateStringError.stringIsTooShort | ValidationError;
+    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
+    [ValidateStringError.notAString]?: ValidateStringError.notAString | ValidationError;
+    [ValidateStringError.stringIsTooLong]?: ValidateStringError.stringIsTooLong | ValidationError;
+    [ValidateStringError.stringIsTooShort]?: ValidateStringError.stringIsTooShort | ValidationError;
 };
 
 const defaultErrors: Errors = {

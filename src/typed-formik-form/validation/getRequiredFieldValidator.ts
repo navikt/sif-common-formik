@@ -8,7 +8,7 @@ export enum ValidateRequiredFieldError {
 type RequiredFieldValidationResult = ValidateRequiredFieldError | ValidationError;
 
 type Errors = {
-    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationError;
+    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
 };
 
 const defaultErrors: Errors = {

@@ -17,10 +17,10 @@ type NumberValidationResult =
     | ValidationError;
 
 type Errors = {
-    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationError;
-    [ValidateNumberError.invalidNumberFormat]: ValidateNumberError.invalidNumberFormat | ValidationError;
-    [ValidateNumberError.numberIsTooLarge]: ValidateNumberError.numberIsTooLarge | ValidationError;
-    [ValidateNumberError.numberIsTooSmall]: ValidateNumberError.numberIsTooSmall | ValidationError;
+    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
+    [ValidateNumberError.invalidNumberFormat]?: ValidateNumberError.invalidNumberFormat | ValidationError;
+    [ValidateNumberError.numberIsTooLarge]?: ValidateNumberError.numberIsTooLarge | ValidationError;
+    [ValidateNumberError.numberIsTooSmall]?: ValidateNumberError.numberIsTooSmall | ValidationError;
 };
 
 const defaultErros: Errors = {

@@ -16,10 +16,10 @@ type ListValidationResult =
     | ValidationError;
 
 type Errors = {
-    [ValidateListError.invalidType]: ValidateListError.invalidType | ValidationError;
-    [ValidateListError.listHasTooFewItems]: ValidateListError.listHasTooFewItems | ValidationError;
-    [ValidateListError.listHasTooManyItems]: ValidateListError.listHasTooManyItems | ValidationError;
-    [ValidateListError.listIsEmpty]: ValidateListError.listIsEmpty | ValidationError;
+    [ValidateListError.invalidType]?: ValidateListError.invalidType | ValidationError;
+    [ValidateListError.listHasTooFewItems]?: ValidateListError.listHasTooFewItems | ValidationError;
+    [ValidateListError.listHasTooManyItems]?: ValidateListError.listHasTooManyItems | ValidationError;
+    [ValidateListError.listIsEmpty]?: ValidateListError.listIsEmpty | ValidationError;
 };
 
 const defaultErrors: Errors = {
