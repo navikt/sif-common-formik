@@ -6,7 +6,7 @@ import ModalFormAndList, { ModalFormAndListProps } from './modal-form-and-list/M
 
 export interface FormikModalFormAndListProps<FieldName, ItemType>
     extends ModalFormAndListProps<ItemType>,
-        TypedFormInputValidationProps {
+        TypedFormInputValidationProps<FieldName> {
     name: FieldName;
     feil?: NavFrontendSkjemaFeil;
     sortFunc?: (a: ItemType, b: ItemType) => number;
@@ -26,7 +26,7 @@ function FormikModalFormAndList<FieldName, ItemType>({
 }: FormikModalFormAndListProps<FieldName, ItemType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field name={name} validate={validate}>
+        <Field name={name} validate={validate ? (value) => validate(value, name) : undefined}>
             {({ field, form }: FieldProps<ItemType[]>) => {
                 return (
                     <ModalFormAndList<ItemType>

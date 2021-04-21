@@ -6,21 +6,21 @@ import FerieuttakList from './FerieuttakList';
 import { Ferieuttak } from './types';
 import { TypedFormInputValidationProps } from '../../../../typed-formik-form/types';
 
-interface Props<FieldNames> extends TypedFormInputValidationProps {
-    name: FieldNames;
+interface Props<FieldName> extends TypedFormInputValidationProps<FieldName> {
+    name: FieldName;
     minDate: Date;
     maxDate: Date;
     labels: ModalFormAndListLabels;
 }
 
-function FerieuttakListAndDialog<FieldNames>({ name, minDate, maxDate, validate, labels }: Props<FieldNames>) {
+function FerieuttakListAndDialog<FieldName>({ name, minDate, maxDate, validate, labels }: Props<FieldName>) {
     return (
         <>
-            <FormikModalFormAndList<FieldNames, Ferieuttak>
+            <FormikModalFormAndList<FieldName, Ferieuttak>
                 name={name}
                 labels={labels}
                 dialogWidth="narrow"
-                validate={validate}
+                validate={validate ? (value) => validate(value, name) : undefined}
                 sortFunc={sortItemsByFom}
                 maxItems={1}
                 formRenderer={({ onSubmit, onCancel, item, allItems }) => (

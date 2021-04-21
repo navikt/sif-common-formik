@@ -11,7 +11,7 @@ interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onCh
     useTwoColumns?: boolean;
 }
 
-export type FormikRadioPanelGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
+export type FormikRadioPanelGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
 
 function FormikRadioPanelGroup<FieldName>({
     name,
@@ -23,7 +23,7 @@ function FormikRadioPanelGroup<FieldName>({
 }: FormikRadioPanelGroupProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <RadioPanelGruppe

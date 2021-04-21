@@ -10,12 +10,12 @@ interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onCh
     name: FieldName;
 }
 
-export type FormikRadioGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
+export type FormikRadioGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
 
 function FormikRadioGroup<FieldName>({ name, validate, radios, feil, ...restProps }: FormikRadioGroupProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <RadioGruppe {...restProps} feil={getFeilPropForFormikInput({ field, form, context, feil })}>

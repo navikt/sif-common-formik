@@ -5,17 +5,17 @@ import FerieuttakForm from './FerieuttakForm';
 import FerieuttakInfo from './FerieuttakInfo';
 import { Ferieuttak } from './types';
 
-interface Props<FieldNames> {
-    name: FieldNames;
+interface Props<FieldName> {
+    name: FieldName;
     minDate: Date;
     maxDate: Date;
     labels: ModalFormAndInfoLabels;
 }
 
-function FerieuttakInfoAndDialog<FieldNames>({ name, minDate, maxDate, labels }: Props<FieldNames>) {
+function FerieuttakInfoAndDialog<FieldName>({ name, minDate, maxDate, labels }: Props<FieldName>) {
     return (
         <>
-            <FormikModalFormAndInfo<FieldNames, Ferieuttak>
+            <FormikModalFormAndInfo<FieldName, Ferieuttak>
                 name={name}
                 labels={labels}
                 dialogWidth="narrow"

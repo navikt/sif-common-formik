@@ -22,14 +22,14 @@ function FormikFileInput<FieldName>({
     onFilesSelect,
     feil,
     onClick,
-}: FormikFileInputProps<FieldName> & TypedFormInputValidationProps) {
+}: FormikFileInputProps<FieldName> & TypedFormInputValidationProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
 
     return (
         <FieldArray
             name={`${name}`}
             render={(arrayHelpers) => (
-                <Field validate={validate} name={name}>
+                <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
                     {({ field, form }: FieldProps) => {
                         return (
                             <FileInput

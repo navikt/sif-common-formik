@@ -65,7 +65,9 @@ const TypedFormExample = () => {
                             type="text"
                             label="Skriv nøkkelord"
                             name={'nøkkelord'}
-                            validate={getRequiredFieldValidator()}
+                            validate={(value) => {
+                                return getRequiredFieldValidator()(value);
+                            }}
                         />
                     </Question>
                     <Question>
@@ -81,7 +83,7 @@ const TypedFormExample = () => {
                             label="Fødselsnummer"
                             validate={getFødselsnummerValidator(
                                 { required: true },
-                                { fødselsnummerNot11Chars: () => 'asjkhsdhf' }
+                                { fødselsnummerNot11Chars: () => 'whooooo' }
                             )}
                         />
                     </Question>

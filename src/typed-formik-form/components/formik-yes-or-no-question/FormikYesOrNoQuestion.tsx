@@ -18,7 +18,7 @@ function FormikYesOrNoQuestion<FieldName>({
     labels,
     useTwoColumns = true,
     ...restProps
-}: FormikYesOrNoQuestionProps<FieldName> & TypedFormInputValidationProps) {
+}: FormikYesOrNoQuestionProps<FieldName> & TypedFormInputValidationProps<FieldName>) {
     const { yes: yesLabel = 'Ja', no: noLabel = 'Nei', doNotKnow: doNotKnowLabel = 'Vet ikke' } = labels || {};
     return (
         <FormikRadioPanelGroup<FieldName>

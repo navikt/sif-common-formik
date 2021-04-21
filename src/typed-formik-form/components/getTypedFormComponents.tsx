@@ -27,38 +27,38 @@ import TypedFormikForm, { TypedFormikFormProps } from './typed-formik-form/Typed
 import TypedFormikWrapper, { TypedFormikWrapperProps } from './typed-formik-wrapper/TypedFormikWrapper';
 import '../styles/nav-frontend-skjema-extension.less';
 
-export function getTypedFormComponents<FieldNames, FormValues>() {
+export function getTypedFormComponents<FieldName, FormValues>() {
     return {
-        Checkbox: (props: FormikCheckboxProps<FieldNames>) => <FormikCheckbox<FieldNames> {...props} />,
-        CheckboxPanelGroup: (props: FormikCheckboxPanelGroupProps<FieldNames>) => (
-            <FormikCheckboxPanelGroup<FieldNames> {...props} />
+        Checkbox: (props: FormikCheckboxProps<FieldName>) => <FormikCheckbox<FieldName> {...props} />,
+        CheckboxPanelGroup: (props: FormikCheckboxPanelGroupProps<FieldName>) => (
+            <FormikCheckboxPanelGroup<FieldName> {...props} />
         ),
-        ConfirmationCheckbox: (props: FormikConfirmationCheckboxPanelProps<FieldNames>) => (
-            <FormikConfirmationCheckboxPanel<FieldNames> {...props} />
+        ConfirmationCheckbox: (props: FormikConfirmationCheckboxPanelProps<FieldName>) => (
+            <FormikConfirmationCheckboxPanel<FieldName> {...props} />
         ),
-        CountrySelect: (props: FormikCountrySelectProps<FieldNames>) => <FormikCountrySelect<FieldNames> {...props} />,
-        DatePicker: (props: FormikDatepickerProps<FieldNames>) => <FormikDatepicker<FieldNames> {...props} />,
-        DateIntervalPicker: (props: DateIntervalPickerProps<FieldNames>) => (
-            <FormikDateIntervalPicker<FieldNames> {...props} />
+        CountrySelect: (props: FormikCountrySelectProps<FieldName>) => <FormikCountrySelect<FieldName> {...props} />,
+        DatePicker: (props: FormikDatepickerProps<FieldName>) => <FormikDatepicker<FieldName> {...props} />,
+        DateIntervalPicker: (props: DateIntervalPickerProps<FieldName>) => (
+            <FormikDateIntervalPicker<FieldName> {...props} />
         ),
-        DateRangePicker: (props: FormikDateRangePickerProps<FieldNames>) => (
-            <FormikDateRangePicker<FieldNames> {...props} />
+        DateRangePicker: (props: FormikDateRangePickerProps<FieldName>) => (
+            <FormikDateRangePicker<FieldName> {...props} />
         ),
-        FileInput: (props: FormikFileInputProps<FieldNames>) => <FormikFileInput<FieldNames> {...props} />,
+        FileInput: (props: FormikFileInputProps<FieldName>) => <FormikFileInput<FieldName> {...props} />,
         Form: (props: TypedFormikFormProps<FormValues>) => <TypedFormikForm {...props} />,
         FormikWrapper: (props: TypedFormikWrapperProps<FormValues>) => <TypedFormikWrapper {...props} />,
-        Input: (props: FormikInputProps<FieldNames>) => <FormikInput<FieldNames> {...props} />,
-        NumberInput: (props: FormikNumberInputProps<FieldNames>) => <FormikNumberInput<FieldNames> {...props} />,
-        InputGroup: (props: FormikInputGroupProps<FieldNames>) => <FormikInputGroup<FieldNames> {...props} />,
-        RadioGroup: (props: FormikRadioGroupProps<FieldNames>) => <FormikRadioGroup<FieldNames> {...props} />,
-        RadioPanelGroup: (props: FormikRadioPanelGroupProps<FieldNames>) => (
-            <FormikRadioPanelGroup<FieldNames> {...props} />
+        Input: (props: FormikInputProps<FieldName>) => <FormikInput<FieldName> {...props} />,
+        NumberInput: (props: FormikNumberInputProps<FieldName>) => <FormikNumberInput<FieldName> {...props} />,
+        InputGroup: (props: FormikInputGroupProps<FieldName>) => <FormikInputGroup<FieldName> {...props} />,
+        RadioGroup: (props: FormikRadioGroupProps<FieldName>) => <FormikRadioGroup<FieldName> {...props} />,
+        RadioPanelGroup: (props: FormikRadioPanelGroupProps<FieldName>) => (
+            <FormikRadioPanelGroup<FieldName> {...props} />
         ),
-        Select: (props: FormikSelectProps<FieldNames>) => <FormikSelect<FieldNames> {...props} />,
-        Textarea: (props: FormikTextareaProps<FieldNames>) => <FormikTextarea<FieldNames> {...props} />,
-        TimeInput: (props: FormikTimeInputProps<FieldNames>) => <FormikTimeInput<FieldNames> {...props} />,
-        YesOrNoQuestion: (props: FormikYesOrNoQuestionProps<FieldNames>) => (
-            <FormikYesOrNoQuestion<FieldNames> {...props} />
+        Select: (props: FormikSelectProps<FieldName>) => <FormikSelect<FieldName> {...props} />,
+        Textarea: (props: FormikTextareaProps<FieldName>) => <FormikTextarea<FieldName> {...props} />,
+        TimeInput: (props: FormikTimeInputProps<FieldName>) => <FormikTimeInput<FieldName> {...props} />,
+        YesOrNoQuestion: (props: FormikYesOrNoQuestionProps<FieldName>) => (
+            <FormikYesOrNoQuestion<FieldName> {...props} />
         ),
     };
 }
