@@ -31,11 +31,11 @@ interface ToDateOptions extends DateValidationOptions {
 const validateFromDate = (
     options: FromDateOptions,
     customErrors?: {
-        [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationError;
-        [ValidateDateError.invalidDateFormat]: ValidateDateError.invalidDateFormat | ValidationError;
-        [ValidateDateError.dateAfterMax]: ValidateDateError.dateAfterMax | ValidationError;
-        [ValidateDateError.dateBeforeMin]: ValidateDateError.dateBeforeMin | ValidationError;
-        [ValidateDateInRangeError.fromDateIsAfterToDate]:
+        [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
+        [ValidateDateError.invalidDateFormat]?: ValidateDateError.invalidDateFormat | ValidationError;
+        [ValidateDateError.dateAfterMax]?: ValidateDateError.dateAfterMax | ValidationError;
+        [ValidateDateError.dateBeforeMin]?: ValidateDateError.dateBeforeMin | ValidationError;
+        [ValidateDateInRangeError.fromDateIsAfterToDate]?:
             | ValidateDateInRangeError.fromDateIsAfterToDate
             | ValidationError;
     }
@@ -62,11 +62,11 @@ const validateFromDate = (
 const validateToDate = (
     options: ToDateOptions,
     customErrors?: {
-        [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationError;
-        [ValidateDateError.invalidDateFormat]: ValidateDateError.invalidDateFormat | ValidationError;
-        [ValidateDateError.dateAfterMax]: ValidateDateError.dateAfterMax | ValidationError;
-        [ValidateDateError.dateBeforeMin]: ValidateDateError.dateBeforeMin | ValidationError;
-        [ValidateDateInRangeError.toDateIsBeforeFromDate]:
+        [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
+        [ValidateDateError.invalidDateFormat]?: ValidateDateError.invalidDateFormat | ValidationError;
+        [ValidateDateError.dateAfterMax]?: ValidateDateError.dateAfterMax | ValidationError;
+        [ValidateDateError.dateBeforeMin]?: ValidateDateError.dateBeforeMin | ValidationError;
+        [ValidateDateInRangeError.toDateIsBeforeFromDate]?:
             | ValidateDateInRangeError.toDateIsBeforeFromDate
             | ValidationError;
     }
