@@ -1,7 +1,7 @@
 import flatten from 'flat';
 import { FieldInputProps, FormikErrors, FormikProps, getIn } from 'formik';
 import { TypedFormikFormContextType } from '../components/typed-formik-form/TypedFormikForm';
-import { NavFrontendSkjemaFeil } from '../types';
+import { FieldErrorType, NavFrontendSkjemaFeil } from '../types';
 
 interface FlattendErrors {
     [key: string]: string;
@@ -24,7 +24,7 @@ export const getFeilPropForFormikInput = ({
 export const getErrorForField = <FormValues>(
     elementName: string,
     errors: FormikErrors<FormValues>
-): string | undefined => {
+): FieldErrorType | undefined => {
     const fieldErrors: Array<string> | string = getIn(errors, elementName);
     if (Array.isArray(fieldErrors)) {
         if (fieldErrors.length === 1 && fieldErrors[0] === null) {
