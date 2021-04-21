@@ -1,13 +1,27 @@
 import { YesOrNo } from '../types';
-import { ValidationFunction } from './types';
+import { ValidationErrorRenderFunc, ValidationFunction } from './types';
 
-export enum validateYesOrNoIsAnsweredError {
+export enum ValidateYesOrNoError {
     'yesOrNoIsUnanswered' = 'yesOrNoIsUnanswered',
 }
 
-const getYesOrNoValidator = (): ValidationFunction<validateYesOrNoIsAnsweredError> => (value: any) => {
+type YesOrNoValidationResult = ValidateYesOrNoError.yesOrNoIsUnanswered | ValidationErrorRenderFunc;
+
+type Errors = {
+    [ValidateYesOrNoError.yesOrNoIsUnanswered]: ValidateYesOrNoError.yesOrNoIsUnanswered | ValidationErrorRenderFunc;
+};
+
+const defaultErrors: Errors = {
+    yesOrNoIsUnanswered: ValidateYesOrNoError.yesOrNoIsUnanswered,
+};
+
+const getYesOrNoValidator = (customErrors?: Errors): ValidationFunction<YesOrNoValidationResult> => (value: any) => {
     const isAnswered = value === YesOrNo.YES || value === YesOrNo.NO || value === YesOrNo.DO_NOT_KNOW;
-    return isAnswered ? undefined : validateYesOrNoIsAnsweredError.yesOrNoIsUnanswered;
+    const errors: Errors = {
+        ...defaultErrors,
+        ...customErrors,
+    };
+    return isAnswered ? undefined : errors[ValidateYesOrNoError.yesOrNoIsUnanswered];
 };
 
 export default getYesOrNoValidator;

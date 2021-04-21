@@ -12,7 +12,7 @@ interface OwnProps<FieldName> extends Omit<CheckboksPanelGruppeProps, 'onChange'
     useTwoColumns?: boolean;
 }
 
-export type FormikCheckboxPanelGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
+export type FormikCheckboxPanelGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
 
 const removeElementFromArray = (element: any, array: any[], keyProp?: string) =>
     array.filter((el) => {
@@ -34,7 +34,7 @@ function FormikCheckboxPanelGroup<FieldName>({
 }: FormikCheckboxPanelGroupProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <CheckboksPanelGruppe

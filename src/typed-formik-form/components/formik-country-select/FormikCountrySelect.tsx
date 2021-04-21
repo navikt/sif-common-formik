@@ -12,7 +12,7 @@ interface OwnProps<FieldName> extends Omit<SelectProps, 'name' | 'children'> {
     useAlpha3Code?: boolean;
 }
 
-export type FormikCountrySelectProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
+export type FormikCountrySelectProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
 
 function FormikCountrySelect<FieldName>({
     name,
@@ -24,7 +24,7 @@ function FormikCountrySelect<FieldName>({
 }: FormikCountrySelectProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <CountrySelect

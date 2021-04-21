@@ -14,12 +14,12 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange'> {
     maxMinutes?: number;
 }
 
-export type FormikTimeInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
+export type FormikTimeInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
 
 function FormikTimeInput<FieldName>({ label, name, validate, feil, ...restProps }: FormikTimeInputProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <SkjemagruppeQuestion feil={getFeilPropForFormikInput({ field, form, context, feil })}>

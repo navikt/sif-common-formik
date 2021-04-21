@@ -9,12 +9,12 @@ interface OwnProps<FieldName> extends Omit<TextareaControlledProps, 'name' | 'de
     name: FieldName;
 }
 
-export type FormikTextareaProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
+export type FormikTextareaProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
 
 function FormikTextarea<FieldName>({ name, validate, feil, ...restProps }: FormikTextareaProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <Textarea

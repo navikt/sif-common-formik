@@ -1,4 +1,4 @@
-import { ValidationFunction } from './types';
+import { ValidationErrorRenderFunc, ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
@@ -9,7 +9,20 @@ export enum ValidateOrgNumberError {
 type OrgNumberValidationResult =
     | undefined
     | ValidateRequiredFieldError.noValue
-    | ValidateOrgNumberError.invalidOrgNumberFormat;
+    | ValidateOrgNumberError.invalidOrgNumberFormat
+    | ValidationErrorRenderFunc;
+
+type Errors = {
+    [ValidateRequiredFieldError.noValue]: ValidateRequiredFieldError.noValue | ValidationErrorRenderFunc;
+    [ValidateOrgNumberError.invalidOrgNumberFormat]:
+        | ValidateOrgNumberError.invalidOrgNumberFormat
+        | ValidationErrorRenderFunc;
+};
+
+const defaultErrors: Errors = {
+    noValue: ValidateRequiredFieldError.noValue,
+    invalidOrgNumberFormat: ValidateOrgNumberError.invalidOrgNumberFormat,
+};
 
 interface Options {
     required?: boolean;
@@ -42,16 +55,21 @@ const isValidOrgNumber = (value: any): boolean => {
     return false;
 };
 
-const getOrgNumberValidator = (options: Options = {}): ValidationFunction<OrgNumberValidationResult> => (
-    value: any
-) => {
+const getOrgNumberValidator = (
+    options: Options = {},
+    customErrors?: Errors
+): ValidationFunction<OrgNumberValidationResult> => (value: any) => {
     const { required } = options;
+    const errors: Errors = {
+        ...defaultErrors,
+        ...customErrors,
+    };
     const isValidFormat = isValidOrgNumber(value);
     if (hasValue(value) === false && required) {
-        return ValidateRequiredFieldError.noValue;
+        return errors[ValidateRequiredFieldError.noValue];
     }
     if (hasValue(value) && isValidFormat === false) {
-        return ValidateOrgNumberError.invalidOrgNumberFormat;
+        return errors[ValidateOrgNumberError.invalidOrgNumberFormat];
     }
     return undefined;
 };

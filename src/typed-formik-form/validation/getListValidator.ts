@@ -1,4 +1,4 @@
-import { ValidationFunction } from './types';
+import { ValidationErrorRenderFunc, ValidationFunction } from './types';
 
 export enum ValidateListError {
     listIsEmpty = 'listIsEmpty',
@@ -12,8 +12,22 @@ type ListValidationResult =
     | ValidateListError.invalidType
     | ValidateListError.listHasTooFewItems
     | ValidateListError.listHasTooManyItems
-    | ValidateListError.listIsEmpty;
+    | ValidateListError.listIsEmpty
+    | ValidationErrorRenderFunc;
 
+type Errors = {
+    [ValidateListError.invalidType]: ValidateListError.invalidType | ValidationErrorRenderFunc;
+    [ValidateListError.listHasTooFewItems]: ValidateListError.listHasTooFewItems | ValidationErrorRenderFunc;
+    [ValidateListError.listHasTooManyItems]: ValidateListError.listHasTooManyItems | ValidationErrorRenderFunc;
+    [ValidateListError.listIsEmpty]: ValidateListError.listIsEmpty | ValidationErrorRenderFunc;
+};
+
+const defaultErrors: Errors = {
+    invalidType: ValidateListError.invalidType,
+    listHasTooFewItems: ValidateListError.listHasTooFewItems,
+    listHastooManyItems: ValidateListError.listHasTooManyItems,
+    listIsEmpty: ValidateListError.listIsEmpty,
+};
 interface Options {
     required?: boolean;
     minItems?: number;
@@ -21,26 +35,32 @@ interface Options {
     validateType?: boolean;
 }
 
-const getListValidator = (options: Options = {}): ValidationFunction<ListValidationResult> => (value: any) => {
+const getListValidator = (options: Options = {}, customErrors?: Errors): ValidationFunction<ListValidationResult> => (
+    value: any
+) => {
     const { required = false, minItems = undefined, maxItems = undefined, validateType = false } = options;
+    const errors: Errors = {
+        ...defaultErrors,
+        ...customErrors,
+    };
     if (Array.isArray(value)) {
         const numItems = value.length;
         if (required && numItems === 0) {
-            return ValidateListError.listIsEmpty;
+            return errors[ValidateListError.listIsEmpty];
         }
         if (minItems !== undefined && minItems > numItems) {
-            return ValidateListError.listHasTooFewItems;
+            return errors[ValidateListError.listHasTooFewItems];
         }
         if (maxItems !== undefined && maxItems < numItems) {
-            return ValidateListError.listHasTooManyItems;
+            return errors[ValidateListError.listHasTooManyItems];
         }
         return undefined;
     }
     if (required) {
         if (validateType) {
-            return ValidateListError.invalidType;
+            return errors[ValidateListError.invalidType];
         }
-        return ValidateListError.listIsEmpty;
+        return errors[ValidateListError.listIsEmpty];
     }
     return undefined;
 };

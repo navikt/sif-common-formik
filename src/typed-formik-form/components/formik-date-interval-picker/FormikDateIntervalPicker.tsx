@@ -5,7 +5,7 @@ import FormikDatepicker, { FormikDatepickerProps } from '../formik-datepicker/Fo
 import FormikInputGroup from '../formik-input-group/FormikInputGroup';
 import './dateIntervalPicker.less';
 
-export interface DateIntervalPickerProps<FieldName> extends TypedFormInputValidationProps {
+export interface DateIntervalPickerProps<FieldName> extends TypedFormInputValidationProps<FieldName> {
     legend?: string;
     fromDatepickerProps: FormikDatepickerProps<FieldName>;
     toDatepickerProps: FormikDatepickerProps<FieldName>;
@@ -19,11 +19,11 @@ function FormikDateIntervalPicker<FieldName>({
     description,
     validate,
 }: DateIntervalPickerProps<FieldName>) {
-    const name = `${fromDatepickerProps.name}_${toDatepickerProps.name}`;
+    const name = `${fromDatepickerProps.name}_${toDatepickerProps.name}` as any;
     return (
         <FormikInputGroup
             name={name}
-            validate={validate}
+            validate={validate ? (value) => validate(value, name) : undefined}
             legend={legend ? <Element tag="div">{legend}</Element> : undefined}
             description={description}
             className="dateIntervalPicker">

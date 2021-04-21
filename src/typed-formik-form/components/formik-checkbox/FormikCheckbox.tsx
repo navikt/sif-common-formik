@@ -10,7 +10,7 @@ interface OwnProps<FieldName> extends Omit<CheckboxProps, 'name'> {
     afterOnChange?: (newValue: boolean) => void;
 }
 
-export type FormikCheckboxProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
+export type FormikCheckboxProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
 
 function FormikCheckbox<FieldName>({
     name,
@@ -21,7 +21,7 @@ function FormikCheckbox<FieldName>({
 }: FormikCheckboxProps<FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <Checkbox

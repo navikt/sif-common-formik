@@ -20,7 +20,7 @@ export interface DatepickerLimitiations {
     disableWeekend?: boolean;
 }
 
-export interface DatePickerBaseProps<FieldName> extends TypedFormInputValidationProps {
+export interface DatePickerBaseProps<FieldName> extends TypedFormInputValidationProps<FieldName> {
     name: FieldName;
     label: string;
     disabled?: boolean;
@@ -43,7 +43,7 @@ interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
 }
 
 export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> &
-    Omit<TypedFormInputValidationProps, 'validate'> &
+    Omit<TypedFormInputValidationProps<FieldName>, 'validate'> &
     DatePickerPresentationProps &
     DatepickerLimitiations;
 
@@ -89,7 +89,7 @@ function FormikDatepicker<FieldName>({
     const intl = useIntl();
 
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps<string>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
                 const handleOnDatepickerChange: DatepickerChange = (dateString) => {

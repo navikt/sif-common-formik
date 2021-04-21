@@ -1,6 +1,7 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import dayjs from 'dayjs';
-import { isFunction, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import {
     FormikDateIntervalPicker,
@@ -13,6 +14,11 @@ import FormikDateRangePicker from '../../../../typed-formik-form/components/form
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
+import {
+    getFieldErrorRenderer,
+    getSummaryFieldErrorRenderer,
+} from '../../../../typed-formik-form/utils/formikErrorRenderUtils';
+import { getFødselsnummerValidator } from '../../../../typed-formik-form/validation';
 import getRequiredFieldValidator from '../../../../typed-formik-form/validation/getRequiredFieldValidator';
 import validateYesOrNoIsAnswered from '../../../../typed-formik-form/validation/getYesOrNoValidator';
 import Question from '../../../components/question/Question';
@@ -20,7 +26,6 @@ import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import FerieuttakInfoAndDialog from '../ferieuttakinfo-and-form-example-/FerieuttakInfoAndDialog';
 import { FormFields, FormValues } from '../types';
-import { useIntl } from 'react-intl';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
 
@@ -35,20 +40,8 @@ const TypedFormExample = () => {
             submitButtonLabel="Ok"
             includeValidationSummary={true}
             includeButtons={true}
-            fieldErrorRenderer={(error, fieldName) => {
-                if (isFunction(error)) {
-                    return error();
-                }
-                return intl.formatMessage({ id: `validation.${fieldName}.${error}` });
-            }}
-            summaryFieldErrorRenderer={(error, skjemaelementId) => {
-                return {
-                    skjemaelementId,
-                    feilmelding: isFunction(error)
-                        ? error()
-                        : intl.formatMessage({ id: `validation.${skjemaelementId}.${error}` }),
-                };
-            }}
+            fieldErrorRenderer={getFieldErrorRenderer(intl, 'example')}
+            summaryFieldErrorRenderer={getSummaryFieldErrorRenderer(intl, 'example')}
             noButtonsContentRenderer={() => (
                 <UnansweredQuestionsInfo>Du har ubesvarte spørsmål</UnansweredQuestionsInfo>
             )}>
@@ -72,7 +65,9 @@ const TypedFormExample = () => {
                             type="text"
                             label="Skriv nøkkelord"
                             name={'nøkkelord'}
-                            validate={getRequiredFieldValidator()}
+                            validate={(value) => {
+                                return getRequiredFieldValidator()(value);
+                            }}
                         />
                     </Question>
                     <Question>
@@ -80,6 +75,16 @@ const TypedFormExample = () => {
                             legend={'Har du kids'}
                             name={FormFields.hasKids}
                             validate={validateYesOrNoIsAnswered()}
+                        />
+                    </Question>
+                    <Question>
+                        <Form.Input
+                            name={FormFields.fødselsnummer}
+                            label="Fødselsnummer"
+                            validate={getFødselsnummerValidator(
+                                { required: true },
+                                { fødselsnummerNot11Chars: () => 'whooooo' }
+                            )}
                         />
                     </Question>
                 </>

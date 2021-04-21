@@ -6,7 +6,7 @@ import ModalFormAndInfo, { ModalFormAndInfoProps } from './modal-form-and-info/M
 
 export interface FormikModalFormAndInfoProps<FieldName, InfoType>
     extends ModalFormAndInfoProps<InfoType>,
-        TypedFormInputValidationProps {
+        TypedFormInputValidationProps<FieldName> {
     name: FieldName;
     feil?: NavFrontendSkjemaFeil;
     onAfterChange?: (data: InfoType) => void;
@@ -24,7 +24,7 @@ function FormikModalFormAndInfo<FieldName, ItemType>({
 }: FormikModalFormAndInfoProps<FieldName, ItemType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field name={name} validate={validate}>
+        <Field name={name} validate={validate ? (value) => validate(value, name) : undefined}>
             {({ field, form }: FieldProps<ItemType>) => {
                 return (
                     <ModalFormAndInfo<ItemType>

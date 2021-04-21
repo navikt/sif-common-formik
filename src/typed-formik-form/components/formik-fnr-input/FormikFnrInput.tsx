@@ -22,7 +22,7 @@ const getPatternForInputMode = (inputMode?: InputMode): string | undefined => {
     }
 };
 
-export type FormikInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps;
+export type FormikInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
 
 function FormikFnrInput<FieldName>({
     name,
@@ -35,7 +35,7 @@ function FormikFnrInput<FieldName>({
     const context = React.useContext(TypedFormikFormContext);
 
     return (
-        <Field validate={validate} name={name}>
+        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <FnrInput
