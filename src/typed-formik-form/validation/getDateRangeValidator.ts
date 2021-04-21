@@ -5,6 +5,7 @@ import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
 import { ValidationFunction, ValidationError } from './types';
 import getDateValidator, { DateValidationOptions, DateValidationResult, ValidateDateError } from './getDateValidator';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
+import { isFunction } from 'formik';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -40,7 +41,8 @@ const validateFromDate = (
             | ValidationError;
     }
 ): ValidationFunction<DateRangeValidationResult> => (value: any) => {
-    const dateError = getDateValidator(options)(value);
+    const { dateAfterMax, dateBeforeMin, invalidDateFormat, noValue } = customErrors || {};
+    const dateError = getDateValidator(options, { dateAfterMax, dateBeforeMin, invalidDateFormat, noValue })(value);
     if (dateError) {
         return dateError;
     }
@@ -71,7 +73,8 @@ const validateToDate = (
             | ValidationError;
     }
 ): ValidationFunction<DateRangeValidationResult> => (value: any) => {
-    const dateError = getDateValidator(options)(value);
+    const { dateAfterMax, dateBeforeMin, invalidDateFormat, noValue } = customErrors || {};
+    const dateError = getDateValidator(options, { dateAfterMax, dateBeforeMin, invalidDateFormat, noValue })(value);
     if (dateError) {
         return dateError;
     }
