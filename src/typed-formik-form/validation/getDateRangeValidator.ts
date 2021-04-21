@@ -5,7 +5,6 @@ import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
 import { ValidationFunction, ValidationError } from './types';
 import getDateValidator, { DateValidationOptions, DateValidationResult, ValidateDateError } from './getDateValidator';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
-import { isFunction } from 'formik';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
