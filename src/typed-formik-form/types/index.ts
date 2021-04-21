@@ -18,8 +18,7 @@ export type CancelButtonTypes = 'standard' | 'hoved' | 'fare' | 'flat';
 
 export type NavFrontendSkjemaFeil = React.ReactNode | boolean;
 
-export type ValidationErrorRenerer = () => string;
-
+export type FieldErrorType = string | (() => string);
 export interface TypedFormInputValidationProps {
-    validate?: (value: any) => (() => string) | string | undefined;
+    validate?: (value: any) => FieldErrorType | undefined;
 }

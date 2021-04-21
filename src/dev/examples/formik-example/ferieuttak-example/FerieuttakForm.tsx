@@ -1,17 +1,16 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
+import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import { Systemtittel } from 'nav-frontend-typografi';
+import { dateToISOString, getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
 import {
     getFieldErrorRenderer,
     getSummaryFieldErrorRenderer,
-} from '@navikt/sif-common-core/lib/validation/renderUtils';
-import { Systemtittel } from 'nav-frontend-typografi';
-import { dateToISOString, getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
+} from '../../../../typed-formik-form/utils/formikErrorRenderUtils';
 import getDateValidator from '../../../../typed-formik-form/validation/getDateValidator';
 import getListValidator, { ValidateListError } from '../../../../typed-formik-form/validation/getListValidator';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
-import { useIntl } from 'react-intl';
-import { isFunction } from 'formik';
-import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
 
 export interface FerieuttakFormLabels {
     title: string;
@@ -104,22 +103,8 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                 renderForm={(formik) => (
                     <Form.Form
                         onCancel={onCancel}
-                        fieldErrorRenderer={(error, field) => {
-                            if (isFunction(error)) {
-                                console.log('func');
-                                return error();
-                            }
-                            return getFieldErrorRenderer(intl)(error, field);
-                        }}
-                        summaryFieldErrorRenderer={(error, field) => {
-                            if (isFunction(error)) {
-                                return {
-                                    skjemaelementId: field,
-                                    feilmelding: error(),
-                                };
-                            }
-                            return getSummaryFieldErrorRenderer(intl)(error, field);
-                        }}>
+                        fieldErrorRenderer={getFieldErrorRenderer(intl, 'ferie')}
+                        summaryFieldErrorRenderer={getSummaryFieldErrorRenderer(intl, 'ferie')}>
                         <Box padBottom="l">
                             <Systemtittel tag="h1">{formLabels.title}</Systemtittel>
                         </Box>

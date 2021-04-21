@@ -1,14 +1,14 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import { FieldInputProps, FormikProps, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
-import { CancelButtonTypes, NavFrontendSkjemaFeil } from '../../types';
+import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
+import { CancelButtonTypes, FieldErrorType, NavFrontendSkjemaFeil } from '../../types';
 import { getErrorForField, isValidationErrorsVisible } from '../../utils/typedFormErrorUtils';
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 import ButtonRow from '../helpers/button-row/ButtonRow';
-import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
 
-export type FormikFieldErrorRender = (error: string | (() => string), fieldName: string) => NavFrontendSkjemaFeil;
-export type FormikSummaryFieldErrorRender = (error: string | (() => string), fieldName: string) => FeiloppsummeringFeil;
+export type FormikFieldErrorRender = (error: FieldErrorType, fieldName: string) => NavFrontendSkjemaFeil;
+export type FormikSummaryFieldErrorRender = (error: FieldErrorType, fieldName: string) => FeiloppsummeringFeil;
 
 export interface TypedFormikFormProps<FormValues> {
     children: React.ReactNode;
