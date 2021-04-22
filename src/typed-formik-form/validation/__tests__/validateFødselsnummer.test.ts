@@ -19,12 +19,6 @@ describe(`validateFødselsnummer`, () => {
         expect(getFødselsnummerValidator()('123456789012')).toEqual(ValidateFødselsnummerError.fødselsnummerNot11Chars);
     });
 
-    it(`returns ${ValidateFødselsnummerError.fødselsnummerChecksumError} when the fødselsnummer has invalid checksum`, () => {
-        expect(getFødselsnummerValidator()('24090014428')).toEqual(
-            ValidateFødselsnummerError.fødselsnummerChecksumError
-        );
-    });
-
     it(`returns ${ValidateFødselsnummerError.disallowedFødselsnummer} when the fødselsnummer is same as disallowedFødselsnummer`, () => {
         expect(getFødselsnummerValidator({ disallowedValues: [generatedFnr] })(generatedFnr)).toEqual(
             ValidateFødselsnummerError.disallowedFødselsnummer
