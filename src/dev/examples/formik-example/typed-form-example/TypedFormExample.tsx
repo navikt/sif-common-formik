@@ -24,7 +24,6 @@ import validateYesOrNoIsAnswered from '../../../../typed-formik-form/validation/
 import Question from '../../../components/question/Question';
 import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
-import FerieuttakInfoAndDialog from '../ferieuttakinfo-and-form-example-/FerieuttakInfoAndDialog';
 import { FormFields, FormValues } from '../types';
 
 const Form = getTypedFormComponents<FormFields, FormValues>();
@@ -91,20 +90,6 @@ const TypedFormExample = () => {
             )}
             {1 + 1 === 3 && (
                 <>
-                    <Question>
-                        <FerieuttakInfoAndDialog
-                            name={'sfd'}
-                            labels={{
-                                addLabel: 'Legg til',
-                                editLabel: 'Endre',
-                                deleteLabel: 'Fjern',
-                                modalTitle: 'Ferieuttak',
-                                infoTitle: 'Ferieuttak',
-                            }}
-                            minDate={dayjs().subtract(1, 'year').toDate()}
-                            maxDate={dayjs().add(1, 'year').toDate()}
-                        />
-                    </Question>
                     <Question>
                         <Form.DatePicker
                             name={FormFields.birthdate}

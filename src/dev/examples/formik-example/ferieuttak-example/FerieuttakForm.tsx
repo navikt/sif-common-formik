@@ -7,6 +7,11 @@ import getDateValidator from '../../../../typed-formik-form/validation/getDateVa
 import getListValidator, { ValidateListError } from '../../../../typed-formik-form/validation/getListValidator';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
 import { getDateRangeValidator } from '../../../../typed-formik-form/validation';
+import {
+    getFieldErrorRenderer,
+    getSummaryFieldErrorRenderer,
+} from '../../../../typed-formik-form/utils/formikErrorRenderUtils';
+import { useIntl } from 'react-intl';
 
 export interface FerieuttakFormLabels {
     title: string;
@@ -87,7 +92,7 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
             throw new Error('FerieuttakForm: Formvalues is not a valid Ferieuttak on submit.');
         }
     };
-
+    const intl = useIntl();
     const formLabels: FerieuttakFormLabels = { ...defaultLabels, ...labels };
     const initialValues = ferieuttak ? mapFerieuttakToFormValues(ferieuttak) : undefined;
     return (
@@ -98,9 +103,8 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                 renderForm={(formik) => (
                     <Form.Form
                         onCancel={onCancel}
-                        // fieldErrorRenderer={getFieldErrorRenderer(intl, 'ferie')}
-                        // summaryFieldErrorRenderer={getSummaryFieldErrorRenderer(intl, 'ferie')}
-                    >
+                        fieldErrorRenderer={getFieldErrorRenderer(intl, 'ferieuttak.form')}
+                        summaryFieldErrorRenderer={getSummaryFieldErrorRenderer(intl, 'ferieuttak.form')}>
                         <Box padBottom="l">
                             <Systemtittel tag="h1">{formLabels.title}</Systemtittel>
                         </Box>
