@@ -1,11 +1,10 @@
 import fnrvalidator from '@navikt/fnrvalidator';
+import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 import { ValidationError, ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
-import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
 export enum ValidateFødselsnummerError {
     fødselsnummerNot11Chars = 'fødselsnummerNot11Chars',
-    fødselsnummerChecksumError = 'fødselsnummerChecksumError',
     invalidFødselsnummer = 'invalidFødselsnummer',
     disallowedFødselsnummer = 'disallowedFødselsnummer',
 }
@@ -13,7 +12,6 @@ export enum ValidateFødselsnummerError {
 type FødselsnummerValidationResult =
     | ValidateRequiredFieldError.noValue
     | ValidateFødselsnummerError.disallowedFødselsnummer
-    | ValidateFødselsnummerError.fødselsnummerChecksumError
     | ValidateFødselsnummerError.fødselsnummerNot11Chars
     | ValidateFødselsnummerError.invalidFødselsnummer
     | ValidationError
@@ -24,9 +22,6 @@ type Errors = {
     [ValidateFødselsnummerError.disallowedFødselsnummer]?:
         | ValidateFødselsnummerError.disallowedFødselsnummer
         | ValidationError;
-    [ValidateFødselsnummerError.fødselsnummerChecksumError]?:
-        | ValidateFødselsnummerError.fødselsnummerChecksumError
-        | ValidationError;
     [ValidateFødselsnummerError.fødselsnummerNot11Chars]?:
         | ValidateFødselsnummerError.fødselsnummerNot11Chars
         | ValidationError;
@@ -36,7 +31,6 @@ type Errors = {
 };
 
 const defaultErrors: Errors = {
-    fødselsnummerChecksumError: ValidateFødselsnummerError.fødselsnummerChecksumError,
     disallowedFødselsnummer: ValidateFødselsnummerError.disallowedFødselsnummer,
     fødselsnummerNot11Chars: ValidateFødselsnummerError.fødselsnummerNot11Chars,
     invalidFødselsnummer: ValidateFødselsnummerError.invalidFødselsnummer,
@@ -67,13 +61,9 @@ const getFødselsnummerValidator = (
         if (result.status === 'invalid') {
             /** Errors from @navikt/fnrvalidator */
             const LENGTH_ERROR = 'fnr or dnr must consist of 11 digits';
-            const CHECKSUM_ERROR = "checksums don't match";
             const { reasons } = result;
             if (reasons.includes(LENGTH_ERROR)) {
                 return errors[ValidateFødselsnummerError.fødselsnummerNot11Chars];
-            }
-            if (reasons.includes(CHECKSUM_ERROR)) {
-                return errors[ValidateFødselsnummerError.fødselsnummerChecksumError];
             }
             return errors[ValidateFødselsnummerError.invalidFødselsnummer];
         }
