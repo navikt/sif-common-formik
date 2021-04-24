@@ -1,6 +1,5 @@
 import React from 'react';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
-// import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { dateToISOString, getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
 import { getDateRangeValidator } from '../../../../typed-formik-form/validation';

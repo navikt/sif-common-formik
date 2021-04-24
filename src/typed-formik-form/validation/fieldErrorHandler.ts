@@ -11,7 +11,7 @@ const getFieldErrorHandler = (intl: IntlShape, errorPrefix?: string): FieldError
 ) => {
     return isIntlErrorObject(error)
         ? intl.formatMessage(
-              { id: error.skipFieldInKey ? error.key : createFieldErrorIntlKey(error.key, fieldName, errorPrefix) },
+              { id: error.isUniqueKey ? error.key : createFieldErrorIntlKey(error.key, fieldName, errorPrefix) },
               error.values
           )
         : intl.formatMessage({ id: createFieldErrorIntlKey(error, fieldName, errorPrefix) });

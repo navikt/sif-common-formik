@@ -12,13 +12,12 @@ import {
 import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
-import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
 import {
+    getFødselsnummerValidator,
     getListValidator,
-    // getStringValidator,
     getYesOrNoValidator,
+    ValidateFødselsnummerError,
     ValidateListError,
-    // ValidateStringError,
 } from '../../../../typed-formik-form/validation';
 import getRequiredFieldValidator from '../../../../typed-formik-form/validation/getRequiredFieldValidator';
 import Question from '../../../components/question/Question';
@@ -41,31 +40,53 @@ const TypedFormExample = () => {
             submitButtonLabel="Ok"
             includeValidationSummary={true}
             includeButtons={true}
-            fieldErrorHandler={getFieldErrorHandler(intl)}
-            noButtonsContentRenderer={() => (
-                <UnansweredQuestionsInfo>Du har ubesvarte spørsmål</UnansweredQuestionsInfo>
-            )}>
-            <h3>Noen skjemaelementer</h3>
-            {1 + 1 == 2 && (
-                <>
-                    <Question>
-                        <Form.YesOrNoQuestion
-                            legend={'Har du kids'}
-                            name={FormFields.hasKids}
-                            validate={(value) => {
-                                const err = getYesOrNoValidator()(value);
-                                if (err) {
-                                    return {
-                                        key: err,
-                                        values: { question: 'spørsmålet om antall barn' },
-                                    };
-                                }
-                            }}
-                        />
-                    </Question>
-                    <Friends fieldName="friends" friends={values.friends || []} />
-                </>
-            )}
+            fieldErrorHandler={getFieldErrorHandler(intl)}>
+            <Question>
+                <Form.YesOrNoQuestion
+                    legend={'Har du kids'}
+                    name={FormFields.hasKids}
+                    validate={(value) => {
+                        const err = getYesOrNoValidator()(value);
+                        if (err) {
+                            return {
+                                key: err,
+                                values: { question: 'spørsmålet om antall barn' },
+                            };
+                        }
+                    }}
+                />
+            </Question>
+            <Question>
+                <Form.Input
+                    name={FormFields.fødselsnummer}
+                    label="Fødselsnummer"
+                    validate={getFødselsnummerValidator({ required: true })}
+                />
+            </Question>
+            <Question>
+                <Form.Input
+                    name={FormFields.barnetsFødselsnummer}
+                    label="Barnets fødselsnummer"
+                    validate={(value) => {
+                        const error = getFødselsnummerValidator({
+                            required: true,
+                            disallowedValues: values.fødselsnummer ? [values.fødselsnummer] : undefined,
+                        })(value);
+                        if (error === ValidateFødselsnummerError.disallowedFødselsnummer) {
+                            return {
+                                key: 'fødselsnummer.disallowedFødselsnummerCustom',
+                                values: {
+                                    info: ' (du har tastet inn ditt eget fødselsnummer)',
+                                },
+                                isUniqueKey: true,
+                            };
+                        }
+                        return error;
+                    }}
+                />
+            </Question>
+            <Friends fieldName="friends" friends={values.friends || []} />
+
             {1 + 1 === 3 && (
                 <>
                     <Question>
@@ -86,16 +107,6 @@ const TypedFormExample = () => {
                             label="Fornavn"
                             name={FormFields.firstname}
                             validate={getRequiredFieldValidator()}
-                        />
-                    </Question>
-                    <Question>
-                        <Form.Input
-                            name={FormFields.fødselsnummer}
-                            label="Fødselsnummer"
-                            // validate={getFødselsnummerValidator(
-                            //     { required: true },
-                            //     { fødselsnummerNot11Chars: () => 'whooooo' }
-                            // )}
                         />
                     </Question>
                     <Question>

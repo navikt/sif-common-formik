@@ -1,4 +1,5 @@
 import { FieldArray } from 'formik';
+import { Knapp } from 'nav-frontend-knapper';
 import Panel from 'nav-frontend-paneler';
 import React from 'react';
 import { FormikInput } from '../../../../typed-formik-form';
@@ -6,7 +7,6 @@ import { getStringValidator } from '../../../../typed-formik-form/validation';
 import Question from '../../../components/question/Question';
 import { Friend } from '../types';
 import Siblings from './Siblings';
-// import Siblings from './Siblings';
 
 interface Props {
     fieldName: string;
@@ -20,7 +20,6 @@ const Friends: React.FunctionComponent<Props> = ({ fieldName, friends }) => (
             <div>
                 {friends && friends.length > 0 ? (
                     friends.map((_friend, index) => {
-                        // const nameFieldName = `${fieldName}.${index}` as any;
                         return (
                             <div key={index}>
                                 <Panel border={true}>
@@ -37,19 +36,14 @@ const Friends: React.FunctionComponent<Props> = ({ fieldName, friends }) => (
                                         <Siblings fieldName={`${fieldName}.${index}.siblings`} friend={_friend} />
                                     </fieldset>
                                 </Panel>
-                                <button
-                                    type="button"
-                                    onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-                                >
+                                <button type="button" onClick={() => arrayHelpers.insert(index, '')}>
                                     +
                                 </button>
                             </div>
                         );
                     })
                 ) : (
-                    <button type="button" onClick={() => arrayHelpers.push('')}>
-                        Add a friend
-                    </button>
+                    <Knapp onClick={() => arrayHelpers.push('')}>Legg til en venn</Knapp>
                 )}
             </div>
         )}

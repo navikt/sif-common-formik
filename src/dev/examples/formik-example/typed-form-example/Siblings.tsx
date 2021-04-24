@@ -31,24 +31,20 @@ const Siblings: React.FunctionComponent<Props> = ({ fieldName, friend }) => {
                                             if (error) {
                                                 const intlErr: IntlErrorObject = {
                                                     key: 'abc',
-                                                    skipFieldInKey: true,
+                                                    isUniqueKey: true,
                                                 };
                                                 return intlErr;
                                             }
                                         }}
                                     />
                                 </Question>
-                                <button
-                                    type="button"
-                                    onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-                                >
+                                <button type="button" onClick={() => arrayHelpers.insert(index, '')}>
                                     +
                                 </button>
                             </div>
                         ))
                     ) : (
                         <button type="button" onClick={() => arrayHelpers.push('')}>
-                            {/* show this when user has removed all friends from the list */}
                             Add a sibling
                         </button>
                     )}
