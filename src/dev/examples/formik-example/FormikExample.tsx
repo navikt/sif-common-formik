@@ -22,6 +22,8 @@ const initialValues: FormValues = {
             land: [],
         },
     ],
+    friends: [],
+    letters: [],
 };
 
 const FormikExample = () => {

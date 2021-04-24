@@ -1,5 +1,4 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
 import dayjs from 'dayjs';
 import { useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
@@ -15,37 +14,59 @@ import FormikTimeInput from '../../../../typed-formik-form/components/formik-tim
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import UnansweredQuestionsInfo from '../../../../typed-formik-form/components/helpers/unanswerd-questions-info/UnansweredQuestionsInfo';
 import {
-    getFieldErrorRenderer,
-    getSummaryFieldErrorRenderer,
-} from '../../../../typed-formik-form/utils/formikErrorRenderUtils';
-import { getFødselsnummerValidator } from '../../../../typed-formik-form/validation';
+    getListValidator,
+    // getStringValidator,
+    getYesOrNoValidator,
+    ValidateListError,
+    // ValidateStringError,
+} from '../../../../typed-formik-form/validation';
 import getRequiredFieldValidator from '../../../../typed-formik-form/validation/getRequiredFieldValidator';
-import validateYesOrNoIsAnswered from '../../../../typed-formik-form/validation/getYesOrNoValidator';
 import Question from '../../../components/question/Question';
 import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
+import { useIntl } from 'react-intl';
+import { ValidationError } from '../../../../typed-formik-form/validation/types';
+import getFieldErrorHandler from '../../../../typed-formik-form/validation/fieldErrorHandler';
+import Friends from './Friends';
 
-const Form = getTypedFormComponents<FormFields, FormValues>();
+const Form = getTypedFormComponents<FormFields, FormValues, ValidationError>();
 
 const TypedFormExample = () => {
     const { values } = useFormikContext<FormValues>();
     const { setFieldValue } = useFormikContext<FormValues>();
-
     const intl = useIntl();
-
     return (
         <Form.Form
             submitButtonLabel="Ok"
             includeValidationSummary={true}
             includeButtons={true}
-            fieldErrorRenderer={getFieldErrorRenderer(intl, 'example')}
-            summaryFieldErrorRenderer={getSummaryFieldErrorRenderer(intl, 'example')}
+            fieldErrorHandler={getFieldErrorHandler(intl)}
             noButtonsContentRenderer={() => (
                 <UnansweredQuestionsInfo>Du har ubesvarte spørsmål</UnansweredQuestionsInfo>
             )}>
             <h3>Noen skjemaelementer</h3>
             {1 + 1 == 2 && (
+                <>
+                    <Question>
+                        <Form.YesOrNoQuestion
+                            legend={'Har du kids'}
+                            name={FormFields.hasKids}
+                            validate={(value) => {
+                                const err = getYesOrNoValidator()(value);
+                                if (err) {
+                                    return {
+                                        key: err,
+                                        values: { question: 'spørsmålet om antall barn' },
+                                    };
+                                }
+                            }}
+                        />
+                    </Question>
+                    <Friends fieldName="friends" friends={values.friends || []} />
+                </>
+            )}
+            {1 + 1 === 3 && (
                 <>
                     <Question>
                         <FerieuttakListAndDialog
@@ -60,36 +81,51 @@ const TypedFormExample = () => {
                         />
                     </Question>
                     <Question>
-                        <FormikInput
+                        <Form.Input
                             type="text"
-                            label="Skriv nøkkelord"
-                            name={'nøkkelord'}
-                            validate={(value) => {
-                                return getRequiredFieldValidator()(value);
-                            }}
-                        />
-                    </Question>
-                    <Question>
-                        <Form.YesOrNoQuestion
-                            legend={'Har du kids'}
-                            name={FormFields.hasKids}
-                            validate={validateYesOrNoIsAnswered()}
+                            label="Fornavn"
+                            name={FormFields.firstname}
+                            validate={getRequiredFieldValidator()}
                         />
                     </Question>
                     <Question>
                         <Form.Input
                             name={FormFields.fødselsnummer}
                             label="Fødselsnummer"
-                            validate={getFødselsnummerValidator(
-                                { required: true },
-                                { fødselsnummerNot11Chars: () => 'whooooo' }
-                            )}
+                            // validate={getFødselsnummerValidator(
+                            //     { required: true },
+                            //     { fødselsnummerNot11Chars: () => 'whooooo' }
+                            // )}
                         />
                     </Question>
-                </>
-            )}
-            {1 + 1 === 3 && (
-                <>
+                    <Question>
+                        <Form.YesOrNoQuestion
+                            legend={'Har du kids'}
+                            name={FormFields.hasKids}
+                            validate={getYesOrNoValidator()}
+                        />
+                    </Question>
+                    <Question>
+                        <Form.CheckboxPanelGroup
+                            legend={'Velg en bokstav'}
+                            name={FormFields.letters}
+                            checkboxes={[
+                                { label: 'a', value: 'a' },
+                                { label: 'b', value: 'b' },
+                                { label: 'c', value: 'c' },
+                            ]}
+                            validate={(value) => {
+                                const error = getListValidator({ required: true })(value);
+                                if (error === ValidateListError.listIsEmpty) {
+                                    return {
+                                        key: error,
+                                        values: { value: 'inserted value' },
+                                    };
+                                }
+                                return error;
+                            }}
+                        />
+                    </Question>
                     <Question>
                         <Form.DatePicker
                             name={FormFields.birthdate}

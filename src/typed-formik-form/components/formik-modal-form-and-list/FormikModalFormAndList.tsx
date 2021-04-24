@@ -4,16 +4,16 @@ import { NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../type
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import ModalFormAndList, { ModalFormAndListProps } from './modal-form-and-list/ModalFormAndList';
 
-export interface FormikModalFormAndListProps<FieldName, ItemType>
+export interface FormikModalFormAndListProps<FieldName, ItemType, ErrorType>
     extends ModalFormAndListProps<ItemType>,
-        TypedFormInputValidationProps<FieldName> {
+        TypedFormInputValidationProps<FieldName, ErrorType> {
     name: FieldName;
     feil?: NavFrontendSkjemaFeil;
     sortFunc?: (a: ItemType, b: ItemType) => number;
     onAfterChange?: (values: ItemType[]) => void;
 }
 
-function FormikModalFormAndList<FieldName, ItemType>({
+function FormikModalFormAndList<FieldName, ItemType, ErrorType>({
     name,
     labels,
     listRenderer,
@@ -23,7 +23,7 @@ function FormikModalFormAndList<FieldName, ItemType>({
     feil,
     maxItems,
     validate,
-}: FormikModalFormAndListProps<FieldName, ItemType>) {
+}: FormikModalFormAndListProps<FieldName, ItemType, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field name={name} validate={validate ? (value) => validate(value, name) : undefined}>

@@ -11,16 +11,17 @@ interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onCh
     useTwoColumns?: boolean;
 }
 
-export type FormikRadioPanelGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
+export type FormikRadioPanelGroupProps<FieldName, ErrorType> = OwnProps<FieldName> &
+    TypedFormInputValidationProps<FieldName, ErrorType>;
 
-function FormikRadioPanelGroup<FieldName>({
+function FormikRadioPanelGroup<FieldName, ErrorType>({
     name,
     validate,
     radios,
     feil,
     useTwoColumns,
     ...restProps
-}: FormikRadioPanelGroupProps<FieldName>) {
+}: FormikRadioPanelGroupProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>

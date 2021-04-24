@@ -12,16 +12,17 @@ interface OwnProps<FieldName> extends Omit<SelectProps, 'name' | 'children'> {
     useAlpha3Code?: boolean;
 }
 
-export type FormikCountrySelectProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
+export type FormikCountrySelectProps<FieldName, ErrorType> = OwnProps<FieldName> &
+    TypedFormInputValidationProps<FieldName, ErrorType>;
 
-function FormikCountrySelect<FieldName>({
+function FormikCountrySelect<FieldName, ErrorType>({
     name,
     feil,
     validate,
     label,
     useAlpha3Code = true,
     showOnlyEuAndEftaCountries,
-}: FormikCountrySelectProps<FieldName>) {
+}: FormikCountrySelectProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>

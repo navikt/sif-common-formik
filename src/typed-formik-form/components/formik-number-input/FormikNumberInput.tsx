@@ -11,11 +11,11 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'patter
     integerValue?: boolean;
 }
 
-export type FormikNumberInputProps<FieldName> = OwnProps<FieldName> &
-    TypedFormInputValidationProps<FieldName> &
+export type FormikNumberInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
+    TypedFormInputValidationProps<FieldName, ErrorType> &
     InputWithSuffix;
 
-function FormikNumberInput<FieldName>({
+function FormikNumberInput<FieldName, ErrorType>({
     name,
     feil,
     validate,
@@ -23,7 +23,7 @@ function FormikNumberInput<FieldName>({
     bredde = 'S',
     integerValue = false,
     ...restProps
-}: FormikNumberInputProps<FieldName>) {
+}: FormikNumberInputProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
 
     return (

@@ -1,16 +1,14 @@
 import React from 'react';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
-import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
+// import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { dateToISOString, getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
+import { getDateRangeValidator } from '../../../../typed-formik-form/validation';
+import getFieldErrorHandler from '../../../../typed-formik-form/validation/fieldErrorHandler';
 import getDateValidator from '../../../../typed-formik-form/validation/getDateValidator';
 import getListValidator, { ValidateListError } from '../../../../typed-formik-form/validation/getListValidator';
+import { ValidationError } from '../../../../typed-formik-form/validation/types';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
-import { getDateRangeValidator } from '../../../../typed-formik-form/validation';
-import {
-    getFieldErrorRenderer,
-    getSummaryFieldErrorRenderer,
-} from '../../../../typed-formik-form/utils/formikErrorRenderUtils';
 import { useIntl } from 'react-intl';
 
 export interface FerieuttakFormLabels {
@@ -52,7 +50,7 @@ interface FormValues extends Omit<Ferieuttak, 'fom' | 'tom'> {
     tom: string;
 }
 
-const Form = getTypedFormComponents<FerieuttakFormFields, FormValues>();
+const Form = getTypedFormComponents<FerieuttakFormFields, FormValues, ValidationError>();
 
 const mapFerieuttakToFormValues = (ferieuttak: Ferieuttak): FormValues => ({
     ...ferieuttak,
@@ -101,10 +99,7 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                 initialValues={initialValues || {}}
                 onSubmit={onFormikSubmit}
                 renderForm={(formik) => (
-                    <Form.Form
-                        onCancel={onCancel}
-                        fieldErrorRenderer={getFieldErrorRenderer(intl, 'ferieuttak.form')}
-                        summaryFieldErrorRenderer={getSummaryFieldErrorRenderer(intl, 'ferieuttak.form')}>
+                    <Form.Form onCancel={onCancel} fieldErrorHandler={getFieldErrorHandler(intl, 'ferieForm')}>
                         <Box padBottom="l">
                             <Systemtittel tag="h1">{formLabels.title}</Systemtittel>
                         </Box>
@@ -148,17 +143,11 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                         .filter((f) => (ferieuttak ? ferieuttak.id !== f.id : true))
                                         .map((f) => ({ from: f.fom, to: f.tom })),
                                     validate: (value) => {
-                                        const error = getDateValidator(
-                                            {
-                                                required: true,
-                                                min: minDate,
-                                                max: maxDate,
-                                            },
-                                            {
-                                                noValue: () => `Tataaa`,
-                                                dateAfterMax: () => `Dato kan ikke være etter ${prettifyDate(maxDate)}`,
-                                            }
-                                        )(value);
+                                        const error = getDateValidator({
+                                            required: true,
+                                            min: minDate,
+                                            max: maxDate,
+                                        })(value);
                                         return error;
                                     },
                                     onChange: () => {

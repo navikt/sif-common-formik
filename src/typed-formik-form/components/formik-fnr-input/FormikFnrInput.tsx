@@ -22,16 +22,17 @@ const getPatternForInputMode = (inputMode?: InputMode): string | undefined => {
     }
 };
 
-export type FormikInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
+export type FormikInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
+    TypedFormInputValidationProps<FieldName, ErrorType>;
 
-function FormikFnrInput<FieldName>({
+function FormikFnrInput<FieldName, ErrorType>({
     name,
     feil,
     validate,
     inputMode = 'numeric',
     autoComplete,
     ...restProps
-}: FormikInputProps<FieldName>) {
+}: FormikInputProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
 
     return (

@@ -9,9 +9,16 @@ interface OwnProps<FieldName> extends Omit<SelectProps, 'name'> {
     name: FieldName;
 }
 
-export type FormikSelectProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
+export type FormikSelectProps<FieldName, ErrorType> = OwnProps<FieldName> &
+    TypedFormInputValidationProps<FieldName, ErrorType>;
 
-function FormikSelect<FieldName>({ name, children, validate, feil, ...restProps }: FormikSelectProps<FieldName>) {
+function FormikSelect<FieldName, ErrorType>({
+    name,
+    children,
+    validate,
+    feil,
+    ...restProps
+}: FormikSelectProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>

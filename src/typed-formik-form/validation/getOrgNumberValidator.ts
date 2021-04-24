@@ -1,6 +1,6 @@
+import getRequiredFieldValidator, { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 import { ValidationError, ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
-import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
 export enum ValidateOrgNumberError {
     invalidOrgNumberFormat = 'invalidOrgNumberFormat',
@@ -11,16 +11,6 @@ type OrgNumberValidationResult =
     | ValidateRequiredFieldError.noValue
     | ValidateOrgNumberError.invalidOrgNumberFormat
     | ValidationError;
-
-type Errors = {
-    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
-    [ValidateOrgNumberError.invalidOrgNumberFormat]?: ValidateOrgNumberError.invalidOrgNumberFormat | ValidationError;
-};
-
-const defaultErrors: Errors = {
-    noValue: ValidateRequiredFieldError.noValue,
-    invalidOrgNumberFormat: ValidateOrgNumberError.invalidOrgNumberFormat,
-};
 
 interface Options {
     required?: boolean;
@@ -53,23 +43,20 @@ const isValidOrgNumber = (value: any): boolean => {
     return false;
 };
 
-const getOrgNumberValidator = (
-    options: Options = {},
-    customErrors?: Errors
-): ValidationFunction<OrgNumberValidationResult> => (value: any) => {
+const getOrgNumberValidator = (options: Options = {}): ValidationFunction<OrgNumberValidationResult> => (
+    value: any
+) => {
     const { required } = options;
-    const errors: Errors = {
-        ...defaultErrors,
-        ...customErrors,
-    };
+    if (required) {
+        const err = getRequiredFieldValidator()(value);
+        if (err) {
+            return err;
+        }
+    }
     const isValidFormat = isValidOrgNumber(value);
-    if (hasValue(value) === false && required) {
-        return errors[ValidateRequiredFieldError.noValue];
-    }
     if (hasValue(value) && isValidFormat === false) {
-        return errors[ValidateOrgNumberError.invalidOrgNumberFormat];
+        return ValidateOrgNumberError.invalidOrgNumberFormat;
     }
-    return undefined;
 };
 
 export default getOrgNumberValidator;

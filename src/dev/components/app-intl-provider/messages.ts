@@ -1,12 +1,7 @@
 export const appMessages = {
     nb: {
-        'common.fieldvalidation.påkrevd': 'Påkrevd verdi',
-        'common.fieldvalidation.ugyldigTall': 'Ugyldig tall',
-        'common.fieldvalidation.dato.ugyldigFormat': 'Ugyldig dato - format på dato skal være dd.mm.åååå',
+        'letters.listIsEmpty': 'Whooa {value}',
+        'hasKids.yesOrNoIsUnanswered': 'You have not answered {question}',
     },
-    nn: {
-        'common.fieldvalidation.påkrevd': 'Påkrevd verdi',
-        'common.fieldvalidation.ugyldigTall': 'Ugyldig tall',
-        'common.fieldvalidation.dato.ugyldigFormat': 'Ugyldig dato - format på dato skal være dd.mm.åååå',
-    },
+    nn: {},
 };

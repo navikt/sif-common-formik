@@ -16,13 +16,13 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name'> {
     name: FieldName;
 }
 
-export type FormikInputProps<FieldName> = OwnProps<FieldName> &
-    TypedFormInputValidationProps<FieldName> &
+export type FormikInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
+    TypedFormInputValidationProps<FieldName, ErrorType> &
     InputWithSuffix;
 
 const bem = bemUtils('formikInput');
 
-function FormikInput<FieldName>({
+function FormikInput<FieldName, ErrorType>({
     name,
     feil,
     id = guid(),
@@ -33,7 +33,7 @@ function FormikInput<FieldName>({
     validate,
     autoComplete,
     ...restProps
-}: FormikInputProps<FieldName>) {
+}: FormikInputProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>

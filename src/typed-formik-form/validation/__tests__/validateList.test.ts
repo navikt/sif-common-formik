@@ -16,6 +16,7 @@ describe(`validateList`, () => {
         expect(getListValidator({ required: false })([])).toBeUndefined();
     });
     it('returns error when list is required and the list is undefined or has no items', () => {
+        expect(getListValidator({ required: true })(undefined)).toEqual(ValidateListError.listIsEmpty);
         expect(getListValidator({ required: true })([])).toEqual(ValidateListError.listIsEmpty);
     });
     it(`returns ${ValidateListError.listHasTooFewItems} when list contains too feew items`, () => {

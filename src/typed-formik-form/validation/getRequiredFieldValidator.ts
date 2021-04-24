@@ -1,29 +1,15 @@
-import { ValidationFunction, ValidationError } from './types';
+import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 
 export enum ValidateRequiredFieldError {
     'noValue' = 'noValue',
 }
 
-type RequiredFieldValidationResult = ValidateRequiredFieldError | ValidationError;
+type RequiredFieldValidationResult = ValidateRequiredFieldError.noValue | undefined;
 
-type Errors = {
-    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
-};
-
-const defaultErrors: Errors = {
-    noValue: ValidateRequiredFieldError.noValue,
-};
-
-const getRequiredFieldValidator = (customErrors?: Errors): ValidationFunction<RequiredFieldValidationResult> => (
-    value: any
-) => {
-    const errors: Errors = {
-        ...defaultErrors,
-        ...customErrors,
-    };
+const getRequiredFieldValidator = (): ValidationFunction<RequiredFieldValidationResult> => (value: any) => {
     if (hasValue(value) === false) {
-        return errors[ValidateRequiredFieldError.noValue];
+        return ValidateRequiredFieldError.noValue;
     }
     return undefined;
 };

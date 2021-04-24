@@ -14,9 +14,16 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange'> {
     maxMinutes?: number;
 }
 
-export type FormikTimeInputProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
+export type FormikTimeInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
+    TypedFormInputValidationProps<FieldName, ErrorType>;
 
-function FormikTimeInput<FieldName>({ label, name, validate, feil, ...restProps }: FormikTimeInputProps<FieldName>) {
+function FormikTimeInput<FieldName, ErrorType>({
+    label,
+    name,
+    validate,
+    feil,
+    ...restProps
+}: FormikTimeInputProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>

@@ -9,9 +9,9 @@ export { default as getStringValidator } from './getStringValidator';
 export { default as getYesOrNoValidator } from './getYesOrNoValidator';
 export { default as getRequiredFieldValidator } from './getRequiredFieldValidator';
 
-export * from './getDateRangeValidator';
 export * from './getCheckedValidator';
 export * from './getDateValidator';
+export * from './getDateRangeValidator';
 export * from './getFødselsnummerValidator';
 export * from './getListValidator';
 export * from './getNumberValidator';

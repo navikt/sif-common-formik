@@ -18,6 +18,7 @@ export enum FormFields {
     'ferieuttak' = 'ferieuttak',
     'letters' = 'letters',
     'fødselsnummer' = 'fødselsnummer',
+    'friends' = 'friends',
 }
 
 export interface CompletedFormValues {
@@ -35,6 +36,13 @@ export interface CompletedFormValues {
     [FormFields.daterange_to]?: string;
     [FormFields.files]?: any;
     [FormFields.ferieuttak]?: Ferieuttak[];
-    [FormFields.letters]?: string;
+    [FormFields.letters]?: string[];
+    [FormFields.friends]: Friend[];
+}
+export interface Person {
+    name: string;
+}
+export interface Friend extends Person {
+    siblings: Person[];
 }
 export type FormValues = Partial<CompletedFormValues>;

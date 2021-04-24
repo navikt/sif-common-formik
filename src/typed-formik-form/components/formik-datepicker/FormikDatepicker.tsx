@@ -20,7 +20,7 @@ export interface DatepickerLimitiations {
     disableWeekend?: boolean;
 }
 
-export interface DatePickerBaseProps<FieldName> extends TypedFormInputValidationProps<FieldName> {
+export interface DatePickerBaseProps<FieldName, ErrorType> extends TypedFormInputValidationProps<FieldName, ErrorType> {
     name: FieldName;
     label: string;
     disabled?: boolean;
@@ -37,13 +37,12 @@ export interface DatePickerPresentationProps {
     fullscreenOverlay?: boolean;
     fullScreenOnMobile?: boolean;
 }
-interface OwnProps<FieldName> extends DatePickerBaseProps<FieldName> {
+interface OwnProps<FieldName, ErrorType> extends DatePickerBaseProps<FieldName, ErrorType> {
     id?: string;
     description?: React.ReactNode;
 }
 
-export type FormikDatepickerProps<FieldName> = OwnProps<FieldName> &
-    Omit<TypedFormInputValidationProps<FieldName>, 'validate'> &
+export type FormikDatepickerProps<FieldName, ErrorType> = OwnProps<FieldName, ErrorType> &
     DatePickerPresentationProps &
     DatepickerLimitiations;
 
@@ -60,7 +59,7 @@ const getLocaleToUse = (locale: string): 'nb' | 'nn' | 'en' | undefined => {
     }
 };
 
-function FormikDatepicker<FieldName>({
+function FormikDatepicker<FieldName, ErrorType>({
     validate,
     label,
     name,
@@ -79,7 +78,7 @@ function FormikDatepicker<FieldName>({
     placeholder,
     locale,
     ...restProps
-}: FormikDatepickerProps<FieldName>) {
+}: FormikDatepickerProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     const isWide = useMedia({ minWidth: 736 });
     const elementId = id || guid();
