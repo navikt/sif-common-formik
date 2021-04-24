@@ -1,8 +1,11 @@
 import { FieldArray } from 'formik';
+import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
 import { FormikInput } from '../../../../typed-formik-form';
 import { getStringValidator } from '../../../../typed-formik-form/validation';
 import { IntlErrorObject } from '../../../../typed-formik-form/validation/types';
+import { hasValue } from '../../../../typed-formik-form/validation/validationUtils';
+import Box from '../../../components/box/Box';
 import Question from '../../../components/question/Question';
 import { Friend } from '../types';
 
@@ -18,7 +21,8 @@ const Siblings: React.FunctionComponent<Props> = ({ fieldName, friend }) => {
             name={fieldName}
             render={(arrayHelpers) => (
                 <div>
-                    {siblings && siblings.length > 0 ? (
+                    {siblings &&
+                        siblings.length > 0 &&
                         siblings.map((_sibling, index) => (
                             <div key={index}>
                                 <Question>
@@ -30,24 +34,24 @@ const Siblings: React.FunctionComponent<Props> = ({ fieldName, friend }) => {
                                             const error = getStringValidator({ required: true })(values);
                                             if (error) {
                                                 const intlErr: IntlErrorObject = {
-                                                    key: 'abc',
+                                                    key: 'søskennavn.mangler',
                                                     isUniqueKey: true,
+                                                    values: {
+                                                        navn: hasValue(friend.name) ? friend.name : ` venn ${index}`,
+                                                    },
                                                 };
                                                 return intlErr;
                                             }
                                         }}
                                     />
                                 </Question>
-                                <button type="button" onClick={() => arrayHelpers.insert(index, '')}>
-                                    +
-                                </button>
                             </div>
-                        ))
-                    ) : (
-                        <button type="button" onClick={() => arrayHelpers.push('')}>
-                            Add a sibling
-                        </button>
-                    )}
+                        ))}
+                    <Box>
+                        <Knapp htmlType="button" mini={true} onClick={() => arrayHelpers.push('')}>
+                            Legg til søsken
+                        </Knapp>
+                    </Box>
                 </div>
             )}
         />

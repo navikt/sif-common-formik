@@ -4,6 +4,7 @@ import Panel from 'nav-frontend-paneler';
 import React from 'react';
 import { FormikInput } from '../../../../typed-formik-form';
 import { getStringValidator } from '../../../../typed-formik-form/validation';
+import Box from '../../../components/box/Box';
 import Question from '../../../components/question/Question';
 import { Friend } from '../types';
 import Siblings from './Siblings';
@@ -18,7 +19,8 @@ const Friends: React.FunctionComponent<Props> = ({ fieldName, friends }) => (
         name={fieldName}
         render={(arrayHelpers) => (
             <div>
-                {friends && friends.length > 0 ? (
+                {friends &&
+                    friends.length > 0 &&
                     friends.map((_friend, index) => {
                         return (
                             <div key={index}>
@@ -36,15 +38,17 @@ const Friends: React.FunctionComponent<Props> = ({ fieldName, friends }) => (
                                         <Siblings fieldName={`${fieldName}.${index}.siblings`} friend={_friend} />
                                     </fieldset>
                                 </Panel>
-                                <button type="button" onClick={() => arrayHelpers.insert(index, '')}>
-                                    +
-                                </button>
                             </div>
                         );
-                    })
-                ) : (
-                    <Knapp onClick={() => arrayHelpers.push('')}>Legg til en venn</Knapp>
-                )}
+                    })}
+                <Box margin="l">
+                    <Knapp
+                        htmlType="button"
+                        mini={true}
+                        onClick={() => arrayHelpers.push({ name: 'bac', siblings: [] })}>
+                        Legg til en venn
+                    </Knapp>
+                </Box>
             </div>
         )}
     />

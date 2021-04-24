@@ -14,6 +14,8 @@ export enum FormFields {
     'time' = 'time',
     'daterange_from' = 'daterange_from',
     'daterange_to' = 'daterange_to',
+    'dateinterval_from' = 'dateinterval_from',
+    'dateinterval_to' = 'dateinterval_to',
     'files' = 'files',
     'ferieuttak' = 'ferieuttak',
     'letters' = 'letters',
