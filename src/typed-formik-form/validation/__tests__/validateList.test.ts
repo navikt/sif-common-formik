@@ -2,7 +2,7 @@ import getListValidator, { ValidateListError } from '../getListValidator';
 
 describe(`validateList`, () => {
     it('returns undefined when list is defined and has items', () => {
-        expect(getListValidator()([1])).toBeUndefined();
+        expect(getListValidator({ required: true })([1])).toBeUndefined();
     });
     it(`returns undefined when list is valid and number of items is within specified range`, () => {
         expect(getListValidator({ minItems: 0 })([1, 2])).toBeUndefined();

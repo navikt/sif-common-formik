@@ -12,7 +12,7 @@ interface Options {
     maxItems?: number;
 }
 
-const getListValidator = (options: Options = {}): ValidationFunction<ValidateListError | undefined> => (value: any) => {
+const getListValidator = (options: Options): ValidationFunction<ValidateListError | undefined> => (value: any) => {
     const { required = false, minItems = undefined, maxItems = undefined } = options;
     if (Array.isArray(value)) {
         const numItems = value.length;
