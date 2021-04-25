@@ -1,4 +1,4 @@
-export type IntlErrorObject = { key: string; values?: { [key: string]: string | number }; isUniqueKey?: boolean };
+export type IntlErrorObject = { key: string; values?: { [key: string]: any }; isUniqueKey?: boolean };
 
 export const isIntlErrorObject = (error: any): error is IntlErrorObject => {
     return typeof error === 'object' && error.key && typeof error.key === 'string';

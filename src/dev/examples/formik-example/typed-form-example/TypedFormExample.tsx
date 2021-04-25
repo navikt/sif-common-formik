@@ -4,13 +4,7 @@ import dayjs from 'dayjs';
 import { useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
-import {
-    FormikDateIntervalPicker,
-    FormikFileInput,
-    FormikInput,
-    FormikNumberInput,
-    ISOStringToDate,
-} from '../../../../typed-formik-form';
+import { FormikDateIntervalPicker, FormikFileInput, FormikInput, ISOStringToDate } from '../../../../typed-formik-form';
 import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
@@ -18,10 +12,12 @@ import {
     getDateValidator,
     getFødselsnummerValidator,
     getListValidator,
+    getNumberValidator,
     getStringValidator,
     getYesOrNoValidator,
     ValidateFødselsnummerError,
     ValidateListError,
+    ValidateNumberError,
 } from '../../../../typed-formik-form/validation';
 import getFieldErrorHandler from '../../../../typed-formik-form/validation/fieldErrorHandler';
 import getRequiredFieldValidator from '../../../../typed-formik-form/validation/getRequiredFieldValidator';
@@ -209,14 +205,29 @@ const TypedFormExample = () => {
                 />
             </Question>
             <Question>
-                <FormikNumberInput
+                <Form.Input
                     label="Oppgi hvor mange timer i snitt per uke, har barnet tilsyn?"
                     name={FormFields.firstname}
                     suffixStyle="text"
                     suffix="Timer"
                     bredde="S"
                     maxLength={5}
-                    validate={getRequiredFieldValidator()}
+                    validate={(value) => {
+                        const error = getNumberValidator({ min: 0, max: 20000 })(value);
+                        if (error === ValidateNumberError.numberIsTooLarge) {
+                            return {
+                                key: error,
+                                values: { max: 20000 },
+                            };
+                        }
+                        if (error === ValidateNumberError.numberIsTooSmall) {
+                            return {
+                                key: error,
+                                values: { min: 0 },
+                            };
+                        }
+                        return error;
+                    }}
                 />
             </Question>
             <Question>
