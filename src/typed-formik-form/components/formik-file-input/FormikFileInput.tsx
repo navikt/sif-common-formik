@@ -14,7 +14,7 @@ export interface FormikFileInputProps<FieldName> {
     onClick?: () => void;
 }
 
-function FormikFileInput<FieldName>({
+function FormikFileInput<FieldName, ErrorType>({
     label,
     name,
     acceptedExtensions,
@@ -22,7 +22,7 @@ function FormikFileInput<FieldName>({
     onFilesSelect,
     feil,
     onClick,
-}: FormikFileInputProps<FieldName> & TypedFormInputValidationProps<FieldName>) {
+}: FormikFileInputProps<FieldName> & TypedFormInputValidationProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
 
     return (

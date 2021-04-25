@@ -12,7 +12,8 @@ interface OwnProps<FieldName> extends Omit<CheckboksPanelGruppeProps, 'onChange'
     useTwoColumns?: boolean;
 }
 
-export type FormikCheckboxPanelGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
+export type FormikCheckboxPanelGroupProps<FieldName, ErrorType> = OwnProps<FieldName> &
+    TypedFormInputValidationProps<FieldName, ErrorType>;
 
 const removeElementFromArray = (element: any, array: any[], keyProp?: string) =>
     array.filter((el) => {
@@ -23,7 +24,7 @@ const isCheckboxChecked = (fieldValues: any[], value: any): boolean => {
     return fieldValues.includes(value);
 };
 
-function FormikCheckboxPanelGroup<FieldName>({
+function FormikCheckboxPanelGroup<FieldName, ErrorType>({
     name,
     validate,
     legend,
@@ -31,7 +32,7 @@ function FormikCheckboxPanelGroup<FieldName>({
     checkboxes,
     useTwoColumns,
     ...restProps
-}: FormikCheckboxPanelGroupProps<FieldName>) {
+}: FormikCheckboxPanelGroupProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>

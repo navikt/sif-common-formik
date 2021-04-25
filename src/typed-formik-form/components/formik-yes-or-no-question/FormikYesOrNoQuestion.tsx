@@ -2,7 +2,8 @@ import React from 'react';
 import { TypedFormInputValidationProps, YesOrNo } from '../../types';
 import FormikRadioPanelGroup, { FormikRadioPanelGroupProps } from '../formik-radio-panel-group/FormikRadioPanelGroup';
 
-export interface FormikYesOrNoQuestionProps<FieldName> extends Omit<FormikRadioPanelGroupProps<FieldName>, 'radios'> {
+export interface FormikYesOrNoQuestionProps<FieldName, ErrorType>
+    extends Omit<FormikRadioPanelGroupProps<FieldName, ErrorType>, 'radios'> {
     includeDoNotKnowOption?: boolean;
     useTwoColumns?: boolean;
     labels?: {
@@ -12,16 +13,16 @@ export interface FormikYesOrNoQuestionProps<FieldName> extends Omit<FormikRadioP
     };
 }
 
-function FormikYesOrNoQuestion<FieldName>({
+function FormikYesOrNoQuestion<FieldName, ErrorType>({
     name,
     includeDoNotKnowOption,
     labels,
     useTwoColumns = true,
     ...restProps
-}: FormikYesOrNoQuestionProps<FieldName> & TypedFormInputValidationProps<FieldName>) {
+}: FormikYesOrNoQuestionProps<FieldName, ErrorType> & TypedFormInputValidationProps<FieldName, ErrorType>) {
     const { yes: yesLabel = 'Ja', no: noLabel = 'Nei', doNotKnow: doNotKnowLabel = 'Vet ikke' } = labels || {};
     return (
-        <FormikRadioPanelGroup<FieldName>
+        <FormikRadioPanelGroup<FieldName, ErrorType>
             radios={[
                 { label: yesLabel, value: YesOrNo.YES },
                 { label: noLabel, value: YesOrNo.NO },

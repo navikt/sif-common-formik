@@ -1,12 +1,10 @@
 export const appMessages = {
     nb: {
-        'common.fieldvalidation.påkrevd': 'Påkrevd verdi',
-        'common.fieldvalidation.ugyldigTall': 'Ugyldig tall',
-        'common.fieldvalidation.dato.ugyldigFormat': 'Ugyldig dato - format på dato skal være dd.mm.åååå',
+        'letters.listIsEmpty': 'Whooa {value}',
+        'hasKids.yesOrNoIsUnanswered': 'You have not answered {question}',
+        'fødselsnummer.disallowedFødselsnummer': 'Du kan ikke bruke dette fødselsnummeret',
+        'fødselsnummer.disallowedFødselsnummerCustom': 'Du kan ikke bruke dette fødselsnummeret {info}',
+        'søskennavn.mangler': 'Ett av søskenene til {navn} mangler navn',
     },
-    nn: {
-        'common.fieldvalidation.påkrevd': 'Påkrevd verdi',
-        'common.fieldvalidation.ugyldigTall': 'Ugyldig tall',
-        'common.fieldvalidation.dato.ugyldigFormat': 'Ugyldig dato - format på dato skal være dd.mm.åååå',
-    },
+    nn: {},
 };

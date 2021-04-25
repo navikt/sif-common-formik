@@ -2,7 +2,8 @@ import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
-import { ValidationFunction, ValidationError } from './types';
+import { getRequiredFieldValidator } from '.';
+import { ValidationFunction } from './types';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 import { hasValue } from './validationUtils';
 
@@ -20,22 +21,7 @@ export type DateValidationResult =
     | ValidateDateError.invalidDateFormat
     | ValidateDateError.dateBeforeMin
     | ValidateDateError.dateAfterMax
-    | ValidationError
     | undefined;
-
-type Errors = {
-    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
-    [ValidateDateError.invalidDateFormat]?: ValidateDateError.invalidDateFormat | ValidationError;
-    [ValidateDateError.dateBeforeMin]?: ValidateDateError.dateBeforeMin | ValidationError;
-    [ValidateDateError.dateAfterMax]?: ValidateDateError.dateAfterMax | ValidationError;
-};
-
-const defaultErrors: Errors = {
-    noValue: ValidateRequiredFieldError.noValue,
-    invalidDateFormat: ValidateDateError.invalidDateFormat,
-    dateBeforeMin: ValidateDateError.dateBeforeMin,
-    dateAfterMax: ValidateDateError.dateAfterMax,
-};
 
 export interface DateValidationOptions {
     required?: boolean;
@@ -43,29 +29,27 @@ export interface DateValidationOptions {
     max?: Date;
 }
 
-const getDateValidator = (
-    options: DateValidationOptions = {},
-    customErrors?: Errors
-): ValidationFunction<DateValidationResult> => (value: any): DateValidationResult => {
+const getDateValidator = (options: DateValidationOptions = {}): ValidationFunction<DateValidationResult> => (
+    value: any
+) => {
     const { required, min, max } = options;
     const date = datepickerUtils.getDateFromDateString(value);
-    const errors: Errors = {
-        ...defaultErrors,
-        ...customErrors,
-    };
-
-    if (hasValue(value) === false && required) {
-        return errors[ValidateRequiredFieldError.noValue];
+    if (required) {
+        const err = getRequiredFieldValidator()(value);
+        if (err) {
+            return err;
+        }
     }
+
     if (hasValue(value)) {
         if (date === undefined) {
-            return errors[ValidateDateError.invalidDateFormat];
+            return ValidateDateError.invalidDateFormat;
         }
         if (min && dayjs(date).isBefore(min, 'day')) {
-            return errors[ValidateDateError.dateBeforeMin];
+            return ValidateDateError.dateBeforeMin;
         }
         if (max && dayjs(date).isAfter(max, 'day')) {
-            return errors[ValidateDateError.dateAfterMax];
+            return ValidateDateError.dateAfterMax;
         }
     }
     return undefined;

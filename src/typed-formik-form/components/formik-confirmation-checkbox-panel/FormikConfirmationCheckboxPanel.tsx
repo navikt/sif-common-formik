@@ -9,17 +9,17 @@ interface OwnProps<FieldName> extends Omit<BekreftCheckboksPanelProps, 'onChange
     name: FieldName;
 }
 
-export type FormikConfirmationCheckboxPanelProps<FieldName> = OwnProps<FieldName> &
-    Omit<TypedFormInputValidationProps<FieldName>, 'info'>;
+export type FormikConfirmationCheckboxPanelProps<FieldName, ErrorType> = OwnProps<FieldName> &
+    Omit<TypedFormInputValidationProps<FieldName, ErrorType>, 'info'>;
 
-function FormikConfirmationCheckboxPanel<FieldName>({
+function FormikConfirmationCheckboxPanel<FieldName, ErrorType>({
     children,
     name,
     feil,
     validate,
     inputProps,
     ...restProps
-}: FormikConfirmationCheckboxPanelProps<FieldName>) {
+}: FormikConfirmationCheckboxPanelProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>

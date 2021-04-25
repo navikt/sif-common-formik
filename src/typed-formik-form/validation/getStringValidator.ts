@@ -1,6 +1,6 @@
-import { ValidationError, ValidationFunction } from './types';
+import getRequiredFieldValidator, { ValidateRequiredFieldError } from './getRequiredFieldValidator';
+import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
-import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 
 export enum ValidateStringError {
     notAString = 'notAString',
@@ -13,52 +13,33 @@ type StringValidationResult =
     | ValidateRequiredFieldError.noValue
     | ValidateStringError.notAString
     | ValidateStringError.stringIsTooLong
-    | ValidateStringError.stringIsTooShort
-    | ValidationError;
+    | ValidateStringError.stringIsTooShort;
 
-type Errors = {
-    [ValidateRequiredFieldError.noValue]?: ValidateRequiredFieldError.noValue | ValidationError;
-    [ValidateStringError.notAString]?: ValidateStringError.notAString | ValidationError;
-    [ValidateStringError.stringIsTooLong]?: ValidateStringError.stringIsTooLong | ValidationError;
-    [ValidateStringError.stringIsTooShort]?: ValidateStringError.stringIsTooShort | ValidationError;
-};
-
-const defaultErrors: Errors = {
-    noValue: ValidateRequiredFieldError.noValue,
-    notAString: ValidateStringError.notAString,
-    stringIsTooLong: ValidateStringError.stringIsTooLong,
-    stringIsTooShort: ValidateStringError.stringIsTooShort,
-};
 interface Options {
     required?: boolean;
     minLength?: number;
     maxLength?: number;
 }
 
-const getStringValidator = (
-    options: Options = {},
-    customErrors?: Errors
-): ValidationFunction<StringValidationResult> => (value: any) => {
+const getStringValidator = (options: Options = {}): ValidationFunction<StringValidationResult> => (value: any) => {
     const { required, minLength, maxLength } = options;
-    const errors: Errors = {
-        ...defaultErrors,
-        ...customErrors,
-    };
-    if (hasValue(value) === false && required) {
-        return errors[ValidateRequiredFieldError.noValue];
+    if (required) {
+        const err = getRequiredFieldValidator()(value);
+        if (err) {
+            return err;
+        }
     }
     if (hasValue(value)) {
         if (typeof value !== 'string') {
-            return errors[ValidateStringError.notAString];
+            return ValidateStringError.notAString;
         }
         if (minLength !== undefined && value.length < minLength) {
-            return errors[ValidateStringError.stringIsTooShort];
+            return ValidateStringError.stringIsTooShort;
         }
         if (maxLength !== undefined && value.length > maxLength) {
-            return errors[ValidateStringError.stringIsTooLong];
+            return ValidateStringError.stringIsTooLong;
         }
     }
-    return undefined;
 };
 
 export default getStringValidator;

@@ -6,7 +6,7 @@ import FerieuttakList from './FerieuttakList';
 import { Ferieuttak } from './types';
 import { TypedFormInputValidationProps } from '../../../../typed-formik-form/types';
 
-interface Props<FieldName> extends TypedFormInputValidationProps<FieldName> {
+interface Props<FieldName> extends TypedFormInputValidationProps<FieldName, string> {
     name: FieldName;
     minDate: Date;
     maxDate: Date;
@@ -16,7 +16,7 @@ interface Props<FieldName> extends TypedFormInputValidationProps<FieldName> {
 function FerieuttakListAndDialog<FieldName>({ name, minDate, maxDate, validate, labels }: Props<FieldName>) {
     return (
         <>
-            <FormikModalFormAndList<FieldName, Ferieuttak>
+            <FormikModalFormAndList<FieldName, Ferieuttak, string>
                 name={name}
                 labels={labels}
                 dialogWidth="narrow"

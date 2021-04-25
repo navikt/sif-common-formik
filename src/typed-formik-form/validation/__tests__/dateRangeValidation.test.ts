@@ -1,4 +1,4 @@
-import getDateRangeValidator, { ValidateDateInRangeError } from '../getDateRangeValidator';
+import getDateRangeValidator, { ValidateDateRangeError } from '../getDateRangeValidator';
 import { ValidateRequiredFieldError } from '../getRequiredFieldValidator';
 
 describe('dateRangeValidation', () => {
@@ -12,9 +12,9 @@ describe('dateRangeValidation', () => {
         it('returns undefined if toDate is undefined', () => {
             expect(getDateRangeValidator.validateFromDate({})('2020-10-10')).toBeUndefined();
         });
-        it(`returns ${ValidateDateInRangeError.fromDateIsAfterToDate} if toDate is undefined`, () => {
+        it(`returns ${ValidateDateRangeError.fromDateIsAfterToDate} if toDate is undefined`, () => {
             expect(getDateRangeValidator.validateFromDate({ toDate: new Date('2020-10-09') })('2020-10-10')).toBe(
-                ValidateDateInRangeError.fromDateIsAfterToDate
+                ValidateDateRangeError.fromDateIsAfterToDate
             );
         });
         it(`returns ${ValidateRequiredFieldError.noValue} if required and date is is undefined`, () => {
@@ -33,9 +33,9 @@ describe('dateRangeValidation', () => {
         it('returns undefined if toDate is undefined', () => {
             expect(getDateRangeValidator.validateToDate({})('2020-10-10')).toBeUndefined();
         });
-        it(`returns ${ValidateDateInRangeError.fromDateIsAfterToDate} if toDate is undefined`, () => {
+        it(`returns ${ValidateDateRangeError.fromDateIsAfterToDate} if toDate is undefined`, () => {
             expect(getDateRangeValidator.validateToDate({ fromDate: new Date('2020-10-11') })('2020-10-10')).toBe(
-                ValidateDateInRangeError.toDateIsBeforeFromDate
+                ValidateDateRangeError.toDateIsBeforeFromDate
             );
         });
         it(`returns ${ValidateRequiredFieldError.noValue} if required and date is is undefined`, () => {

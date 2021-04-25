@@ -1,28 +1,14 @@
-import { ValidationError, ValidationFunction } from './types';
+import { ValidationFunction } from './types';
 
 export enum ValidateCheckedError {
     'notChecked' = 'notChecked',
 }
 
-type CheckedValidationResult = ValidateCheckedError.notChecked | ValidationError;
-
-type Errors = {
-    [ValidateCheckedError.notChecked]?: ValidateCheckedError.notChecked | ValidationError;
-};
-
-const defaultErrors: Errors = {
-    notChecked: ValidateCheckedError.notChecked,
-};
-
-const validateChecked = (customErrors?: Errors): ValidationFunction<CheckedValidationResult> => (value: any) => {
-    const errors: Errors = {
-        ...defaultErrors,
-        ...customErrors,
-    };
+const getCheckedValidator = (): ValidationFunction<ValidateCheckedError | undefined> => (value: any) => {
     if (value !== true) {
-        return errors[ValidateCheckedError.notChecked];
+        return ValidateCheckedError.notChecked;
     }
     return undefined;
 };
 
-export default validateChecked;
+export default getCheckedValidator;

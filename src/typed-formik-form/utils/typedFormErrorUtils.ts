@@ -1,11 +1,6 @@
-import flatten from 'flat';
 import { FieldInputProps, FormikErrors, FormikProps, getIn } from 'formik';
 import { TypedFormikFormContextType } from '../components/typed-formik-form/TypedFormikForm';
-import { FieldErrorType, NavFrontendSkjemaFeil } from '../types';
-
-interface FlattendErrors {
-    [key: string]: string;
-}
+import { NavFrontendSkjemaFeil } from '../types';
 
 export const getFeilPropForFormikInput = ({
     feil,
@@ -24,8 +19,11 @@ export const getFeilPropForFormikInput = ({
 export const getErrorForField = <FormValues>(
     elementName: string,
     errors: FormikErrors<FormValues>
-): FieldErrorType | undefined => {
+): any | undefined => {
     const fieldErrors: Array<string> | string = getIn(errors, elementName);
+    if (fieldErrors === null) {
+        return undefined;
+    }
     if (Array.isArray(fieldErrors)) {
         if (fieldErrors.length === 1 && fieldErrors[0] === null) {
             /** Filter out fieldArray errors containing only null item */
@@ -43,41 +41,22 @@ export const isValidationErrorsVisible = (formik: FormikProps<any>): boolean => 
     return formik?.status?.showErrors === true;
 };
 
-export const returnAllInFrontOfKey = (flattenedKey: string): string | undefined => {
-    const searchString = '.';
-    if (flattenedKey.indexOf(searchString) >= 0) {
-        const a = flattenedKey.slice().split(searchString);
-        if (a[0]) {
-            return a[0];
-        }
-    }
-    return undefined;
-};
-
-export const flattenFieldErrors = (errors: any) => {
-    const flatErrors = flatten(errors) as FlattendErrors;
-    const allErrorKeys = Object.keys(flatErrors);
-    const flattendFieldErrors = {};
-    allErrorKeys.forEach((key) => {
-        if (flatErrors[key] && flatErrors[key] !== null) {
-            flattendFieldErrors[key] = flatErrors[key];
-        }
-    });
-    return flattendFieldErrors;
-};
-
-export function getAndFlattenAllErrors<FormValues>(
-    errors: FormikErrors<FormValues>
-): FormikErrors<FormValues> | undefined {
+export const getAllFieldsWithErrors = (errors: any, keys: string[] = [], parentKey?: string): string[] => {
+    const createFieldKey = (fieldName: string): string => {
+        return parentKey ? `${parentKey}.${fieldName}` : fieldName;
+    };
     if (errors) {
-        const numberOfErrors = Object.keys(errors).length;
-        if (numberOfErrors > 0) {
-            return flattenFieldErrors(errors);
-        }
+        Object.keys(errors).forEach((key) => {
+            const error = errors[key];
+            if (Array.isArray(error)) {
+                error.forEach((err, idx) => {
+                    getAllFieldsWithErrors(err, keys, createFieldKey(`${key}.${idx}`));
+                });
+            } else {
+                keys.push(createFieldKey(key));
+            }
+        });
     }
-    return undefined;
-}
 
-export function getAllErrors<FormValues>(formik: FormikProps<FormValues>): FormikErrors<FormValues> | undefined {
-    return isValidationErrorsVisible(formik) ? getAndFlattenAllErrors(formik.errors) : undefined;
-}
+    return keys;
+};

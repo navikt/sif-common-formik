@@ -14,10 +14,14 @@ export enum FormFields {
     'time' = 'time',
     'daterange_from' = 'daterange_from',
     'daterange_to' = 'daterange_to',
+    'dateinterval_from' = 'dateinterval_from',
+    'dateinterval_to' = 'dateinterval_to',
     'files' = 'files',
     'ferieuttak' = 'ferieuttak',
     'letters' = 'letters',
     'fødselsnummer' = 'fødselsnummer',
+    'barnetsFødselsnummer' = 'barnetsFødselsnummer',
+    'friends' = 'friends',
 }
 
 export interface CompletedFormValues {
@@ -35,6 +39,15 @@ export interface CompletedFormValues {
     [FormFields.daterange_to]?: string;
     [FormFields.files]?: any;
     [FormFields.ferieuttak]?: Ferieuttak[];
-    [FormFields.letters]?: string;
+    [FormFields.letters]?: string[];
+    [FormFields.friends]: Friend[];
+    [FormFields.fødselsnummer]: string;
+    [FormFields.barnetsFødselsnummer]: string;
+}
+export interface Person {
+    name: string;
+}
+export interface Friend extends Person {
+    siblings: Person[];
 }
 export type FormValues = Partial<CompletedFormValues>;

@@ -5,20 +5,21 @@ import FormikDatepicker, { FormikDatepickerProps } from '../formik-datepicker/Fo
 import FormikInputGroup from '../formik-input-group/FormikInputGroup';
 import './dateIntervalPicker.less';
 
-export interface DateIntervalPickerProps<FieldName> extends TypedFormInputValidationProps<FieldName> {
+export interface DateIntervalPickerProps<FieldName, ErrorType>
+    extends TypedFormInputValidationProps<FieldName, ErrorType> {
     legend?: string;
-    fromDatepickerProps: FormikDatepickerProps<FieldName>;
-    toDatepickerProps: FormikDatepickerProps<FieldName>;
+    fromDatepickerProps: FormikDatepickerProps<FieldName, ErrorType>;
+    toDatepickerProps: FormikDatepickerProps<FieldName, ErrorType>;
     description?: React.ReactNode;
 }
 
-function FormikDateIntervalPicker<FieldName>({
+function FormikDateIntervalPicker<FieldName, ErrorType>({
     legend,
     fromDatepickerProps,
     toDatepickerProps,
     description,
     validate,
-}: DateIntervalPickerProps<FieldName>) {
+}: DateIntervalPickerProps<FieldName, ErrorType>) {
     const name = `${fromDatepickerProps.name}_${toDatepickerProps.name}` as any;
     return (
         <FormikInputGroup
@@ -28,8 +29,8 @@ function FormikDateIntervalPicker<FieldName>({
             description={description}
             className="dateIntervalPicker">
             <div className="dateIntervalPicker__flexContainer">
-                <FormikDatepicker<FieldName> {...fromDatepickerProps} />
-                <FormikDatepicker<FieldName> {...toDatepickerProps} />
+                <FormikDatepicker<FieldName, ErrorType> {...fromDatepickerProps} />
+                <FormikDatepicker<FieldName, ErrorType> {...toDatepickerProps} />
             </div>
         </FormikInputGroup>
     );

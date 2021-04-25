@@ -1,16 +1,12 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import { FieldInputProps, FormikProps, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
-import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
-import { CancelButtonTypes, FieldErrorType, NavFrontendSkjemaFeil } from '../../types';
+import { CancelButtonTypes, FieldErrorHandler, NavFrontendSkjemaFeil } from '../../types';
 import { getErrorForField, isValidationErrorsVisible } from '../../utils/typedFormErrorUtils';
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 import ButtonRow from '../helpers/button-row/ButtonRow';
 
-export type FormikFieldErrorRender = (error: FieldErrorType, fieldName: string) => NavFrontendSkjemaFeil;
-export type FormikSummaryFieldErrorRender = (error: FieldErrorType, fieldName: string) => FeiloppsummeringFeil;
-
-export interface TypedFormikFormProps<FormValues> {
+export interface TypedFormikFormProps<FormValues, ErrorType> {
     children: React.ReactNode;
     className?: string;
     includeValidationSummary?: boolean;
@@ -21,32 +17,31 @@ export interface TypedFormikFormProps<FormValues> {
     id?: string;
     cancelButtonType?: CancelButtonTypes;
     runDelayedFormValidation?: boolean;
-    fieldErrorRenderer?: FormikFieldErrorRender;
-    summaryFieldErrorRenderer?: FormikSummaryFieldErrorRender;
+    fieldErrorHandler?: FieldErrorHandler<ErrorType>;
     noButtonsContentRenderer?: () => React.ReactNode;
     cleanup?: (values: FormValues) => FormValues;
     onValidSubmit?: () => void;
     onCancel?: () => void;
 }
 
-export interface TypedFormikFormContextType {
+export type TypedFormikFormContextType = {
     showErrors: boolean;
-    fieldErrorRenderer?: FormikFieldErrorRender;
-    summaryFieldErrorRenderer?: FormikSummaryFieldErrorRender;
+    fieldErrorHandler?: FieldErrorHandler<any>;
     getAndRenderFieldErrorMessage: (field: FieldInputProps<any>, form: FormikProps<any>) => NavFrontendSkjemaFeil;
     onAfterFieldValueSet: () => void;
-}
+};
 
 interface SubmitProps {
     isSubmitting: boolean;
     isValid: boolean;
 }
-export const userHasSubmittedValidForm = (oldProps: SubmitProps, currentProps: SubmitProps) =>
+
+const userHasSubmittedValidForm = (oldProps: SubmitProps, currentProps: SubmitProps) =>
     oldProps.isSubmitting === true && currentProps.isSubmitting === false && currentProps.isValid === true;
 
 export const TypedFormikFormContext = createContext<TypedFormikFormContextType | undefined>(undefined);
 
-function TypedFormikForm<FormValues>({
+function TypedFormikForm<FormValues, ErrorType>({
     children,
     resetFormOnCancel,
     className,
@@ -57,13 +52,12 @@ function TypedFormikForm<FormValues>({
     includeButtons = true,
     runDelayedFormValidation,
     cancelButtonType,
-    fieldErrorRenderer,
-    summaryFieldErrorRenderer,
+    fieldErrorHandler,
     onCancel,
     onValidSubmit,
     noButtonsContentRenderer,
     cleanup,
-}: TypedFormikFormProps<FormValues>) {
+}: TypedFormikFormProps<FormValues, ErrorType>) {
     const formik = useFormikContext<FormValues>();
     const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid, isValidating } = formik;
     const [formSubmitCount, setFormSubmitCout] = useState(submitCount);
@@ -118,13 +112,14 @@ function TypedFormikForm<FormValues>({
         const showErrors = isValidationErrorsVisible(formik);
         return {
             showErrors,
-            fieldErrorRenderer,
-            summaryFieldErrorRenderer,
+            fieldErrorHandler: (error, fieldName) => {
+                return fieldErrorHandler ? fieldErrorHandler(error, fieldName) : error;
+            },
             getAndRenderFieldErrorMessage: (field, form) => {
                 if (showErrors) {
                     const error = getErrorForField(field.name, form.errors);
                     if (error) {
-                        return fieldErrorRenderer ? fieldErrorRenderer(error, field.name) : error;
+                        return fieldErrorHandler ? fieldErrorHandler(error, field.name) : error;
                     }
                 }
                 return undefined;

@@ -12,9 +12,10 @@ interface OwnProps<FieldName> extends SkjemaGruppeProps {
     feil?: NavFrontendSkjemaFeil;
 }
 
-export type FormikInputGroupProps<FieldName> = OwnProps<FieldName> & TypedFormInputValidationProps<FieldName>;
+export type FormikInputGroupProps<ErrorType, FieldName> = OwnProps<FieldName> &
+    TypedFormInputValidationProps<FieldName, ErrorType>;
 
-function FormikInputGroup<FieldName = string>({
+function FormikInputGroup<ErrorType, FieldName>({
     legend,
     name,
     feil,
@@ -22,7 +23,7 @@ function FormikInputGroup<FieldName = string>({
     validate,
     className,
     ...restProps
-}: FormikInputGroupProps<FieldName>) {
+}: FormikInputGroupProps<ErrorType, FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>

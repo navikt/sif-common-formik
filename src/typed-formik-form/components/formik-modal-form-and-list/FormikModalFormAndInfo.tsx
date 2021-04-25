@@ -4,15 +4,15 @@ import { NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../type
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import ModalFormAndInfo, { ModalFormAndInfoProps } from './modal-form-and-info/ModalFormAndInfo';
 
-export interface FormikModalFormAndInfoProps<FieldName, InfoType>
+export interface FormikModalFormAndInfoProps<FieldName, InfoType, ErrorType>
     extends ModalFormAndInfoProps<InfoType>,
-        TypedFormInputValidationProps<FieldName> {
+        TypedFormInputValidationProps<FieldName, ErrorType> {
     name: FieldName;
     feil?: NavFrontendSkjemaFeil;
     onAfterChange?: (data: InfoType) => void;
 }
 
-function FormikModalFormAndInfo<FieldName, ItemType>({
+function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
     name,
     labels,
     infoRenderer,
@@ -21,7 +21,7 @@ function FormikModalFormAndInfo<FieldName, ItemType>({
     renderEditButtons,
     feil,
     validate,
-}: FormikModalFormAndInfoProps<FieldName, ItemType>) {
+}: FormikModalFormAndInfoProps<FieldName, ItemType, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
         <Field name={name} validate={validate ? (value) => validate(value, name) : undefined}>
