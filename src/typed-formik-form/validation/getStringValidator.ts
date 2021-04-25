@@ -1,5 +1,5 @@
 import getRequiredFieldValidator, { ValidateRequiredFieldError } from './getRequiredFieldValidator';
-import { ValidationError, ValidationFunction } from './types';
+import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 
 export enum ValidateStringError {
@@ -13,8 +13,7 @@ type StringValidationResult =
     | ValidateRequiredFieldError.noValue
     | ValidateStringError.notAString
     | ValidateStringError.stringIsTooLong
-    | ValidateStringError.stringIsTooShort
-    | ValidationError;
+    | ValidateStringError.stringIsTooShort;
 
 interface Options {
     required?: boolean;

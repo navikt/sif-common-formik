@@ -1,5 +1,5 @@
 import getRequiredFieldValidator, { ValidateRequiredFieldError } from './getRequiredFieldValidator';
-import { ValidationError, ValidationFunction } from './types';
+import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 
 export enum ValidateOrgNumberError {
@@ -9,8 +9,7 @@ export enum ValidateOrgNumberError {
 type OrgNumberValidationResult =
     | undefined
     | ValidateRequiredFieldError.noValue
-    | ValidateOrgNumberError.invalidOrgNumberFormat
-    | ValidationError;
+    | ValidateOrgNumberError.invalidOrgNumberFormat;
 
 interface Options {
     required?: boolean;

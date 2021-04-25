@@ -1,4 +1,4 @@
-import { ValidationError, ValidationFunction } from './types';
+import { ValidationFunction } from './types';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 import { hasValue } from './validationUtils';
 
@@ -13,8 +13,7 @@ type NumberValidationResult =
     | ValidateRequiredFieldError.noValue
     | ValidateNumberError.invalidNumberFormat
     | ValidateNumberError.numberIsTooLarge
-    | ValidateNumberError.numberIsTooSmall
-    | ValidationError;
+    | ValidateNumberError.numberIsTooSmall;
 
 interface Options {
     required?: boolean;

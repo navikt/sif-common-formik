@@ -6,8 +6,6 @@ export const isIntlErrorObject = (error: any): error is IntlErrorObject => {
 
 export type ValidationError = string | IntlErrorObject;
 
-export type CustomError = () => ValidationError;
-
 export type ValidationResult<ValidationErrors> = ValidationErrors | undefined;
 
 export type ValidationFunction<ValidationErrors> = (value: any) => ValidationResult<ValidationErrors>;

@@ -8,6 +8,7 @@ export { default as getOrgNumberValidator } from './getOrgNumberValidator';
 export { default as getStringValidator } from './getStringValidator';
 export { default as getYesOrNoValidator } from './getYesOrNoValidator';
 export { default as getRequiredFieldValidator } from './getRequiredFieldValidator';
+export { default as fieldErrorHandler } from './fieldErrorHandler';
 
 export * from './getCheckedValidator';
 export * from './getDateValidator';

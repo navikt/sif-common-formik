@@ -18,6 +18,7 @@ import {
     getDateValidator,
     getFødselsnummerValidator,
     getListValidator,
+    getStringValidator,
     getYesOrNoValidator,
     ValidateFødselsnummerError,
     ValidateListError,
@@ -25,6 +26,7 @@ import {
 import getFieldErrorHandler from '../../../../typed-formik-form/validation/fieldErrorHandler';
 import getRequiredFieldValidator from '../../../../typed-formik-form/validation/getRequiredFieldValidator';
 import { ValidationError } from '../../../../typed-formik-form/validation/types';
+import { validateAll } from '../../../../typed-formik-form/validation/validationUtils';
 import Box from '../../../components/box/Box';
 import Question from '../../../components/question/Question';
 import Tiles from '../../../components/tiles/Tiles';
@@ -63,7 +65,12 @@ const TypedFormExample = () => {
                 <Form.Input
                     name={FormFields.fødselsnummer}
                     label="Fødselsnummer"
-                    validate={getFødselsnummerValidator({ required: true })}
+                    validate={(value) =>
+                        validateAll<ValidationError>([
+                            () => getStringValidator({ minLength: 2 })(value),
+                            () => getFødselsnummerValidator({ required: true })(value),
+                        ])
+                    }
                 />
             </Question>
             <Question>
