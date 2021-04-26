@@ -1,11 +1,10 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import { FieldInputProps, FormikProps, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
-import { CancelButtonTypes, FieldErrorHandler, NavFrontendSkjemaFeil } from '../../types';
+import { CancelButtonTypes, ErrorTypeChecker, FieldErrorHandler, NavFrontendSkjemaFeil } from '../../types';
 import { getErrorForField, isValidationErrorsVisible } from '../../utils/typedFormErrorUtils';
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 import ButtonRow from '../helpers/button-row/ButtonRow';
-
 export interface TypedFormikFormProps<FormValues, ErrorType> {
     children: React.ReactNode;
     className?: string;
@@ -18,6 +17,7 @@ export interface TypedFormikFormProps<FormValues, ErrorType> {
     cancelButtonType?: CancelButtonTypes;
     runDelayedFormValidation?: boolean;
     fieldErrorHandler?: FieldErrorHandler<ErrorType>;
+    isHandledErrorTypeFunc?: ErrorTypeChecker<ErrorType>;
     noButtonsContentRenderer?: () => React.ReactNode;
     cleanup?: (values: FormValues) => FormValues;
     onValidSubmit?: () => void;
@@ -27,6 +27,7 @@ export interface TypedFormikFormProps<FormValues, ErrorType> {
 export type TypedFormikFormContextType = {
     showErrors: boolean;
     fieldErrorHandler?: FieldErrorHandler<any>;
+    isHandlerErrorType?: ErrorTypeChecker<any>;
     getAndRenderFieldErrorMessage: (field: FieldInputProps<any>, form: FormikProps<any>) => NavFrontendSkjemaFeil;
     onAfterFieldValueSet: () => void;
 };
@@ -53,6 +54,7 @@ function TypedFormikForm<FormValues, ErrorType>({
     runDelayedFormValidation,
     cancelButtonType,
     fieldErrorHandler,
+    isHandledErrorTypeFunc: errorObjectChecker,
     onCancel,
     onValidSubmit,
     noButtonsContentRenderer,
@@ -115,6 +117,7 @@ function TypedFormikForm<FormValues, ErrorType>({
             fieldErrorHandler: (error, fieldName) => {
                 return fieldErrorHandler ? fieldErrorHandler(error, fieldName) : error;
             },
+            isHandlerErrorType: errorObjectChecker,
             getAndRenderFieldErrorMessage: (field, form) => {
                 if (showErrors) {
                     const error = getErrorForField(field.name, form.errors);
