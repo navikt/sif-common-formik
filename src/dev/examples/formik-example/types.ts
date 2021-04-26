@@ -20,6 +20,7 @@ export enum FormFields {
     'ferieuttak' = 'ferieuttak',
     'letters' = 'letters',
     'fødselsnummer' = 'fødselsnummer',
+    'datastruktur' = 'objekt',
     'barnetsFødselsnummer' = 'barnetsFødselsnummer',
     'friends' = 'friends',
 }
@@ -42,6 +43,9 @@ export interface CompletedFormValues {
     [FormFields.letters]?: string[];
     [FormFields.friends]: Friend[];
     [FormFields.fødselsnummer]: string;
+    [FormFields.datastruktur]: {
+        navn: string;
+    };
     [FormFields.barnetsFødselsnummer]: string;
 }
 export interface Person {

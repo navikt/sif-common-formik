@@ -1,6 +1,6 @@
-import { FieldInputProps, FormikErrors, FormikProps, getIn } from 'formik';
+import { FieldInputProps, FormikErrors, FormikProps, getIn, isObject } from 'formik';
 import { TypedFormikFormContextType } from '../components/typed-formik-form/TypedFormikForm';
-import { NavFrontendSkjemaFeil } from '../types';
+import { ErrorTypeChecker, NavFrontendSkjemaFeil } from '../types';
 
 export const getFeilPropForFormikInput = ({
     feil,
@@ -41,22 +41,31 @@ export const isValidationErrorsVisible = (formik: FormikProps<any>): boolean => 
     return formik?.status?.showErrors === true;
 };
 
-export const getAllFieldsWithErrors = (errors: any, keys: string[] = [], parentKey?: string): string[] => {
-    const createFieldKey = (fieldName: string): string => {
-        return parentKey ? `${parentKey}.${fieldName}` : fieldName;
+export const getAllFieldsWithErrors = (allErrors: any, errorObjectChecker?: ErrorTypeChecker): string[] => {
+    const getFieldsWithErrors = (errors: any, keys: string[] = [], parentKey?: string): string[] => {
+        const createFieldKey = (fieldName: string): string => {
+            return parentKey ? `${parentKey}.${fieldName}` : fieldName;
+        };
+        if (errors) {
+            Object.keys(errors).forEach((key) => {
+                const error = errors[key];
+                if (Array.isArray(error)) {
+                    error.forEach((err, idx) => {
+                        getFieldsWithErrors(err, keys, createFieldKey(`${key}.${idx}`));
+                    });
+                } else {
+                    if (isObject(error)) {
+                        if (errorObjectChecker && errorObjectChecker(error)) {
+                            keys.push(createFieldKey(key));
+                            return;
+                        }
+                        return getFieldsWithErrors(error, keys, createFieldKey(`${key}`));
+                    }
+                    keys.push(createFieldKey(key));
+                }
+            });
+        }
+        return keys;
     };
-    if (errors) {
-        Object.keys(errors).forEach((key) => {
-            const error = errors[key];
-            if (Array.isArray(error)) {
-                error.forEach((err, idx) => {
-                    getAllFieldsWithErrors(err, keys, createFieldKey(`${key}.${idx}`));
-                });
-            } else {
-                keys.push(createFieldKey(key));
-            }
-        });
-    }
-
-    return keys;
+    return getFieldsWithErrors(allErrors, []);
 };

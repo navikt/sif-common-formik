@@ -23,3 +23,4 @@ export interface TypedFormInputValidationProps<FieldName, ErrorType> {
 }
 
 export type FieldErrorHandler<ErrorType> = (error: ErrorType, fieldName: string) => string;
+export type ErrorTypeChecker<ErrorType = any> = (error: ErrorType) => boolean;
