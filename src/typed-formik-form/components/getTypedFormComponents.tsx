@@ -27,7 +27,7 @@ import TypedFormikForm, { TypedFormikFormProps } from './typed-formik-form/Typed
 import TypedFormikWrapper, { TypedFormikWrapperProps } from './typed-formik-wrapper/TypedFormikWrapper';
 import '../styles/nav-frontend-skjema-extension.less';
 
-export function getTypedFormComponents<FieldName, FormValues, ErrorType>() {
+export function getTypedFormComponents<FieldName, FormValues, ErrorType = string>() {
     return {
         Checkbox: (props: FormikCheckboxProps<FieldName, ErrorType>) => (
             <FormikCheckbox<FieldName, ErrorType> {...props} />
