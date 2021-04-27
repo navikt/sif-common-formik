@@ -9,6 +9,7 @@ import FormikDateRangePicker from '../../../../typed-formik-form/components/form
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import {
+    fallbackValidationIntlKeys,
     getDateValidator,
     getFødselsnummerValidator,
     getListValidator,
@@ -21,7 +22,6 @@ import {
 } from '../../../../typed-formik-form/validation';
 import getFieldErrorHandler from '../../../../typed-formik-form/validation/fieldErrorHandler';
 import getRequiredFieldValidator from '../../../../typed-formik-form/validation/getRequiredFieldValidator';
-import { isIntlErrorObject, ValidationError } from '../../../../typed-formik-form/validation/types';
 import { validateAll } from '../../../../typed-formik-form/validation/validationUtils';
 import Box from '../../../components/box/Box';
 import Question from '../../../components/question/Question';
@@ -29,6 +29,7 @@ import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
 import Friends from './Friends';
+import { isIntlErrorObject, ValidationError } from '../../../../typed-formik-form/validation/types';
 
 const Form = getTypedFormComponents<FormFields, FormValues, ValidationError>();
 
@@ -87,6 +88,20 @@ const TypedFormExample = () => {
                     }}
                 />
             </Question>
+            <Question>
+                <Form.Input
+                    type="text"
+                    label="Fornavn"
+                    name={FormFields.firstname}
+                    validate={(value) =>
+                        getRequiredFieldValidator()(value)
+                            ? {
+                                  key: fallbackValidationIntlKeys.noValue,
+                              }
+                            : undefined
+                    }
+                />
+            </Question>
             {1 + 1 === 3 && (
                 <>
                     <Question>
@@ -131,14 +146,6 @@ const TypedFormExample = () => {
                             }}
                             minDate={dayjs().subtract(1, 'year').toDate()}
                             maxDate={dayjs().add(1, 'year').toDate()}
-                        />
-                    </Question>
-                    <Question>
-                        <Form.Input
-                            type="text"
-                            label="Fornavn"
-                            name={FormFields.firstname}
-                            validate={getRequiredFieldValidator()}
                         />
                     </Question>
                     <Question>

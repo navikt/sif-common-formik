@@ -1,14 +1,14 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import Box from '@navikt/sif-common-core/lib/components/box/Box';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { dateToISOString, getTypedFormComponents, ISOStringToDate } from '../../../../typed-formik-form';
 import { getDateRangeValidator } from '../../../../typed-formik-form/validation';
-import getFieldErrorHandler from '../../../../typed-formik-form/validation/fieldErrorHandler';
 import getDateValidator from '../../../../typed-formik-form/validation/getDateValidator';
 import getListValidator, { ValidateListError } from '../../../../typed-formik-form/validation/getListValidator';
+import getFieldErrorHandler from '../../../../typed-formik-form/validation/fieldErrorHandler';
 import { ValidationError } from '../../../../typed-formik-form/validation/types';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
-import { useIntl } from 'react-intl';
 
 export interface FerieuttakFormLabels {
     title: string;

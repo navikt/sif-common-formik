@@ -1,9 +1,9 @@
+import React from 'react';
 import { FieldArray } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
-import React from 'react';
 import { FormikInput } from '../../../../typed-formik-form';
 import { getStringValidator } from '../../../../typed-formik-form/validation';
-import { IntlErrorObject } from '../../../../typed-formik-form/validation/types';
+import { ValidationError } from '../../../../typed-formik-form/validation/types';
 import { hasValue } from '../../../../typed-formik-form/validation/validationUtils';
 import Box from '../../../components/box/Box';
 import Question from '../../../components/question/Question';
@@ -33,9 +33,8 @@ const Siblings: React.FunctionComponent<Props> = ({ fieldName, friend }) => {
                                         validate={(values) => {
                                             const error = getStringValidator({ required: true })(values);
                                             if (error) {
-                                                const intlErr: IntlErrorObject = {
+                                                const intlErr: ValidationError = {
                                                     key: 'søskennavn.mangler',
-                                                    isUniqueKey: true,
                                                     values: {
                                                         navn: hasValue(friend.name) ? friend.name : ` venn ${index}`,
                                                     },

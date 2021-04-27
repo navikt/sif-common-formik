@@ -1,7 +1,12 @@
-export type IntlErrorObject = { key: string; values?: { [key: string]: any }; isUniqueKey?: boolean };
+export interface IntlErrorObject {
+    /** If passed in, the key is not transformed with field name and error */
+    key?: string;
+    /** Values passed through to intl formatMessage */
+    values?: { [key: string]: any };
+}
 
 export const isIntlErrorObject = (error: any): error is IntlErrorObject => {
-    return typeof error === 'object' && error.key && typeof error.key === 'string';
+    return typeof error === 'object' && (error.values || (error.key && typeof error.key === 'string'));
 };
 
 export type ValidationError = string | IntlErrorObject;
