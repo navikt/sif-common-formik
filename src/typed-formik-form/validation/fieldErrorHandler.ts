@@ -2,7 +2,7 @@ import { IntlShape } from 'react-intl';
 import { FieldErrorHandler } from '../types';
 import { isIntlErrorObject, ValidationError } from './types';
 
-const createFieldErrorIntlKey = (error: ValidationError, fieldName: string, errorPrefix?: string): string =>
+const createFieldErrorIntlKey = (error: string, fieldName: string, errorPrefix?: string): string =>
     `${errorPrefix ? `${errorPrefix}.` : ''}${fieldName}.${error}`;
 
 const getFieldErrorHandler = (intl: IntlShape, errorPrefix?: string): FieldErrorHandler<ValidationError> => (
@@ -11,7 +11,7 @@ const getFieldErrorHandler = (intl: IntlShape, errorPrefix?: string): FieldError
 ) => {
     return isIntlErrorObject(error)
         ? intl.formatMessage(
-              { id: error.key ? error.key : createFieldErrorIntlKey(error, fieldName, errorPrefix) },
+              { id: error.keepKeyUnaltered ? error.key : createFieldErrorIntlKey(error.key, fieldName, errorPrefix) },
               error.values
           )
         : intl.formatMessage({ id: createFieldErrorIntlKey(error, fieldName, errorPrefix) });

@@ -54,6 +54,7 @@ const TypedFormExample = () => {
                             return {
                                 key: err,
                                 values: { question: 'spørsmålet om antall barn' },
+                                keepKeyUnaltered: true,
                             };
                         }
                     }}
@@ -71,39 +72,39 @@ const TypedFormExample = () => {
                     }
                 />
             </Question>
-            <Question>
-                <Form.Input
-                    name={'datastruktur.navn' as any}
-                    label="Datastrukturnavn"
-                    validate={(value) => {
-                        const error = getStringValidator({ minLength: 2, required: true })(value);
-                        if (error) {
-                            return {
-                                key: 'abc',
-                                values: { s: 2 },
-                                isUniqueKey: true,
-                            };
-                        }
-                        return error;
-                    }}
-                />
-            </Question>
-            <Question>
-                <Form.Input
-                    type="text"
-                    label="Fornavn"
-                    name={FormFields.firstname}
-                    validate={(value) =>
-                        getRequiredFieldValidator()(value)
-                            ? {
-                                  key: fallbackValidationIntlKeys.noValue,
-                              }
-                            : undefined
-                    }
-                />
-            </Question>
+
             {1 + 1 === 3 && (
                 <>
+                    <Question>
+                        <Form.Input
+                            name={'datastruktur.navn' as any}
+                            label="Datastrukturnavn"
+                            validate={(value) => {
+                                const error = getStringValidator({ minLength: 2, required: true })(value);
+                                if (error) {
+                                    return {
+                                        key: 'abc',
+                                        values: { s: 2 },
+                                    };
+                                }
+                                return error;
+                            }}
+                        />
+                    </Question>
+                    <Question>
+                        <Form.Input
+                            type="text"
+                            label="Fornavn"
+                            name={FormFields.firstname}
+                            validate={(value) =>
+                                getRequiredFieldValidator()(value)
+                                    ? {
+                                          key: fallbackValidationIntlKeys.noValue,
+                                      }
+                                    : undefined
+                            }
+                        />
+                    </Question>{' '}
                     <Question>
                         <Form.Input
                             name={FormFields.barnetsFødselsnummer}
@@ -119,14 +120,12 @@ const TypedFormExample = () => {
                                         values: {
                                             info: ' (du har tastet inn ditt eget fødselsnummer)',
                                         },
-                                        isUniqueKey: true,
                                     };
                                 }
                                 return error;
                             }}
                         />
                     </Question>
-
                     <Box margin="xl">
                         <Box margin="l" padBottom="l">
                             <Undertittel>Venner</Undertittel>
@@ -135,7 +134,6 @@ const TypedFormExample = () => {
                             <Friends fieldName="friends" friends={values.friends || []} />
                         </Question>
                     </Box>
-
                     <Question>
                         <FerieuttakListAndDialog
                             name={FormFields.ferieuttak}
