@@ -9,7 +9,8 @@ function FormikValidationErrorSummary() {
     const context = React.useContext(TypedFormikFormContext);
     const formik = useFormikContext();
     if (formik && context && context.showErrors) {
-        const fieldsWithErrors = !formik.isValid && getAllFieldsWithErrors(formik.errors, context.isHandlerErrorType);
+        const fieldsWithErrors =
+            !formik.isValid && getAllFieldsWithErrors(formik.errors, context.isHandledErrorTypeChecker);
         const errorMessages: FeiloppsummeringFeil[] | undefined = fieldsWithErrors
             ? fieldsWithErrors.map((fieldName) => {
                   const error = getErrorForField(fieldName, formik.errors);

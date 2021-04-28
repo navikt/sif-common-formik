@@ -1,10 +1,17 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import { FieldInputProps, FormikProps, useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
-import { CancelButtonTypes, ErrorTypeChecker, FieldErrorHandler, NavFrontendSkjemaFeil } from '../../types';
+import {
+    CancelButtonTypes,
+    CustomFormErrorHandler,
+    ErrorTypeChecker,
+    FieldErrorHandler,
+    NavFrontendSkjemaFeil,
+} from '../../types';
 import { getErrorForField, isValidationErrorsVisible } from '../../utils/typedFormErrorUtils';
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 import ButtonRow from '../helpers/button-row/ButtonRow';
+
 export interface TypedFormikFormProps<FormValues, ErrorType> {
     children: React.ReactNode;
     className?: string;
@@ -16,8 +23,7 @@ export interface TypedFormikFormProps<FormValues, ErrorType> {
     id?: string;
     cancelButtonType?: CancelButtonTypes;
     runDelayedFormValidation?: boolean;
-    fieldErrorHandler?: FieldErrorHandler<ErrorType>;
-    isHandledErrorTypeFunc?: ErrorTypeChecker<ErrorType>;
+    formErrorHandler?: CustomFormErrorHandler<ErrorType>;
     noButtonsContentRenderer?: () => React.ReactNode;
     cleanup?: (values: FormValues) => FormValues;
     onValidSubmit?: () => void;
@@ -27,7 +33,7 @@ export interface TypedFormikFormProps<FormValues, ErrorType> {
 export type TypedFormikFormContextType = {
     showErrors: boolean;
     fieldErrorHandler?: FieldErrorHandler<any>;
-    isHandlerErrorType?: ErrorTypeChecker<any>;
+    isHandledErrorTypeChecker?: ErrorTypeChecker<any>;
     getAndRenderFieldErrorMessage: (field: FieldInputProps<any>, form: FormikProps<any>) => NavFrontendSkjemaFeil;
     onAfterFieldValueSet: () => void;
 };
@@ -53,8 +59,7 @@ function TypedFormikForm<FormValues, ErrorType>({
     includeButtons = true,
     runDelayedFormValidation,
     cancelButtonType,
-    fieldErrorHandler,
-    isHandledErrorTypeFunc: errorObjectChecker,
+    formErrorHandler,
     onCancel,
     onValidSubmit,
     noButtonsContentRenderer,
@@ -115,14 +120,14 @@ function TypedFormikForm<FormValues, ErrorType>({
         return {
             showErrors,
             fieldErrorHandler: (error, fieldName) => {
-                return fieldErrorHandler ? fieldErrorHandler(error, fieldName) : error;
+                return formErrorHandler ? formErrorHandler.fieldErrorHandler(error, fieldName) : error;
             },
-            isHandlerErrorType: errorObjectChecker,
+            isHandledErrorTypeChecker: formErrorHandler?.isHandledErrorTypeFunc,
             getAndRenderFieldErrorMessage: (field, form) => {
                 if (showErrors) {
                     const error = getErrorForField(field.name, form.errors);
                     if (error) {
-                        return fieldErrorHandler ? fieldErrorHandler(error, field.name) : error;
+                        return formErrorHandler ? formErrorHandler.fieldErrorHandler(error, field.name) : error;
                     }
                 }
                 return undefined;

@@ -9,7 +9,6 @@ import FormikDateRangePicker from '../../../../typed-formik-form/components/form
 import FormikTimeInput from '../../../../typed-formik-form/components/formik-time-input/FormikTimeInput';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import {
-    fallbackValidationIntlKeys,
     getDateValidator,
     getFødselsnummerValidator,
     getListValidator,
@@ -20,8 +19,9 @@ import {
     ValidateListError,
     ValidateNumberError,
 } from '../../../../typed-formik-form/validation';
-import getFieldErrorHandler from '../../../../typed-formik-form/validation/fieldErrorHandler';
 import getRequiredFieldValidator from '../../../../typed-formik-form/validation/getRequiredFieldValidator';
+import getIntlFormErrorHandler from '../../../../typed-formik-form/validation/intlFormErrorHandler';
+import { ValidationError } from '../../../../typed-formik-form/validation/types';
 import { validateAll } from '../../../../typed-formik-form/validation/validationUtils';
 import Box from '../../../components/box/Box';
 import Question from '../../../components/question/Question';
@@ -29,7 +29,7 @@ import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
 import Friends from './Friends';
-import { isIntlErrorObject, ValidationError } from '../../../../typed-formik-form/validation/types';
+import { fallbackValidationIntlKeys } from '../../../../typed-formik-form/validation/fallbackValidationMessages';
 
 const Form = getTypedFormComponents<FormFields, FormValues, ValidationError>();
 
@@ -42,8 +42,7 @@ const TypedFormExample = () => {
             submitButtonLabel="Ok"
             includeValidationSummary={true}
             includeButtons={true}
-            fieldErrorHandler={getFieldErrorHandler(intl)}
-            isHandledErrorTypeFunc={isIntlErrorObject}>
+            formErrorHandler={getIntlFormErrorHandler(intl)}>
             <Question>
                 <Form.YesOrNoQuestion
                     legend={'Har du kids'}
@@ -54,7 +53,7 @@ const TypedFormExample = () => {
                             return {
                                 key: err,
                                 values: { question: 'spørsmålet om antall barn' },
-                                keepKeyUnaltered: true,
+                                keepKeyUnaltered: false,
                             };
                         }
                     }}

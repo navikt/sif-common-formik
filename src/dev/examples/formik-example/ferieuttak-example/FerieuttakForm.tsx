@@ -6,7 +6,7 @@ import { dateToISOString, getTypedFormComponents, ISOStringToDate } from '../../
 import { getDateRangeValidator } from '../../../../typed-formik-form/validation';
 import getDateValidator from '../../../../typed-formik-form/validation/getDateValidator';
 import getListValidator, { ValidateListError } from '../../../../typed-formik-form/validation/getListValidator';
-import getFieldErrorHandler from '../../../../typed-formik-form/validation/fieldErrorHandler';
+import getIntlFormErrorHandler from '../../../../typed-formik-form/validation/intlFormErrorHandler';
 import { ValidationError } from '../../../../typed-formik-form/validation/types';
 import { Ferieland, Ferieuttak, isFerieuttak } from './types';
 
@@ -98,7 +98,7 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                 initialValues={initialValues || {}}
                 onSubmit={onFormikSubmit}
                 renderForm={(formik) => (
-                    <Form.Form onCancel={onCancel} fieldErrorHandler={getFieldErrorHandler(intl, 'ferieForm')}>
+                    <Form.Form onCancel={onCancel} formErrorHandler={getIntlFormErrorHandler(intl, 'ferieForm')}>
                         <Box padBottom="l">
                             <Systemtittel tag="h1">{formLabels.title}</Systemtittel>
                         </Box>

@@ -22,5 +22,10 @@ export interface TypedFormInputValidationProps<FieldName, ErrorType> {
     validate?: (value: any, fieldName: FieldName) => ErrorType | undefined;
 }
 
+export interface CustomFormErrorHandler<ErrorType> {
+    fieldErrorHandler: FieldErrorHandler<ErrorType>;
+    isHandledErrorTypeFunc?: ErrorTypeChecker<ErrorType>;
+}
+
 export type FieldErrorHandler<ErrorType> = (error: ErrorType, fieldName: string) => string;
 export type ErrorTypeChecker<ErrorType = any> = (error: ErrorType) => boolean;

@@ -1,4 +1,4 @@
-import { fallbackValidationMessages } from '../../../typed-formik-form/validation';
+import { fallbackValidationMessages } from '../../../typed-formik-form/validation/fallbackValidationMessages';
 
 export const appMessages = {
     nb: {
