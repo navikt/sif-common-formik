@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Systemtittel } from 'nav-frontend-typografi';
 import NAVLogo from './components/svg/NAVLogo';
 import DevContent from './DevContent';
@@ -17,9 +17,9 @@ const DevPage = () => {
                 </span>
             </header>
             <div className="contentWrapper">
-                <BrowserRouter>
+                <HashRouter>
                     <DevContent />
-                </BrowserRouter>
+                </HashRouter>
             </div>
         </main>
     );
