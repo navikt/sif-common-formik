@@ -1,5 +1,6 @@
 import React from 'react';
 import FormikExample from '../examples/formik-example/FormikExample';
+import ValideringExample from '../examples/validering-example/ValideringExample';
 import Intro from '../Intro';
 
 export interface RouteConfig {
@@ -18,6 +19,11 @@ export const routes: RouteConfig[] = [
         path: 'formik-example',
         title: 'TypedFormExample',
         renderContent: () => <FormikExample />,
+    },
+    {
+        path: 'validering',
+        title: 'Validering',
+        renderContent: () => <ValideringExample />,
     },
 ];
 
