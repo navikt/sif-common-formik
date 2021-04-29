@@ -114,12 +114,12 @@ const ValideringExample = () => {
                                 <Question>
                                     <Form.NumberInput
                                         name={FormFields.tall}
-                                        label="Skriv inn et årstall mellom 1999 og 2020"
+                                        label="Skriv inn et årstall mellom 1999 og 2021"
                                         bredde="S"
                                         validate={getNumberValidator({
                                             required: true,
                                             min: 1999,
-                                            max: 2020,
+                                            max: 2021,
                                         })}></Form.NumberInput>
                                 </Question>
                                 <ValidationErrorList
@@ -134,7 +134,7 @@ const ValideringExample = () => {
                                         },
                                         [ValidateNumberError.numberIsTooLarge]: {
                                             info: 'for stort tall',
-                                            example: `Årstallet kan ikke være etter 2020`,
+                                            example: `Årstallet kan ikke være etter 2021`,
                                         },
                                         [ValidateNumberError.numberIsTooSmall]: {
                                             info: 'for lavt tall',
@@ -147,12 +147,12 @@ const ValideringExample = () => {
                                 <Question>
                                     <Form.DatePicker
                                         name={FormFields.dato}
-                                        label={'Velg en dato i 2020 som ikke er en lørdag eller søndag'}
+                                        label={'Velg en dato i 2021 som ikke er en lørdag eller søndag'}
                                         showYearSelector={true}
                                         validate={getDateValidator({
                                             required: true,
-                                            min: new Date(2020, 0, 1),
-                                            max: new Date(2020, 11, 31),
+                                            min: new Date(2021, 0, 1),
+                                            max: new Date(2021, 11, 31),
                                             onlyWeekdays: true,
                                         })}
                                     />
@@ -166,15 +166,15 @@ const ValideringExample = () => {
                                         [ValidateDateError.invalidDateFormat]: {
                                             info: 'ugyldig verdi',
                                             example:
-                                                'Datoen i 2020 har ikke gyldig format. Formatet må være dd.mm.åååå',
+                                                'Datoen i 2021 har ikke gyldig format. Formatet må være dd.mm.åååå',
                                         },
                                         [ValidateDateError.dateBeforeMin]: {
                                             info: 'dato er for tidlig',
-                                            example: 'Datoen er for tidlig, første gyldige dato er 1. januar 2020',
+                                            example: 'Datoen er for tidlig, første gyldige dato er 1. januar 2021',
                                         },
                                         [ValidateDateError.dateAfterMax]: {
                                             info: 'dato er for sen',
-                                            example: 'Datoen er for sen, siste gyldige dato er 31. desember 2020',
+                                            example: 'Datoen er for sen, siste gyldige dato er 31. desember 2021',
                                         },
                                     }}
                                 />
@@ -182,7 +182,7 @@ const ValideringExample = () => {
                             <ValideringPanel title="Periodevelger">
                                 <Question>
                                     <Form.DateRangePicker
-                                        legend="Velg en tidsperiode i 2020 som ikke er lørdag eller søndag"
+                                        legend="Velg en tidsperiode i 2021 som ikke er lørdag eller søndag"
                                         fromInputProps={{
                                             label: 'Fra og med',
                                             name: FormFields.tidsperiode_fra,
@@ -267,6 +267,7 @@ const ValideringExample = () => {
                                 <Question>
                                     <Form.Input
                                         name={FormFields.fødselsnummer}
+                                        bredde="M"
                                         description={'Eksempelfødselsnummeret "19081988075" er ikke lov å taste inn'}
                                         label="Skriv inn et norskt fødselsnummer eller d-nummer. "
                                         validate={getFødselsnummerValidator({
