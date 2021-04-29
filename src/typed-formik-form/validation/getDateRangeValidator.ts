@@ -27,7 +27,11 @@ interface ToDateOptions extends DateValidationOptions {
     fromDate?: Date;
 }
 
-const validateFromDate = (options: FromDateOptions): ValidationFunction<DateRangeValidationResult> => (value: any) => {
+type Options = ToDateOptions & FromDateOptions;
+
+const getFromDateValidator = (options: FromDateOptions): ValidationFunction<DateRangeValidationResult> => (
+    value: any
+) => {
     const dateError = getDateValidator(options)(value);
     if (dateError) {
         return dateError;
@@ -44,7 +48,7 @@ const validateFromDate = (options: FromDateOptions): ValidationFunction<DateRang
     return undefined;
 };
 
-const validateToDate = (options: ToDateOptions): ValidationFunction<DateRangeValidationResult> => (value: any) => {
+const getToDateValidator = (options: ToDateOptions): ValidationFunction<DateRangeValidationResult> => (value: any) => {
     const dateError = getDateValidator(options)(value);
     if (dateError) {
         return dateError;
@@ -60,9 +64,9 @@ const validateToDate = (options: ToDateOptions): ValidationFunction<DateRangeVal
     return undefined;
 };
 
-const getDateRangeValidator = {
-    validateFromDate,
-    validateToDate,
-};
+const getDateRangeValidator = (options: Options) => ({
+    validateFromDate: getFromDateValidator(options),
+    validateToDate: getToDateValidator(options),
+});
 
 export default getDateRangeValidator;
