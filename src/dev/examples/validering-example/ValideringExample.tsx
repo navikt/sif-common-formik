@@ -1,40 +1,39 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
+import Panel from 'nav-frontend-paneler';
 import 'nav-frontend-tabs-style';
 import { getTypedFormComponents } from '../../../typed-formik-form';
+import datepickerUtils from '../../../typed-formik-form/components/formik-datepicker/datepickerUtils';
 import TypedFormikWrapper from '../../../typed-formik-form/components/typed-formik-wrapper/TypedFormikWrapper';
 import {
-    getDateValidator,
+    getCheckedValidator,
     getDateRangeValidator,
+    getDateValidator,
+    getFødselsnummerValidator,
+    getListValidator,
     getNumberValidator,
+    getOrgNumberValidator,
+    getRequiredFieldValidator,
     getStringValidator,
     getYesOrNoValidator,
+    ValidateCheckedError,
     ValidateDateError,
     ValidateDateRangeError,
+    ValidateFødselsnummerError,
+    ValidateListError,
     ValidateNumberError,
+    ValidateOrgNumberError,
     ValidateRequiredFieldError,
     ValidateStringError,
     ValidateYesOrNoError,
-    getFødselsnummerValidator,
-    ValidateFødselsnummerError,
-    getOrgNumberValidator,
-    ValidateOrgNumberError,
-    getListValidator,
-    ValidateListError,
-    getRequiredFieldValidator,
-    getCheckedValidator,
-    ValidateCheckedError,
 } from '../../../typed-formik-form/validation';
 import getIntlFormErrorHandler from '../../../typed-formik-form/validation/intlFormErrorHandler';
 import { ValidationError } from '../../../typed-formik-form/validation/types';
+import Box from '../../components/box/Box';
 import PageIntro from '../../components/page-intro/PageIntro';
-import Question from '../../components/question/Question';
 import ValidationErrorList from '../../components/validation-errors/ValidationErrorList';
 import { FormFields, FormValues } from './types';
 import ValideringPanel from './ValideringPanel';
-import datepickerUtils from '../../../typed-formik-form/components/formik-datepicker/datepickerUtils';
-import { Element } from 'nav-frontend-typografi';
-import Box from '../../components/box/Box';
 
 const initialValues: FormValues = {
     liste: [],
@@ -47,7 +46,7 @@ const ValideringExample = () => {
     return (
         <>
             <PageIntro title="@navikt/sif-common-formik">
-                <h2>Validering av skjemaelementer</h2>
+                <h2>Validering</h2>
                 <p>sif-common-formik komponenter med validering</p>
             </PageIntro>
 
@@ -65,14 +64,27 @@ const ValideringExample = () => {
                             includeValidationSummary={true}
                             includeButtons={true}
                             formErrorHandler={getIntlFormErrorHandler(intl)}>
-                            <ValideringPanel title="Ja/Nei">
-                                <Question>
+                            <ValideringPanel
+                                title="Ja/Nei"
+                                code={`
+export enum ValidateYesOrNoError {
+yesOrNoIsUnanswered = 'yesOrNoIsUnanswered',
+}
+
+type YesOrNoValidationResult =
+| ValidateYesOrNoError.yesOrNoIsUnanswered
+| undefined;
+
+const error = getYesOrNoValidator()(value);
+                    `}>
+                                <Panel>
                                     <Form.YesOrNoQuestion
                                         name={FormFields.jaNeiSpørsmål}
                                         legend="Du må svare ja eller nei"
                                         validate={getYesOrNoValidator()}></Form.YesOrNoQuestion>
-                                </Question>
+                                </Panel>
                                 <ValidationErrorList
+                                    title="Feilmeldinger"
                                     errors={{
                                         [ValidateYesOrNoError.yesOrNoIsUnanswered]: {
                                             info: 'spørsmål er ikke besvart',
@@ -81,8 +93,32 @@ const ValideringExample = () => {
                                     }}
                                 />
                             </ValideringPanel>
-                            <ValideringPanel title="Fritekst">
-                                <Question>
+
+                            <ValideringPanel
+                                title="Fritekst"
+                                code={`
+export enum ValidateStringError {
+    notAString = 'notAString',
+    stringIsTooShort = 'stringIsTooShort',
+    stringIsTooLong = 'stringIsTooLong',
+}
+
+type StringValidationResult =
+    | undefined
+    | ValidateRequiredFieldError.noValue
+    | ValidateStringError.notAString
+    | ValidateStringError.stringIsTooLong
+    | ValidateStringError.stringIsTooShort;
+
+type Options = {
+    required?: boolean;
+    minLength?: number;
+    maxLength?: number;
+}
+
+const error = getStringValidator(options)(value);
+                                    `}>
+                                <Panel>
                                     <Form.Input
                                         name={FormFields.tekst}
                                         label="Skriv inn hvilken dag det er i dag - bruk mellom 5 og 20 tegn"
@@ -92,8 +128,9 @@ const ValideringExample = () => {
                                             maxLength: 20,
                                             minLength: 5,
                                         })}></Form.Input>
-                                </Question>
+                                </Panel>
                                 <ValidationErrorList
+                                    title="Feilmeldinger"
                                     errors={{
                                         [ValidateRequiredFieldError.noValue]: {
                                             info: 'tomt innhold i felt',
@@ -110,8 +147,31 @@ const ValideringExample = () => {
                                     }}
                                 />
                             </ValideringPanel>
-                            <ValideringPanel title="Tall">
-                                <Question>
+                            <ValideringPanel
+                                title="Tall"
+                                code={`
+export enum ValidateNumberError {
+    invalidNumberFormat = 'invalidNumberFormat',
+    numberIsTooSmall = 'numberIsTooSmall',
+    numberIsTooLarge = 'numberIsTooLarge',
+}
+
+type NumberValidationResult =
+    | undefined
+    | ValidateRequiredFieldError.noValue
+    | ValidateNumberError.invalidNumberFormat
+    | ValidateNumberError.numberIsTooLarge
+    | ValidateNumberError.numberIsTooSmall;
+
+interface Options {
+    required?: boolean;
+    min?: number;
+    max?: number;
+}
+
+const error = getNumberValidator(options)(value);
+                                    `}>
+                                <Panel>
                                     <Form.NumberInput
                                         name={FormFields.tall}
                                         label="Skriv inn et årstall mellom 1999 og 2021"
@@ -121,8 +181,9 @@ const ValideringExample = () => {
                                             min: 1999,
                                             max: 2021,
                                         })}></Form.NumberInput>
-                                </Question>
+                                </Panel>
                                 <ValidationErrorList
+                                    title="Feilmeldinger"
                                     errors={{
                                         [ValidateRequiredFieldError.noValue]: {
                                             info: 'tomt innhold i felt',
@@ -143,8 +204,34 @@ const ValideringExample = () => {
                                     }}
                                 />
                             </ValideringPanel>
-                            <ValideringPanel title="Dato">
-                                <Question>
+                            <ValideringPanel
+                                title="Dato"
+                                code={`
+export enum ValidateDateError {
+    invalidDateFormat = 'invalidDateFormat',
+    dateBeforeMin = 'dateBeforeMin',
+    dateAfterMax = 'dateAfterMax',
+    dateNotWeekday = 'dateNotWeekday',
+}
+
+export type DateValidationResult =
+    | ValidateRequiredFieldError.noValue
+    | ValidateDateError.invalidDateFormat
+    | ValidateDateError.dateBeforeMin
+    | ValidateDateError.dateAfterMax
+    | ValidateDateError.dateNotWeekday
+    | undefined;
+
+export interface DateValidationOptions {
+    required?: boolean;
+    min?: Date;
+    max?: Date;
+    onlyWeekdays?: boolean;
+}
+
+const error = getDateValidator(options)(value);
+`}>
+                                <Panel>
                                     <Form.DatePicker
                                         name={FormFields.dato}
                                         label={'Velg en dato i 2021 som ikke er en lørdag eller søndag'}
@@ -156,8 +243,9 @@ const ValideringExample = () => {
                                             onlyWeekdays: true,
                                         })}
                                     />
-                                </Question>
+                                </Panel>
                                 <ValidationErrorList
+                                    title="Feilmeldinger"
                                     errors={{
                                         [ValidateRequiredFieldError.noValue]: {
                                             info: 'tomt innhold i felt',
@@ -179,38 +267,59 @@ const ValideringExample = () => {
                                     }}
                                 />
                             </ValideringPanel>
-                            <ValideringPanel title="Periodevelger">
-                                <Question>
+                            <ValideringPanel
+                                title="Periodevelger"
+                                code={`
+export enum ValidateDateRangeError {
+    toDateIsBeforeFromDate = 'toDateIsBeforeFromDate',
+    fromDateIsAfterToDate = 'fromDateIsAfterToDate',
+}
+
+type DateRangeValidationResult =
+    | DateValidationResult
+    | ValidateDateRangeError.fromDateIsAfterToDate
+    | ValidateDateRangeError.toDateIsBeforeFromDate
+    | undefined;
+
+interface Options extends DateValidationOptions {
+    fromDate?: Date;
+    toDate?: Date;
+}
+
+const errorFromDate = getDateRangeValidator(options).validateFromDate(value);
+const errorToDate = getDateRangeValidator(options).validateToDate(value);
+                                `}>
+                                <Panel>
                                     <Form.DateRangePicker
                                         legend="Velg en tidsperiode i 2021 som ikke er lørdag eller søndag"
                                         fromInputProps={{
                                             label: 'Fra og med',
                                             name: FormFields.tidsperiode_fra,
                                             dayPickerProps: { initialMonth: new Date(2021, 0, 1) },
-                                            validate: getDateRangeValidator.validateFromDate({
+                                            validate: getDateRangeValidator({
                                                 min: new Date(2021, 0, 1),
                                                 max: new Date(2021, 11, 31),
                                                 toDate,
                                                 required: true,
                                                 onlyWeekdays: true,
-                                            }),
+                                            }).validateFromDate,
                                         }}
                                         toInputProps={{
                                             label: 'Til og med',
                                             name: FormFields.tidsperiode_til,
                                             dayPickerProps: { initialMonth: new Date(2021, 11, 31) },
-                                            validate: getDateRangeValidator.validateToDate({
+                                            validate: getDateRangeValidator({
                                                 min: new Date(2021, 0, 1),
                                                 max: new Date(2021, 11, 31),
                                                 fromDate,
                                                 required: true,
                                                 onlyWeekdays: true,
-                                            }),
+                                            }).validateToDate,
                                         }}
                                     />
-                                </Question>
-                                <Element tag="h3">Fra-dato</Element>
+                                </Panel>
                                 <ValidationErrorList
+                                    title="Feilmeldinger - Fra-dato"
                                     errors={{
                                         [ValidateRequiredFieldError.noValue]: {
                                             info: 'ingen verdi',
@@ -235,8 +344,8 @@ const ValideringExample = () => {
                                     }}
                                 />
                                 <Box margin="xl">
-                                    <Element tag="h3">Til-dato</Element>
                                     <ValidationErrorList
+                                        title="Feilmeldinger - Til-dato"
                                         errors={{
                                             [ValidateRequiredFieldError.noValue]: {
                                                 info: 'ingen verdi',
@@ -263,8 +372,31 @@ const ValideringExample = () => {
                                     />
                                 </Box>
                             </ValideringPanel>
-                            <ValideringPanel title="Norsk fødselsnummer/D-nummer">
-                                <Question>
+                            <ValideringPanel
+                                title="Norsk fødselsnummer/D-nummer"
+                                code={`
+export enum ValidateFødselsnummerError {
+    fødselsnummerNot11Chars = 'fødselsnummerNot11Chars',
+    invalidFødselsnummer = 'invalidFødselsnummer',
+    disallowedFødselsnummer = 'disallowedFødselsnummer',
+}
+
+type FødselsnummerValidationResult =
+    | ValidateRequiredFieldError.noValue
+    | ValidateFødselsnummerError.disallowedFødselsnummer
+    | ValidateFødselsnummerError.fødselsnummerNot11Chars
+    | ValidateFødselsnummerError.invalidFødselsnummer
+    | undefined;
+
+interface Options {
+    required?: boolean;
+    /** Andre fødselsnumre som ikke er gyldig - f.eks søkers fødselsnummer */
+    disallowedValues?: string[];
+}
+
+const error = getFødselsnummerValidator(options)(value);
+`}>
+                                <Panel>
                                     <Form.Input
                                         name={FormFields.fødselsnummer}
                                         bredde="M"
@@ -275,8 +407,9 @@ const ValideringExample = () => {
                                             disallowedValues: ['19081988075'],
                                         })}
                                     />
-                                </Question>
+                                </Panel>
                                 <ValidationErrorList
+                                    title="Feilmeldinger"
                                     errors={{
                                         [ValidateRequiredFieldError.noValue]: {
                                             info: 'ingen verdi',
@@ -299,14 +432,32 @@ const ValideringExample = () => {
                                     }}
                                 />
                             </ValideringPanel>
-                            <ValideringPanel title="Organisasjonsnummer">
-                                <Question>
+                            <ValideringPanel
+                                title="Organisasjonsnummer"
+                                code={`
+export enum ValidateOrgNumberError {
+    invalidOrgNumberFormat = 'invalidOrgNumberFormat',
+}
+
+type OrgNumberValidationResult =
+    | undefined
+    | ValidateRequiredFieldError.noValue
+    | ValidateOrgNumberError.invalidOrgNumberFormat;
+
+interface Options {
+    required?: boolean;
+}
+
+const error = getOrgNumberValidator(options)(value);
+`}>
+                                <Panel>
                                     <Form.YesOrNoQuestion
                                         name={FormFields.orgnummer}
                                         legend="Hva er NAVs organisasjonsnummer"
                                         validate={getOrgNumberValidator({ required: true })}></Form.YesOrNoQuestion>
-                                </Question>
+                                </Panel>
                                 <ValidationErrorList
+                                    title="Feilmeldinger"
                                     errors={{
                                         [ValidateRequiredFieldError.noValue]: {
                                             info: 'ingen verdi',
@@ -319,8 +470,26 @@ const ValideringExample = () => {
                                     }}
                                 />
                             </ValideringPanel>
-                            <ValideringPanel title="Flervalgsliste">
-                                <Question>
+                            <ValideringPanel
+                                title="Flervalgsliste"
+                                code={`
+export enum ValidateListError {
+    listIsEmpty = 'listIsEmpty',
+    listHasTooFewItems = 'listHasTooFewItems',
+    listHasTooManyItems = 'listHastooManyItems',
+}
+
+type ListValidationResult = undefined | ValidateListError;
+
+interface Options {
+    required?: boolean;
+    minItems?: number;
+    maxItems?: number;
+}
+
+const error = getListValidator(options)(value);
+`}>
+                                <Panel>
                                     <Form.CheckboxPanelGroup
                                         name={FormFields.liste}
                                         legend="Velg dine to eller tre favorittfrukter"
@@ -348,8 +517,9 @@ const ValideringExample = () => {
                                             maxItems: 3,
                                         })}
                                     />
-                                </Question>
+                                </Panel>
                                 <ValidationErrorList
+                                    title="Feilmeldinger"
                                     errors={{
                                         [ValidateListError.listIsEmpty]: {
                                             info: 'ingen element valgt',
@@ -366,8 +536,18 @@ const ValideringExample = () => {
                                     }}
                                 />
                             </ValideringPanel>
-                            <ValideringPanel title="Enkeltvalg i radioliste">
-                                <Question>
+                            <ValideringPanel
+                                title="Enkeltvalg - radioknapper"
+                                code={`
+export enum ValidateRequiredFieldError {
+    'noValue' = 'noValue',
+}
+
+type RequiredFieldValidationResult = ValidateRequiredFieldError.noValue | undefined;
+
+const error = getRequiredFieldValidator()(value);
+`}>
+                                <Panel>
                                     <Form.RadioPanelGroup
                                         name={FormFields.radio}
                                         legend="Velg din éne favorittfrukt"
@@ -391,8 +571,9 @@ const ValideringExample = () => {
                                         ]}
                                         validate={getRequiredFieldValidator()}
                                     />
-                                </Question>
+                                </Panel>
                                 <ValidationErrorList
+                                    title="Feilmeldinger"
                                     errors={{
                                         [ValidateRequiredFieldError.noValue]: {
                                             info: 'ingen element valgt',
@@ -401,16 +582,27 @@ const ValideringExample = () => {
                                     }}
                                 />
                             </ValideringPanel>
-                            <ValideringPanel title="Enkeltvalg i liste">
+                            <ValideringPanel
+                                title="Enkeltvalg i liste"
+                                code={`
+export enum ValidateRequiredFieldError {
+    'noValue' = 'noValue',
+}
+
+type RequiredFieldValidationResult = ValidateRequiredFieldError.noValue | undefined;
+
+const error = getRequiredFieldValidator()(value);
+`}>
                                 <p>Samme valideringslogikk som for en radioliste</p>
-                                <Question>
+                                <Panel>
                                     <Form.CountrySelect
                                         name={FormFields.select}
                                         label="Velg ett land"
                                         validate={getRequiredFieldValidator()}
                                     />
-                                </Question>
+                                </Panel>
                                 <ValidationErrorList
+                                    title="Feilmeldinger"
                                     errors={{
                                         [ValidateRequiredFieldError.noValue]: {
                                             info: 'ikke valgt',
@@ -419,15 +611,26 @@ const ValideringExample = () => {
                                     }}
                                 />
                             </ValideringPanel>
-                            <ValideringPanel title="Avkrysningsvalg">
-                                <Question>
+                            <ValideringPanel
+                                title="Avkrysningsvalg"
+                                code={`
+export enum ValidateCheckedError {
+    'notChecked' = 'notChecked',
+}
+
+type CheckedValidationResult = ValidateCheckedError | undefined;
+
+const error = getCheckedValidator()(value);
+                            `}>
+                                <Panel>
                                     <Form.Checkbox
                                         name={FormFields.checked}
                                         label="Kryss av for at du bare må krysse av denne checkboxen"
                                         validate={getCheckedValidator()}
                                     />
-                                </Question>
+                                </Panel>
                                 <ValidationErrorList
+                                    title="Feilmeldinger"
                                     errors={{
                                         [ValidateCheckedError.notChecked]: {
                                             info: 'ikke valgt',

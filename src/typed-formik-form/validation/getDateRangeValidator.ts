@@ -19,19 +19,12 @@ type DateRangeValidationResult =
     | ValidateDateRangeError.toDateIsBeforeFromDate
     | undefined;
 
-interface FromDateOptions extends DateValidationOptions {
+interface Options extends DateValidationOptions {
+    fromDate?: Date;
     toDate?: Date;
 }
 
-interface ToDateOptions extends DateValidationOptions {
-    fromDate?: Date;
-}
-
-type Options = ToDateOptions & FromDateOptions;
-
-const getFromDateValidator = (options: FromDateOptions): ValidationFunction<DateRangeValidationResult> => (
-    value: any
-) => {
+const getFromDateValidator = (options: Options): ValidationFunction<DateRangeValidationResult> => (value: any) => {
     const dateError = getDateValidator(options)(value);
     if (dateError) {
         return dateError;
@@ -48,7 +41,7 @@ const getFromDateValidator = (options: FromDateOptions): ValidationFunction<Date
     return undefined;
 };
 
-const getToDateValidator = (options: ToDateOptions): ValidationFunction<DateRangeValidationResult> => (value: any) => {
+const getToDateValidator = (options: Options): ValidationFunction<DateRangeValidationResult> => (value: any) => {
     const dateError = getDateValidator(options)(value);
     if (dateError) {
         return dateError;

@@ -161,12 +161,12 @@ const FerieuttakForm: React.FunctionComponent<Props> = ({
                                     fullscreenOverlay: true,
                                     minDate: minDate || formik.values.fom,
                                     maxDate,
-                                    validate: getDateRangeValidator.validateToDate({
+                                    validate: getDateRangeValidator({
                                         fromDate: ISOStringToDate(formik.values.fom),
                                         min: minDate,
                                         max: maxDate,
                                         required: true,
-                                    }),
+                                    }).validateToDate,
                                     onChange: () => {
                                         setTimeout(() => {
                                             formik.validateField(FerieuttakFormFields.fom);

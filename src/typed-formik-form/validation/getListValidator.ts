@@ -6,13 +6,15 @@ export enum ValidateListError {
     listHasTooManyItems = 'listHastooManyItems',
 }
 
+type ListValidationResult = undefined | ValidateListError;
+
 interface Options {
     required?: boolean;
     minItems?: number;
     maxItems?: number;
 }
 
-const getListValidator = (options: Options): ValidationFunction<ValidateListError | undefined> => (value: any) => {
+const getListValidator = (options: Options): ValidationFunction<ListValidationResult> => (value: any) => {
     const { required = false, minItems = undefined, maxItems = undefined } = options;
     if (Array.isArray(value)) {
         const numItems = value.length;

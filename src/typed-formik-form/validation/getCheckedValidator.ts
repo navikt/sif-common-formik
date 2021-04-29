@@ -4,7 +4,9 @@ export enum ValidateCheckedError {
     'notChecked' = 'notChecked',
 }
 
-const getCheckedValidator = (): ValidationFunction<ValidateCheckedError | undefined> => (value: any) => {
+type CheckedValidationResult = ValidateCheckedError | undefined;
+
+const getCheckedValidator = (): ValidationFunction<CheckedValidationResult> => (value: any) => {
     if (value !== true) {
         return ValidateCheckedError.notChecked;
     }
