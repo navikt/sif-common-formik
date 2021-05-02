@@ -1,17 +1,17 @@
-import getRequiredFieldValidator, { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 
 export enum ValidateStringError {
-    notAString = 'notAString',
+    stringHasNoValue = 'stringHasNoValue',
+    stringIsNotAString = 'stringIsNotAString',
     stringIsTooShort = 'stringIsTooShort',
     stringIsTooLong = 'stringIsTooLong',
 }
 
 type StringValidationResult =
     | undefined
-    | ValidateRequiredFieldError.noValue
-    | ValidateStringError.notAString
+    | ValidateStringError.stringHasNoValue
+    | ValidateStringError.stringIsNotAString
     | ValidateStringError.stringIsTooLong
     | ValidateStringError.stringIsTooShort;
 
@@ -23,15 +23,13 @@ interface Options {
 
 const getStringValidator = (options: Options = {}): ValidationFunction<StringValidationResult> => (value: any) => {
     const { required, minLength, maxLength } = options;
-    if (required) {
-        const err = getRequiredFieldValidator()(value);
-        if (err) {
-            return err;
-        }
+
+    if (required && hasValue(value) === false) {
+        return ValidateStringError.stringHasNoValue;
     }
     if (hasValue(value)) {
         if (typeof value !== 'string') {
-            return ValidateStringError.notAString;
+            return ValidateStringError.stringIsNotAString;
         }
         if (minLength !== undefined && value.length < minLength) {
             return ValidateStringError.stringIsTooShort;

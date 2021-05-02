@@ -1,5 +1,5 @@
 import getDateRangeValidator, { ValidateDateRangeError } from '../getDateRangeValidator';
-import { ValidateRequiredFieldError } from '../getRequiredFieldValidator';
+import { ValidateDateError } from '../getDateValidator';
 
 describe('dateRangeValidation', () => {
     it('runs', () => {
@@ -17,9 +17,9 @@ describe('dateRangeValidation', () => {
                 ValidateDateRangeError.fromDateIsAfterToDate
             );
         });
-        it(`returns ${ValidateRequiredFieldError.noValue} if required and date is is undefined`, () => {
+        it(`returns ${ValidateDateError.dateHasNoValue} if required and date is is undefined`, () => {
             expect(getDateRangeValidator({ required: true }).validateFromDate('')).toBe(
-                ValidateRequiredFieldError.noValue
+                ValidateDateError.dateHasNoValue
             );
         });
     });
@@ -38,10 +38,8 @@ describe('dateRangeValidation', () => {
                 ValidateDateRangeError.toDateIsBeforeFromDate
             );
         });
-        it(`returns ${ValidateRequiredFieldError.noValue} if required and date is is undefined`, () => {
-            expect(getDateRangeValidator({ required: true }).validateToDate('')).toBe(
-                ValidateRequiredFieldError.noValue
-            );
+        it(`returns ${ValidateDateError.dateHasNoValue} if required and date is is undefined`, () => {
+            expect(getDateRangeValidator({ required: true }).validateToDate('')).toBe(ValidateDateError.dateHasNoValue);
         });
     });
 });

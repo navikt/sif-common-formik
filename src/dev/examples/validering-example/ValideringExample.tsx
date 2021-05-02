@@ -98,15 +98,16 @@ const error = getYesOrNoValidator()(value);
                                 title="Fritekst"
                                 code={`
 export enum ValidateStringError {
-    notAString = 'notAString',
+    stringHasNoValue = 'stringHasNoValue',
+    stringIsNotAString = 'stringIsNotAString',
     stringIsTooShort = 'stringIsTooShort',
     stringIsTooLong = 'stringIsTooLong',
 }
 
 type StringValidationResult =
     | undefined
-    | ValidateRequiredFieldError.noValue
-    | ValidateStringError.notAString
+    | ValidateStringError.stringHasNoValue
+    | ValidateStringError.stringIsNotAString
     | ValidateStringError.stringIsTooLong
     | ValidateStringError.stringIsTooShort;
 
@@ -132,9 +133,13 @@ const error = getStringValidator(options)(value);
                                 <ValidationErrorList
                                     title="Feilmeldinger"
                                     errors={{
-                                        [ValidateRequiredFieldError.noValue]: {
+                                        [ValidateStringError.stringHasNoValue]: {
                                             info: 'tomt innhold i felt',
                                             example: 'Du har ikke fylt ut hvilken dag det er i dag',
+                                        },
+                                        [ValidateStringError.stringIsNotAString]: {
+                                            info: 'feil type data',
+                                            example: 'Verdien er ikke en gyldig tekst',
                                         },
                                         [ValidateStringError.stringIsTooLong]: {
                                             info: 'for lang tekst',
@@ -151,15 +156,16 @@ const error = getStringValidator(options)(value);
                                 title="Tall"
                                 code={`
 export enum ValidateNumberError {
-    invalidNumberFormat = 'invalidNumberFormat',
+    numberHasNoValue = 'numberHasNoValue',
+    numberHasInvalidFormat = 'numberHasInvalidFormat',
     numberIsTooSmall = 'numberIsTooSmall',
     numberIsTooLarge = 'numberIsTooLarge',
 }
 
 type NumberValidationResult =
     | undefined
-    | ValidateRequiredFieldError.noValue
-    | ValidateNumberError.invalidNumberFormat
+    | ValidateNumberError.numberHasNoValue
+    | ValidateNumberError.numberHasInvalidFormat
     | ValidateNumberError.numberIsTooLarge
     | ValidateNumberError.numberIsTooSmall;
 
@@ -185,11 +191,11 @@ const error = getNumberValidator(options)(value);
                                 <ValidationErrorList
                                     title="Feilmeldinger"
                                     errors={{
-                                        [ValidateRequiredFieldError.noValue]: {
+                                        [ValidateNumberError.numberHasNoValue]: {
                                             info: 'tomt innhold i felt',
                                             example: 'Du har ikke fylt ut hvilken dag det er i dag',
                                         },
-                                        [ValidateNumberError.invalidNumberFormat]: {
+                                        [ValidateNumberError.numberHasInvalidFormat]: {
                                             info: 'verdien er ikke et tall',
                                             example: 'Årstall-feltet inneholder ikke et gyldig formatert tall',
                                         },
@@ -208,18 +214,19 @@ const error = getNumberValidator(options)(value);
                                 title="Dato"
                                 code={`
 export enum ValidateDateError {
-    invalidDateFormat = 'invalidDateFormat',
-    dateBeforeMin = 'dateBeforeMin',
-    dateAfterMax = 'dateAfterMax',
-    dateNotWeekday = 'dateNotWeekday',
+    dateHasNoValue = 'dateHasNoValue',
+    dateHasInvalidFormat = 'dateHasInvalidFormat',
+    dateIsBeforeMin = 'dateIsBeforeMin',
+    dateIsAfterMax = 'dateIsAfterMax',
+    dateIsNotWeekday = 'dateIsNotWeekday',
 }
 
 export type DateValidationResult =
-    | ValidateRequiredFieldError.noValue
-    | ValidateDateError.invalidDateFormat
-    | ValidateDateError.dateBeforeMin
-    | ValidateDateError.dateAfterMax
-    | ValidateDateError.dateNotWeekday
+    | ValidateDateError.dateHasNoValue
+    | ValidateDateError.dateHasInvalidFormat
+    | ValidateDateError.dateIsBeforeMin
+    | ValidateDateError.dateIsAfterMax
+    | ValidateDateError.dateIsNotWeekday
     | undefined;
 
 export interface DateValidationOptions {
@@ -247,20 +254,20 @@ const error = getDateValidator(options)(value);
                                 <ValidationErrorList
                                     title="Feilmeldinger"
                                     errors={{
-                                        [ValidateRequiredFieldError.noValue]: {
+                                        [ValidateDateError.dateHasNoValue]: {
                                             info: 'tomt innhold i felt',
                                             example: 'Du har ikke fylt ut hvilken dag det er i dag',
                                         },
-                                        [ValidateDateError.invalidDateFormat]: {
+                                        [ValidateDateError.dateHasInvalidFormat]: {
                                             info: 'ugyldig verdi',
                                             example:
                                                 'Datoen i 2021 har ikke gyldig format. Formatet må være dd.mm.åååå',
                                         },
-                                        [ValidateDateError.dateBeforeMin]: {
+                                        [ValidateDateError.dateIsBeforeMin]: {
                                             info: 'dato er for tidlig',
                                             example: 'Datoen er for tidlig, første gyldige dato er 1. januar 2021',
                                         },
-                                        [ValidateDateError.dateAfterMax]: {
+                                        [ValidateDateError.dateIsAfterMax]: {
                                             info: 'dato er for sen',
                                             example: 'Datoen er for sen, siste gyldige dato er 31. desember 2021',
                                         },
@@ -325,15 +332,15 @@ const errorToDate = getDateRangeValidator(options).validateToDate(value);
                                             info: 'ingen verdi',
                                             example: 'Du må velge fra-dato',
                                         },
-                                        [ValidateDateError.invalidDateFormat]: {
+                                        [ValidateDateError.dateHasInvalidFormat]: {
                                             info: 'ugyldig verdi',
                                             example: 'Fra-dato har ikke gyldig format. Formatet må være dd.mm.åååå',
                                         },
-                                        [ValidateDateError.dateBeforeMin]: {
+                                        [ValidateDateError.dateIsBeforeMin]: {
                                             info: 'dato er for tidlig',
                                             example: 'Fra-dato er for tidlig, første gyldige dato er 1. januar 2021',
                                         },
-                                        [ValidateDateError.dateAfterMax]: {
+                                        [ValidateDateError.dateIsAfterMax]: {
                                             info: 'dato er for sen',
                                             example: 'Fra-dato er for sen, siste gyldige dato er 31. desember 2021',
                                         },
@@ -351,16 +358,16 @@ const errorToDate = getDateRangeValidator(options).validateToDate(value);
                                                 info: 'ingen verdi',
                                                 example: 'Du må velge til-dato',
                                             },
-                                            [ValidateDateError.invalidDateFormat]: {
+                                            [ValidateDateError.dateHasInvalidFormat]: {
                                                 info: 'ugyldig verdi',
                                                 example: 'Til-dato har ikke gyldig format. Formatet må være dd.mm.åååå',
                                             },
-                                            [ValidateDateError.dateBeforeMin]: {
+                                            [ValidateDateError.dateIsBeforeMin]: {
                                                 info: 'dato er for tidlig',
                                                 example:
                                                     'Til-dato er for tidlig, første gyldige dato er 1. januar 2021',
                                             },
-                                            [ValidateDateError.dateAfterMax]: {
+                                            [ValidateDateError.dateIsAfterMax]: {
                                                 info: 'dato er for sen',
                                                 example: 'Til-dato er for sen, siste gyldige dato er 31. desember 2021',
                                             },
@@ -376,16 +383,17 @@ const errorToDate = getDateRangeValidator(options).validateToDate(value);
                                 title="Norsk fødselsnummer/D-nummer"
                                 code={`
 export enum ValidateFødselsnummerError {
-    fødselsnummerNot11Chars = 'fødselsnummerNot11Chars',
-    invalidFødselsnummer = 'invalidFødselsnummer',
-    disallowedFødselsnummer = 'disallowedFødselsnummer',
+    fødselsnummerHasNoValue = 'fødselsnummerHasNoValue',
+    fødselsnummerIsNot11Chars = 'fødselsnummerIsNot11Chars',
+    fødselsnummerIsInvalid = 'fødselsnummerIsInvalid',
+    fødselsnummerIsNotAllowed = 'fødselsnummerIsNotAllowed',
 }
 
 type FødselsnummerValidationResult =
-    | ValidateRequiredFieldError.noValue
-    | ValidateFødselsnummerError.disallowedFødselsnummer
-    | ValidateFødselsnummerError.fødselsnummerNot11Chars
-    | ValidateFødselsnummerError.invalidFødselsnummer
+    | ValidateFødselsnummerError.fødselsnummerHasNoValue
+    | ValidateFødselsnummerError.fødselsnummerIsNotAllowed
+    | ValidateFødselsnummerError.fødselsnummerIsNot11Chars
+    | ValidateFødselsnummerError.fødselsnummerIsInvalid
     | undefined;
 
 interface Options {
@@ -411,20 +419,20 @@ const error = getFødselsnummerValidator(options)(value);
                                 <ValidationErrorList
                                     title="Feilmeldinger"
                                     errors={{
-                                        [ValidateRequiredFieldError.noValue]: {
+                                        [ValidateFødselsnummerError.fødselsnummerHasNoValue]: {
                                             info: 'ingen verdi',
                                             example: 'Du må fylle ut fødselsnummeret',
                                         },
-                                        [ValidateFødselsnummerError.fødselsnummerNot11Chars]: {
+                                        [ValidateFødselsnummerError.fødselsnummerIsNot11Chars]: {
                                             info: 'ikke 11 tegn',
                                             example: 'Fødselsnummeret må bestå av 11 siffer',
                                         },
-                                        [ValidateFødselsnummerError.invalidFødselsnummer]: {
+                                        [ValidateFødselsnummerError.fødselsnummerIsInvalid]: {
                                             info: 'ikke 11 tegn',
                                             example:
                                                 'Fødselsnummeret inneholder 11 siffer, men det er ikke et gyldig norsk fødselsnummer',
                                         },
-                                        [ValidateFødselsnummerError.disallowedFødselsnummer]: {
+                                        [ValidateFødselsnummerError.fødselsnummerIsNotAllowed]: {
                                             info: 'ikke tillatt fødselsnummer',
                                             example:
                                                 'Fødselsnummeret du har fylt ut ditt eget. Du må fylle ut barnets fødselsnummer',
@@ -436,13 +444,14 @@ const error = getFødselsnummerValidator(options)(value);
                                 title="Organisasjonsnummer"
                                 code={`
 export enum ValidateOrgNumberError {
-    invalidOrgNumberFormat = 'invalidOrgNumberFormat',
+    orgNumberHasNoValue = 'orgNumberHasNoValue',
+    orgNumberHasInvalidFormat = 'orgNumberHasInvalidFormat',
 }
 
 type OrgNumberValidationResult =
     | undefined
-    | ValidateRequiredFieldError.noValue
-    | ValidateOrgNumberError.invalidOrgNumberFormat;
+    | ValidateOrgNumberError.orgNumberHasNoValue
+    | ValidateOrgNumberError.orgNumberHasInvalidFormat;
 
 interface Options {
     required?: boolean;
@@ -459,11 +468,11 @@ const error = getOrgNumberValidator(options)(value);
                                 <ValidationErrorList
                                     title="Feilmeldinger"
                                     errors={{
-                                        [ValidateRequiredFieldError.noValue]: {
+                                        [ValidateOrgNumberError.orgNumberHasNoValue]: {
                                             info: 'ingen verdi',
                                             example: 'Du må fylle ut NAVs organisasjonsnummer',
                                         },
-                                        [ValidateOrgNumberError.invalidOrgNumberFormat]: {
+                                        [ValidateOrgNumberError.orgNumberHasInvalidFormat]: {
                                             info: 'ugyldig orgnummer',
                                             example: 'Organisasjonsnummeret er ikke gyldig',
                                         },

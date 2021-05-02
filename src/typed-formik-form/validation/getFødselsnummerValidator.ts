@@ -1,19 +1,19 @@
 import fnrvalidator from '@navikt/fnrvalidator';
-import getRequiredFieldValidator, { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 
 export enum ValidateFødselsnummerError {
-    fødselsnummerNot11Chars = 'fødselsnummerNot11Chars',
-    invalidFødselsnummer = 'invalidFødselsnummer',
-    disallowedFødselsnummer = 'disallowedFødselsnummer',
+    fødselsnummerHasNoValue = 'fødselsnummerHasNoValue',
+    fødselsnummerIsNot11Chars = 'fødselsnummerIsNot11Chars',
+    fødselsnummerIsInvalid = 'fødselsnummerIsInvalid',
+    fødselsnummerIsNotAllowed = 'fødselsnummerIsNotAllowed',
 }
 
 type FødselsnummerValidationResult =
-    | ValidateRequiredFieldError.noValue
-    | ValidateFødselsnummerError.disallowedFødselsnummer
-    | ValidateFødselsnummerError.fødselsnummerNot11Chars
-    | ValidateFødselsnummerError.invalidFødselsnummer
+    | ValidateFødselsnummerError.fødselsnummerHasNoValue
+    | ValidateFødselsnummerError.fødselsnummerIsNotAllowed
+    | ValidateFødselsnummerError.fødselsnummerIsNot11Chars
+    | ValidateFødselsnummerError.fødselsnummerIsInvalid
     | undefined;
 
 interface Options {
@@ -28,11 +28,8 @@ const getFødselsnummerValidator = (options: Options = {}): ValidationFunction<F
     if (hasValue(value) === false && required === false) {
         return undefined;
     }
-    if (required) {
-        const err = getRequiredFieldValidator()(value);
-        if (err) {
-            return err;
-        }
+    if (required && hasValue(value) === false) {
+        return ValidateFødselsnummerError.fødselsnummerHasNoValue;
     }
     if (hasValue(value)) {
         const result = fnrvalidator.fnr(value);
@@ -41,14 +38,14 @@ const getFødselsnummerValidator = (options: Options = {}): ValidationFunction<F
             const LENGTH_ERROR = 'fnr or dnr must consist of 11 digits';
             const { reasons } = result;
             if (reasons.includes(LENGTH_ERROR)) {
-                return ValidateFødselsnummerError.fødselsnummerNot11Chars;
+                return ValidateFødselsnummerError.fødselsnummerIsNot11Chars;
             }
-            return ValidateFødselsnummerError.invalidFødselsnummer;
+            return ValidateFødselsnummerError.fødselsnummerIsInvalid;
         }
         if (disallowedValues) {
             const equalsDisallowedValue = disallowedValues.some((f) => f === value);
             if (equalsDisallowedValue) {
-                return ValidateFødselsnummerError.disallowedFødselsnummer;
+                return ValidateFødselsnummerError.fødselsnummerIsNotAllowed;
             }
         }
     }

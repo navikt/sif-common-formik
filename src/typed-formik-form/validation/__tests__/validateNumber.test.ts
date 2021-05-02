@@ -1,5 +1,4 @@
 import getNumberValidator, { ValidateNumberError } from '../getNumberValidator';
-import { ValidateRequiredFieldError } from '../getRequiredFieldValidator';
 
 describe(`validateNumber`, () => {
     it(`returns undefined when not required and value is empty`, () => {
@@ -13,12 +12,12 @@ describe(`validateNumber`, () => {
         expect(getNumberValidator()(1)).toBeUndefined();
         expect(getNumberValidator()(2)).toBeUndefined();
     });
-    it(`returns ${ValidateRequiredFieldError.noValue} when value is required and value is empty, undefined or null`, () => {
-        expect(getNumberValidator({ required: true })('')).toEqual(ValidateRequiredFieldError.noValue);
+    it(`returns ${ValidateNumberError.numberHasNoValue} when value is required and value is empty, undefined or null`, () => {
+        expect(getNumberValidator({ required: true })('')).toEqual(ValidateNumberError.numberHasNoValue);
     });
-    it(`returns ${ValidateNumberError.invalidNumberFormat} when hasValue and value has invalid format`, () => {
-        expect(getNumberValidator()('1.2.3')).toEqual(ValidateNumberError.invalidNumberFormat);
-        expect(getNumberValidator()([1])).toEqual(ValidateNumberError.invalidNumberFormat);
+    it(`returns ${ValidateNumberError.numberHasInvalidFormat} when hasValue and value has invalid format`, () => {
+        expect(getNumberValidator()('1.2.3')).toEqual(ValidateNumberError.numberHasInvalidFormat);
+        expect(getNumberValidator()([1])).toEqual(ValidateNumberError.numberHasInvalidFormat);
     });
     it(`returns ${ValidateNumberError.numberIsTooSmall} if number is valid and too small`, () => {
         expect(getNumberValidator({ min: 2 })('1')).toEqual(ValidateNumberError.numberIsTooSmall);

@@ -1,17 +1,17 @@
 import { ValidationFunction } from './types';
-import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 import { hasValue } from './validationUtils';
 
 export enum ValidateNumberError {
-    invalidNumberFormat = 'invalidNumberFormat',
+    numberHasNoValue = 'numberHasNoValue',
+    numberHasInvalidFormat = 'numberHasInvalidFormat',
     numberIsTooSmall = 'numberIsTooSmall',
     numberIsTooLarge = 'numberIsTooLarge',
 }
 
 type NumberValidationResult =
     | undefined
-    | ValidateRequiredFieldError.noValue
-    | ValidateNumberError.invalidNumberFormat
+    | ValidateNumberError.numberHasNoValue
+    | ValidateNumberError.numberHasInvalidFormat
     | ValidateNumberError.numberIsTooLarge
     | ValidateNumberError.numberIsTooSmall;
 
@@ -41,12 +41,12 @@ const getNumberValidator = (options: Options = {}): ValidationFunction<NumberVal
     const numberValue = getNumberFromStringInput(value);
 
     if (hasValue(value) === false && required) {
-        return ValidateRequiredFieldError.noValue;
+        return ValidateNumberError.numberHasNoValue;
     }
 
     if (hasValue(value)) {
         if (numberValue === undefined) {
-            return ValidateNumberError.invalidNumberFormat;
+            return ValidateNumberError.numberHasInvalidFormat;
         }
         if (min !== undefined && numberValue < min) {
             return ValidateNumberError.numberIsTooSmall;

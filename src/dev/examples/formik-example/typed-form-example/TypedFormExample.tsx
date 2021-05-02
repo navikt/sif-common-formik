@@ -113,9 +113,9 @@ const TypedFormExample = () => {
                                     required: true,
                                     disallowedValues: values.fødselsnummer ? [values.fødselsnummer] : undefined,
                                 })(value);
-                                if (error === ValidateFødselsnummerError.disallowedFødselsnummer) {
+                                if (error === ValidateFødselsnummerError.fødselsnummerIsNotAllowed) {
                                     return {
-                                        key: 'fødselsnummer.disallowedFødselsnummerCustom',
+                                        key: 'fødselsnummer.fødselsnummerIsNotAllowed',
                                         values: {
                                             info: ' (du har tastet inn ditt eget fødselsnummer)',
                                         },

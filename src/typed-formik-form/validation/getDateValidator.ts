@@ -1,11 +1,9 @@
 import dayjs from 'dayjs';
+import isoWeek from 'dayjs/plugin/isoWeek';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
-import isoWeek from 'dayjs/plugin/isoWeek';
 import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
-import { getRequiredFieldValidator } from '.';
 import { ValidationFunction } from './types';
-import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 import { hasValue } from './validationUtils';
 
 dayjs.extend(isSameOrAfter);
@@ -13,18 +11,19 @@ dayjs.extend(isSameOrBefore);
 dayjs.extend(isoWeek);
 
 export enum ValidateDateError {
-    invalidDateFormat = 'invalidDateFormat',
-    dateBeforeMin = 'dateBeforeMin',
-    dateAfterMax = 'dateAfterMax',
-    dateNotWeekday = 'dateNotWeekday',
+    dateHasNoValue = 'dateHasNoValue',
+    dateHasInvalidFormat = 'dateHasInvalidFormat',
+    dateIsBeforeMin = 'dateIsBeforeMin',
+    dateIsAfterMax = 'dateIsAfterMax',
+    dateIsNotWeekday = 'dateIsNotWeekday',
 }
 
 export type DateValidationResult =
-    | ValidateRequiredFieldError.noValue
-    | ValidateDateError.invalidDateFormat
-    | ValidateDateError.dateBeforeMin
-    | ValidateDateError.dateAfterMax
-    | ValidateDateError.dateNotWeekday
+    | ValidateDateError.dateHasNoValue
+    | ValidateDateError.dateHasInvalidFormat
+    | ValidateDateError.dateIsBeforeMin
+    | ValidateDateError.dateIsAfterMax
+    | ValidateDateError.dateIsNotWeekday
     | undefined;
 
 export interface DateValidationOptions {
@@ -39,25 +38,21 @@ const getDateValidator = (options: DateValidationOptions = {}): ValidationFuncti
 ) => {
     const { required, min, max, onlyWeekdays } = options;
     const date = datepickerUtils.getDateFromDateString(value);
-    if (required) {
-        const err = getRequiredFieldValidator()(value);
-        if (err) {
-            return err;
-        }
+    if (required && hasValue(value) === false) {
+        return ValidateDateError.dateHasNoValue;
     }
-
     if (hasValue(value)) {
         if (date === undefined) {
-            return ValidateDateError.invalidDateFormat;
+            return ValidateDateError.dateHasInvalidFormat;
         }
         if (min && dayjs(date).isBefore(min, 'day')) {
-            return ValidateDateError.dateBeforeMin;
+            return ValidateDateError.dateIsBeforeMin;
         }
         if (max && dayjs(date).isAfter(max, 'day')) {
-            return ValidateDateError.dateAfterMax;
+            return ValidateDateError.dateIsAfterMax;
         }
         if (onlyWeekdays && dayjs(date).isoWeekday() > 5) {
-            return ValidateDateError.dateNotWeekday;
+            return ValidateDateError.dateIsNotWeekday;
         }
     }
     return undefined;
