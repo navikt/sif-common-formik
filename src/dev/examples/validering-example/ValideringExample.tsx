@@ -328,7 +328,7 @@ const errorToDate = getDateRangeValidator(options).validateToDate(value);
                                 <ValidationErrorList
                                     title="Feilmeldinger - Fra-dato"
                                     errors={{
-                                        [ValidateRequiredFieldError.noValue]: {
+                                        [ValidateDateError.dateHasNoValue]: {
                                             info: 'ingen verdi',
                                             example: 'Du må velge fra-dato',
                                         },
@@ -354,7 +354,7 @@ const errorToDate = getDateRangeValidator(options).validateToDate(value);
                                     <ValidationErrorList
                                         title="Feilmeldinger - Til-dato"
                                         errors={{
-                                            [ValidateRequiredFieldError.noValue]: {
+                                            [ValidateDateError.dateHasNoValue]: {
                                                 info: 'ingen verdi',
                                                 example: 'Du må velge til-dato',
                                             },
