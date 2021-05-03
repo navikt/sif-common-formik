@@ -29,7 +29,6 @@ import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
 import Friends from './Friends';
-import { fallbackValidationIntlKeys } from '../../../../typed-formik-form/validation/fallbackValidationMessages';
 
 const Form = getTypedFormComponents<FormFields, FormValues, ValidationError>();
 
@@ -37,6 +36,8 @@ const TypedFormExample = () => {
     const { values } = useFormikContext<FormValues>();
     const { setFieldValue } = useFormikContext<FormValues>();
     const intl = useIntl();
+    const minDate = dayjs().subtract(2, 'month').toDate();
+    const maxDate = dayjs().add(1, 'month').toDate();
     return (
         <Form.Form
             submitButtonLabel="Ok"
@@ -71,6 +72,22 @@ const TypedFormExample = () => {
                     }
                 />
             </Question>
+            <Question>
+                <FormikDateRangePicker
+                    legend="DateRangePicker"
+                    disableWeekend={true}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    fromInputProps={{
+                        name: FormFields.daterange_from,
+                        label: 'Fra',
+                    }}
+                    toInputProps={{
+                        name: FormFields.daterange_to,
+                        label: 'Til',
+                    }}
+                />
+            </Question>
 
             {1 + 1 === 3 && (
                 <>
@@ -95,13 +112,7 @@ const TypedFormExample = () => {
                             type="text"
                             label="Fornavn"
                             name={FormFields.firstname}
-                            validate={(value) =>
-                                getRequiredFieldValidator()(value)
-                                    ? {
-                                          key: fallbackValidationIntlKeys.noValue,
-                                      }
-                                    : undefined
-                            }
+                            validate={getRequiredFieldValidator()}
                         />
                     </Question>{' '}
                     <Question>
@@ -209,22 +220,6 @@ const TypedFormExample = () => {
                                 label: 'Til',
                                 minDate: ISOStringToDate(values.daterange_from),
                                 validate: getRequiredFieldValidator(),
-                            }}
-                        />
-                    </Question>
-                    <Question>
-                        <FormikDateRangePicker
-                            legend="DateRangePicker"
-                            disableWeekend={true}
-                            minDate={dayjs().subtract(4, 'month').toDate()}
-                            maxDate={dayjs().add(4, 'month').toDate()}
-                            fromInputProps={{
-                                name: FormFields.daterange_from,
-                                label: 'Fra',
-                            }}
-                            toInputProps={{
-                                name: FormFields.daterange_to,
-                                label: 'Til',
                             }}
                         />
                     </Question>
