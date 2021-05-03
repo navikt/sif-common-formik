@@ -110,7 +110,7 @@ export const getMaxDateForRangeEnd = ({
     const follwingDateRange = getClosestDateRangeAfterDate(baseDate, dateRanges);
     const followingDate = getFollowingDate(follwingDateRange, allowRangesToStartAndStopOnSameDate);
     const dates: Date[] = [...(maxDate ? [maxDate] : []), ...(followingDate ? [followingDate] : [])];
-    return findClosestDateAfterDate(baseDate, dates);
+    return findClosestDateAfterDate(baseDate, dates) || maxDate;
 };
 
 const getPreceedingDate = (
@@ -140,6 +140,7 @@ export const getMinDateForRangeStart = ({
     const preceedingDateRange = getClosestDateRangeBeforeDate(toDate, dateRanges);
     const preceedingDate = getPreceedingDate(preceedingDateRange, allowRangesToStartAndStopOnSameDate);
     const dates: Date[] = [...(minDate ? [minDate] : []), ...(preceedingDate ? [preceedingDate] : [])];
+
     return findClosestDateBeforeDate(toDate, dates);
 };
 
