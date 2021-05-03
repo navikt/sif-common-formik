@@ -37,6 +37,8 @@ const TypedFormExample = () => {
     const { values } = useFormikContext<FormValues>();
     const { setFieldValue } = useFormikContext<FormValues>();
     const intl = useIntl();
+    const minDate = dayjs().subtract(2, 'month').toDate();
+    const maxDate = dayjs().add(1, 'month').toDate();
     return (
         <Form.Form
             submitButtonLabel="Ok"
@@ -69,6 +71,22 @@ const TypedFormExample = () => {
                             () => getFødselsnummerValidator({ required: true })(value),
                         ])
                     }
+                />
+            </Question>
+            <Question>
+                <FormikDateRangePicker
+                    legend="DateRangePicker"
+                    disableWeekend={true}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    fromInputProps={{
+                        name: FormFields.daterange_from,
+                        label: 'Fra',
+                    }}
+                    toInputProps={{
+                        name: FormFields.daterange_to,
+                        label: 'Til',
+                    }}
                 />
             </Question>
 
@@ -209,22 +227,6 @@ const TypedFormExample = () => {
                                 label: 'Til',
                                 minDate: ISOStringToDate(values.daterange_from),
                                 validate: getRequiredFieldValidator(),
-                            }}
-                        />
-                    </Question>
-                    <Question>
-                        <FormikDateRangePicker
-                            legend="DateRangePicker"
-                            disableWeekend={true}
-                            minDate={dayjs().subtract(4, 'month').toDate()}
-                            maxDate={dayjs().add(4, 'month').toDate()}
-                            fromInputProps={{
-                                name: FormFields.daterange_from,
-                                label: 'Fra',
-                            }}
-                            toInputProps={{
-                                name: FormFields.daterange_to,
-                                label: 'Til',
                             }}
                         />
                     </Question>

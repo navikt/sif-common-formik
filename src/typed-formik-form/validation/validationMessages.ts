@@ -1,26 +1,38 @@
-import { ValidateCheckedError } from './getCheckedValidator';
-import { ValidateDateRangeError } from './getDateRangeValidator';
-import { ValidateDateError } from './getDateValidator';
-import { ValidateFødselsnummerError } from './getFødselsnummerValidator';
-import { ValidateListError } from './getListValidator';
-import { ValidateNumberError } from './getNumberValidator';
-import { ValidateOrgNumberError } from './getOrgNumberValidator';
-import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
-import { ValidateStringError } from './getStringValidator';
-import { ValidateYesOrNoError } from './getYesOrNoValidator';
+import { ValidateCheckedError } from './';
+import { ValidateDateRangeError } from './';
+import { ValidateDateError } from './';
+import { ValidateFødselsnummerError } from './';
+import { ValidateListError } from './';
+import { ValidateNumberError } from './';
+import { ValidateOrgNumberError } from './';
+import { ValidateRequiredFieldError } from './';
+import { ValidateStringError } from './';
+import { ValidateYesOrNoError } from './';
 
 export const validationMessages = {
     [ValidateRequiredFieldError.noValue]: ({ hva }: { hva: string }) => `Du må svare på ${hva}.`,
+
     [ValidateCheckedError.notChecked]: ({ hva }: { hva: string }) => `Du må krysse av for ${hva}.`,
-    [ValidateDateError.dateHasNoValue]: ({ hva }: { hva: string }) =>
-        `Du må oppgi en dato for ${hva}. Skriv inn eller velg dato.`,
+
+    /** Du må oppgi {hva}. Skriv inn eller velg dato. */
+    [ValidateDateError.dateHasNoValue]: ({ hva }: { hva: string }) => `Du må oppgi ${hva}. Skriv inn eller velg dato.`,
+
+    /** Du må oppgi {hva} i et gyldig format. Gyldig format er dd.mm.åååå. */
     [ValidateDateError.dateHasInvalidFormat]: ({ hva }: { hva: string }) =>
-        `Du må oppgi dato for ${hva} i et gyldig format. Gyldig format er dd.mm.åååå.`,
-    [ValidateDateError.dateIsBeforeMin]: ({ dato, mindato }: { dato: string; mindato: string }) =>
-        `${dato} kan ikke være før ${mindato}. Skriv inn eller velg sluttdato fra datovelgeren.`,
-    [ValidateDateError.dateIsAfterMax]: ({ dato, maksdato }: { dato: string; maksdato: string }) =>
-        `${dato} kan ikke være etter ${maksdato}. Skriv inn eller velg dato fra datovelgeren.`,
+        `Du må oppgi ${hva} i et gyldig format. Gyldig format er dd.mm.åååå.`,
+
+    /** ${hva} kan ikke være før ${min}. Skriv inn eller velg sluttdato fra datovelgeren. */
+    [ValidateDateError.dateIsBeforeMin]: ({ hva, min }: { hva: string; min: string }) =>
+        `${hva} kan ikke være før ${min}. Skriv inn eller velg sluttdato fra datovelgeren.`,
+
+    /** ${hva} kan ikke være etter ${maks}. Skriv inn eller velg dato fra datovelgeren. */
+    [ValidateDateError.dateIsAfterMax]: ({ hva, maks }: { hva: string; maks: string }) =>
+        `${hva} kan ikke være etter ${maks}. Skriv inn eller velg dato fra datovelgeren.`,
+
+    /** Lørdag og søndag kan ikke velges. Velg en annen ukedag. */
     [ValidateDateError.dateIsNotWeekday]: `Lørdag og søndag kan ikke velges. Velg en annen ukedag.`,
+
+    /** ${startdato} kan ikke være etter ${sluttdato}. Skriv inn eller velg dato fra datovelgeren. */
     [ValidateDateRangeError.fromDateIsAfterToDate]: ({
         sluttdato,
         startdato,
@@ -28,6 +40,8 @@ export const validationMessages = {
         sluttdato: string;
         startdato: string;
     }) => `${startdato} kan ikke være etter ${sluttdato}. Skriv inn eller velg dato fra datovelgeren.`,
+
+    /** ${sluttdato} kan ikke være før ${startdato}. Skriv inn eller velg sluttdato fra datovelgeren. */
     [ValidateDateRangeError.toDateIsBeforeFromDate]: ({
         sluttdato,
         startdato,
@@ -35,6 +49,7 @@ export const validationMessages = {
         sluttdato: string;
         startdato: string;
     }) => `${sluttdato} kan ikke være før ${startdato}. Skriv inn eller velg sluttdato fra datovelgeren.`,
+
     [ValidateFødselsnummerError.fødselsnummerHasNoValue]: ({ fødselsnummeret }: { fødselsnummeret: string }) =>
         `Skriv inn ${fødselsnummeret}.`,
     [ValidateFødselsnummerError.fødselsnummerIsNot11Chars]: ({ fødselsnummeret }: { fødselsnummeret: string }) =>
