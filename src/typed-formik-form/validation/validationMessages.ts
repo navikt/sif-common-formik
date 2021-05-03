@@ -1,4 +1,3 @@
-import { MessageFileFormat } from '../../dev/utils/devIntlUtils';
 import { ValidateCheckedError } from './getCheckedValidator';
 import { ValidateDateRangeError } from './getDateRangeValidator';
 import { ValidateDateError } from './getDateValidator';
@@ -9,6 +8,12 @@ import { ValidateOrgNumberError } from './getOrgNumberValidator';
 import { ValidateRequiredFieldError } from './getRequiredFieldValidator';
 import { ValidateStringError } from './getStringValidator';
 import { ValidateYesOrNoError } from './getYesOrNoValidator';
+
+export interface MessageFileFormat {
+    [locale: string]: {
+        [key: string]: string;
+    };
+}
 
 export interface ValidationMessages {
     [ValidateRequiredFieldError.noValue]: string;
