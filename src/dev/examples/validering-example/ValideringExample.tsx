@@ -34,6 +34,8 @@ import PageIntro from '../../components/page-intro/PageIntro';
 import ValidationErrorList from '../../components/validation-errors/ValidationErrorList';
 import { FormFields, FormValues } from './types';
 import ValideringPanel from './ValideringPanel';
+import { dateToday } from '../../utils/dateUtils';
+import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
 
 const initialValues: FormValues = {
     liste: [],
@@ -80,7 +82,7 @@ const error = getYesOrNoValidator()(value);
                                 <Panel>
                                     <Form.YesOrNoQuestion
                                         name={FormFields.jaNeiSpørsmål}
-                                        legend="Du må svare ja eller nei"
+                                        legend="Har du søkt om andre ytelser i perioden du søker for?"
                                         validate={getYesOrNoValidator()}></Form.YesOrNoQuestion>
                                 </Panel>
                                 <ValidationErrorList
@@ -88,7 +90,8 @@ const error = getYesOrNoValidator()(value);
                                     errors={{
                                         [ValidateYesOrNoError.yesOrNoIsUnanswered]: {
                                             info: 'spørsmål er ikke besvart',
-                                            example: 'Du har ikke svart om du sier ja eller nei',
+                                            example:
+                                                'Du må svare ja eller nei på om du har søkt andre ytelser i perioden du søker for',
                                         },
                                     }}
                                 />
@@ -122,7 +125,7 @@ const error = getStringValidator(options)(value);
                                 <Panel>
                                     <Form.Input
                                         name={FormFields.tekst}
-                                        label="Skriv inn hvilken dag det er i dag - bruk mellom 5 og 20 tegn"
+                                        label="Hva er navnet på dagen i dag? Bruk mellom 5 og 20 tegn"
                                         bredde="L"
                                         validate={getStringValidator({
                                             required: true,
@@ -135,19 +138,19 @@ const error = getStringValidator(options)(value);
                                     errors={{
                                         [ValidateStringError.stringHasNoValue]: {
                                             info: 'tomt innhold i felt',
-                                            example: 'Du har ikke fylt ut hvilken dag det er i dag',
+                                            example: 'Skriv inn hvilken dag det er i dag',
                                         },
                                         [ValidateStringError.stringIsNotAString]: {
                                             info: 'feil type data',
-                                            example: 'Verdien er ikke en gyldig tekst',
+                                            example: 'Navnet på dagen i dag er ikke gyldig',
                                         },
                                         [ValidateStringError.stringIsTooLong]: {
                                             info: 'for lang tekst',
-                                            example: 'Du har brukt for mange tegn for å si hvilken dag det er i dag',
+                                            example: 'Navnet på dagen i dag kan ikke inneholde flere enn 20 tegn.',
                                         },
                                         [ValidateStringError.stringIsTooShort]: {
                                             info: 'for kort tekst',
-                                            example: 'Du har brukt for få tegn for å si hvilken dag det er i dag',
+                                            example: 'Navnet på dagen i dag må inneholde minst 5 tegn',
                                         },
                                     }}
                                 />
@@ -180,7 +183,7 @@ const error = getNumberValidator(options)(value);
                                 <Panel>
                                     <Form.NumberInput
                                         name={FormFields.tall}
-                                        label="Skriv inn et årstall mellom 1999 og 2021"
+                                        label="Hva er næringsinntekten for virksomheten?"
                                         bredde="S"
                                         validate={getNumberValidator({
                                             required: true,
@@ -193,19 +196,20 @@ const error = getNumberValidator(options)(value);
                                     errors={{
                                         [ValidateNumberError.numberHasNoValue]: {
                                             info: 'tomt innhold i felt',
-                                            example: 'Du har ikke fylt ut hvilken dag det er i dag',
+                                            example: 'Du må oppgi næringsinntekt for virksomheten',
                                         },
                                         [ValidateNumberError.numberHasInvalidFormat]: {
                                             info: 'verdien er ikke et tall',
-                                            example: 'Årstall-feltet inneholder ikke et gyldig formatert tall',
-                                        },
-                                        [ValidateNumberError.numberIsTooLarge]: {
-                                            info: 'for stort tall',
-                                            example: `Årstallet kan ikke være etter 2021`,
+                                            example:
+                                                'Du må oppgi et gyldig tall for næringsinntekten i virksomheten. Et gyldig tall inneholder kun siffer.',
                                         },
                                         [ValidateNumberError.numberIsTooSmall]: {
                                             info: 'for lavt tall',
-                                            example: `Årstallet kan ikke være før 1999`,
+                                            example: `Tallet du har oppgitt som næringsinntekt for virksomheten er for lavt. Tallet kan ikke være lavere enn 0.`,
+                                        },
+                                        [ValidateNumberError.numberIsTooLarge]: {
+                                            info: 'for stort tall',
+                                            example: `Tallet du har oppgitt som næringsinntekt for virksomheten er for høyt. Tallet kan ikke være høyere enn 99999999.`,
                                         },
                                     }}
                                 />
@@ -241,12 +245,14 @@ const error = getDateValidator(options)(value);
                                 <Panel>
                                     <Form.DatePicker
                                         name={FormFields.dato}
-                                        label={'Velg en dato i 2021 som ikke er en lørdag eller søndag'}
+                                        label={
+                                            'Når startet du i arbeidslivet? Dersom dette var en lørdag eller søndag, velg påfølgende mandag.'
+                                        }
                                         showYearSelector={true}
                                         validate={getDateValidator({
                                             required: true,
-                                            min: new Date(2021, 0, 1),
-                                            max: new Date(2021, 11, 31),
+                                            min: new Date(2015, 0, 1),
+                                            max: dateToday,
                                             onlyWeekdays: true,
                                         })}
                                     />
@@ -256,20 +262,24 @@ const error = getDateValidator(options)(value);
                                     errors={{
                                         [ValidateDateError.dateHasNoValue]: {
                                             info: 'tomt innhold i felt',
-                                            example: 'Du har ikke fylt ut hvilken dag det er i dag',
+                                            example:
+                                                'Du må oppgi dato for når du begynte i arbeidslivet. Skriv inn eller velg dato fra datovelgeren.',
                                         },
                                         [ValidateDateError.dateHasInvalidFormat]: {
                                             info: 'ugyldig verdi',
                                             example:
-                                                'Datoen i 2021 har ikke gyldig format. Formatet må være dd.mm.åååå',
+                                                'Du må oppgi dato for når du begynte i arbeidslivet i et gyldig format. Gyldig format er dd.mm.åååå.',
                                         },
                                         [ValidateDateError.dateIsBeforeMin]: {
                                             info: 'dato er for tidlig',
-                                            example: 'Datoen er for tidlig, første gyldige dato er 1. januar 2021',
+                                            example: `Datoen for når du begynte i arbeidslivet kan ikke være før ${prettifyDate(
+                                                new Date(2015, 0, 1)
+                                            )}. Skriv inn eller velg dato fra datovelgeren.`,
                                         },
                                         [ValidateDateError.dateIsAfterMax]: {
                                             info: 'dato er for sen',
-                                            example: 'Datoen er for sen, siste gyldige dato er 31. desember 2021',
+                                            example:
+                                                'Datoen for når du begynte i arbeidslivet kan ikke være etter dagens dato. Skriv inn eller velg dato fra datovelgeren.',
                                         },
                                     }}
                                 />
@@ -298,9 +308,9 @@ const errorToDate = getDateRangeValidator(options).validateToDate(value);
                                 `}>
                                 <Panel>
                                     <Form.DateRangePicker
-                                        legend="Velg en tidsperiode i 2021 som ikke er lørdag eller søndag"
+                                        legend="Når startet og avsluttet du virksomheten?"
                                         fromInputProps={{
-                                            label: 'Fra og med',
+                                            label: 'Startdato',
                                             name: FormFields.tidsperiode_fra,
                                             dayPickerProps: { initialMonth: new Date(2021, 0, 1) },
                                             validate: getDateRangeValidator({
@@ -312,12 +322,12 @@ const errorToDate = getDateRangeValidator(options).validateToDate(value);
                                             }).validateFromDate,
                                         }}
                                         toInputProps={{
-                                            label: 'Til og med',
+                                            label: 'Sluttdato',
                                             name: FormFields.tidsperiode_til,
                                             dayPickerProps: { initialMonth: new Date(2021, 11, 31) },
                                             validate: getDateRangeValidator({
-                                                min: new Date(2021, 0, 1),
-                                                max: new Date(2021, 11, 31),
+                                                min: new Date(2000, 0, 1),
+                                                max: dateToday,
                                                 fromDate,
                                                 required: true,
                                                 onlyWeekdays: true,
@@ -326,54 +336,65 @@ const errorToDate = getDateRangeValidator(options).validateToDate(value);
                                     />
                                 </Panel>
                                 <ValidationErrorList
-                                    title="Feilmeldinger - Fra-dato"
+                                    title="Feilmeldinger - Startdato"
                                     errors={{
                                         [ValidateDateError.dateHasNoValue]: {
                                             info: 'ingen verdi',
-                                            example: 'Du må velge fra-dato',
+                                            example:
+                                                'Du må oppgi hvilken dato du startet virksomheten. Skriv inn eller velg startdato fra datovelgeren.',
                                         },
                                         [ValidateDateError.dateHasInvalidFormat]: {
                                             info: 'ugyldig verdi',
-                                            example: 'Fra-dato har ikke gyldig format. Formatet må være dd.mm.åååå',
+                                            example:
+                                                'Du må oppgi startdato for virksomheten i et gyldig format. Gyldig format er dd.mm.ååå.',
                                         },
                                         [ValidateDateError.dateIsBeforeMin]: {
                                             info: 'dato er for tidlig',
-                                            example: 'Fra-dato er for tidlig, første gyldige dato er 1. januar 2021',
+                                            example: `Startdatoen for når du startet virksomheten kan ikke være før ${prettifyDate(
+                                                new Date(2000, 0, 1)
+                                            )}. Skriv inn eller velg startdato fra datovelgeren.`,
                                         },
                                         [ValidateDateError.dateIsAfterMax]: {
                                             info: 'dato er for sen',
-                                            example: 'Fra-dato er for sen, siste gyldige dato er 31. desember 2021',
+                                            example:
+                                                'Startdatoen for når du startet virksomhetem må være før dagens dato. Skriv inn eller velg startdato fra datovelgeren.',
                                         },
                                         [ValidateDateRangeError.fromDateIsAfterToDate]: {
                                             info: 'fra-dato er etter til-dato',
-                                            example: 'Fra-dato kan ikke være etter til-datoen',
+                                            example:
+                                                'Startdatoen for når du startet virksomheten må være før sluttdatoen, eller på samme dag som sluttdatoen. Skriv inn eller velg dato fra datovelgeren.',
                                         },
                                     }}
                                 />
                                 <Box margin="xl">
                                     <ValidationErrorList
-                                        title="Feilmeldinger - Til-dato"
+                                        title="Feilmeldinger - Sluttdato"
                                         errors={{
                                             [ValidateDateError.dateHasNoValue]: {
                                                 info: 'ingen verdi',
-                                                example: 'Du må velge til-dato',
+                                                example:
+                                                    'Du må oppgi hvilken dato du avsluttet virksomheten. Skriv inn eller velg dato fra datovelgeren.',
                                             },
                                             [ValidateDateError.dateHasInvalidFormat]: {
                                                 info: 'ugyldig verdi',
-                                                example: 'Til-dato har ikke gyldig format. Formatet må være dd.mm.åååå',
+                                                example:
+                                                    'Du må oppgi hvilken dato du avsluttet virksomheten. Skriv inn eller velg dato fra datovelgeren.',
                                             },
                                             [ValidateDateError.dateIsBeforeMin]: {
                                                 info: 'dato er for tidlig',
-                                                example:
-                                                    'Til-dato er for tidlig, første gyldige dato er 1. januar 2021',
+                                                example: `Sluttdatoen for når du avsluttet virksomheten kan ikke være før ${prettifyDate(
+                                                    new Date(2000, 0, 1)
+                                                )}. Skriv inn eller velg sluttdato fra datovelgeren.`,
                                             },
                                             [ValidateDateError.dateIsAfterMax]: {
                                                 info: 'dato er for sen',
-                                                example: 'Til-dato er for sen, siste gyldige dato er 31. desember 2021',
+                                                example:
+                                                    'Sluttdatoen for når du avsluttet virksomhetem må være før dagens dato. Skriv inn eller velg sluttdato fra datovelgeren.',
                                             },
                                             [ValidateDateRangeError.toDateIsBeforeFromDate]: {
-                                                info: 'til-dato er før fra-dato',
-                                                example: 'Til-dato kan ikke være før fra-datoen',
+                                                info: 'fra-dato er etter til-dato',
+                                                example:
+                                                    'Sluttdatoen for når du avsluttet virksomheten kan ikke være før startdatoen. Skriv inn eller velg sluttdato fra datovelgeren.',
                                             },
                                         }}
                                     />
@@ -408,8 +429,10 @@ const error = getFødselsnummerValidator(options)(value);
                                     <Form.Input
                                         name={FormFields.fødselsnummer}
                                         bredde="M"
-                                        description={'Eksempelfødselsnummeret "19081988075" er ikke lov å taste inn'}
-                                        label="Skriv inn et norskt fødselsnummer eller d-nummer. "
+                                        description={
+                                            'Eksempelfødselsnummeret "19081988075" er ditt eget, og er ikke tillatt'
+                                        }
+                                        label="Hva er barnets fødselsnummer / D-nummer?"
                                         validate={getFødselsnummerValidator({
                                             required: true,
                                             disallowedValues: ['19081988075'],
@@ -421,21 +444,22 @@ const error = getFødselsnummerValidator(options)(value);
                                     errors={{
                                         [ValidateFødselsnummerError.fødselsnummerHasNoValue]: {
                                             info: 'ingen verdi',
-                                            example: 'Du må fylle ut fødselsnummeret',
+                                            example: 'Skriv inn barnets fødselsnummer',
                                         },
                                         [ValidateFødselsnummerError.fødselsnummerIsNot11Chars]: {
                                             info: 'ikke 11 tegn',
-                                            example: 'Fødselsnummeret må bestå av 11 siffer',
+                                            example:
+                                                'Du har oppgitt et ugyldig fødselsnummer. Et gyldig fødselsnummer består av 11 siffer.',
                                         },
                                         [ValidateFødselsnummerError.fødselsnummerIsInvalid]: {
                                             info: 'ikke 11 tegn',
                                             example:
-                                                'Fødselsnummeret inneholder 11 siffer, men det er ikke et gyldig norsk fødselsnummer',
+                                                'Du har oppgitt et ugyldig fødselsnummer som ikke består av 11 siffer. Et gyldig fødselsnummer består av 11 siffer.',
                                         },
                                         [ValidateFødselsnummerError.fødselsnummerIsNotAllowed]: {
                                             info: 'ikke tillatt fødselsnummer',
                                             example:
-                                                'Fødselsnummeret du har fylt ut ditt eget. Du må fylle ut barnets fødselsnummer',
+                                                'Du har oppgitt ditt eget fødselsnummer som barnets fødselsnummer. Skriv inn barnets fødselsnummer.',
                                         },
                                     }}
                                 />
@@ -470,11 +494,13 @@ const error = getOrgNumberValidator(options)(value);
                                     errors={{
                                         [ValidateOrgNumberError.orgNumberHasNoValue]: {
                                             info: 'ingen verdi',
-                                            example: 'Du må fylle ut NAVs organisasjonsnummer',
+                                            example:
+                                                'Skriv inn organisasjonsnummeret. Et gyldig organsisasjonsnummer inneholder 9 siffer',
                                         },
                                         [ValidateOrgNumberError.orgNumberHasInvalidFormat]: {
                                             info: 'ugyldig orgnummer',
-                                            example: 'Organisasjonsnummeret er ikke gyldig',
+                                            example:
+                                                'Du har oppgitt et ugyldig organisasjonsnummer. Oppgi et gyldig organsisasjonsnummer som inneholder 9 siffer.',
                                         },
                                     }}
                                 />
@@ -501,7 +527,7 @@ const error = getListValidator(options)(value);
                                 <Panel>
                                     <Form.CheckboxPanelGroup
                                         name={FormFields.liste}
-                                        legend="Velg dine to eller tre favorittfrukter"
+                                        legend="Velg dine 2 eller 3 favorittfrukter"
                                         checkboxes={[
                                             {
                                                 label: 'Eple',
@@ -532,15 +558,16 @@ const error = getListValidator(options)(value);
                                     errors={{
                                         [ValidateListError.listIsEmpty]: {
                                             info: 'ingen element valgt',
-                                            example: 'Du har ikke valgt to eller tre frukter',
+                                            example: 'Velg dine 2 eller 3 favorittfrukter. Huk av i listen.',
                                         },
                                         [ValidateListError.listHasTooFewItems]: {
                                             info: 'for få valgt',
-                                            example: 'Du har ikke valgt nok frukter, du må velge minst 2',
+                                            example: 'Du har valgt for få frukter. Du må velge minst 2 frukter.',
                                         },
                                         [ValidateListError.listHasTooManyItems]: {
                                             info: 'for mange valgt',
-                                            example: 'Du har valgt for mange frukter, du kan ikke velge flere enn 3',
+                                            example:
+                                                'Du har valgt for mange frukter. Du kan ikke velge flere enn 3 frukter.',
                                         },
                                     }}
                                 />
@@ -586,7 +613,7 @@ const error = getRequiredFieldValidator()(value);
                                     errors={{
                                         [ValidateRequiredFieldError.noValue]: {
                                             info: 'ingen element valgt',
-                                            example: 'Du har ikke valgt din favorittgfrukt',
+                                            example: 'Du må velge din éne favorittfrukt. Huk av i listen.',
                                         },
                                     }}
                                 />
@@ -606,7 +633,7 @@ const error = getRequiredFieldValidator()(value);
                                 <Panel>
                                     <Form.CountrySelect
                                         name={FormFields.select}
-                                        label="Velg ett land"
+                                        label="Hvilket land er virksomheten registrert i?"
                                         validate={getRequiredFieldValidator()}
                                     />
                                 </Panel>
@@ -615,7 +642,8 @@ const error = getRequiredFieldValidator()(value);
                                     errors={{
                                         [ValidateRequiredFieldError.noValue]: {
                                             info: 'ikke valgt',
-                                            example: 'Du må velge land',
+                                            example:
+                                                'Du må velge hvilket land virksomheten din er registrert i. Velg land fra listen.',
                                         },
                                     }}
                                 />
