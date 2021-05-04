@@ -31,9 +31,7 @@ const FormikExample = () => {
         <>
             <PageIntro title="@navikt/sif-common-formik">
                 <h2>TypedFormExample</h2>
-                Siden setter opp TypedFormikWrapper og setter type med generics. Se <code>TypedFormExample</code>. En
-                kan også bruke <code>getTypedFormComponents</code>-util for å få ut alle skjemakomponentene typed
-                direkte. Se <code>TypedFormExample</code>.
+                <p>Skjemaet her er mest brukt som arbeidsflate for å teste komponentene under utvikling.</p>
             </PageIntro>
 
             <TypedFormikWrapper<FormValues>
