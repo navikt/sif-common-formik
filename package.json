@@ -89,7 +89,7 @@
         "classnames": "^2.3.1",
         "formik": "^2.2.6",
         "intl": "^1.2.5",
-        "nav-datovelger": "^11.0.x",
+        "nav-datovelger": "^11.1.x",
         "nav-frontend-alertstriper": "^3.x",
         "nav-frontend-core": "^5.x",
         "nav-frontend-hjelpetekst": "^2.x",
@@ -104,7 +104,7 @@
         "react-day-picker": "^7.4.10",
         "react-dom": "^17.0.x",
         "react": "^17.0.x",
-        "react-intl": "^5.15.x"
+        "react-intl": "^5.17.x"
     },
     "jest": {
         "testEnvironment": "node"
