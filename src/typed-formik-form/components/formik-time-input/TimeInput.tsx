@@ -84,17 +84,6 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                         maxLength={2}
                         max={maxMinutes}
                         value={stateTime?.minutes || ''}
-                        // onBlur={(evt: React.FocusEvent<HTMLInputElement>) => {
-                        //     if (evt.target.value === '' || evt.target.value === '0') {
-                        //         const { hours, minutes } = stateTime || {};
-                        //         const newTime = {
-                        //             hours: hasValue(hours) ? hours : undefined,
-                        //             minutes: hasValue(minutes) ? minutes : hours !== undefined ? '0' : undefined,
-                        //         };
-                        //         setStateTime(newTime);
-                        //         handleTimeChange(newTime, onChange);
-                        //     }
-                        // }}
                         onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
                             const newTime = { ...stateTime, minutes: evt.target.value };
                             setStateTime(newTime);
