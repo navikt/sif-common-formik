@@ -8,8 +8,11 @@ const SkjemagruppeQuestion: React.FunctionComponent<SkjemaGruppeProps> = ({
     tag,
     children,
     className,
+    id,
 }) => (
     <SkjemaGruppe
+        id={id}
+        tabIndex={id ? -1 : undefined}
         className={`${className ? className : ''} singleInputWrapper`}
         tag={tag ? tag : legend ? 'fieldset' : 'div'}
         feil={feil}

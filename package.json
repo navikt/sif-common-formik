@@ -101,9 +101,9 @@
         "nav-frontend-popover": "^1.x",
         "nav-frontend-skjema": "^3.x",
         "nav-frontend-typografi": "^3.x",
+        "react": "^17.0.x",
         "react-day-picker": "^7.4.10",
         "react-dom": "^17.0.x",
-        "react": "^17.0.x",
         "react-intl": "^5.17.x"
     },
     "jest": {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
-import { InputProps, Label } from 'nav-frontend-skjema';
+import { InputProps } from 'nav-frontend-skjema';
 import { Time, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 
@@ -29,12 +29,14 @@ function FormikTimeInput<FieldName, ErrorType>({
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
-                    <SkjemagruppeQuestion feil={getFeilPropForFormikInput({ field, form, context, feil })}>
-                        <Label htmlFor={field.name}>{label}</Label>
-
+                    <SkjemagruppeQuestion
+                        feil={getFeilPropForFormikInput({ field, form, context, feil })}
+                        id={name as any}
+                        legend={label}>
                         <TimeInput
                             {...restProps}
                             {...field}
+                            justifyContent="left"
                             time={field.value || undefined}
                             onChange={(time: Partial<Time> | undefined) => {
                                 form.setFieldValue(field.name, time);

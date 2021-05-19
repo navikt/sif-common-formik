@@ -1,5 +1,5 @@
 import { ValidationFunction } from './types';
-import { hasValue } from './validationUtils';
+import { getNumberFromStringInput, hasValue } from './validationUtils';
 
 export enum ValidateNumberError {
     numberHasNoValue = 'numberHasNoValue',
@@ -20,21 +20,6 @@ interface Options {
     min?: number;
     max?: number;
 }
-
-const getNumberFromStringInput = (inputValue: string | undefined): number | undefined => {
-    if (inputValue === undefined || inputValue === '' || Array.isArray(inputValue)) {
-        return undefined;
-    }
-    if (typeof inputValue === 'number' && isNaN(inputValue)) {
-        return undefined;
-    }
-    const value = `${inputValue}`.replace(/\,/g, '.');
-    const numValue = Number(value);
-    if (isNaN(numValue)) {
-        return undefined;
-    }
-    return numValue;
-};
 
 const getNumberValidator = (options: Options = {}): ValidationFunction<NumberValidationResult> => (value: any) => {
     const { required, min, max } = options;

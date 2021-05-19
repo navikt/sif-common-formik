@@ -14,20 +14,11 @@
         padding-bottom: 0.25rem;
         margin-bottom: 0;
     }
-    &.skjemaelement--harFeil {
-        background-color: @pinkErrorBg;
-        .skjemaelement__feilmelding {
-            margin-top: -0.25rem;
-            padding: 0 1rem 1rem 1rem;
-        }
-    }
-
     input {
         text-align: center;
         width: 100%;
         padding: 0.5rem;
     }
-
     .timeInput {
         &__label {
             display: block;
@@ -44,15 +35,6 @@
         &__minutes {
             margin: 0;
         }
-        &__hours {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-        &__minutes {
-            border-left: none;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
         &__contentWrapper {
             white-space: nowrap;
             padding-bottom: 2rem;
@@ -64,7 +46,7 @@
         }
         &__inputWrapper {
             position: relative;
-            max-width: 5rem;
+            max-width: 3.5rem;
             margin: 0;
         }
     }
@@ -79,7 +61,6 @@
     }
     &__hours,
     &__minutes {
-        .skjemaelement__input();
         width: 4rem;
         margin-bottom: 0.5rem;
         &:focus {
@@ -101,5 +82,33 @@
     }
     &--compact {
         .timeInputCompactChildren();
+        .timeInput__hours {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .timeInput__minutes {
+            border-left: none;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .timeInput__inputWrapper:first-child {
+            margin-right: 0;
+        }
+    }
+    &--compactWithSpace {
+        .timeInputCompactChildren();
+        .timeInput__inputWrapper:first-child {
+            margin-right: .5rem;
+        }
+        &.timeInput--content-left {
+            .timeInput__contentWrapper {
+                justify-content: left;
+            }
+        }
+        &.timeInput--content-right {
+            .timeInput__contentWrapper {
+                justify-content: left;
+            }
+        }
     }
 }

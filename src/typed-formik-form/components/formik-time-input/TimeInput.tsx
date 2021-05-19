@@ -1,98 +1,69 @@
 import React, { useState } from 'react';
 import { guid } from 'nav-frontend-js-utils';
+import { Input } from 'nav-frontend-skjema';
 import { Time } from '../../types';
 import bemUtils from '../../utils/bemUtils';
+import { getNumberFromNumberInputValue } from '../../utils/numberInputUtils';
 import './timeInput.less';
 
 const MAX_HOURS = 23;
 const MAX_MINUTES = 59;
 
-type TimeInputChangeFunc = (time: Partial<Time> | undefined) => void;
+type TimeInputChangeFunc = (time: Partial<Time> | undefined, isValidTime: boolean) => void;
 
 interface TimeInputProps {
     time?: Time | Partial<Time> | undefined;
     maxHours?: number;
     maxMinutes?: number;
+    layout?: 'normal' | 'compact' | 'compactWithSpace';
+    justifyContent?: 'left' | 'center' | 'right';
     onChange: TimeInputChangeFunc;
-    layout?: 'normal' | 'compact';
 }
 
 const bem = bemUtils('timeInput');
 
-const handleTimeChange = (time: Partial<Time>, onChange: TimeInputChangeFunc) => {
-    if ((time.hours === undefined || isNaN(time.hours)) && (time.minutes === undefined || isNaN(time.minutes))) {
-        onChange(undefined);
-    } else {
-        onChange(time);
-    }
+export const isValidTime = (time: Partial<Time>): time is Time => {
+    const hours = getNumberFromNumberInputValue(time.hours || '0');
+    const minutes = getNumberFromNumberInputValue(time.minutes || '0');
+    return hours !== undefined && minutes !== undefined;
 };
 
-const getNewTime = (
-    stateTime: Partial<Time> | undefined = {},
-    values: { hours?: string; minutes?: string }
-): Partial<Time> => {
-    if (values.hours !== undefined) {
-        const hours = parseInt(values.hours, 10);
-        if (!isNaN(hours)) {
-            return {
-                ...stateTime,
-                hours,
-            };
-        }
-        return stateTime.minutes ? { ...stateTime, hours: undefined } : { hours: undefined };
-    }
-    if (values.minutes !== undefined) {
-        const minutes = parseInt(values.minutes, 10);
-        if (!isNaN(minutes)) {
-            return {
-                ...stateTime,
-                minutes,
-            };
-        }
-        return stateTime.hours ? { ...stateTime, minutes: undefined } : { minutes: undefined };
-    }
-
-    return stateTime;
+const handleTimeChange = (time: Partial<Time>, onChange: TimeInputChangeFunc) => {
+    onChange(time, isValidTime(time));
 };
 
 const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     time = { hours: undefined, minutes: undefined },
     maxHours = MAX_HOURS,
     maxMinutes = MAX_MINUTES,
+    layout = 'compactWithSpace',
+    justifyContent = 'center',
     onChange,
-    layout = 'compact',
 }) => {
     const [stateTime, setStateTime] = useState<Partial<Time> | undefined>(time);
-    const hours =
-        !stateTime || stateTime.hours === undefined || isNaN(stateTime.hours)
-            ? ''
-            : Math.min(stateTime.hours, maxHours);
-    const minutes =
-        !stateTime || stateTime.minutes === undefined || isNaN(stateTime.minutes)
-            ? ''
-            : Math.min(stateTime.minutes, maxMinutes);
     const id = guid();
     const hoursLabelId = `${id}-hours`;
     const minutesLabelId = `${id}-minutes`;
-
     return (
-        <div className={bem.classNames(bem.block, bem.modifier(layout))}>
+        <div className={bem.classNames(bem.block, bem.modifier(layout), bem.modifier(`content-${justifyContent}`))}>
             <div className={bem.element('contentWrapper')}>
                 <div className={bem.element('inputWrapper')}>
                     <label className={bem.element('label')} htmlFor={hoursLabelId}>
                         Timer
                     </label>
-                    <input
+                    <Input
                         id={hoursLabelId}
                         className={bem.element('hours')}
-                        type="number"
+                        type="text"
+                        autoComplete={'off'}
+                        inputMode={'numeric'}
+                        pattern={'[0-9]*'}
                         min={0}
                         max={maxHours}
                         maxLength={2}
-                        value={hours}
-                        autoComplete="off"
+                        value={stateTime?.hours || ''}
                         onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
-                            const newTime = getNewTime(stateTime, { hours: evt.target.value });
+                            const newTime = { ...stateTime, hours: evt.target.value };
                             setStateTime(newTime);
                             handleTimeChange(newTime, onChange);
                         }}
@@ -102,27 +73,30 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                     <label className={bem.element('label')} htmlFor={minutesLabelId}>
                         Minutter
                     </label>
-                    <input
+                    <Input
                         id={minutesLabelId}
                         className={bem.element('minutes')}
-                        type="number"
+                        type="text"
+                        autoComplete={'off'}
+                        inputMode={'numeric'}
+                        pattern={'[0-9]*'}
                         min={0}
                         maxLength={2}
                         max={maxMinutes}
-                        value={minutes}
-                        autoComplete="off"
-                        onBlur={(evt: React.FocusEvent<HTMLInputElement>) => {
-                            if (evt.target.value === '' || evt.target.value === '0') {
-                                const newTime = {
-                                    ...stateTime,
-                                    minutes: stateTime && stateTime.hours !== undefined ? 0 : undefined,
-                                };
-                                setStateTime(newTime);
-                                handleTimeChange(newTime, onChange);
-                            }
-                        }}
+                        value={stateTime?.minutes || ''}
+                        // onBlur={(evt: React.FocusEvent<HTMLInputElement>) => {
+                        //     if (evt.target.value === '' || evt.target.value === '0') {
+                        //         const { hours, minutes } = stateTime || {};
+                        //         const newTime = {
+                        //             hours: hasValue(hours) ? hours : undefined,
+                        //             minutes: hasValue(minutes) ? minutes : hours !== undefined ? '0' : undefined,
+                        //         };
+                        //         setStateTime(newTime);
+                        //         handleTimeChange(newTime, onChange);
+                        //     }
+                        // }}
                         onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
-                            const newTime = getNewTime(stateTime, { minutes: evt.target.value });
+                            const newTime = { ...stateTime, minutes: evt.target.value };
                             setStateTime(newTime);
                             handleTimeChange(newTime, onChange);
                         }}
