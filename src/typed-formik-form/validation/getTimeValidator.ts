@@ -5,9 +5,9 @@ import { getNumberFromStringInput } from './validationUtils';
 export enum ValidateTimeError {
     timeHasNoValue = 'timeHasNoValue',
     hoursAreInvalid = 'hoursAreInvalid',
+    minutesAreInvalid = 'minutesAreInvalid',
     tooManyHours = 'tooManyHours',
     tooManyMinutes = 'tooManyMinutes',
-    minutesAreInvalid = 'minutesAreInvalid',
     durationIsTooLong = 'durationIsTooLong',
     durationIsTooShort = 'durationIsTooShort',
 }

@@ -1,4 +1,4 @@
-import { YesOrNo } from '../../../typed-formik-form';
+import { Time, YesOrNo } from '../../../typed-formik-form';
 
 export enum FormFields {
     'jaNeiSpørsmål' = 'jaNeiSpørsmål',
@@ -13,6 +13,7 @@ export enum FormFields {
     'radio' = 'radio',
     'select' = 'select',
     'checked' = 'checked',
+    'time' = 'time',
 }
 
 export interface FormValues {
@@ -28,6 +29,7 @@ export interface FormValues {
     [FormFields.select]?: string;
     [FormFields.radio]?: string;
     [FormFields.checked]?: boolean;
+    [FormFields.time]?: Partial<Time>;
 }
 
 export const initialValues = {};
