@@ -36,7 +36,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     time = { hours: undefined, minutes: undefined },
     maxHours = MAX_HOURS,
     maxMinutes = MAX_MINUTES,
-    layout = 'compactWithSpace',
+    layout = 'compact',
     justifyContent = 'center',
     onChange,
 }) => {

@@ -44,6 +44,7 @@ function FormikTimeInput<FieldName, ErrorType>({
                         <TimeInput
                             {...restProps}
                             {...field}
+                            layout="compact"
                             justifyContent="left"
                             time={field.value || undefined}
                             onChange={(time: Partial<Time> | undefined) => {

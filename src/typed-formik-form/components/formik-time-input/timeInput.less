@@ -82,11 +82,15 @@
     }
     &--compact {
         .timeInputCompactChildren();
-        .timeInput__hours {
+        *:focus {
+            z-index: 10;
+            position: relative;
+        }
+        .timeInput__hours > input {
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
         }
-        .timeInput__minutes {
+        .timeInput__minutes > input {
             border-left: none;
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
@@ -100,6 +104,9 @@
         .timeInput__inputWrapper:first-child {
             margin-right: .5rem;
         }
+    }
+    &--compactWithSpace,
+    &--compact {
         &.timeInput--content-left {
             .timeInput__contentWrapper {
                 justify-content: left;
@@ -111,4 +118,5 @@
             }
         }
     }
+
 }
