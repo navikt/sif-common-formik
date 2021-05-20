@@ -49,6 +49,7 @@ const TypedFormExample = () => {
                 <FormikTimeInput
                     name="abc"
                     label="Torsdag 12. 10. 2000"
+                    layout="compact"
                     validate={(time) => {
                         const error = getTimeValidator({
                             required: true,

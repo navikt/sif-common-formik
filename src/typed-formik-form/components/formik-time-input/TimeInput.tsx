@@ -11,11 +11,13 @@ const MAX_MINUTES = 59;
 
 type TimeInputChangeFunc = (time: Partial<Time> | undefined, isValidTime: boolean) => void;
 
+export type TimeInputLayout = 'normal' | 'compact' | 'compactWithSpace';
+
 interface TimeInputProps {
     time?: Time | Partial<Time> | undefined;
     maxHours?: number;
     maxMinutes?: number;
-    layout?: 'normal' | 'compact' | 'compactWithSpace';
+    layout?: TimeInputLayout;
     justifyContent?: 'left' | 'center' | 'right';
     onChange: TimeInputChangeFunc;
 }
@@ -36,7 +38,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     time = { hours: undefined, minutes: undefined },
     maxHours = MAX_HOURS,
     maxMinutes = MAX_MINUTES,
-    layout = 'compact',
+    layout = 'compactWithSpace',
     justifyContent = 'center',
     onChange,
 }) => {

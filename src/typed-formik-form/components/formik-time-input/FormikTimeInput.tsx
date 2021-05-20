@@ -6,13 +6,14 @@ import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
-import TimeInput from './TimeInput';
+import TimeInput, { TimeInputLayout } from './TimeInput';
 import { focusFirstElement } from '../../utils/focusUtils';
 
 interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange'> {
     name: FieldName;
     maxHours?: number;
     maxMinutes?: number;
+    layout?: TimeInputLayout;
 }
 
 export type FormikTimeInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
@@ -23,6 +24,7 @@ function FormikTimeInput<FieldName, ErrorType>({
     name,
     validate,
     feil,
+    layout,
     ...restProps
 }: FormikTimeInputProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -44,7 +46,7 @@ function FormikTimeInput<FieldName, ErrorType>({
                         <TimeInput
                             {...restProps}
                             {...field}
-                            layout="compact"
+                            layout={layout}
                             justifyContent="left"
                             time={field.value || undefined}
                             onChange={(time: Partial<Time> | undefined) => {
