@@ -6,25 +6,28 @@ import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
-import TimeInput, { TimeInputLayout } from './TimeInput';
+import TimeInput, { TimeInputLayoutProps } from './TimeInput';
 import { focusFirstElement } from '../../utils/focusUtils';
+import bemUtils from '../../utils/bemUtils';
 
 interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange'> {
     name: FieldName;
     maxHours?: number;
     maxMinutes?: number;
-    layout?: TimeInputLayout;
+    timeInputLayout?: TimeInputLayoutProps;
 }
 
 export type FormikTimeInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
     TypedFormInputValidationProps<FieldName, ErrorType>;
+
+const bem = bemUtils('formikTimeInput');
 
 function FormikTimeInput<FieldName, ErrorType>({
     label,
     name,
     validate,
     feil,
-    layout,
+    timeInputLayout,
     ...restProps
 }: FormikTimeInputProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -34,6 +37,11 @@ function FormikTimeInput<FieldName, ErrorType>({
             {({ field, form }: FieldProps) => {
                 return (
                     <SkjemagruppeQuestion
+                        className={bem.classNames(
+                            bem.block,
+                            bem.modifierConditional(timeInputLayout?.layout, timeInputLayout?.layout !== undefined)
+                        )}
+                        {...timeInputLayout}
                         ref={ref}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         id={name as any}
@@ -46,7 +54,7 @@ function FormikTimeInput<FieldName, ErrorType>({
                         <TimeInput
                             {...restProps}
                             {...field}
-                            layout={layout}
+                            {...timeInputLayout}
                             justifyContent="left"
                             time={field.value || undefined}
                             onChange={(time: Partial<Time> | undefined) => {
