@@ -46,25 +46,48 @@ const TypedFormExample = () => {
             includeButtons={true}
             formErrorHandler={getIntlFormErrorHandler(intl)}>
             <Question>
-                <FormikTimeInput
-                    name="abc"
-                    label="Torsdag 12. 10. 2000"
-                    layout="compact"
-                    validate={(time) => {
-                        const error = getTimeValidator({
-                            required: true,
-                            min: { hours: 0, minutes: 1 },
-                            max: { hours: 7, minutes: 30 },
-                        })(time);
-                        return error
-                            ? {
-                                  key: error,
-                                  values: { dag: 'Torsdag 12. 10. 2000' },
-                                  keepKeyUnaltered: true,
-                              }
-                            : undefined;
-                    }}
-                />
+                <Box margin="m">
+                    <FormikTimeInput
+                        name="abc"
+                        label="Tor. 12.05.21"
+                        timeInputLayout={{ layout: 'horizontal', srOnlyLabels: true }}
+                        validate={(time) => {
+                            const error = getTimeValidator({
+                                required: true,
+                                min: { hours: 0, minutes: 1 },
+                                max: { hours: 7, minutes: 30 },
+                            })(time);
+                            return error
+                                ? {
+                                      key: error,
+                                      values: { dag: 'Torsdag 12. 10. 2000' },
+                                      keepKeyUnaltered: true,
+                                  }
+                                : undefined;
+                        }}
+                    />
+                </Box>
+                <Box margin="m">
+                    <FormikTimeInput
+                        name="abc"
+                        label="Tor. 12.05.21"
+                        timeInputLayout={{ layout: 'horizontal', srOnlyLabels: true }}
+                        validate={(time) => {
+                            const error = getTimeValidator({
+                                required: true,
+                                min: { hours: 0, minutes: 1 },
+                                max: { hours: 7, minutes: 30 },
+                            })(time);
+                            return error
+                                ? {
+                                      key: error,
+                                      values: { dag: 'Torsdag 12. 10. 2000' },
+                                      keepKeyUnaltered: true,
+                                  }
+                                : undefined;
+                        }}
+                    />
+                </Box>
             </Question>
             <Question>
                 <Form.YesOrNoQuestion

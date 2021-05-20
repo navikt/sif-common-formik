@@ -99,7 +99,8 @@
             margin-right: 0;
         }
     }
-    &--compactWithSpace {
+    &--compactWithSpace,
+    &--horizontal {
         .timeInputCompactChildren();
         .timeInput__inputWrapper:first-child {
             margin-right: .5rem;
@@ -118,9 +119,29 @@
             }
         }
     }
+    &--srOnlyLabels {
+        .timeInput__contentWrapper {
+            padding-bottom: 0;
+        }
+
+    }
+
 }
 
-.singleInputWrapper {
-    display: flex;
-    flex-direction: row;
+.formikTimeInput {
+    &--horizontal {
+        flex-direction: row;
+        legend {
+            float: left;
+            padding-right: 1rem;
+            display: flex;
+            align-items: flex-start;
+            padding-top: .5rem;
+            white-space: nowrap;
+            min-width: 8rem;
+        }
+        .timeInput__contentWrapper {
+            justify-content: left;
+        }
+    }
 }

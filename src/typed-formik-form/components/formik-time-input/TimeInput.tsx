@@ -11,14 +11,21 @@ const MAX_MINUTES = 59;
 
 type TimeInputChangeFunc = (time: Partial<Time> | undefined, isValidTime: boolean) => void;
 
-export type TimeInputLayout = 'normal' | 'compact' | 'compactWithSpace';
+export type TimeInputLayout = 'normal' | 'compact' | 'compactWithSpace' | 'horizontal';
+export interface TimeInputLayoutProps {
+    layout?: TimeInputLayout;
+    justifyContent?: 'left' | 'center' | 'right';
+    srOnlyLabels?: boolean;
+    placeholders?: {
+        hours: string;
+        minutes: string;
+    };
+}
 
-interface TimeInputProps {
+interface TimeInputProps extends TimeInputLayoutProps {
     time?: Time | Partial<Time> | undefined;
     maxHours?: number;
     maxMinutes?: number;
-    layout?: TimeInputLayout;
-    justifyContent?: 'left' | 'center' | 'right';
     onChange: TimeInputChangeFunc;
 }
 
@@ -40,6 +47,8 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     maxMinutes = MAX_MINUTES,
     layout = 'compactWithSpace',
     justifyContent = 'center',
+    srOnlyLabels,
+    placeholders,
     onChange,
 }) => {
     const [stateTime, setStateTime] = useState<Partial<Time> | undefined>(time);
@@ -47,10 +56,18 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     const hoursLabelId = `${id}-hours`;
     const minutesLabelId = `${id}-minutes`;
     return (
-        <div className={bem.classNames(bem.block, bem.modifier(layout), bem.modifier(`content-${justifyContent}`))}>
+        <div
+            className={bem.classNames(
+                bem.block,
+                bem.modifier(layout),
+                bem.modifier(`content-${justifyContent}`),
+                bem.modifierConditional('srOnlyLabels', srOnlyLabels)
+            )}>
             <div className={bem.element('contentWrapper')}>
                 <div className={bem.element('inputWrapper')}>
-                    <label className={bem.element('label')} htmlFor={hoursLabelId}>
+                    <label
+                        className={bem.classNames(bem.element('label'), srOnlyLabels ? 'sr-only' : '')}
+                        htmlFor={hoursLabelId}>
                         Timer
                     </label>
                     <Input
@@ -60,6 +77,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                         autoComplete={'off'}
                         inputMode={'numeric'}
                         pattern={'[0-9]*'}
+                        placeholder={placeholders?.hours}
                         min={0}
                         max={maxHours}
                         maxLength={2}
@@ -72,7 +90,9 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                     />
                 </div>
                 <div className={bem.element('inputWrapper')}>
-                    <label className={bem.element('label')} htmlFor={minutesLabelId}>
+                    <label
+                        className={bem.classNames(bem.element('label'), srOnlyLabels ? 'sr-only' : '')}
+                        htmlFor={minutesLabelId}>
                         Minutter
                     </label>
                     <Input
@@ -81,6 +101,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                         type="text"
                         autoComplete={'off'}
                         inputMode={'numeric'}
+                        placeholder={placeholders?.minutes}
                         pattern={'[0-9]*'}
                         min={0}
                         maxLength={2}
