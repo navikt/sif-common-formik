@@ -20,3 +20,4 @@ export * from './getOrgNumberValidator';
 export * from './getStringValidator';
 export * from './getYesOrNoValidator';
 export * from './getRequiredFieldValidator';
+export * from './getTimeValidator';
