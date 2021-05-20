@@ -36,6 +36,7 @@ import { FormFields, FormValues } from './types';
 import ValideringPanel from './ValideringPanel';
 import { dateToday } from '../../utils/dateUtils';
 import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
+import getTimeValidator, { ValidateTimeError } from '../../../typed-formik-form/validation/getTimeValidator';
 
 const initialValues: FormValues = {
     liste: [],
@@ -672,6 +673,96 @@ const error = getCheckedValidator()(value);
                                         [ValidateCheckedError.notChecked]: {
                                             info: 'ikke valgt',
                                             example: 'Du må krysse av for at du bare må gjøre det',
+                                        },
+                                    }}
+                                />
+                            </ValideringPanel>
+
+                            <ValideringPanel
+                                title="TimeInput"
+                                code={`
+export enum ValidateTimeError {
+    timeHasNoValue = 'timeHasNoValue',
+    hoursAreInvalid = 'hoursAreInvalid',
+    minutesAreInvalid = 'minutesAreInvalid',
+    tooManyHours = 'tooManyHours',
+    tooManyMinutes = 'tooManyMinutes',
+    durationIsTooLong = 'durationIsTooLong',
+    durationIsTooShort = 'durationIsTooShort',
+}
+
+type TimeValidationResult =
+    | undefined
+    | ValidateTimeError.timeHasNoValue
+    | ValidateTimeError.hoursAreInvalid
+    | ValidateTimeError.minutesAreInvalid
+    | ValidateTimeError.durationIsTooLong
+    | ValidateTimeError.durationIsTooShort
+    | ValidateTimeError.tooManyHours
+    | ValidateTimeError.tooManyMinutes;
+
+type TimeRange = {
+    hours: number;
+    minutes: number;
+};
+
+interface Options {
+    required?: boolean;
+    min?: TimeRange;
+    max?: TimeRange;
+}
+
+const error = getTimeValidator()(value);
+                    `}>
+                                <Panel>
+                                    <Form.TimeInput
+                                        name={FormFields.time}
+                                        label="Hvor lenge var barnet i tilsyn 12.10.2020"
+                                        validate={(time) => {
+                                            const error = getTimeValidator({
+                                                required: true,
+                                                min: { hours: 0, minutes: 1 },
+                                                max: { hours: 7, minutes: 30 },
+                                            })(time);
+                                            return error
+                                                ? {
+                                                      key: error,
+                                                      values: { dag: 'Torsdag 12.10.2000' },
+                                                      keepKeyUnaltered: true,
+                                                  }
+                                                : undefined;
+                                        }}></Form.TimeInput>
+                                </Panel>
+                                <ValidationErrorList
+                                    title="Feilmeldinger"
+                                    errors={{
+                                        [ValidateTimeError.timeHasNoValue]: {
+                                            info: 'spørsmål er ikke besvart',
+                                            example: 'Du må fylle ut timer og minutter',
+                                        },
+                                        [ValidateTimeError.hoursAreInvalid]: {
+                                            info: 'ugyldig verdi i feltet for antall timer',
+                                            example: 'Antall timer er ikke et gyldig tall',
+                                        },
+                                        [ValidateTimeError.minutesAreInvalid]: {
+                                            info: 'ugyldig verdi i feltet for antall minutter',
+                                            example: 'Antall minutter er ikke et gyldig tall',
+                                        },
+                                        [ValidateTimeError.tooManyHours]: {
+                                            info: 'antall timer over 23',
+                                            example: 'Antall timer kan ikke overstige 23',
+                                        },
+                                        [ValidateTimeError.tooManyHours]: {
+                                            info: 'antall minutter over 59',
+                                            example: 'Antall minutter kan ikke overstige 59',
+                                        },
+                                        [ValidateTimeError.durationIsTooLong]: {
+                                            info: 'for lang tid',
+                                            example: 'Angitt varighet kan ikke være mer enn {maks}',
+                                        },
+                                        [ValidateTimeError.durationIsTooShort]: {
+                                            info: 'for kort tid',
+                                            example: 'Angitt varighet må være minst {min}',
                                         },
                                     }}
                                 />

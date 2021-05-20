@@ -20,6 +20,7 @@ import {
     ValidateNumberError,
 } from '../../../../typed-formik-form/validation';
 import getRequiredFieldValidator from '../../../../typed-formik-form/validation/getRequiredFieldValidator';
+import getTimeValidator from '../../../../typed-formik-form/validation/getTimeValidator';
 import getIntlFormErrorHandler from '../../../../typed-formik-form/validation/intlFormErrorHandler';
 import { ValidationError } from '../../../../typed-formik-form/validation/types';
 import { validateAll } from '../../../../typed-formik-form/validation/validationUtils';
@@ -45,6 +46,26 @@ const TypedFormExample = () => {
             includeButtons={true}
             formErrorHandler={getIntlFormErrorHandler(intl)}>
             <Question>
+                <FormikTimeInput
+                    name="abc"
+                    label="Torsdag 12. 10. 2000"
+                    validate={(time) => {
+                        const error = getTimeValidator({
+                            required: true,
+                            min: { hours: 0, minutes: 1 },
+                            max: { hours: 7, minutes: 30 },
+                        })(time);
+                        return error
+                            ? {
+                                  key: error,
+                                  values: { dag: 'Torsdag 12. 10. 2000' },
+                                  keepKeyUnaltered: true,
+                              }
+                            : undefined;
+                    }}
+                />
+            </Question>
+            <Question>
                 <Form.YesOrNoQuestion
                     legend={'Har du kids'}
                     name={FormFields.hasKids}
@@ -58,18 +79,6 @@ const TypedFormExample = () => {
                             };
                         }
                     }}
-                />
-            </Question>
-            <Question>
-                <Form.Input
-                    name={FormFields.fødselsnummer}
-                    label="Fødselsnummer"
-                    validate={(value) =>
-                        validateAll<ValidationError>([
-                            () => getStringValidator({ minLength: 2 })(value),
-                            () => getFødselsnummerValidator({ required: true })(value),
-                        ])
-                    }
                 />
             </Question>
             <Question>
@@ -91,6 +100,18 @@ const TypedFormExample = () => {
 
             {1 + 1 === 3 && (
                 <>
+                    <Question>
+                        <Form.Input
+                            name={FormFields.fødselsnummer}
+                            label="Fødselsnummer"
+                            validate={(value) =>
+                                validateAll<ValidationError>([
+                                    () => getStringValidator({ minLength: 2 })(value),
+                                    () => getFødselsnummerValidator({ required: true })(value),
+                                ])
+                            }
+                        />
+                    </Question>
                     <Question>
                         <Form.Input
                             name={'datastruktur.navn' as any}

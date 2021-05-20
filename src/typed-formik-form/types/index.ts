@@ -6,8 +6,8 @@ export enum YesOrNo {
 }
 
 export interface Time {
-    hours: number;
-    minutes: number;
+    hours: string;
+    minutes: string;
 }
 export interface DateRange {
     from: Date;
