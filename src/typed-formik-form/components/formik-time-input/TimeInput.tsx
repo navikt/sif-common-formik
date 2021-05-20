@@ -16,6 +16,10 @@ export interface TimeInputLayoutProps {
     layout?: TimeInputLayout;
     justifyContent?: 'left' | 'center' | 'right';
     srOnlyLabels?: boolean;
+    placeholders?: {
+        hours: string;
+        minutes: string;
+    };
 }
 
 interface TimeInputProps extends TimeInputLayoutProps {
@@ -44,6 +48,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     layout = 'compactWithSpace',
     justifyContent = 'center',
     srOnlyLabels,
+    placeholders,
     onChange,
 }) => {
     const [stateTime, setStateTime] = useState<Partial<Time> | undefined>(time);
@@ -72,7 +77,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                         autoComplete={'off'}
                         inputMode={'numeric'}
                         pattern={'[0-9]*'}
-                        placeholder="tim"
+                        placeholder={placeholders?.hours}
                         min={0}
                         max={maxHours}
                         maxLength={2}
@@ -96,7 +101,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                         type="text"
                         autoComplete={'off'}
                         inputMode={'numeric'}
-                        placeholder="min"
+                        placeholder={placeholders?.minutes}
                         pattern={'[0-9]*'}
                         min={0}
                         maxLength={2}
