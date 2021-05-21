@@ -50,7 +50,11 @@ const TypedFormExample = () => {
                     <FormikTimeInput
                         name="abc"
                         label="Tor. 12.05.21"
-                        timeInputLayout={{ layout: 'horizontal', srOnlyLabels: true }}
+                        timeInputLayout={{
+                            layout: 'compact',
+                            srOnlyLabels: true,
+                            suffix: { hours: 't', minutes: 'm' },
+                        }}
                         validate={(time) => {
                             const error = getTimeValidator({
                                 required: true,
@@ -71,7 +75,11 @@ const TypedFormExample = () => {
                     <FormikTimeInput
                         name="abc"
                         label="Tor. 12.05.21"
-                        timeInputLayout={{ layout: 'horizontal', srOnlyLabels: true }}
+                        timeInputLayout={{
+                            layout: 'normal',
+                            srOnlyLabels: true,
+                            suffix: { hours: 't', minutes: 'm' },
+                        }}
                         validate={(time) => {
                             const error = getTimeValidator({
                                 required: true,

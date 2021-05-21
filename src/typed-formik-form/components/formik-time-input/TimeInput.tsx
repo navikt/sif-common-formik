@@ -12,10 +12,15 @@ const MAX_MINUTES = 59;
 type TimeInputChangeFunc = (time: Partial<Time> | undefined, isValidTime: boolean) => void;
 
 export type TimeInputLayout = 'normal' | 'compact' | 'compactWithSpace' | 'horizontal';
+export interface TimeInputSuffix {
+    hours: string;
+    minutes: string;
+}
 export interface TimeInputLayoutProps {
     layout?: TimeInputLayout;
     justifyContent?: 'left' | 'center' | 'right';
     srOnlyLabels?: boolean;
+    suffix?: TimeInputSuffix;
     placeholders?: {
         hours: string;
         minutes: string;
@@ -49,6 +54,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     justifyContent = 'center',
     srOnlyLabels,
     placeholders,
+    suffix,
     onChange,
 }) => {
     const [stateTime, setStateTime] = useState<Partial<Time> | undefined>(time);
@@ -61,7 +67,8 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                 bem.block,
                 bem.modifier(layout),
                 bem.modifier(`content-${justifyContent}`),
-                bem.modifierConditional('srOnlyLabels', srOnlyLabels)
+                bem.modifierConditional('srOnlyLabels', srOnlyLabels),
+                bem.modifierConditional('withSuffix', suffix !== undefined)
             )}>
             <div className={bem.element('contentWrapper')}>
                 <div className={bem.element('inputWrapper')}>
@@ -88,6 +95,11 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                             handleTimeChange(newTime, onChange);
                         }}
                     />
+                    {suffix && (
+                        <span aria-hidden={true} role="presentation" className={bem.element('suffix')}>
+                            {suffix.hours}
+                        </span>
+                    )}
                 </div>
                 <div className={bem.element('inputWrapper')}>
                     <label
@@ -113,6 +125,14 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                             handleTimeChange(newTime, onChange);
                         }}
                     />
+                    {suffix && (
+                        <span
+                            aria-hidden={true}
+                            role="presentation"
+                            className={bem.classNames(bem.element('suffix'), bem.element('suffix--min'))}>
+                            {suffix.minutes}
+                        </span>
+                    )}
                 </div>
             </div>
         </div>
