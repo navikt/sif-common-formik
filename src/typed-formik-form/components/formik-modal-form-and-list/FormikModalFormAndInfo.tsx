@@ -20,6 +20,7 @@ function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
     onAfterChange,
     renderEditButtons,
     dialogWidth,
+    dialogClassName,
     feil,
     validate,
 }: FormikModalFormAndInfoProps<FieldName, ItemType, ErrorType>) {
@@ -31,6 +32,7 @@ function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
                     <ModalFormAndInfo<ItemType>
                         labels={labels}
                         data={field.value}
+                        dialogClassName={dialogClassName}
                         dialogWidth={dialogWidth}
                         renderEditButtons={renderEditButtons}
                         error={feil || (context ? context.getAndRenderFieldErrorMessage(field, form) : undefined)}
