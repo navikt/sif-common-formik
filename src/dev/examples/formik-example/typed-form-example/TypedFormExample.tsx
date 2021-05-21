@@ -122,7 +122,7 @@ const TypedFormExample = () => {
                 />
             </Question>
 
-            {1 + 1 === 3 && (
+            {1 + 1 === 2 && (
                 <>
                     <Question>
                         <Form.Input

@@ -25,6 +25,7 @@ export interface ModalFormAndInfoProps<DataType> {
     formRenderer: ModalFormRenderer<DataType>;
     renderEditButtons?: boolean;
     dialogWidth?: DialogFormWrapperWidths;
+    modalClassName?: string;
 }
 interface PrivateProps<DataType> {
     onDelete: () => void;
@@ -41,6 +42,7 @@ function ModalFormAndInfo<DataType>({
     error,
     dialogWidth,
     renderEditButtons = false,
+    modalClassName,
     infoRenderer,
     formRenderer,
     onDelete,
@@ -69,7 +71,11 @@ function ModalFormAndInfo<DataType>({
 
     return (
         <>
-            <Modal isOpen={modalState.isVisible} contentLabel={labels.modalTitle} onRequestClose={resetModal}>
+            <Modal
+                className={modalClassName}
+                isOpen={modalState.isVisible}
+                contentLabel={labels.modalTitle}
+                onRequestClose={resetModal}>
                 <DialogFormWrapper width={dialogWidth}>
                     {formRenderer({
                         onSubmit: handleOnSubmit,
