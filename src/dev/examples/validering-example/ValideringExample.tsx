@@ -684,7 +684,9 @@ const error = getCheckedValidator()(value);
 export enum ValidateTimeError {
     timeHasNoValue = 'timeHasNoValue',
     hoursAreInvalid = 'hoursAreInvalid',
+    hoursAreNegative = 'hoursAreNegative',
     minutesAreInvalid = 'minutesAreInvalid',
+    minutesAreNegative = 'minutesAreNegative',
     tooManyHours = 'tooManyHours',
     tooManyMinutes = 'tooManyMinutes',
     durationIsTooLong = 'durationIsTooLong',
@@ -695,7 +697,9 @@ type TimeValidationResult =
     | undefined
     | ValidateTimeError.timeHasNoValue
     | ValidateTimeError.hoursAreInvalid
+    | ValidateTimeError.hoursAreNegative
     | ValidateTimeError.minutesAreInvalid
+    | ValidateTimeError.minutesAreNegative
     | ValidateTimeError.durationIsTooLong
     | ValidateTimeError.durationIsTooShort
     | ValidateTimeError.tooManyHours
@@ -744,9 +748,17 @@ const error = getTimeValidator()(value);
                                             info: 'ugyldig verdi i feltet for antall timer',
                                             example: 'Antall timer er ikke et gyldig tall',
                                         },
+                                        [ValidateTimeError.hoursAreNegative]: {
+                                            info: 'antall timer har negativ verdi',
+                                            example: 'Antall timer kan ikke være mindre enn 0',
+                                        },
                                         [ValidateTimeError.minutesAreInvalid]: {
                                             info: 'ugyldig verdi i feltet for antall minutter',
                                             example: 'Antall minutter er ikke et gyldig tall',
+                                        },
+                                        [ValidateTimeError.minutesAreNegative]: {
+                                            info: 'antall minutter har negativ verdi',
+                                            example: 'Antall minutter kan ikke være mindre enn 0',
                                         },
                                         [ValidateTimeError.tooManyHours]: {
                                             info: 'antall timer over 23',
