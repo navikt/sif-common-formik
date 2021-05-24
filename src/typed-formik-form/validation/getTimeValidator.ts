@@ -5,7 +5,9 @@ import { getNumberFromStringInput } from './validationUtils';
 export enum ValidateTimeError {
     timeHasNoValue = 'timeHasNoValue',
     hoursAreInvalid = 'hoursAreInvalid',
+    hoursAreNegative = 'hoursAreNegative',
     minutesAreInvalid = 'minutesAreInvalid',
+    minutesAreNegative = 'minutesAreNegative',
     tooManyHours = 'tooManyHours',
     tooManyMinutes = 'tooManyMinutes',
     durationIsTooLong = 'durationIsTooLong',
@@ -16,7 +18,9 @@ type TimeValidationResult =
     | undefined
     | ValidateTimeError.timeHasNoValue
     | ValidateTimeError.hoursAreInvalid
+    | ValidateTimeError.hoursAreNegative
     | ValidateTimeError.minutesAreInvalid
+    | ValidateTimeError.minutesAreNegative
     | ValidateTimeError.durationIsTooLong
     | ValidateTimeError.durationIsTooShort
     | ValidateTimeError.tooManyHours
@@ -48,11 +52,15 @@ const getTimeValidator = (options: Options = {}): ValidationFunction<TimeValidat
         return ValidateTimeError.hoursAreInvalid;
     } else if (hours > 23) {
         return ValidateTimeError.tooManyHours;
+    } else if (hours < 0) {
+        return ValidateTimeError.hoursAreNegative;
     }
     if (minutes === undefined) {
         return ValidateTimeError.minutesAreInvalid;
     } else if (minutes > 59) {
         return ValidateTimeError.tooManyMinutes;
+    } else if (minutes < 0) {
+        return ValidateTimeError.minutesAreNegative;
     }
 
     if (required && hours === 0 && minutes === 0) {

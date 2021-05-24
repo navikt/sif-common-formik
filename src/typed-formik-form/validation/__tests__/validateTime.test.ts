@@ -17,6 +17,12 @@ describe(`validateTime`, () => {
     it(`returns ${ValidateTimeError.timeHasNoValue} when required and no hours and minutes`, () => {
         expect(getTimeValidator({ required: true })(emptyTime)).toEqual(ValidateTimeError.timeHasNoValue);
     });
+    it(`returns ${ValidateTimeError.hoursAreNegative} when value for hours are negative`, () => {
+        expect(getTimeValidator({ required: true })({ hours: -1 })).toEqual(ValidateTimeError.hoursAreNegative);
+    });
+    it(`returns ${ValidateTimeError.minutesAreNegative} when value for minutes are negative`, () => {
+        expect(getTimeValidator({ required: true })({ minutes: -1 })).toEqual(ValidateTimeError.minutesAreNegative);
+    });
     it(`returns ${ValidateTimeError.hoursAreInvalid} when hours has invalid value`, () => {
         expect(getTimeValidator()({ hours: 'x' })).toEqual(ValidateTimeError.hoursAreInvalid);
         expect(getTimeValidator()({ hours: 'x', minutes: '2' })).toEqual(ValidateTimeError.hoursAreInvalid);
