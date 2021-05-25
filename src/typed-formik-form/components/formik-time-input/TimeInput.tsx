@@ -103,7 +103,10 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                         }}
                     />
                     {suffix && (
-                        <span aria-hidden={true} role="presentation" className={bem.element('suffix')}>
+                        <span
+                            aria-hidden={true}
+                            role="presentation"
+                            className={bem.classNames(bem.element('suffix'), bem.element('suffix--hours'))}>
                             {suffix.hours}
                         </span>
                     )}
