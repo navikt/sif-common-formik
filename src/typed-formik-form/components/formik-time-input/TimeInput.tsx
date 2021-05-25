@@ -73,6 +73,8 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                 bem.modifierConditional('srOnlyLabels', srOnlyLabels),
                 bem.modifierConditional('withSuffix', suffix !== undefined),
                 bem.modifierConditional('withValue', hasValue(time.hours) || hasValue(time.minutes)),
+                bem.modifierConditional('withHours', hasValue(time.hours)),
+                bem.modifierConditional('withMinute', hasValue(time.minutes)),
                 className
             )}>
             <div className={bem.element('contentWrapper')}>
