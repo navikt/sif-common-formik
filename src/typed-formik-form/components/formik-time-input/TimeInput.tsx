@@ -5,6 +5,7 @@ import { Time } from '../../types';
 import bemUtils from '../../utils/bemUtils';
 import { getNumberFromNumberInputValue } from '../../utils/numberInputUtils';
 import './timeInput.less';
+import { hasValue } from '../../validation/validationUtils';
 
 const MAX_HOURS = 23;
 const MAX_MINUTES = 59;
@@ -31,6 +32,7 @@ interface TimeInputProps extends TimeInputLayoutProps {
     time?: Time | Partial<Time> | undefined;
     maxHours?: number;
     maxMinutes?: number;
+    className?: string;
     onChange: TimeInputChangeFunc;
 }
 
@@ -56,6 +58,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     placeholders,
     suffix,
     onChange,
+    className,
 }) => {
     const [stateTime, setStateTime] = useState<Partial<Time> | undefined>(time);
     const id = guid();
@@ -68,7 +71,9 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                 bem.modifier(layout),
                 bem.modifier(`content-${justifyContent}`),
                 bem.modifierConditional('srOnlyLabels', srOnlyLabels),
-                bem.modifierConditional('withSuffix', suffix !== undefined)
+                bem.modifierConditional('withSuffix', suffix !== undefined),
+                bem.modifierConditional('withValue', hasValue(time.hours) || hasValue(time.minutes)),
+                className
             )}>
             <div className={bem.element('contentWrapper')}>
                 <div className={bem.element('inputWrapper')}>
