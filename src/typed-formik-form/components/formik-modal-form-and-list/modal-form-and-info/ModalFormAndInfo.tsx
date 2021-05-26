@@ -26,6 +26,7 @@ export interface ModalFormAndInfoProps<DataType> {
     renderEditButtons?: boolean;
     dialogWidth?: DialogFormWrapperWidths;
     dialogClassName?: string;
+    wrapInfoInPanel?: boolean;
 }
 interface PrivateProps<DataType> {
     onDelete: () => void;
@@ -43,6 +44,7 @@ function ModalFormAndInfo<DataType>({
     dialogWidth,
     renderEditButtons = false,
     dialogClassName,
+    wrapInfoInPanel = true,
     infoRenderer,
     formRenderer,
     onDelete,
@@ -93,9 +95,13 @@ function ModalFormAndInfo<DataType>({
                 {data !== undefined && (
                     <>
                         <div className="modalFormAndInfo__infoWrapper">
-                            <Panel border={true} style={{ padding: '1rem' }}>
-                                {infoRenderer({ data, onEdit: handleEdit, onDelete: handleDelete })}
-                            </Panel>
+                            {wrapInfoInPanel ? (
+                                <Panel border={true} className={'modalFormAndInfo__infoWrapper__panel'}>
+                                    {infoRenderer({ data, onEdit: handleEdit, onDelete: handleDelete })}
+                                </Panel>
+                            ) : (
+                                infoRenderer({ data, onEdit: handleEdit, onDelete: handleDelete })
+                            )}
                         </div>
                         {renderEditButtons && (
                             <div className={'modalFormAndInfo__buttons'}>
