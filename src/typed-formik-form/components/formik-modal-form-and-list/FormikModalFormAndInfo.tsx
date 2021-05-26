@@ -19,6 +19,7 @@ function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
     formRenderer,
     onAfterChange,
     renderEditButtons,
+    renderDeleteButton,
     dialogWidth,
     dialogClassName,
     feil,
@@ -35,6 +36,7 @@ function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
                         dialogClassName={dialogClassName}
                         dialogWidth={dialogWidth}
                         renderEditButtons={renderEditButtons}
+                        renderDeleteButton={renderDeleteButton}
                         error={feil || (context ? context.getAndRenderFieldErrorMessage(field, form) : undefined)}
                         onDelete={() => form.setFieldValue(field.name, undefined)}
                         onChange={(value) => {
