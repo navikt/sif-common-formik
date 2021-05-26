@@ -1,6 +1,6 @@
 import { Time } from '../types';
 import { ValidationFunction } from './types';
-import { getNumberFromStringInput } from './validationUtils';
+import { getNumberFromStringInput, hasValue } from './validationUtils';
 
 export enum ValidateTimeError {
     timeHasNoValue = 'timeHasNoValue',
@@ -39,11 +39,25 @@ interface Options {
 
 const getMinutes = (hours: number, minutes: number): number => hours * 60 + minutes;
 
+const valueIsValidNumber = (value: string | undefined): boolean => {
+    if (value) {
+        return value.match(/^[\-0-9]+$/) !== null; // Tillatt - for å kunne gi feil på negative verdier
+    }
+    return false;
+};
+
 const getTimeValidator = (options: Options = {}): ValidationFunction<TimeValidationResult> => (
     value: Partial<Time>
 ) => {
     const { required, max, min } = options;
     const { hours: inputHours, minutes: inputMinutes } = value || {};
+
+    if (hasValue(inputHours) && valueIsValidNumber(inputHours) === false) {
+        return ValidateTimeError.hoursAreInvalid;
+    }
+    if (hasValue(inputMinutes) && valueIsValidNumber(inputMinutes) === false) {
+        return ValidateTimeError.minutesAreInvalid;
+    }
 
     const hours = getNumberFromStringInput(inputHours || '0');
     const minutes = getNumberFromStringInput(inputMinutes || '0');

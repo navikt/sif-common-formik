@@ -10,26 +10,31 @@ describe(`validateTime`, () => {
     it(`returns undefined when not required and value is empty`, () => {
         expect(getTimeValidator({ required: false })('')).toBeUndefined();
     });
-    it(`returns undefined when wither hours and minutes have valid value`, () => {
-        expect(getTimeValidator({ required: true })({ ...emptyTime, minutes: 1 })).toBeUndefined();
-        expect(getTimeValidator({ required: true })({ ...emptyTime, hours: 1 })).toBeUndefined();
+    it(`returns undefined when hours and minutes have valid value`, () => {
+        expect(getTimeValidator({ required: true })({ ...emptyTime, minutes: '1' })).toBeUndefined();
+        expect(getTimeValidator({ required: true })({ ...emptyTime, hours: '1' })).toBeUndefined();
     });
     it(`returns ${ValidateTimeError.timeHasNoValue} when required and no hours and minutes`, () => {
         expect(getTimeValidator({ required: true })(emptyTime)).toEqual(ValidateTimeError.timeHasNoValue);
     });
     it(`returns ${ValidateTimeError.hoursAreNegative} when value for hours are negative`, () => {
-        expect(getTimeValidator({ required: true })({ hours: -1 })).toEqual(ValidateTimeError.hoursAreNegative);
+        expect(getTimeValidator({ required: true })({ hours: '-1' })).toEqual(ValidateTimeError.hoursAreNegative);
     });
     it(`returns ${ValidateTimeError.minutesAreNegative} when value for minutes are negative`, () => {
-        expect(getTimeValidator({ required: true })({ minutes: -1 })).toEqual(ValidateTimeError.minutesAreNegative);
+        expect(getTimeValidator({ required: true })({ minutes: '-1' })).toEqual(ValidateTimeError.minutesAreNegative);
     });
     it(`returns ${ValidateTimeError.hoursAreInvalid} when hours has invalid value`, () => {
         expect(getTimeValidator()({ hours: 'x' })).toEqual(ValidateTimeError.hoursAreInvalid);
         expect(getTimeValidator()({ hours: 'x', minutes: '2' })).toEqual(ValidateTimeError.hoursAreInvalid);
+        expect(getTimeValidator()({ hours: '1.', minutes: '2' })).toEqual(ValidateTimeError.hoursAreInvalid);
+        expect(getTimeValidator()({ hours: ',1', minutes: '2' })).toEqual(ValidateTimeError.hoursAreInvalid);
     });
     it(`returns ${ValidateTimeError.minutesAreInvalid} when hours has invalid value`, () => {
         expect(getTimeValidator()({ minutes: 'x' })).toEqual(ValidateTimeError.minutesAreInvalid);
         expect(getTimeValidator()({ minutes: 'x', hours: '2' })).toEqual(ValidateTimeError.minutesAreInvalid);
+        expect(getTimeValidator()({ minutes: '.2', hours: '2' })).toEqual(ValidateTimeError.minutesAreInvalid);
+        expect(getTimeValidator()({ minutes: '2.', hours: '2' })).toEqual(ValidateTimeError.minutesAreInvalid);
+        expect(getTimeValidator()({ minutes: '2,', hours: '2' })).toEqual(ValidateTimeError.minutesAreInvalid);
     });
     it(`returns ${ValidateTimeError.tooManyHours} when hours are more than 23 hours`, () => {
         expect(getTimeValidator()({ hours: '24' })).toEqual(ValidateTimeError.tooManyHours);
