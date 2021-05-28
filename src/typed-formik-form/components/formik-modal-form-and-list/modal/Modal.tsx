@@ -1,5 +1,5 @@
 import React from 'react';
-import { default as NFModal } from 'nav-frontend-modal';
+import NFModal from 'nav-frontend-modal';
 import './modal.less';
 
 export interface ModalProps {

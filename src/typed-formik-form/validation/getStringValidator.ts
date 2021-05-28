@@ -21,23 +21,25 @@ interface Options {
     maxLength?: number;
 }
 
-const getStringValidator = (options: Options = {}): ValidationFunction<StringValidationResult> => (value: any) => {
-    const { required, minLength, maxLength } = options;
+const getStringValidator =
+    (options: Options = {}): ValidationFunction<StringValidationResult> =>
+    (value: any) => {
+        const { required, minLength, maxLength } = options;
 
-    if (required && hasValue(value) === false) {
-        return ValidateStringError.stringHasNoValue;
-    }
-    if (hasValue(value)) {
-        if (typeof value !== 'string') {
-            return ValidateStringError.stringIsNotAString;
+        if (required && hasValue(value) === false) {
+            return ValidateStringError.stringHasNoValue;
         }
-        if (minLength !== undefined && value.length < minLength) {
-            return ValidateStringError.stringIsTooShort;
+        if (hasValue(value)) {
+            if (typeof value !== 'string') {
+                return ValidateStringError.stringIsNotAString;
+            }
+            if (minLength !== undefined && value.length < minLength) {
+                return ValidateStringError.stringIsTooShort;
+            }
+            if (maxLength !== undefined && value.length > maxLength) {
+                return ValidateStringError.stringIsTooLong;
+            }
         }
-        if (maxLength !== undefined && value.length > maxLength) {
-            return ValidateStringError.stringIsTooLong;
-        }
-    }
-};
+    };
 
 export default getStringValidator;

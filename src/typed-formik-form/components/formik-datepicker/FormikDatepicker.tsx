@@ -3,9 +3,9 @@ import { DayPickerProps } from 'react-day-picker';
 import { useIntl } from 'react-intl';
 import { Field, FieldProps } from 'formik';
 import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger';
-import useMedia from 'use-media';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
+import { useMediaQuery } from 'react-responsive';
 import { DateRange, NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
@@ -80,7 +80,7 @@ function FormikDatepicker<FieldName, ErrorType>({
     ...restProps
 }: FormikDatepickerProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
-    const isWide = useMedia({ minWidth: 736 });
+    const isWide = useMediaQuery({ minWidth: 736 });
     const elementId = id || guid();
     const position: CalendarPlacement | undefined =
         fullscreenOverlay || (fullScreenOnMobile && isWide === false) ? 'fullscreen' : undefined;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Field, FieldProps } from 'formik';
 import { Radio, RadioGruppe, RadioPanelGruppeProps } from 'nav-frontend-skjema';
 import { TypedFormInputValidationProps } from '../../types';
@@ -20,7 +20,7 @@ function FormikRadioGroup<FieldName, ErrorType>({
     feil,
     ...restProps
 }: FormikRadioGroupProps<FieldName, ErrorType>) {
-    const context = React.useContext(TypedFormikFormContext);
+    const context = useContext(TypedFormikFormContext);
     return (
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
@@ -32,7 +32,7 @@ function FormikRadioGroup<FieldName, ErrorType>({
                                 <Radio
                                     key={idx}
                                     {...rb}
-                                    name={(name as any) as string}
+                                    name={name as any}
                                     checked={isSelected}
                                     autoComplete="off"
                                     onChange={(evt) => {

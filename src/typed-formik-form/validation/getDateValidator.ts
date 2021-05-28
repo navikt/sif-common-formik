@@ -33,29 +33,29 @@ export interface DateValidationOptions {
     onlyWeekdays?: boolean;
 }
 
-const getDateValidator = (options: DateValidationOptions = {}): ValidationFunction<DateValidationResult> => (
-    value: any
-) => {
-    const { required, min, max, onlyWeekdays } = options;
-    const date = datepickerUtils.getDateFromDateString(value);
-    if (required && hasValue(value) === false) {
-        return ValidateDateError.dateHasNoValue;
-    }
-    if (hasValue(value)) {
-        if (date === undefined) {
-            return ValidateDateError.dateHasInvalidFormat;
+const getDateValidator =
+    (options: DateValidationOptions = {}): ValidationFunction<DateValidationResult> =>
+    (value: any) => {
+        const { required, min, max, onlyWeekdays } = options;
+        const date = datepickerUtils.getDateFromDateString(value);
+        if (required && hasValue(value) === false) {
+            return ValidateDateError.dateHasNoValue;
         }
-        if (min && dayjs(date).isBefore(min, 'day')) {
-            return ValidateDateError.dateIsBeforeMin;
+        if (hasValue(value)) {
+            if (date === undefined) {
+                return ValidateDateError.dateHasInvalidFormat;
+            }
+            if (min && dayjs(date).isBefore(min, 'day')) {
+                return ValidateDateError.dateIsBeforeMin;
+            }
+            if (max && dayjs(date).isAfter(max, 'day')) {
+                return ValidateDateError.dateIsAfterMax;
+            }
+            if (onlyWeekdays && dayjs(date).isoWeekday() > 5) {
+                return ValidateDateError.dateIsNotWeekday;
+            }
         }
-        if (max && dayjs(date).isAfter(max, 'day')) {
-            return ValidateDateError.dateIsAfterMax;
-        }
-        if (onlyWeekdays && dayjs(date).isoWeekday() > 5) {
-            return ValidateDateError.dateIsNotWeekday;
-        }
-    }
-    return undefined;
-};
+        return undefined;
+    };
 
 export default getDateValidator;
