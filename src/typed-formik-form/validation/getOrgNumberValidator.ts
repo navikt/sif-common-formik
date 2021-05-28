@@ -42,17 +42,17 @@ const isValidOrgNumber = (value: any): boolean => {
     return false;
 };
 
-const getOrgNumberValidator = (options: Options = {}): ValidationFunction<OrgNumberValidationResult> => (
-    value: any
-) => {
-    const { required } = options;
-    if (required && hasValue(value) === false) {
-        return ValidateOrgNumberError.orgNumberHasNoValue;
-    }
-    const isValidFormat = isValidOrgNumber(value);
-    if (hasValue(value) && isValidFormat === false) {
-        return ValidateOrgNumberError.orgNumberHasInvalidFormat;
-    }
-};
+const getOrgNumberValidator =
+    (options: Options = {}): ValidationFunction<OrgNumberValidationResult> =>
+    (value: any) => {
+        const { required } = options;
+        if (required && hasValue(value) === false) {
+            return ValidateOrgNumberError.orgNumberHasNoValue;
+        }
+        const isValidFormat = isValidOrgNumber(value);
+        if (hasValue(value) && isValidFormat === false) {
+            return ValidateOrgNumberError.orgNumberHasInvalidFormat;
+        }
+    };
 
 export default getOrgNumberValidator;

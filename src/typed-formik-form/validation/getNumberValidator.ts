@@ -21,26 +21,28 @@ interface Options {
     max?: number;
 }
 
-const getNumberValidator = (options: Options = {}): ValidationFunction<NumberValidationResult> => (value: any) => {
-    const { required, min, max } = options;
-    const numberValue = getNumberFromStringInput(value);
+const getNumberValidator =
+    (options: Options = {}): ValidationFunction<NumberValidationResult> =>
+    (value: any) => {
+        const { required, min, max } = options;
+        const numberValue = getNumberFromStringInput(value);
 
-    if (hasValue(value) === false && required) {
-        return ValidateNumberError.numberHasNoValue;
-    }
+        if (hasValue(value) === false && required) {
+            return ValidateNumberError.numberHasNoValue;
+        }
 
-    if (hasValue(value)) {
-        if (numberValue === undefined) {
-            return ValidateNumberError.numberHasInvalidFormat;
+        if (hasValue(value)) {
+            if (numberValue === undefined) {
+                return ValidateNumberError.numberHasInvalidFormat;
+            }
+            if (min !== undefined && numberValue < min) {
+                return ValidateNumberError.numberIsTooSmall;
+            }
+            if (max !== undefined && numberValue > max) {
+                return ValidateNumberError.numberIsTooLarge;
+            }
         }
-        if (min !== undefined && numberValue < min) {
-            return ValidateNumberError.numberIsTooSmall;
-        }
-        if (max !== undefined && numberValue > max) {
-            return ValidateNumberError.numberIsTooLarge;
-        }
-    }
-    return undefined;
-};
+        return undefined;
+    };
 
 export default getNumberValidator;
