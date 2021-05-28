@@ -24,6 +24,7 @@ export interface ModalFormAndInfoProps<DataType> {
     infoRenderer: InfoRenderer<DataType>;
     formRenderer: ModalFormRenderer<DataType>;
     renderEditButtons?: boolean;
+    renderDeleteButton?: boolean;
     dialogWidth?: DialogFormWrapperWidths;
     dialogClassName?: string;
     wrapInfoInPanel?: boolean;
@@ -43,6 +44,7 @@ function ModalFormAndInfo<DataType>({
     error,
     dialogWidth,
     renderEditButtons = false,
+    renderDeleteButton = true,
     dialogClassName,
     wrapInfoInPanel = true,
     infoRenderer,
@@ -111,14 +113,16 @@ function ModalFormAndInfo<DataType>({
                                     mini={true}>
                                     {data ? labels.editLabel : labels.addLabel}
                                 </Knapp>
-                                <Knapp
-                                    htmlType="button"
-                                    onClick={() => {
-                                        onDelete();
-                                    }}
-                                    mini={true}>
-                                    {labels.deleteLabel}
-                                </Knapp>
+                                {renderDeleteButton && (
+                                    <Knapp
+                                        htmlType="button"
+                                        onClick={() => {
+                                            onDelete();
+                                        }}
+                                        mini={true}>
+                                        {labels.deleteLabel}
+                                    </Knapp>
+                                )}
                             </div>
                         )}
                     </>
