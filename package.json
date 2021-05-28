@@ -1,6 +1,6 @@
 {
     "name": "@navikt/sif-common-formik",
-    "version": "19.2.1",
+    "version": "19.2.2-beta.0",
     "private": false,
     "scripts": {
         "dev": "craco start",
@@ -91,7 +91,7 @@
         "classnames": "^2.3.1",
         "formik": "^2.2.8",
         "intl": "^1.2.5",
-        "nav-datovelger": "^11.3.x",
+        "nav-datovelger": "^11.3.0",
         "nav-frontend-alertstriper": "^4.x",
         "nav-frontend-core": "^6.x",
         "nav-frontend-hjelpetekst": "^3.x",
