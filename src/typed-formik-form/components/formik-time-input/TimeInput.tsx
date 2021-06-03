@@ -12,7 +12,7 @@ const MAX_MINUTES = 59;
 
 type TimeInputChangeFunc = (time: Partial<Time> | undefined, isValidTime: boolean) => void;
 
-export type TimeInputLayout = 'normal' | 'compact' | 'compactWithSpace' | 'horizontal';
+export type TimeInputLayout = 'normal' | 'compact' | 'compactWithSpace' | 'horizontal' | 'horizontalCompact';
 export interface TimeInputSuffix {
     hours: string;
     minutes: string;
