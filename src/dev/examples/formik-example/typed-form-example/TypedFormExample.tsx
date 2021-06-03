@@ -30,6 +30,10 @@ import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
 import Friends from './Friends';
+import {
+    OmsorgstilbudInlineForm,
+    getDatoerForOmsorgstilbudPeriode,
+} from '@navikt/sif-common-forms/lib/omsorgstilbud/OmsorgstilbudForm';
 
 const Form = getTypedFormComponents<FormFields, FormValues, ValidationError>();
 
@@ -39,99 +43,101 @@ const TypedFormExample = () => {
     const intl = useIntl();
     const minDate = dayjs().subtract(2, 'month').toDate();
     const maxDate = dayjs().add(1, 'month').toDate();
+    const datoer = getDatoerForOmsorgstilbudPeriode(dayjs('2021-06-01').toDate(), dayjs('2021-06-04').toDate());
     return (
         <Form.Form
             submitButtonLabel="Ok"
             includeValidationSummary={true}
             includeButtons={true}
             formErrorHandler={getIntlFormErrorHandler(intl)}>
-            <Question>
-                <Box margin="m">
-                    <FormikTimeInput
-                        name="abc"
-                        label="Tor. 12.05.21"
-                        timeInputLayout={{
-                            layout: 'compact',
-                            srOnlyLabels: true,
-                            suffix: { hours: 't', minutes: 'm' },
-                        }}
-                        validate={(time) => {
-                            const error = getTimeValidator({
-                                required: true,
-                                min: { hours: 0, minutes: 1 },
-                                max: { hours: 7, minutes: 30 },
-                            })(time);
-                            return error
-                                ? {
-                                      key: error,
-                                      values: { dag: 'Torsdag 12. 10. 2000' },
-                                      keepKeyUnaltered: true,
-                                  }
-                                : undefined;
-                        }}
-                    />
-                </Box>
-                <Box margin="m">
-                    <FormikTimeInput
-                        name="abc"
-                        label="Tor. 12.05.21"
-                        timeInputLayout={{
-                            layout: 'normal',
-                            srOnlyLabels: true,
-                            suffix: { hours: 't', minutes: 'm' },
-                        }}
-                        validate={(time) => {
-                            const error = getTimeValidator({
-                                required: true,
-                                min: { hours: 0, minutes: 1 },
-                                max: { hours: 7, minutes: 30 },
-                            })(time);
-                            return error
-                                ? {
-                                      key: error,
-                                      values: { dag: 'Torsdag 12. 10. 2000' },
-                                      keepKeyUnaltered: true,
-                                  }
-                                : undefined;
-                        }}
-                    />
-                </Box>
-            </Question>
-            <Question>
-                <Form.YesOrNoQuestion
-                    legend={'Har du kids'}
-                    name={FormFields.hasKids}
-                    validate={(value) => {
-                        const err = getYesOrNoValidator()(value);
-                        if (err) {
-                            return {
-                                key: err,
-                                values: { question: 'spørsmålet om antall barn' },
-                                keepKeyUnaltered: false,
-                            };
-                        }
-                    }}
-                />
-            </Question>
-            <Question>
-                <FormikDateRangePicker
-                    legend="DateRangePicker"
-                    disableWeekend={true}
-                    minDate={minDate}
-                    maxDate={maxDate}
-                    fromInputProps={{
-                        name: FormFields.daterange_from,
-                        label: 'Fra',
-                    }}
-                    toInputProps={{
-                        name: FormFields.daterange_to,
-                        label: 'Til',
-                    }}
-                />
-            </Question>
+            <OmsorgstilbudInlineForm fieldName={`enkeltdager`} datoer={datoer} />
 
             {1 + 1 === 2 && (
                 <>
+                    <Question>
+                        <Box margin="m">
+                            <FormikTimeInput
+                                name="abc"
+                                label="Tor. 12.05.21"
+                                timeInputLayout={{
+                                    layout: 'compact',
+                                    srOnlyLabels: true,
+                                    suffix: { hours: 't', minutes: 'm' },
+                                }}
+                                validate={(time) => {
+                                    const error = getTimeValidator({
+                                        required: true,
+                                        min: { hours: 0, minutes: 1 },
+                                        max: { hours: 7, minutes: 30 },
+                                    })(time);
+                                    return error
+                                        ? {
+                                              key: error,
+                                              values: { dag: 'Torsdag 12. 10. 2000' },
+                                              keepKeyUnaltered: true,
+                                          }
+                                        : undefined;
+                                }}
+                            />
+                        </Box>
+                        <Box margin="m">
+                            <FormikTimeInput
+                                name="abc"
+                                label="Tor. 12.05.21"
+                                timeInputLayout={{
+                                    layout: 'normal',
+                                    srOnlyLabels: true,
+                                    suffix: { hours: 't', minutes: 'm' },
+                                }}
+                                validate={(time) => {
+                                    const error = getTimeValidator({
+                                        required: true,
+                                        min: { hours: 0, minutes: 1 },
+                                        max: { hours: 7, minutes: 30 },
+                                    })(time);
+                                    return error
+                                        ? {
+                                              key: error,
+                                              values: { dag: 'Torsdag 12. 10. 2000' },
+                                              keepKeyUnaltered: true,
+                                          }
+                                        : undefined;
+                                }}
+                            />
+                        </Box>
+                    </Question>
+                    <Question>
+                        <Form.YesOrNoQuestion
+                            legend={'Har du kids'}
+                            name={FormFields.hasKids}
+                            validate={(value) => {
+                                const err = getYesOrNoValidator()(value);
+                                if (err) {
+                                    return {
+                                        key: err,
+                                        values: { question: 'spørsmålet om antall barn' },
+                                        keepKeyUnaltered: false,
+                                    };
+                                }
+                            }}
+                        />
+                    </Question>
+                    <Question>
+                        <FormikDateRangePicker
+                            legend="DateRangePicker"
+                            disableWeekend={true}
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            fromInputProps={{
+                                name: FormFields.daterange_from,
+                                label: 'Fra',
+                            }}
+                            toInputProps={{
+                                name: FormFields.daterange_to,
+                                label: 'Til',
+                            }}
+                        />
+                    </Question>
                     <Question>
                         <Form.Input
                             name={FormFields.fødselsnummer}
