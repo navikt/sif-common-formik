@@ -54,7 +54,7 @@
         }
         &__contentWrapper {
             white-space: nowrap;
-            padding-bottom: 2rem;
+            padding-bottom: 1.25rem;
             display: flex;
             > * {
                 flex: 1;
@@ -107,6 +107,7 @@
     &--horizontal {
         flex-direction: row;
         display: flex;
+        flex-wrap: wrap;
         .divLegend {
             padding-right: 1rem;
             align-items: flex-start;
@@ -119,6 +120,9 @@
         }
         .timeInput__contentWrapper {
             justify-content: left;
+        }
+        .timeInput + div {
+            width: 100%;
         }
     }
 }
