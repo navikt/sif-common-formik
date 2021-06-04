@@ -22,7 +22,7 @@ const SkjemagruppeQuestion = forwardRef(function SkjemagruppeQuestion(props: Skj
             legend={isFieldsetTag ? legend ? <Element tag="div">{legend}</Element> : undefined : undefined}
             {...rest}>
             {isFieldsetTag === false && legend && (
-                <div className="skjemaelement__label" id={titleId}>
+                <div className="skjemaelement__label divLegend" id={titleId}>
                     {legend}
                 </div>
             )}

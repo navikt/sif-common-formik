@@ -23,7 +23,7 @@
         margin-right: 0;
     }
 }
-.timeInputCompactChildren() {
+.timeInputLabelsBelow() {
     > .skjemaelement__label {
         font-weight: normal;
         text-align: center;
@@ -31,7 +31,6 @@
         padding-bottom: 0.25rem;
         margin-bottom: 0;
     }
-
     input {
         text-align: center;
         width: 100%;
@@ -57,35 +56,17 @@
             white-space: nowrap;
             padding-bottom: 2rem;
             display: flex;
-            justify-content: center;
             > * {
                 flex: 1;
             }
         }
         &__inputWrapper {
             max-width: 3.5rem;
-            margin: 0;
         }
-    }
-    .timeInput__suffix {
-        position: absolute;
-        right: 0.5rem;
-        display: flex;
-        align-self: center;
-        justify-content: flex-end;
     }
 }
 
 .timeInput {
-    &__suffix {
-        position: relative;
-        right: 1rem;
-        opacity: 0.6;
-        font-size: 0.9rem;
-        &--min {
-            right: 1.2rem;
-        }
-    }
     .skjemaelement__label {
         font-weight: bold;
     }
@@ -94,7 +75,7 @@
     }
     &__hours,
     &__minutes {
-        width: 4rem;
+        width: 100%;
         margin-bottom: 0.5rem;
         &:focus {
             z-index: 2;
@@ -103,9 +84,10 @@
     &__inputWrapper {
         display: flex;
         align-items: baseline;
-        margin-right: 1rem;
+        margin-right: 0.5rem;
         padding: 0;
         position: relative;
+        max-width: 3rem;
     }
     &__label {
         padding-left: 0.5rem;
@@ -114,62 +96,26 @@
     &__input {
         order: 1;
     }
+    .timeInputLabelsBelow();
+
     &--compact {
-        .timeInputCompactChildren();
         .compactInputs();
-    }
-    &--compactWithSpace,
-    &--horizontal {
-        .timeInputCompactChildren();
-        .timeInput__inputWrapper:first-child {
-            margin-right: 0.5rem;
-        }
-    }
-    &--horizontalCompact {
-        .timeInputCompactChildren();
-        .compactInputs();
-    }
-    &--compactWithSpace,
-    &--compact {
-        &.timeInput--content-left {
-            .timeInput__contentWrapper {
-                justify-content: left;
-            }
-        }
-        &.timeInput--content-right {
-            .timeInput__contentWrapper {
-                justify-content: left;
-            }
-        }
-    }
-    &--srOnlyLabels {
-        .timeInput__contentWrapper {
-            padding-bottom: 0;
-        }
-    }
-    &--withSuffix {
-        input {
-            text-align: right;
-            padding-right: 1.25rem;
-        }
-        .timeInput__minutes input {
-            padding-right: 1.5rem;
-        }
     }
 }
 
 .formikTimeInput {
-    &--horizontal,
-    &--horizontalCompact {
+    &--horizontal {
         flex-direction: row;
-        legend {
-            float: left;
+        display: flex;
+        .divLegend {
             padding-right: 1rem;
-            display: flex;
             align-items: flex-start;
             padding-top: 0.5rem;
             white-space: nowrap;
-            min-width: 8rem;
+            flex: 1 1 8rem;
+        }
+        .timeInput {
+            flex: 2 1 10rem;
         }
         .timeInput__contentWrapper {
             justify-content: left;

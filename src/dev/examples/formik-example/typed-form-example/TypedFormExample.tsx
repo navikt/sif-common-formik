@@ -30,10 +30,10 @@ import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
 import Friends from './Friends';
-import {
-    OmsorgstilbudInlineForm,
-    getDatoerForOmsorgstilbudPeriode,
-} from '@navikt/sif-common-forms/lib/omsorgstilbud/OmsorgstilbudForm';
+// import {
+//     OmsorgstilbudInlineForm,
+//     getDatoerForOmsorgstilbudPeriode,
+// } from '@navikt/sif-common-forms/lib/omsorgstilbud/OmsorgstilbudForm';
 
 const Form = getTypedFormComponents<FormFields, FormValues, ValidationError>();
 
@@ -43,7 +43,7 @@ const TypedFormExample = () => {
     const intl = useIntl();
     const minDate = dayjs().subtract(2, 'month').toDate();
     const maxDate = dayjs().add(1, 'month').toDate();
-    const datoer = getDatoerForOmsorgstilbudPeriode(dayjs('2021-06-01').toDate(), dayjs('2021-06-04').toDate());
+    // const datoer = getDatoerForOmsorgstilbudPeriode(dayjs('2021-06-01').toDate(), dayjs('2021-06-04').toDate());
     return (
         <Form.Form
             submitButtonLabel="Ok"
@@ -55,9 +55,8 @@ const TypedFormExample = () => {
                     name="abc"
                     label="Tor. 12.05.21"
                     timeInputLayout={{
-                        layout: 'compact',
-                        srOnlyLabels: true,
-                        suffix: { hours: 't', minutes: 'm' },
+                        direction: 'horizontal',
+                        compact: false,
                     }}
                     validate={(time) => {
                         const error = getTimeValidator({
@@ -75,19 +74,38 @@ const TypedFormExample = () => {
                     }}
                 />
             </Box>
+            <Box margin="m">
+                <FormikTimeInput
+                    name="abc"
+                    label="Tor. 12.05.21"
+                    timeInputLayout={{
+                        direction: 'horizontal',
+                        compact: true,
+                    }}
+                />
+            </Box>
+            <Box margin="m">
+                <FormikTimeInput
+                    name="abc"
+                    label="Tor. 12.05.21"
+                    timeInputLayout={{
+                        direction: 'vertical',
+                        compact: true,
+                    }}
+                />
+            </Box>
 
             {1 + 1 === 3 && (
                 <>
-                    <OmsorgstilbudInlineForm fieldName={`enkeltdager`} datoer={datoer} />
+                    {/* <OmsorgstilbudInlineForm fieldName={`enkeltdager`} datoer={datoer} /> */}
                     <Question>
                         <Box margin="m">
                             <FormikTimeInput
                                 name="abc"
                                 label="Tor. 12.05.21"
                                 timeInputLayout={{
-                                    layout: 'compact',
-                                    srOnlyLabels: true,
-                                    suffix: { hours: 't', minutes: 'm' },
+                                    direction: 'vertical',
+                                    compact: false,
                                 }}
                                 validate={(time) => {
                                     const error = getTimeValidator({
@@ -110,9 +128,7 @@ const TypedFormExample = () => {
                                 name="abc"
                                 label="Tor. 12.05.21"
                                 timeInputLayout={{
-                                    layout: 'normal',
-                                    srOnlyLabels: true,
-                                    suffix: { hours: 't', minutes: 'm' },
+                                    direction: 'vertical',
                                 }}
                                 validate={(time) => {
                                     const error = getTimeValidator({
