@@ -50,10 +50,35 @@ const TypedFormExample = () => {
             includeValidationSummary={true}
             includeButtons={true}
             formErrorHandler={getIntlFormErrorHandler(intl)}>
-            <OmsorgstilbudInlineForm fieldName={`enkeltdager`} datoer={datoer} />
+            <Box margin="m">
+                <FormikTimeInput
+                    name="abc"
+                    label="Tor. 12.05.21"
+                    timeInputLayout={{
+                        layout: 'compact',
+                        srOnlyLabels: true,
+                        suffix: { hours: 't', minutes: 'm' },
+                    }}
+                    validate={(time) => {
+                        const error = getTimeValidator({
+                            required: true,
+                            min: { hours: 0, minutes: 1 },
+                            max: { hours: 7, minutes: 30 },
+                        })(time);
+                        return error
+                            ? {
+                                  key: error,
+                                  values: { dag: 'Torsdag 12. 10. 2000' },
+                                  keepKeyUnaltered: true,
+                              }
+                            : undefined;
+                    }}
+                />
+            </Box>
 
-            {1 + 1 === 2 && (
+            {1 + 1 === 3 && (
                 <>
+                    <OmsorgstilbudInlineForm fieldName={`enkeltdager`} datoer={datoer} />
                     <Question>
                         <Box margin="m">
                             <FormikTimeInput
