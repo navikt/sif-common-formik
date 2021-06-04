@@ -4,24 +4,20 @@ import { Input } from 'nav-frontend-skjema';
 import { Time } from '../../types';
 import bemUtils from '../../utils/bemUtils';
 import { getNumberFromNumberInputValue } from '../../utils/numberInputUtils';
-import './timeInput.less';
 import { hasValue } from '../../validation/validationUtils';
+import './timeInput.less';
 
 const MAX_HOURS = 23;
 const MAX_MINUTES = 59;
 
 type TimeInputChangeFunc = (time: Partial<Time> | undefined, isValidTime: boolean) => void;
 
-export type TimeInputLayout = 'normal' | 'compact' | 'compactWithSpace' | 'horizontal';
-export interface TimeInputSuffix {
-    hours: string;
-    minutes: string;
-}
+export type TimeInputLayout = 'vertical' | 'horizontal';
+
 export interface TimeInputLayoutProps {
-    layout?: TimeInputLayout;
+    direction?: TimeInputLayout;
+    compact?: boolean;
     justifyContent?: 'left' | 'center' | 'right';
-    srOnlyLabels?: boolean;
-    suffix?: TimeInputSuffix;
     placeholders?: {
         hours: string;
         minutes: string;
@@ -52,11 +48,10 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     time = { hours: undefined, minutes: undefined },
     maxHours = MAX_HOURS,
     maxMinutes = MAX_MINUTES,
-    layout = 'compactWithSpace',
+    direction: layout = 'normal',
+    compact = true,
     justifyContent = 'center',
-    srOnlyLabels,
     placeholders,
-    suffix,
     onChange,
     className,
 }) => {
@@ -70,8 +65,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                 bem.block,
                 bem.modifier(layout),
                 bem.modifier(`content-${justifyContent}`),
-                bem.modifierConditional('srOnlyLabels', srOnlyLabels),
-                bem.modifierConditional('withSuffix', suffix !== undefined),
+                bem.modifierConditional('compact', compact),
                 bem.modifierConditional('withValue', hasValue(time.hours) || hasValue(time.minutes)),
                 bem.modifierConditional('withHours', hasValue(time.hours)),
                 bem.modifierConditional('withMinutes', hasValue(time.minutes)),
@@ -79,9 +73,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
             )}>
             <div className={bem.element('contentWrapper')}>
                 <div className={bem.element('inputWrapper')}>
-                    <label
-                        className={bem.classNames(bem.element('label'), srOnlyLabels ? 'sr-only' : '')}
-                        htmlFor={hoursLabelId}>
+                    <label className={bem.element('label')} htmlFor={hoursLabelId}>
                         Timer
                     </label>
                     <Input
@@ -102,19 +94,9 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                             handleTimeChange(newTime, onChange);
                         }}
                     />
-                    {suffix && (
-                        <span
-                            aria-hidden={true}
-                            role="presentation"
-                            className={bem.classNames(bem.element('suffix'), bem.element('suffix--hours'))}>
-                            {suffix.hours}
-                        </span>
-                    )}
                 </div>
                 <div className={bem.element('inputWrapper')}>
-                    <label
-                        className={bem.classNames(bem.element('label'), srOnlyLabels ? 'sr-only' : '')}
-                        htmlFor={minutesLabelId}>
+                    <label className={bem.element('label')} htmlFor={minutesLabelId}>
                         Minutter
                     </label>
                     <Input
@@ -135,14 +117,6 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                             handleTimeChange(newTime, onChange);
                         }}
                     />
-                    {suffix && (
-                        <span
-                            aria-hidden={true}
-                            role="presentation"
-                            className={bem.classNames(bem.element('suffix'), bem.element('suffix--min'))}>
-                            {suffix.minutes}
-                        </span>
-                    )}
                 </div>
             </div>
         </div>

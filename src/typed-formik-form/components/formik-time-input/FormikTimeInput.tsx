@@ -37,9 +37,13 @@ function FormikTimeInput<FieldName, ErrorType>({
             {({ field, form }: FieldProps) => {
                 return (
                     <SkjemagruppeQuestion
+                        tag={'div'}
                         className={bem.classNames(
                             bem.block,
-                            bem.modifierConditional(timeInputLayout?.layout, timeInputLayout?.layout !== undefined)
+                            bem.modifierConditional(
+                                timeInputLayout?.direction,
+                                timeInputLayout?.direction !== undefined
+                            )
                         )}
                         ref={ref}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
