@@ -764,7 +764,7 @@ const error = getTimeValidator()(value);
                                             info: 'antall timer over 23',
                                             example: 'Antall timer kan ikke overstige 23',
                                         },
-                                        [ValidateTimeError.tooManyHours]: {
+                                        [ValidateTimeError.tooManyMinutes]: {
                                             info: 'antall minutter over 59',
                                             example: 'Antall minutter kan ikke overstige 59',
                                         },
