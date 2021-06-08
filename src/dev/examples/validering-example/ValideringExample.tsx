@@ -163,7 +163,8 @@ export enum ValidateNumberError {
     numberHasNoValue = 'numberHasNoValue',
     numberHasInvalidFormat = 'numberHasInvalidFormat',
     numberIsTooSmall = 'numberIsTooSmall',
-    numberIsTooLarge = 'numberIsTooLarge',
+    numberIsTooLarge = 'numberIsTooLarge'
+    numberHasDecimals = 'numberHasDecimals',
 }
 
 type NumberValidationResult =
@@ -171,7 +172,8 @@ type NumberValidationResult =
     | ValidateNumberError.numberHasNoValue
     | ValidateNumberError.numberHasInvalidFormat
     | ValidateNumberError.numberIsTooLarge
-    | ValidateNumberError.numberIsTooSmall;
+    | ValidateNumberError.numberIsTooSmall
+    |ValidateNumberError.numberHasDecimals;
 
 interface Options {
     required?: boolean;
@@ -190,6 +192,7 @@ const error = getNumberValidator(options)(value);
                                             required: true,
                                             min: 1999,
                                             max: 2021,
+                                            allowDecimals: false,
                                         })}></Form.NumberInput>
                                 </Panel>
                                 <ValidationErrorList
@@ -211,6 +214,10 @@ const error = getNumberValidator(options)(value);
                                         [ValidateNumberError.numberIsTooLarge]: {
                                             info: 'for stort tall',
                                             example: `Tallet du har oppgitt som næringsinntekt for virksomheten er for høyt. Tallet kan ikke være høyere enn 99999999.`,
+                                        },
+                                        [ValidateNumberError.numberHasDecimals]: {
+                                            info: 'tall inneholder desimaler',
+                                            example: `Tallet du har oppgitt inneholder desimaler. Oppgi tallet i heltall.`,
                                         },
                                     }}
                                 />
