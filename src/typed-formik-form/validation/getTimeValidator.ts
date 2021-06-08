@@ -1,5 +1,5 @@
 import { Time } from '../types';
-import { getNumberFromNumberInputValue } from '../utils/numberInputUtils';
+import { getNumberFromStringInput } from './validationUtils';
 import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
 
@@ -60,8 +60,8 @@ const getTimeValidator =
             return ValidateTimeError.minutesAreInvalid;
         }
 
-        const hours = getNumberFromNumberInputValue(inputHours || '0');
-        const minutes = getNumberFromNumberInputValue(inputMinutes || '0');
+        const hours = getNumberFromStringInput(inputHours || '0');
+        const minutes = getNumberFromStringInput(inputMinutes || '0');
 
         if (hours === undefined) {
             return ValidateTimeError.hoursAreInvalid;
