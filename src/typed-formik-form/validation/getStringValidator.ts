@@ -26,14 +26,17 @@ const getStringValidator =
     (value: any) => {
         const { required, minLength, maxLength } = options;
 
-        if (required && hasValue(value) === false) {
-            return ValidateStringError.stringHasNoValue;
+        if (required) {
+            if (hasValue(value) === false || (typeof value === 'string' && value.trim().length === 0)) {
+                return ValidateStringError.stringHasNoValue;
+            }
         }
+
         if (hasValue(value)) {
             if (typeof value !== 'string') {
                 return ValidateStringError.stringIsNotAString;
             }
-            if (minLength !== undefined && value.length < minLength) {
+            if (minLength !== undefined && value.trim().length < minLength) {
                 return ValidateStringError.stringIsTooShort;
             }
             if (maxLength !== undefined && value.length > maxLength) {

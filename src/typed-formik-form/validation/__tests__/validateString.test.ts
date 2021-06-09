@@ -13,6 +13,7 @@ describe(`validateString`, () => {
     it(`returns ${ValidateStringError.stringHasNoValue} when required and no value`, () => {
         expect(getStringValidator({ required: true })(undefined)).toBe(ValidateStringError.stringHasNoValue);
         expect(getStringValidator({ required: true })('')).toBe(ValidateStringError.stringHasNoValue);
+        expect(getStringValidator({ required: true })(' ')).toBe(ValidateStringError.stringHasNoValue);
         expect(getStringValidator({ required: true })(null)).toBe(ValidateStringError.stringHasNoValue);
     });
     describe('length validation', () => {
