@@ -36,7 +36,7 @@ const getStringValidator =
             if (typeof value !== 'string') {
                 return ValidateStringError.stringIsNotAString;
             }
-            if (minLength !== undefined && value.length < minLength) {
+            if (minLength !== undefined && value.trim().length < minLength) {
                 return ValidateStringError.stringIsTooShort;
             }
             if (maxLength !== undefined && value.length > maxLength) {
