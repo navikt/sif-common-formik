@@ -32,7 +32,7 @@ export interface ModalFormAndInfoProps<DataType> {
 interface PrivateProps<DataType> {
     onDelete: () => void;
     onChange: (data: DataType) => void;
-    data: DataType;
+    data?: DataType;
     error?: React.ReactNode | boolean;
 }
 
