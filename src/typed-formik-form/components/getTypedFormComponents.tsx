@@ -27,7 +27,7 @@ import TypedFormikForm, { TypedFormikFormProps } from './typed-formik-form/Typed
 import TypedFormikWrapper, { TypedFormikWrapperProps } from './typed-formik-wrapper/TypedFormikWrapper';
 import '../styles/nav-frontend-skjema-extension.less';
 
-export interface TypedFormComponents<FieldName, ErrorType, FormValues> {
+export interface TypedFormComponents<FieldName, FormValues, ErrorType> {
     Checkbox: (props: FormikCheckboxProps<FieldName, ErrorType>) => JSX.Element;
     CheckboxPanelGroup: (props: FormikCheckboxPanelGroupProps<FieldName, ErrorType>) => JSX.Element;
     ConfirmationCheckbox: (props: FormikConfirmationCheckboxPanelProps<FieldName, ErrorType>) => JSX.Element;
@@ -51,8 +51,8 @@ export interface TypedFormComponents<FieldName, ErrorType, FormValues> {
 
 export function getTypedFormComponents<FieldName, FormValues, ErrorType = string>(): TypedFormComponents<
     FieldName,
-    ErrorType,
-    FormValues
+    FormValues,
+    ErrorType
 > {
     return {
         Checkbox: (props: FormikCheckboxProps<FieldName, ErrorType>) => (
