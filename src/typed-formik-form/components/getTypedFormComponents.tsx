@@ -27,7 +27,33 @@ import TypedFormikForm, { TypedFormikFormProps } from './typed-formik-form/Typed
 import TypedFormikWrapper, { TypedFormikWrapperProps } from './typed-formik-wrapper/TypedFormikWrapper';
 import '../styles/nav-frontend-skjema-extension.less';
 
-export function getTypedFormComponents<FieldName, FormValues, ErrorType = string>() {
+export interface TypedFormComponents<FieldName, ErrorType, FormValues> {
+    Checkbox: (props: FormikCheckboxProps<FieldName, ErrorType>) => JSX.Element;
+    CheckboxPanelGroup: (props: FormikCheckboxPanelGroupProps<FieldName, ErrorType>) => JSX.Element;
+    ConfirmationCheckbox: (props: FormikConfirmationCheckboxPanelProps<FieldName, ErrorType>) => JSX.Element;
+    CountrySelect: (props: FormikCountrySelectProps<FieldName, ErrorType>) => JSX.Element;
+    DatePicker: (props: FormikDatepickerProps<FieldName, ErrorType>) => JSX.Element;
+    DateIntervalPicker: (props: DateIntervalPickerProps<FieldName, ErrorType>) => JSX.Element;
+    DateRangePicker: (props: FormikDateRangePickerProps<FieldName, ErrorType>) => JSX.Element;
+    FileInput: (props: FormikFileInputProps<FieldName>) => JSX.Element;
+    Form: (props: TypedFormikFormProps<FormValues, ErrorType>) => JSX.Element;
+    FormikWrapper: (props: TypedFormikWrapperProps<FormValues>) => JSX.Element;
+    Input: (props: FormikInputProps<FieldName, ErrorType>) => JSX.Element;
+    NumberInput: (props: FormikNumberInputProps<FieldName, ErrorType>) => JSX.Element;
+    InputGroup: (props: FormikInputGroupProps<ErrorType, FieldName>) => JSX.Element;
+    RadioGroup: (props: FormikRadioGroupProps<FieldName, ErrorType>) => JSX.Element;
+    RadioPanelGroup: (props: FormikRadioPanelGroupProps<FieldName, ErrorType>) => JSX.Element;
+    Select: (props: FormikSelectProps<FieldName, ErrorType>) => JSX.Element;
+    Textarea: (props: FormikTextareaProps<FieldName, ErrorType>) => JSX.Element;
+    TimeInput: (props: FormikTimeInputProps<FieldName, ErrorType>) => JSX.Element;
+    YesOrNoQuestion: (props: FormikYesOrNoQuestionProps<FieldName, ErrorType>) => JSX.Element;
+}
+
+export function getTypedFormComponents<FieldName, FormValues, ErrorType = string>(): TypedFormComponents<
+    FieldName,
+    ErrorType,
+    FormValues
+> {
     return {
         Checkbox: (props: FormikCheckboxProps<FieldName, ErrorType>) => (
             <FormikCheckbox<FieldName, ErrorType> {...props} />
