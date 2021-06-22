@@ -9,12 +9,14 @@ export interface FormikModalFormAndInfoProps<FieldName, InfoType, ErrorType>
         TypedFormInputValidationProps<FieldName, ErrorType> {
     name: FieldName;
     feil?: NavFrontendSkjemaFeil;
+    defaultValue?: InfoType;
     onAfterChange?: (data: InfoType) => void;
 }
 
 function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
     name,
     labels,
+    defaultValue,
     infoRenderer,
     formRenderer,
     onAfterChange,
@@ -32,7 +34,7 @@ function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
                 return (
                     <ModalFormAndInfo<ItemType>
                         labels={labels}
-                        data={field.value}
+                        data={field.value || defaultValue}
                         dialogClassName={dialogClassName}
                         dialogWidth={dialogWidth}
                         renderEditButtons={renderEditButtons}
