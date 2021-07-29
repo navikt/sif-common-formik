@@ -12,6 +12,8 @@ import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQ
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
 import './datepicker.less';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 export interface DatepickerLimitiations {
     minDate?: Date;
@@ -86,12 +88,16 @@ function FormikDatepicker<FieldName, ErrorType>({
         fullscreenOverlay || (fullScreenOnMobile && isWide === false) ? 'fullscreen' : undefined;
     const inputName = (name || '') as string;
     const intl = useIntl();
+    dayjs.extend(customParseFormat);
 
     return (
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps<string>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
                 const handleOnDatepickerChange: DatepickerChange = (dateString) => {
+                    if (dateString && !dayjs(dateString, ['DD.MM.YYYY', 'YYYY.MM.DD']).isValid()) {
+                        dateString = '';
+                    }
                     if (field.value !== dateString) {
                         form.setFieldValue(field.name, dateString);
                         if (onChange) {
@@ -111,7 +117,11 @@ function FormikDatepicker<FieldName, ErrorType>({
                             inputId={elementId}
                             locale={getLocaleToUse(locale || intl.locale)}
                             {...restProps}
-                            inputProps={{ name: inputName, placeholder, 'aria-invalid': isInvalid, title: inputTitle }}
+                            inputProps={{
+                                name: inputName,
+                                'aria-invalid': isInvalid,
+                                title: inputTitle,
+                            }}
                             value={field.value}
                             limitations={datepickerUtils.parseDateLimitations({
                                 minDate,
