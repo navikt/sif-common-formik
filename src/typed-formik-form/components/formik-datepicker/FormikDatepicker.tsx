@@ -95,9 +95,6 @@ function FormikDatepicker<FieldName, ErrorType>({
             {({ field, form }: FieldProps<string>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
                 const handleOnDatepickerChange: DatepickerChange = (dateString) => {
-                    // if (dateString && !dayjs(dateString, ['DD.MM.YYYY', 'YYYY.MM.DD']).isValid()) {
-                    //     dateString = '';
-                    // }
                     if (field.value !== dateString) {
                         form.setFieldValue(field.name, dateString);
                         if (onChange) {
@@ -109,7 +106,7 @@ function FormikDatepicker<FieldName, ErrorType>({
                     }
                 };
 
-                const isFieldValueValidDate = dayjs(field.value, ['DD.MM.YYYY', 'YYYY.MM.DD']).isValid();
+                const isFieldValueValidDate = dayjs(field.value, ['DD.MM.YYYY']).isValid();
 
                 return (
                     <SkjemagruppeQuestion feil={getFeilPropForFormikInput({ field, form, context, feil })}>
