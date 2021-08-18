@@ -94,6 +94,13 @@ const TypedFormExample = () => {
                     }}
                 />
             </Box>
+            <Question>
+                <Form.DatePicker
+                    name={FormFields.birthdate}
+                    label="Fødselsdato"
+                    validate={getDateValidator({ required: true })}
+                />
+            </Question>
 
             {1 + 1 === 3 && (
                 <>
@@ -275,13 +282,6 @@ const TypedFormExample = () => {
                                 }
                                 return error;
                             }}
-                        />
-                    </Question>
-                    <Question>
-                        <Form.DatePicker
-                            name={FormFields.birthdate}
-                            label="Fødselsdato"
-                            validate={getDateValidator({ required: true })}
                         />
                     </Question>
                     <Question>

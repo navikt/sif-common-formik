@@ -1,20 +1,21 @@
 import React from 'react';
 import { DayPickerProps } from 'react-day-picker';
 import { useIntl } from 'react-intl';
+import { useMediaQuery } from 'react-responsive';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Field, FieldProps } from 'formik';
 import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
-import { useMediaQuery } from 'react-responsive';
 import { DateRange, NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
 import './datepicker.less';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 
+dayjs.extend(customParseFormat);
 export interface DatepickerLimitiations {
     minDate?: Date;
     maxDate?: Date;
@@ -88,16 +89,15 @@ function FormikDatepicker<FieldName, ErrorType>({
         fullscreenOverlay || (fullScreenOnMobile && isWide === false) ? 'fullscreen' : undefined;
     const inputName = (name || '') as string;
     const intl = useIntl();
-    dayjs.extend(customParseFormat);
 
     return (
         <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps<string>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
                 const handleOnDatepickerChange: DatepickerChange = (dateString) => {
-                    if (dateString && !dayjs(dateString, ['DD.MM.YYYY', 'YYYY.MM.DD']).isValid()) {
-                        dateString = '';
-                    }
+                    // if (dateString && !dayjs(dateString, ['DD.MM.YYYY', 'YYYY.MM.DD']).isValid()) {
+                    //     dateString = '';
+                    // }
                     if (field.value !== dateString) {
                         form.setFieldValue(field.name, dateString);
                         if (onChange) {
@@ -108,6 +108,8 @@ function FormikDatepicker<FieldName, ErrorType>({
                         }
                     }
                 };
+
+                const isFieldValueValidDate = dayjs(field.value, ['DD.MM.YYYY', 'YYYY.MM.DD']).isValid();
 
                 return (
                     <SkjemagruppeQuestion feil={getFeilPropForFormikInput({ field, form, context, feil })}>
@@ -122,7 +124,7 @@ function FormikDatepicker<FieldName, ErrorType>({
                                 'aria-invalid': isInvalid,
                                 title: inputTitle,
                             }}
-                            value={field.value}
+                            value={isFieldValueValidDate ? field.value : undefined}
                             limitations={datepickerUtils.parseDateLimitations({
                                 minDate,
                                 maxDate,
