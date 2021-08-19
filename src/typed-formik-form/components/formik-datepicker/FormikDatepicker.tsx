@@ -113,7 +113,6 @@ function FormikDatepicker<FieldName, ErrorType>({
                             {...restProps}
                             inputProps={{ name: inputName, placeholder, 'aria-invalid': isInvalid, title: inputTitle }}
                             value={field.value}
-                            dayPickerProps={{}}
                             calendarDateStringFilter={(value) => {
                                 if (datepickerUtils.isValidFormattedDateString(value)) {
                                     return value;
