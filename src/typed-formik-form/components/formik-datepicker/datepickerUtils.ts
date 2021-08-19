@@ -50,10 +50,16 @@ const getDateFromDateString = (dateString: string | undefined): Date | undefined
     return undefined;
 };
 
+/** Check if dateString has format DD.MM.YYYY, or D.M.YY */
+const isValidFormattedDateString = (dateString = ''): boolean => {
+    return /\d{1,2}.\d{1,2}.(\d{2}|\d{4})$/.test(dateString);
+};
+
 const datepickerUtils = {
     getDateStringFromValue,
     getDateFromDateString,
     parseDateLimitations,
+    isValidFormattedDateString,
 };
 
 export default datepickerUtils;

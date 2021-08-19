@@ -1,11 +1,11 @@
 import React from 'react';
 import { DayPickerProps } from 'react-day-picker';
 import { useIntl } from 'react-intl';
+import { useMediaQuery } from 'react-responsive';
 import { Field, FieldProps } from 'formik';
 import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
-import { useMediaQuery } from 'react-responsive';
 import { DateRange, NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
@@ -113,6 +113,13 @@ function FormikDatepicker<FieldName, ErrorType>({
                             {...restProps}
                             inputProps={{ name: inputName, placeholder, 'aria-invalid': isInvalid, title: inputTitle }}
                             value={field.value}
+                            calendarDateStringFilter={(value) => {
+                                if (datepickerUtils.isValidFormattedDateString(value)) {
+                                    return value;
+                                }
+                                // Date is not valid, open calendar with no date specified
+                                return undefined;
+                            }}
                             limitations={datepickerUtils.parseDateLimitations({
                                 minDate,
                                 maxDate,

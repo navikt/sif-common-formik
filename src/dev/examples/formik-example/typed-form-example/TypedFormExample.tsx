@@ -30,10 +30,6 @@ import Tiles from '../../../components/tiles/Tiles';
 import FerieuttakListAndDialog from '../ferieuttak-example/FerieuttakListAndDialog';
 import { FormFields, FormValues } from '../types';
 import Friends from './Friends';
-// import {
-//     OmsorgstilbudInlineForm,
-//     getDatoerForOmsorgstilbudPeriode,
-// } from '@navikt/sif-common-forms/lib/omsorgstilbud/OmsorgstilbudForm';
 
 const Form = getTypedFormComponents<FormFields, FormValues, ValidationError>();
 
