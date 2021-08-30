@@ -21,7 +21,7 @@ const removeElementFromArray = (element: any, array: any[], keyProp?: string) =>
     });
 
 const isCheckboxChecked = (fieldValues: any[], value: any): boolean => {
-    return fieldValues.includes(value);
+    return (fieldValues || []).includes(value);
 };
 
 function FormikCheckboxPanelGroup<FieldName, ErrorType>({

@@ -91,7 +91,7 @@ const TypedFormExample = () => {
                 />
             </Box>
 
-            {1 + 1 === 3 && (
+            {1 + 1 === 2 && (
                 <>
                     {/* <OmsorgstilbudInlineForm fieldName={`enkeltdager`} datoer={datoer} /> */}
                     <Question>

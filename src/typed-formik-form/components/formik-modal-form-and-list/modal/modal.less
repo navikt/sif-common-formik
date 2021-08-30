@@ -1,8 +1,19 @@
+@mobile-breakpoint: 576px;
+
 .modal {
-  &__content {
-    padding: 1rem 1rem 2rem 1rem;
-    @media (max-width: 736px) {
-      padding: 1rem 0 1rem 0;
+    &__content {
+        padding: 1rem 1rem 2rem 1rem;
+        @media (max-width: 736px) {
+            padding: 1rem 0 1rem 0;
+        }
     }
-  }
+    @media (max-width: @mobile-breakpoint) {
+        padding: 1rem;
+        .modal__overlay {
+            padding: 0.125rem;
+        }
+        .modal__content {
+            padding: 0.25rem;
+        }
+    }
 }
