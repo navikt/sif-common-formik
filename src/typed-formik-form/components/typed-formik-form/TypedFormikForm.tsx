@@ -11,6 +11,7 @@ import {
 import { getErrorForField, isValidationErrorsVisible } from '../../utils/typedFormErrorUtils';
 import FormikValidationErrorSummary from '../formik-validation-error-summary/FormikValidationErrorSummary';
 import ButtonRow from '../helpers/button-row/ButtonRow';
+import '../../styles/nav-frontend-skjema-extension.less';
 
 export interface TypedFormikFormProps<FormValues, ErrorType> {
     children: React.ReactNode;

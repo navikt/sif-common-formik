@@ -1,3 +1,5 @@
+@mobile-breakpoint: 576px;
+
 .dialogFormWrapper {
     width: 32rem;
     padding-top: 2rem;
@@ -8,5 +10,9 @@
     &--wide {
         width: auto;
         max-width: 90%;
+    }
+
+    @media (max-width: @mobile-breakpoint) {
+        padding-top: 3rem;
     }
 }

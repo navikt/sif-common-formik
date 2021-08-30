@@ -2,9 +2,9 @@ import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { guid } from 'nav-frontend-js-utils';
 import { Knapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
 import SkjemagruppeQuestion from '../../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import DialogFormWrapper, { DialogFormWrapperWidths } from '../dialog-form-wrapper/DialogFormWrapper';
-import Modal from '../modal/Modal';
 import { ModalFormAndListLabels, ModalFormAndListListItemBase } from '../types';
 import './modalFormAndList.less';
 
