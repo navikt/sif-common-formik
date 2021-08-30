@@ -1,9 +1,9 @@
 import React from 'react';
 import { Knapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
 import Panel from 'nav-frontend-paneler';
 import SkjemagruppeQuestion from '../../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import DialogFormWrapper, { DialogFormWrapperWidths } from '../dialog-form-wrapper/DialogFormWrapper';
-import Modal from '../modal/Modal';
 import { ModalFormAndInfoLabels } from '../types';
 import './modalFormAndInfo.less';
 

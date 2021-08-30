@@ -1,3 +1,5 @@
+@mobile-breakpoint: 576px;
+
 .inputPanelGruppe.twoColumnPanelGruppe {
     .inputPanelGruppe__inner {
         display: flex;
@@ -14,6 +16,13 @@
             }
             &:last-child {
                 margin-left: 0.25rem;
+            }
+        }
+        @media screen and (max-width: @mobile-breakpoint) {
+            flex-direction: column !important;
+            .inputPanel {
+                max-width: initial !important;
+                margin: 0 0 0.5rem 0 !important;
             }
         }
     }

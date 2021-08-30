@@ -1,3 +1,4 @@
+@mobile-breakpoint: 576px;
 @import 'nav-frontend-core/less/core.less';
 @import 'nav-frontend-skjema-style/src/input.less';
 
@@ -37,6 +38,9 @@
         border-color: @navGra60 !important;
         &--text {
             border-color: transparent !important;
+        }
+        @media screen and (max-width: @mobile-breakpoint) {
+            white-space: initial;
         }
     }
 }
