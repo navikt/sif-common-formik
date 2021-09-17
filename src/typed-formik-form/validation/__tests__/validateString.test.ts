@@ -30,4 +30,16 @@ describe(`validateString`, () => {
             expect(getStringValidator({ maxLength: 2 })('123')).toBe(ValidateStringError.stringIsTooLong);
         });
     });
+    describe('validFormat validation', () => {
+        const formatRegExp = /^[\w+\s()]+$/;
+        it(`returns undefined when string passes regexp test`, () => {
+            expect(getStringValidator({ formatRegExp })('asd')).toBeUndefined();
+        });
+        it(`returns undefined when string passes regexp test`, () => {
+            expect(getStringValidator({ formatRegExp })('+(47) 11 22 33')).toBeUndefined();
+        });
+        it(`returns ${ValidateStringError.stringHasInvalidFormat} when string failes regexp test()`, () => {
+            expect(getStringValidator({ formatRegExp })('asd,')).toBe(ValidateStringError.stringHasInvalidFormat);
+        });
+    });
 });
