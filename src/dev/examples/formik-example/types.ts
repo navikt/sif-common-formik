@@ -23,6 +23,7 @@ export enum FormFields {
     'datastruktur' = 'objekt',
     'barnetsFødselsnummer' = 'barnetsFødselsnummer',
     'friends' = 'friends',
+    'tilsynstimer' = 'tilsynstimer',
 }
 
 export interface CompletedFormValues {
@@ -43,6 +44,7 @@ export interface CompletedFormValues {
     [FormFields.letters]?: string[];
     [FormFields.friends]: Friend[];
     [FormFields.fødselsnummer]: string;
+    [FormFields.tilsynstimer]: string;
     [FormFields.datastruktur]: {
         navn: string;
     };

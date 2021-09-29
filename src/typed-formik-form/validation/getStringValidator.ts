@@ -6,6 +6,7 @@ export enum ValidateStringError {
     stringIsNotAString = 'stringIsNotAString',
     stringIsTooShort = 'stringIsTooShort',
     stringIsTooLong = 'stringIsTooLong',
+    stringHasInvalidFormat = 'stringHasInvalidFormat',
 }
 
 type StringValidationResult =
@@ -13,18 +14,20 @@ type StringValidationResult =
     | ValidateStringError.stringHasNoValue
     | ValidateStringError.stringIsNotAString
     | ValidateStringError.stringIsTooLong
-    | ValidateStringError.stringIsTooShort;
+    | ValidateStringError.stringIsTooShort
+    | ValidateStringError.stringHasInvalidFormat;
 
 interface Options {
     required?: boolean;
     minLength?: number;
     maxLength?: number;
+    formatRegExp?: RegExp;
 }
 
 const getStringValidator =
     (options: Options = {}): ValidationFunction<StringValidationResult> =>
     (value: any) => {
-        const { required, minLength, maxLength } = options;
+        const { required, minLength, maxLength, formatRegExp } = options;
 
         if (required) {
             if (hasValue(value) === false || (typeof value === 'string' && value.trim().length === 0)) {
@@ -41,6 +44,11 @@ const getStringValidator =
             }
             if (maxLength !== undefined && value.length > maxLength) {
                 return ValidateStringError.stringIsTooLong;
+            }
+            if (formatRegExp !== undefined) {
+                if (formatRegExp.test(value) === false) {
+                    return ValidateStringError.stringHasInvalidFormat;
+                }
             }
         }
     };
