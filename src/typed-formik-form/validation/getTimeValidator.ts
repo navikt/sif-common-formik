@@ -64,7 +64,7 @@ const getTimeValidator =
 
         if (hours === undefined) {
             return ValidateTimeError.hoursAreInvalid;
-        } else if (hours > 23) {
+        } else if (hours > 24) {
             return ValidateTimeError.tooManyHours;
         } else if (hours < 0) {
             return ValidateTimeError.hoursAreNegative;

@@ -14,6 +14,18 @@ describe(`validateTime`, () => {
         expect(getTimeValidator({ required: true })({ ...emptyTime, minutes: '1' })).toBeUndefined();
         expect(getTimeValidator({ required: true })({ ...emptyTime, hours: '1' })).toBeUndefined();
     });
+    it(`returns undefined when hours are 24 and minutes are 0 or empty`, () => {
+        expect(
+            getTimeValidator({ required: true, max: { hours: 24, minutes: 0 } })({ ...emptyTime, hours: '24' })
+        ).toBeUndefined();
+        expect(
+            getTimeValidator({ required: true, max: { hours: 24, minutes: 0 } })({
+                ...emptyTime,
+                hours: '24',
+                minutes: '0',
+            })
+        ).toBeUndefined();
+    });
     it(`returns ${ValidateTimeError.timeHasNoValue} when required and no hours and minutes`, () => {
         expect(getTimeValidator({ required: true })(emptyTime)).toEqual(ValidateTimeError.timeHasNoValue);
     });
@@ -36,8 +48,8 @@ describe(`validateTime`, () => {
         expect(getTimeValidator()({ minutes: '2.', hours: '2' })).toEqual(ValidateTimeError.minutesAreInvalid);
         expect(getTimeValidator()({ minutes: '2,', hours: '2' })).toEqual(ValidateTimeError.minutesAreInvalid);
     });
-    it(`returns ${ValidateTimeError.tooManyHours} when hours are more than 23 hours`, () => {
-        expect(getTimeValidator()({ hours: '24' })).toEqual(ValidateTimeError.tooManyHours);
+    it(`returns ${ValidateTimeError.tooManyHours} when hours are more than 24 hours`, () => {
+        expect(getTimeValidator()({ hours: '25' })).toEqual(ValidateTimeError.tooManyHours);
     });
     it(`returns ${ValidateTimeError.tooManyMinutes} when hours are more than 59 minutes`, () => {
         expect(getTimeValidator()({ minutes: '60' })).toEqual(ValidateTimeError.tooManyMinutes);
