@@ -44,7 +44,7 @@ const getDateFromDateString = (dateString: string | undefined): Date | undefined
     if (dateString === undefined) {
         return undefined;
     }
-    if (isISODateString(dateString)) {
+    if (isISODateString(dateString) && dayjs(dateString).isValid()) {
         return new Date(dateString);
     }
     return undefined;
