@@ -10,7 +10,7 @@ export interface ModalFormAndListLabels {
 }
 export interface ModalFormAndInfoLabels {
     modalTitle: string;
-    infoTitle?: string;
+    infoTitle?: React.ReactNode;
     addLabel: string;
     editLabel: string;
     deleteLabel: string;
