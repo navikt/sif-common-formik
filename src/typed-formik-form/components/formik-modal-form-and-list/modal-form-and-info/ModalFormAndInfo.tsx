@@ -49,7 +49,7 @@ function ModalFormAndInfo<DataType>({
     renderDeleteButton = true,
     dialogClassName,
     wrapInfoInPanel = true,
-    shouldCloseOnOverlayClick,
+    shouldCloseOnOverlayClick = false,
     infoRenderer,
     formRenderer,
     onDelete,

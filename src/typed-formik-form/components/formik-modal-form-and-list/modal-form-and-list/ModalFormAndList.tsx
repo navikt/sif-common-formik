@@ -45,7 +45,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
     error,
     dialogWidth,
     maxItems,
-    shouldCloseOnOverlayClick,
+    shouldCloseOnOverlayClick = false,
     onChange,
 }: Props<ItemType>) {
     const [modalState, setModalState] = React.useState<{ isVisible: boolean; selectedItem?: ItemType }>({
