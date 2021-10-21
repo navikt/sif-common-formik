@@ -1,6 +1,6 @@
 import React from 'react';
 import { Knapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
+import Modal, { ModalProps } from 'nav-frontend-modal';
 import Panel from 'nav-frontend-paneler';
 import SkjemagruppeQuestion from '../../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import DialogFormWrapper, { DialogFormWrapperWidths } from '../dialog-form-wrapper/DialogFormWrapper';
@@ -19,7 +19,7 @@ type InfoRenderer<DataType> = (props: {
     onDelete: (data: DataType) => void;
 }) => React.ReactNode;
 
-export interface ModalFormAndInfoProps<DataType> {
+export interface ModalFormAndInfoProps<DataType> extends Pick<ModalProps, 'shouldCloseOnOverlayClick'> {
     labels: ModalFormAndInfoLabels;
     infoRenderer: InfoRenderer<DataType>;
     formRenderer: ModalFormRenderer<DataType>;
@@ -36,7 +36,9 @@ interface PrivateProps<DataType> {
     error?: React.ReactNode | boolean;
 }
 
-type Props<DataType> = ModalFormAndInfoProps<DataType> & PrivateProps<DataType>;
+type Props<DataType> = ModalFormAndInfoProps<DataType> &
+    PrivateProps<DataType> &
+    Pick<ModalProps, 'shouldCloseOnOverlayClick'>;
 
 function ModalFormAndInfo<DataType>({
     data,
@@ -47,6 +49,7 @@ function ModalFormAndInfo<DataType>({
     renderDeleteButton = true,
     dialogClassName,
     wrapInfoInPanel = true,
+    shouldCloseOnOverlayClick,
     infoRenderer,
     formRenderer,
     onDelete,
@@ -79,6 +82,7 @@ function ModalFormAndInfo<DataType>({
                 className={dialogClassName}
                 isOpen={modalState.isVisible}
                 contentLabel={labels.modalTitle}
+                shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
                 onRequestClose={resetModal}>
                 <DialogFormWrapper width={dialogWidth}>
                     {formRenderer({

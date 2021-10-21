@@ -20,6 +20,7 @@ function FormikModalFormAndList<FieldName, ItemType, ErrorType>({
     formRenderer,
     sortFunc,
     onAfterChange,
+    shouldCloseOnOverlayClick,
     feil,
     maxItems,
     validate,
@@ -34,6 +35,7 @@ function FormikModalFormAndList<FieldName, ItemType, ErrorType>({
                         items={field.value}
                         error={feil || (context ? context.getAndRenderFieldErrorMessage(field, form) : undefined)}
                         maxItems={maxItems}
+                        shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
                         onChange={(values) => {
                             const updatedValues = sortFunc ? values.sort(sortFunc) : values;
                             form.setFieldValue(field.name, updatedValues);

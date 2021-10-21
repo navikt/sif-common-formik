@@ -2,7 +2,7 @@ import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { guid } from 'nav-frontend-js-utils';
 import { Knapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
+import Modal, { ModalProps } from 'nav-frontend-modal';
 import SkjemagruppeQuestion from '../../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import DialogFormWrapper, { DialogFormWrapperWidths } from '../dialog-form-wrapper/DialogFormWrapper';
 import { ModalFormAndListLabels, ModalFormAndListListItemBase } from '../types';
@@ -21,7 +21,8 @@ type ListRenderer<ItemType> = (props: {
     onDelete: (item: ItemType) => void;
 }) => React.ReactNode;
 
-export interface ModalFormAndListProps<ItemType extends ModalFormAndListListItemBase> {
+export interface ModalFormAndListProps<ItemType extends ModalFormAndListListItemBase>
+    extends Pick<ModalProps, 'shouldCloseOnOverlayClick'> {
     labels: ModalFormAndListLabels;
     maxItems?: number;
     listRenderer: ListRenderer<ItemType>;
@@ -44,6 +45,7 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
     error,
     dialogWidth,
     maxItems,
+    shouldCloseOnOverlayClick,
     onChange,
 }: Props<ItemType>) {
     const [modalState, setModalState] = React.useState<{ isVisible: boolean; selectedItem?: ItemType }>({
@@ -74,7 +76,11 @@ function ModalFormAndList<ItemType extends ModalFormAndListListItemBase>({
     const showListTitle = items.length > 0;
     return (
         <>
-            <Modal isOpen={modalState.isVisible} contentLabel={labels.modalTitle} onRequestClose={resetModal}>
+            <Modal
+                isOpen={modalState.isVisible}
+                contentLabel={labels.modalTitle}
+                onRequestClose={resetModal}
+                shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}>
                 <DialogFormWrapper width={dialogWidth}>
                     {formRenderer({
                         onSubmit: handleOnSubmit,
