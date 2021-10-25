@@ -10,6 +10,7 @@ export interface FormikModalFormAndInfoProps<FieldName, InfoType, ErrorType>
     name: FieldName;
     feil?: NavFrontendSkjemaFeil;
     defaultValue?: InfoType;
+    validateOnSetFieldValue?: boolean;
     onAfterChange?: (data: InfoType) => void;
 }
 
@@ -27,6 +28,7 @@ function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
     dialogClassName,
     wrapInfoInPanel,
     feil,
+    validateOnSetFieldValue = false,
     validate,
 }: FormikModalFormAndInfoProps<FieldName, ItemType, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -46,7 +48,7 @@ function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
                         error={feil || (context ? context.getAndRenderFieldErrorMessage(field, form) : undefined)}
                         onDelete={() => form.setFieldValue(field.name, undefined)}
                         onChange={(value) => {
-                            form.setFieldValue(field.name, value);
+                            form.setFieldValue(field.name, value, validateOnSetFieldValue);
                             if (onAfterChange) {
                                 onAfterChange(value);
                             }

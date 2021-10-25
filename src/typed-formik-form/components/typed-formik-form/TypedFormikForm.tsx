@@ -69,12 +69,12 @@ function TypedFormikForm<FormValues, ErrorType>({
     cleanup,
 }: TypedFormikFormProps<FormValues, ErrorType>) {
     const formik = useFormikContext<FormValues>();
-    const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid, isValidating } = formik;
+    const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid } = formik;
     const [formSubmitCount, setFormSubmitCout] = useState(submitCount);
     const [cleanupState, setCleanupState] = useState({ hasCleanedUp: false, counter: 0 });
 
     const ref = useRef<any>({ isSubmitting, isValid });
-
+    const showErrors = formik?.status?.showErrors === true;
     useEffect(() => {
         ref.current = {
             isSubmitting,
@@ -84,15 +84,16 @@ function TypedFormikForm<FormValues, ErrorType>({
             if (submitCount > formSubmitCount) {
                 if (isValid) {
                     setFormSubmitCout(submitCount);
+                } else {
+                    setStatus({ showErrors: true });
                 }
-                setStatus({ showErrors: true });
             } else {
-                if (formik && formik.status && formik.status.showErrors === true) {
+                if (showErrors) {
                     setStatus({ showErrors: false });
                 }
             }
         }
-    }, [submitCount, setStatus, formSubmitCount, isSubmitting, isValid, isValidating]);
+    }, [submitCount, showErrors, setStatus, formSubmitCount, isSubmitting, isValid]);
 
     useEffect(() => {
         cleanupState.hasCleanedUp && handleSubmit();
