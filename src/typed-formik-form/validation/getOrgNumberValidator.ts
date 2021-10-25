@@ -53,6 +53,7 @@ const getOrgNumberValidator =
         if (hasValue(value) && isValidFormat === false) {
             return ValidateOrgNumberError.orgNumberHasInvalidFormat;
         }
+        return undefined;
     };
 
 export default getOrgNumberValidator;

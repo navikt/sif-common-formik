@@ -33,6 +33,7 @@ const getListValidator =
         if (required && !Array.isArray(value)) {
             return ValidateListError.listIsEmpty;
         }
+        return undefined;
     };
 
 export default getListValidator;

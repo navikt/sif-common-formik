@@ -67,6 +67,7 @@ export const getAllFieldsWithErrors = (allErrors: any, errorObjectChecker?: Erro
                     }
                     keys.push(createFieldKey(key));
                 }
+                return undefined;
             });
         }
         return keys;

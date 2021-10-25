@@ -51,6 +51,7 @@ const getStringValidator =
                 }
             }
         }
+        return undefined;
     };
 
 export default getStringValidator;
