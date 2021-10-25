@@ -24,7 +24,7 @@ function FormikDateIntervalPicker<FieldName, ErrorType>({
     return (
         <FormikInputGroup
             name={name}
-            validate={validate ? (value) => validate(value, name) : undefined}
+            validate={validate ? (value: any) => validate(value, name) : undefined}
             legend={legend ? <Element tag="div">{legend}</Element> : undefined}
             description={description}
             className="dateIntervalPicker">

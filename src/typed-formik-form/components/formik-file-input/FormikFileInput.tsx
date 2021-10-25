@@ -29,7 +29,7 @@ function FormikFileInput<FieldName, ErrorType>({
         <FieldArray
             name={`${name}`}
             render={(arrayHelpers) => (
-                <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
+                <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
                     {({ field, form }: FieldProps) => {
                         return (
                             <FileInput

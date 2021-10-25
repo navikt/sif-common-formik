@@ -26,7 +26,7 @@ function FormikInputGroup<ErrorType, FieldName>({
 }: FormikInputGroupProps<ErrorType, FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
+        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 const feilProp = getFeilPropForFormikInput({ field, form, context, feil });
                 const isRenderableErrorMsgType = ['string', 'object'].includes(typeof feilProp);

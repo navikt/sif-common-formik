@@ -22,7 +22,7 @@ function FormikCheckbox<FieldName, ErrorType>({
 }: FormikCheckboxProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
+        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <Checkbox

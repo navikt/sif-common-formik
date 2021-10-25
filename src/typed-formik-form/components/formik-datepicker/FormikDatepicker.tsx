@@ -88,7 +88,7 @@ function FormikDatepicker<FieldName, ErrorType>({
     const intl = useIntl();
 
     return (
-        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
+        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps<string>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
                 const handleOnDatepickerChange: DatepickerChange = (dateString) => {

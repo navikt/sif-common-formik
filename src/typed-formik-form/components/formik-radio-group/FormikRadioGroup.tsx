@@ -22,7 +22,7 @@ function FormikRadioGroup<FieldName, ErrorType>({
 }: FormikRadioGroupProps<FieldName, ErrorType>) {
     const context = useContext(TypedFormikFormContext);
     return (
-        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
+        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <RadioGruppe {...restProps} feil={getFeilPropForFormikInput({ field, form, context, feil })}>

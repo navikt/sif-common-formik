@@ -33,7 +33,7 @@ function FormikTimeInput<FieldName, ErrorType>({
     const context = React.useContext(TypedFormikFormContext);
     const ref = useRef<any>();
     return (
-        <Field validate={validate ? (value) => validate(value, name) : undefined} name={name}>
+        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <SkjemagruppeQuestion
