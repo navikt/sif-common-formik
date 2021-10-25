@@ -120,8 +120,6 @@ function TypedFormikForm<FormValues, ErrorType>({
         }
     };
 
-    console.log('form render');
-
     const createTypedFormikFormContext = (): TypedFormikFormContextType => {
         const showErrors = isValidationErrorsVisible(formik);
         return {
@@ -132,7 +130,6 @@ function TypedFormikForm<FormValues, ErrorType>({
             isHandledErrorTypeChecker: formErrorHandler?.isHandledErrorTypeFunc,
             getAndRenderFieldErrorMessage: (field, form) => {
                 if (showErrors) {
-                    console.log('getAndRenderFieldErrorMessage');
                     const error = getErrorForField(field.name, form.errors);
                     if (error) {
                         return formErrorHandler ? formErrorHandler.fieldErrorHandler(error, field.name) : error;
@@ -141,19 +138,14 @@ function TypedFormikForm<FormValues, ErrorType>({
                 return undefined;
             },
             onAfterFieldValueSet: () => {
-                console.log('onAfterFieldValueSet');
                 if (runDelayedFormValidation && formik.status && formik.status.showErrors) {
                     setTimeout(() => {
-                        console.log('Run validation');
-
                         formik.validateForm();
                     });
                 }
             },
         };
     };
-
-    console.log('sdf');
 
     return (
         <form onSubmit={onSubmit} noValidate={true} className={className} id={id} autoComplete="off">
