@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldProps } from 'formik';
+import { FastField, FieldProps } from 'formik';
 import { NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../types';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import ModalFormAndInfo, { ModalFormAndInfoProps } from './modal-form-and-info/ModalFormAndInfo';
@@ -10,7 +10,6 @@ export interface FormikModalFormAndInfoProps<FieldName, InfoType, ErrorType>
     name: FieldName;
     feil?: NavFrontendSkjemaFeil;
     defaultValue?: InfoType;
-    validateOnSetFieldValue?: boolean;
     onAfterChange?: (data: InfoType) => void;
 }
 
@@ -28,12 +27,11 @@ function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
     dialogClassName,
     wrapInfoInPanel,
     feil,
-    validateOnSetFieldValue = false,
     validate,
 }: FormikModalFormAndInfoProps<FieldName, ItemType, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field name={name} validate={validate ? (value) => validate(value, name) : undefined}>
+        <FastField name={name} validate={validate ? (value: any) => validate(value, name) : undefined}>
             {({ field, form }: FieldProps<ItemType>) => {
                 return (
                     <ModalFormAndInfo<ItemType>
@@ -48,11 +46,13 @@ function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
                         error={feil || (context ? context.getAndRenderFieldErrorMessage(field, form) : undefined)}
                         onDelete={() => form.setFieldValue(field.name, undefined)}
                         onChange={(value) => {
-                            form.setFieldValue(field.name, value, validateOnSetFieldValue);
+                            form.setFieldValue(field.name, value, false);
                             if (onAfterChange) {
+                                console.log('onAfterChange');
                                 onAfterChange(value);
                             }
                             if (context) {
+                                console.log('onAfterFieldValueSet');
                                 context.onAfterFieldValueSet();
                             }
                         }}
@@ -61,7 +61,7 @@ function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
                     />
                 );
             }}
-        </Field>
+        </FastField>
     );
 }
 

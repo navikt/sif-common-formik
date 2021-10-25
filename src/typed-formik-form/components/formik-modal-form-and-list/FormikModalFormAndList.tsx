@@ -9,7 +9,6 @@ export interface FormikModalFormAndListProps<FieldName, ItemType, ErrorType>
         TypedFormInputValidationProps<FieldName, ErrorType> {
     name: FieldName;
     feil?: NavFrontendSkjemaFeil;
-    validateOnSetFieldValue?: boolean;
     sortFunc?: (a: ItemType, b: ItemType) => number;
     onAfterChange?: (values: ItemType[]) => void;
 }
@@ -24,12 +23,11 @@ function FormikModalFormAndList<FieldName, ItemType, ErrorType>({
     shouldCloseOnOverlayClick,
     feil,
     maxItems,
-    validateOnSetFieldValue = false,
     validate,
 }: FormikModalFormAndListProps<FieldName, ItemType, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     return (
-        <Field name={name} validate={validate ? (value) => validate(value, name) : undefined}>
+        <Field name={name} validate={validate ? (value: any) => validate(value, name) : undefined}>
             {({ field, form }: FieldProps<ItemType[]>) => {
                 return (
                     <ModalFormAndList<ItemType>
@@ -40,7 +38,7 @@ function FormikModalFormAndList<FieldName, ItemType, ErrorType>({
                         shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
                         onChange={(values) => {
                             const updatedValues = sortFunc ? values.sort(sortFunc) : values;
-                            form.setFieldValue(field.name, updatedValues, validateOnSetFieldValue);
+                            form.setFieldValue(field.name, updatedValues);
                             if (onAfterChange) {
                                 onAfterChange(updatedValues);
                             }
