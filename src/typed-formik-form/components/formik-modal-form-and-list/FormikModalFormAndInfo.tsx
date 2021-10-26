@@ -48,11 +48,9 @@ function FormikModalFormAndInfo<FieldName, ItemType, ErrorType>({
                         onChange={(value) => {
                             form.setFieldValue(field.name, value, false);
                             if (onAfterChange) {
-                                console.log('onAfterChange');
                                 onAfterChange(value);
                             }
                             if (context) {
-                                console.log('onAfterFieldValueSet');
                                 context.onAfterFieldValueSet();
                             }
                         }}
