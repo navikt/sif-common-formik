@@ -22,6 +22,10 @@ export interface TypedFormInputValidationProps<FieldName, ErrorType> {
     validate?: (value: any, fieldName: FieldName) => ErrorType | undefined;
 }
 
+export interface UseFastFieldProps {
+    useFastField?: boolean;
+}
+
 export interface CustomFormErrorHandler<ErrorType> {
     fieldErrorHandler: FieldErrorHandler<ErrorType>;
     isHandledErrorTypeFunc?: ErrorTypeChecker<ErrorType>;

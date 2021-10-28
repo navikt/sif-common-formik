@@ -1,8 +1,8 @@
 import React from 'react';
-import { Field, FieldProps } from 'formik';
+import { FastField, Field, FieldProps } from 'formik';
 import { CheckboksPanelGruppe, CheckboksPanelGruppeProps } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { TypedFormInputValidationProps } from '../../types';
+import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import '../../styles/nav-frontend-skjema-extension.less';
@@ -13,7 +13,8 @@ interface OwnProps<FieldName> extends Omit<CheckboksPanelGruppeProps, 'onChange'
 }
 
 export type FormikCheckboxPanelGroupProps<FieldName, ErrorType> = OwnProps<FieldName> &
-    TypedFormInputValidationProps<FieldName, ErrorType>;
+    TypedFormInputValidationProps<FieldName, ErrorType> &
+    UseFastFieldProps;
 
 const removeElementFromArray = (element: any, array: any[], keyProp?: string) =>
     array.filter((el) => {
@@ -31,11 +32,13 @@ function FormikCheckboxPanelGroup<FieldName, ErrorType>({
     feil,
     checkboxes,
     useTwoColumns,
+    useFastField,
     ...restProps
 }: FormikCheckboxPanelGroupProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
+    const FieldComponent = useFastField ? FastField : Field;
     return (
-        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
+        <FieldComponent validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <CheckboksPanelGruppe
@@ -67,7 +70,7 @@ function FormikCheckboxPanelGroup<FieldName, ErrorType>({
                     />
                 );
             }}
-        </Field>
+        </FieldComponent>
     );
 }
 

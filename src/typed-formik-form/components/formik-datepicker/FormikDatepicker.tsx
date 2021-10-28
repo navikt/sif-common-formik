@@ -2,11 +2,11 @@ import React from 'react';
 import { DayPickerProps } from 'react-day-picker';
 import { useIntl } from 'react-intl';
 import { useMediaQuery } from 'react-responsive';
-import { Field, FieldProps } from 'formik';
+import { FastField, Field, FieldProps } from 'formik';
 import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
-import { DateRange, NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../types';
+import { DateRange, NavFrontendSkjemaFeil, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
@@ -44,7 +44,8 @@ interface OwnProps<FieldName, ErrorType> extends DatePickerBaseProps<FieldName, 
 
 export type FormikDatepickerProps<FieldName, ErrorType> = OwnProps<FieldName, ErrorType> &
     DatePickerPresentationProps &
-    DatepickerLimitiations;
+    DatepickerLimitiations &
+    UseFastFieldProps;
 
 const getLocaleToUse = (locale: string): 'nb' | 'nn' | 'en' | undefined => {
     switch (locale) {
@@ -77,6 +78,7 @@ function FormikDatepicker<FieldName, ErrorType>({
     description,
     placeholder,
     locale,
+    useFastField,
     ...restProps
 }: FormikDatepickerProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -86,9 +88,10 @@ function FormikDatepicker<FieldName, ErrorType>({
         fullscreenOverlay || (fullScreenOnMobile && isWide === false) ? 'fullscreen' : undefined;
     const inputName = (name || '') as string;
     const intl = useIntl();
+    const FieldComponent = useFastField ? FastField : Field;
 
     return (
-        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
+        <FieldComponent validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps<string>) => {
                 const isInvalid = (feil || getFeilPropForFormikInput({ field, form, context, feil })) !== undefined;
                 const handleOnDatepickerChange: DatepickerChange = (dateString) => {
@@ -135,7 +138,7 @@ function FormikDatepicker<FieldName, ErrorType>({
                     </SkjemagruppeQuestion>
                 );
             }}
-        </Field>
+        </FieldComponent>
     );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Field, FieldProps } from 'formik';
+import { FastField, Field, FieldProps } from 'formik';
 import { Select, SelectProps } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps } from '../../types';
+import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -10,18 +10,21 @@ interface OwnProps<FieldName> extends Omit<SelectProps, 'name'> {
 }
 
 export type FormikSelectProps<FieldName, ErrorType> = OwnProps<FieldName> &
-    TypedFormInputValidationProps<FieldName, ErrorType>;
+    TypedFormInputValidationProps<FieldName, ErrorType> &
+    UseFastFieldProps;
 
 function FormikSelect<FieldName, ErrorType>({
     name,
     children,
     validate,
     feil,
+    useFastField,
     ...restProps
 }: FormikSelectProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
+    const FieldComponent = useFastField ? FastField : Field;
     return (
-        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
+        <FieldComponent validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <Select
@@ -34,7 +37,7 @@ function FormikSelect<FieldName, ErrorType>({
                     </Select>
                 );
             }}
-        </Field>
+        </FieldComponent>
     );
 }
 

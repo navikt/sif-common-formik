@@ -1,8 +1,8 @@
 import React from 'react';
-import { Field, FieldProps } from 'formik';
+import { FastField, Field, FieldProps } from 'formik';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
 import { Element, Feilmelding } from 'nav-frontend-typografi';
-import { NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../types';
+import { NavFrontendSkjemaFeil, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import './formikInputGroup.less';
@@ -13,7 +13,8 @@ interface OwnProps<FieldName> extends SkjemaGruppeProps {
 }
 
 export type FormikInputGroupProps<ErrorType, FieldName> = OwnProps<FieldName> &
-    TypedFormInputValidationProps<FieldName, ErrorType>;
+    TypedFormInputValidationProps<FieldName, ErrorType> &
+    UseFastFieldProps;
 
 function FormikInputGroup<ErrorType, FieldName>({
     legend,
@@ -22,11 +23,13 @@ function FormikInputGroup<ErrorType, FieldName>({
     children,
     validate,
     className,
+    useFastField,
     ...restProps
 }: FormikInputGroupProps<ErrorType, FieldName>) {
     const context = React.useContext(TypedFormikFormContext);
+    const FieldComponent = useFastField ? FastField : Field;
     return (
-        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
+        <FieldComponent validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 const feilProp = getFeilPropForFormikInput({ field, form, context, feil });
                 const isRenderableErrorMsgType = ['string', 'object'].includes(typeof feilProp);
@@ -53,7 +56,7 @@ function FormikInputGroup<ErrorType, FieldName>({
                     </SkjemaGruppe>
                 );
             }}
-        </Field>
+        </FieldComponent>
     );
 }
 export default FormikInputGroup;

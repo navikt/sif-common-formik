@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { Field, FieldProps } from 'formik';
+import { FastField, Field, FieldProps } from 'formik';
 import { Radio, RadioGruppe, RadioPanelGruppeProps } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps } from '../../types';
+import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import '../../styles/nav-frontend-skjema-extension.less';
@@ -11,18 +11,21 @@ interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onCh
 }
 
 export type FormikRadioGroupProps<FieldName, ErrorType> = OwnProps<FieldName> &
-    TypedFormInputValidationProps<FieldName, ErrorType>;
+    TypedFormInputValidationProps<FieldName, ErrorType> &
+    UseFastFieldProps;
 
 function FormikRadioGroup<FieldName, ErrorType>({
     name,
     validate,
     radios,
     feil,
+    useFastField,
     ...restProps
 }: FormikRadioGroupProps<FieldName, ErrorType>) {
     const context = useContext(TypedFormikFormContext);
+    const FieldComponent = useFastField ? FastField : Field;
     return (
-        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
+        <FieldComponent validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <RadioGruppe {...restProps} feil={getFeilPropForFormikInput({ field, form, context, feil })}>
@@ -47,7 +50,7 @@ function FormikRadioGroup<FieldName, ErrorType>({
                     </RadioGruppe>
                 );
             }}
-        </Field>
+        </FieldComponent>
     );
 }
 

@@ -10,6 +10,7 @@ import FormikDatepicker, {
 } from '../formik-datepicker/FormikDatepicker';
 import { getDateRangePickerLimitations } from './dateRangePickerUtils';
 import './dateRangePicker.less';
+import { UseFastFieldProps } from '../..';
 
 interface OwnProps<FieldName, ErrorType> {
     legend?: string;
@@ -25,7 +26,8 @@ interface OwnProps<FieldName, ErrorType> {
 
 export type FormikDateRangePickerProps<FieldName, ErrorType> = OwnProps<FieldName, ErrorType> &
     DatePickerPresentationProps &
-    DatepickerLimitiations;
+    DatepickerLimitiations &
+    UseFastFieldProps;
 
 function FormikDateRangePicker<FieldName, ErrorType>({
     legend,
@@ -40,6 +42,7 @@ function FormikDateRangePicker<FieldName, ErrorType>({
     fullScreenOnMobile,
     fullscreenOverlay,
     allowRangesToStartAndStopOnSameDate,
+    useFastField,
     locale,
 }: FormikDateRangePickerProps<FieldName, ErrorType>) {
     const { values } = useFormikContext<any>();
@@ -65,12 +68,14 @@ function FormikDateRangePicker<FieldName, ErrorType>({
                     {...{ fullscreenOverlay, fullScreenOnMobile, showYearSelector }}
                     {...fromDateLimitations}
                     {...locale}
+                    useFastField={useFastField}
                 />
                 <FormikDatepicker<FieldName, ErrorType>
                     {...toInputProps}
                     {...{ fullscreenOverlay, fullScreenOnMobile, showYearSelector }}
                     {...toDateLimitations}
                     {...locale}
+                    useFastField={useFastField}
                 />
             </div>
         </SkjemaGruppe>
