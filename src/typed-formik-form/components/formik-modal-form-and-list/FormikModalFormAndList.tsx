@@ -1,11 +1,12 @@
 import React from 'react';
-import { Field, FieldProps } from 'formik';
-import { NavFrontendSkjemaFeil, TypedFormInputValidationProps } from '../../types';
+import { FastField, Field, FieldProps } from 'formik';
+import { NavFrontendSkjemaFeil, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import ModalFormAndList, { ModalFormAndListProps } from './modal-form-and-list/ModalFormAndList';
 
 export interface FormikModalFormAndListProps<FieldName, ItemType, ErrorType>
     extends ModalFormAndListProps<ItemType>,
+        UseFastFieldProps,
         TypedFormInputValidationProps<FieldName, ErrorType> {
     name: FieldName;
     feil?: NavFrontendSkjemaFeil;
@@ -23,11 +24,13 @@ function FormikModalFormAndList<FieldName, ItemType, ErrorType>({
     shouldCloseOnOverlayClick,
     feil,
     maxItems,
+    useFastField,
     validate,
 }: FormikModalFormAndListProps<FieldName, ItemType, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
+    const FieldComponent = useFastField ? FastField : Field;
     return (
-        <Field name={name} validate={validate ? (value: any) => validate(value, name) : undefined}>
+        <FieldComponent name={name} validate={validate ? (value: any) => validate(value, name) : undefined}>
             {({ field, form }: FieldProps<ItemType[]>) => {
                 return (
                     <ModalFormAndList<ItemType>
@@ -51,7 +54,7 @@ function FormikModalFormAndList<FieldName, ItemType, ErrorType>({
                     />
                 );
             }}
-        </Field>
+        </FieldComponent>
     );
 }
 

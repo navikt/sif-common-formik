@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import { Field, FieldProps } from 'formik';
+import { FastField, Field, FieldProps } from 'formik';
 import { InputProps } from 'nav-frontend-skjema';
-import { Time, TypedFormInputValidationProps } from '../../types';
+import { Time, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
@@ -18,7 +18,8 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange'> {
 }
 
 export type FormikTimeInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
-    TypedFormInputValidationProps<FieldName, ErrorType>;
+    TypedFormInputValidationProps<FieldName, ErrorType> &
+    UseFastFieldProps;
 
 const bem = bemUtils('formikTimeInput');
 
@@ -28,12 +29,14 @@ function FormikTimeInput<FieldName, ErrorType>({
     validate,
     feil,
     timeInputLayout,
+    useFastField,
     ...restProps
 }: FormikTimeInputProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
     const ref = useRef<any>();
+    const FieldComponent = useFastField ? FastField : Field;
     return (
-        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
+        <FieldComponent validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <SkjemagruppeQuestion
@@ -70,7 +73,7 @@ function FormikTimeInput<FieldName, ErrorType>({
                     </SkjemagruppeQuestion>
                 );
             }}
-        </Field>
+        </FieldComponent>
     );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Field, FieldProps } from 'formik';
+import { FastField, Field, FieldProps } from 'formik';
 import { Checkbox, CheckboxProps } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps } from '../../types';
+import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -11,18 +11,21 @@ interface OwnProps<FieldName> extends Omit<CheckboxProps, 'name'> {
 }
 
 export type FormikCheckboxProps<FieldName, ErrorType> = OwnProps<FieldName> &
-    TypedFormInputValidationProps<FieldName, ErrorType>;
+    TypedFormInputValidationProps<FieldName, ErrorType> &
+    UseFastFieldProps;
 
 function FormikCheckbox<FieldName, ErrorType>({
     name,
     validate,
     afterOnChange,
     feil,
+    useFastField,
     ...restProps
 }: FormikCheckboxProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
+    const FieldComponent = useFastField ? FastField : Field;
     return (
-        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
+        <FieldComponent validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <Checkbox
@@ -44,7 +47,7 @@ function FormikCheckbox<FieldName, ErrorType>({
                     />
                 );
             }}
-        </Field>
+        </FieldComponent>
     );
 }
 

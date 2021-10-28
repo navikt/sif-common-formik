@@ -1,12 +1,13 @@
 import React from 'react';
 import { Element } from 'nav-frontend-typografi';
-import { TypedFormInputValidationProps } from '../../types';
+import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import FormikDatepicker, { FormikDatepickerProps } from '../formik-datepicker/FormikDatepicker';
 import FormikInputGroup from '../formik-input-group/FormikInputGroup';
 import './dateIntervalPicker.less';
 
 export interface DateIntervalPickerProps<FieldName, ErrorType>
-    extends TypedFormInputValidationProps<FieldName, ErrorType> {
+    extends TypedFormInputValidationProps<FieldName, ErrorType>,
+        UseFastFieldProps {
     legend?: string;
     fromDatepickerProps: FormikDatepickerProps<FieldName, ErrorType>;
     toDatepickerProps: FormikDatepickerProps<FieldName, ErrorType>;
@@ -18,6 +19,7 @@ function FormikDateIntervalPicker<FieldName, ErrorType>({
     fromDatepickerProps,
     toDatepickerProps,
     description,
+    useFastField,
     validate,
 }: DateIntervalPickerProps<FieldName, ErrorType>) {
     const name = `${fromDatepickerProps.name}_${toDatepickerProps.name}` as any;
@@ -29,8 +31,8 @@ function FormikDateIntervalPicker<FieldName, ErrorType>({
             description={description}
             className="dateIntervalPicker">
             <div className="dateIntervalPicker__flexContainer">
-                <FormikDatepicker<FieldName, ErrorType> {...fromDatepickerProps} />
-                <FormikDatepicker<FieldName, ErrorType> {...toDatepickerProps} />
+                <FormikDatepicker<FieldName, ErrorType> {...fromDatepickerProps} useFastField={useFastField} />
+                <FormikDatepicker<FieldName, ErrorType> {...toDatepickerProps} useFastField={useFastField} />
             </div>
         </FormikInputGroup>
     );

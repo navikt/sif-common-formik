@@ -1,7 +1,7 @@
 import React from 'react';
-import { Field, FieldProps } from 'formik';
+import { FastField, Field, FieldProps } from 'formik';
 import { Textarea, TextareaControlledProps } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps } from '../../types';
+import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -10,17 +10,20 @@ interface OwnProps<FieldName> extends Omit<TextareaControlledProps, 'name' | 'de
 }
 
 export type FormikTextareaProps<FieldName, ErrorType> = OwnProps<FieldName> &
-    TypedFormInputValidationProps<FieldName, ErrorType>;
+    TypedFormInputValidationProps<FieldName, ErrorType> &
+    UseFastFieldProps;
 
 function FormikTextarea<FieldName, ErrorType>({
     name,
     validate,
     feil,
+    useFastField,
     ...restProps
 }: FormikTextareaProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
+    const FieldComponent = useFastField ? FastField : Field;
     return (
-        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
+        <FieldComponent validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <Textarea
@@ -38,7 +41,7 @@ function FormikTextarea<FieldName, ErrorType>({
                     />
                 );
             }}
-        </Field>
+        </FieldComponent>
     );
 }
 

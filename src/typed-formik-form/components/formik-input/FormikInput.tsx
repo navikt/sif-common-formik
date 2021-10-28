@@ -1,7 +1,7 @@
 import React from 'react';
-import { Field, FieldProps } from 'formik';
+import { FastField, Field, FieldProps } from 'formik';
 import { Input, InputProps, Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps } from '../../types';
+import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import { guid } from 'nav-frontend-js-utils';
@@ -18,7 +18,8 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name'> {
 
 export type FormikInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
     TypedFormInputValidationProps<FieldName, ErrorType> &
-    InputWithSuffix;
+    InputWithSuffix &
+    UseFastFieldProps;
 
 const bem = bemUtils('formikInput');
 
@@ -32,11 +33,13 @@ function FormikInput<FieldName, ErrorType>({
     description,
     validate,
     autoComplete,
+    useFastField,
     ...restProps
 }: FormikInputProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
+    const FieldComponent = useFastField ? FastField : Field;
     return (
-        <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
+        <FieldComponent validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 const feilProp = getFeilPropForFormikInput({ field, form, context, feil });
                 const harFeil = feilProp !== undefined;
@@ -87,7 +90,7 @@ function FormikInput<FieldName, ErrorType>({
                     </div>
                 );
             }}
-        </Field>
+        </FieldComponent>
     );
 }
 
