@@ -23,6 +23,7 @@ export interface ModalFormAndInfoProps<DataType> extends Pick<ModalProps, 'shoul
     labels: ModalFormAndInfoLabels;
     infoRenderer: InfoRenderer<DataType>;
     formRenderer: ModalFormRenderer<DataType>;
+    wrapInfoInFieldset?: boolean;
     renderEditButtons?: boolean;
     renderDeleteButton?: boolean;
     dialogWidth?: DialogFormWrapperWidths;
@@ -50,6 +51,7 @@ function ModalFormAndInfo<DataType>({
     dialogClassName,
     wrapInfoInPanel = true,
     shouldCloseOnOverlayClick = false,
+    wrapInfoInFieldset = true,
     infoRenderer,
     formRenderer,
     onDelete,
@@ -76,6 +78,42 @@ function ModalFormAndInfo<DataType>({
         setModalState({ isVisible: false, data: undefined });
     };
 
+    const content =
+        data === undefined ? (
+            <Knapp htmlType="button" onClick={() => setModalState({ isVisible: true, data })} mini={true}>
+                {labels.addLabel}
+            </Knapp>
+        ) : (
+            <>
+                <div className="modalFormAndInfo__infoWrapper">
+                    {wrapInfoInPanel ? (
+                        <Panel border={true} className={'modalFormAndInfo__infoWrapper__panel'}>
+                            {infoRenderer({ data, onEdit: handleEdit, onDelete: handleDelete })}
+                        </Panel>
+                    ) : (
+                        infoRenderer({ data, onEdit: handleEdit, onDelete: handleDelete })
+                    )}
+                </div>
+                {renderEditButtons && (
+                    <div className={'modalFormAndInfo__buttons'}>
+                        <Knapp htmlType="button" onClick={() => setModalState({ isVisible: true, data })} mini={true}>
+                            {data ? labels.editLabel : labels.addLabel}
+                        </Knapp>
+                        {renderDeleteButton && (
+                            <Knapp
+                                htmlType="button"
+                                onClick={() => {
+                                    onDelete();
+                                }}
+                                mini={true}>
+                                {labels.deleteLabel}
+                            </Knapp>
+                        )}
+                    </div>
+                )}
+            </>
+        );
+
     return (
         <>
             <Modal
@@ -92,46 +130,13 @@ function ModalFormAndInfo<DataType>({
                     })}
                 </DialogFormWrapper>
             </Modal>
-            <SkjemagruppeQuestion feil={error} tag="div" legend={labels.infoTitle}>
-                {data === undefined && (
-                    <Knapp htmlType="button" onClick={() => setModalState({ isVisible: true, data })} mini={true}>
-                        {labels.addLabel}
-                    </Knapp>
-                )}
-                {data !== undefined && (
-                    <>
-                        <div className="modalFormAndInfo__infoWrapper">
-                            {wrapInfoInPanel ? (
-                                <Panel border={true} className={'modalFormAndInfo__infoWrapper__panel'}>
-                                    {infoRenderer({ data, onEdit: handleEdit, onDelete: handleDelete })}
-                                </Panel>
-                            ) : (
-                                infoRenderer({ data, onEdit: handleEdit, onDelete: handleDelete })
-                            )}
-                        </div>
-                        {renderEditButtons && (
-                            <div className={'modalFormAndInfo__buttons'}>
-                                <Knapp
-                                    htmlType="button"
-                                    onClick={() => setModalState({ isVisible: true, data })}
-                                    mini={true}>
-                                    {data ? labels.editLabel : labels.addLabel}
-                                </Knapp>
-                                {renderDeleteButton && (
-                                    <Knapp
-                                        htmlType="button"
-                                        onClick={() => {
-                                            onDelete();
-                                        }}
-                                        mini={true}>
-                                        {labels.deleteLabel}
-                                    </Knapp>
-                                )}
-                            </div>
-                        )}
-                    </>
-                )}
-            </SkjemagruppeQuestion>
+            {wrapInfoInFieldset !== undefined ? (
+                <SkjemagruppeQuestion feil={error} tag="div" legend={labels.infoTitle}>
+                    {content}
+                </SkjemagruppeQuestion>
+            ) : (
+                content
+            )}
         </>
     );
 }
