@@ -47,7 +47,10 @@ export const getAllFieldsWithErrors = (allErrors: any, errorObjectChecker?: Erro
             return parentKey ? `${parentKey}.${fieldName}` : fieldName;
         };
         if (errors) {
-            if (parentKey && isObject(errors) && errorObjectChecker && errorObjectChecker(errors)) {
+            if (
+                (parentKey && isObject(errors) && errorObjectChecker && errorObjectChecker(errors)) ||
+                (parentKey && typeof errors === 'string')
+            ) {
                 keys.push(parentKey);
                 return keys;
             }
