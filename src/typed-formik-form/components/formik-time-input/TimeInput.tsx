@@ -29,6 +29,7 @@ interface TimeInputProps extends TimeInputLayoutProps {
     maxHours?: number;
     maxMinutes?: number;
     className?: string;
+    description?: React.ReactNode;
     onChange: TimeInputChangeFunc;
 }
 
@@ -52,6 +53,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     compact = true,
     justifyContent = 'center',
     placeholders,
+    description,
     onChange,
     className,
 }) => {
@@ -87,6 +89,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                         min={0}
                         max={maxHours}
                         maxLength={2}
+                        description={description}
                         value={stateTime?.hours || ''}
                         onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
                             const newTime = { ...stateTime, hours: evt.target.value };
