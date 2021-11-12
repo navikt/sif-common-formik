@@ -10,7 +10,7 @@ import TimeInput, { TimeInputLayoutProps } from './TimeInput';
 import { focusFirstElement } from '../../utils/focusUtils';
 import bemUtils from '../../utils/bemUtils';
 
-interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange'> {
+interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange' | 'description'> {
     name: FieldName;
     maxHours?: number;
     maxMinutes?: number;

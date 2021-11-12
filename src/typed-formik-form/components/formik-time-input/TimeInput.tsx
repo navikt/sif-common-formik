@@ -89,7 +89,6 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                         min={0}
                         max={maxHours}
                         maxLength={2}
-                        description={description}
                         value={stateTime?.hours || ''}
                         onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
                             const newTime = { ...stateTime, hours: evt.target.value };
@@ -122,6 +121,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                     />
                 </div>
             </div>
+            {description && <p className={bem.element('description')}>{description}</p>}
         </div>
     );
 };

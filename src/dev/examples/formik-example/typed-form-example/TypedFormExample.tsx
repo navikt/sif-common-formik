@@ -57,9 +57,11 @@ const TypedFormExample = () => {
             {1 + 1 === 2 && (
                 <>
                     <Question>
+                        <Form.TimeInput label="Tid" name={'a' as any} />
                         <Form.YesOrNoQuestion
                             legend={'Har du kids'}
                             name={FormFields.hasKids}
+                            description="abs"
                             validate={(value) => {
                                 const err = getYesOrNoValidator()(value);
                                 if (err) {
