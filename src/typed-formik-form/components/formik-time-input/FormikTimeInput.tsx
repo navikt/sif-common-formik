@@ -6,7 +6,7 @@ import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
-import TimeInput, { TimeInputLayoutProps } from './TimeInput';
+import TimeInput, { TimeInputLayoutProps, TimeInputRefProps } from './TimeInput';
 import { focusFirstElement } from '../../utils/focusUtils';
 import bemUtils from '../../utils/bemUtils';
 
@@ -19,7 +19,8 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange' | 'de
 
 export type FormikTimeInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
     TypedFormInputValidationProps<FieldName, ErrorType> &
-    UseFastFieldProps;
+    UseFastFieldProps &
+    TimeInputRefProps;
 
 const bem = bemUtils('formikTimeInput');
 

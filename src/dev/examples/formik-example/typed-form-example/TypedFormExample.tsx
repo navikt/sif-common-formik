@@ -35,6 +35,7 @@ const TypedFormExample = () => {
     const intl = useIntl();
     const minDate = dayjs().subtract(2, 'month').toDate();
     const maxDate = dayjs().add(1, 'month').toDate();
+
     return (
         <Form.Form
             submitButtonLabel="Ok"

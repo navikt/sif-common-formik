@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { RefObject, useState } from 'react';
 import { guid } from 'nav-frontend-js-utils';
 import { Input } from 'nav-frontend-skjema';
 import { Time } from '../../types';
@@ -13,7 +13,12 @@ const MAX_MINUTES = 59;
 type TimeInputChangeFunc = (time: Partial<Time> | undefined, isValidTime: boolean) => void;
 
 export type TimeInputLayout = 'vertical' | 'horizontal';
-
+export interface TimeInputRefProps {
+    refs?: {
+        hours?: RefObject<HTMLInputElement>;
+        minutes?: RefObject<HTMLInputElement>;
+    };
+}
 export interface TimeInputLayoutProps {
     direction?: TimeInputLayout;
     compact?: boolean;
@@ -24,7 +29,7 @@ export interface TimeInputLayoutProps {
     };
 }
 
-interface TimeInputProps extends TimeInputLayoutProps {
+interface TimeInputProps extends TimeInputLayoutProps, TimeInputRefProps {
     time?: Time | Partial<Time> | undefined;
     maxHours?: number;
     maxMinutes?: number;
@@ -55,6 +60,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     placeholders,
     description,
     onChange,
+    refs,
     className,
 }) => {
     const [stateTime, setStateTime] = useState<Partial<Time> | undefined>(time);
@@ -80,6 +86,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                     </label>
                     <Input
                         id={hoursLabelId}
+                        inputRef={refs?.hours}
                         className={bem.element('hours')}
                         type="text"
                         autoComplete={'off'}
@@ -104,6 +111,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                     <Input
                         id={minutesLabelId}
                         className={bem.element('minutes')}
+                        inputRef={refs?.minutes}
                         type="text"
                         autoComplete={'off'}
                         inputMode={'numeric'}
