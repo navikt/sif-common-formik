@@ -26,9 +26,11 @@ import FormikYesOrNoQuestion, { FormikYesOrNoQuestionProps } from './formik-yes-
 import TypedFormikForm, { TypedFormikFormProps } from './typed-formik-form/TypedFormikForm';
 import TypedFormikWrapper, { TypedFormikWrapperProps } from './typed-formik-wrapper/TypedFormikWrapper';
 import '../styles/nav-frontend-skjema-extension.less';
+import FormikCheckboxGroup, { FormikCheckboxGroupProps } from './formik-checkbox-group/FormikCheckboxGroup';
 
 export interface TypedFormComponents<FieldName, FormValues, ErrorType> {
     Checkbox: (props: FormikCheckboxProps<FieldName, ErrorType>) => JSX.Element;
+    CheckboxGroup: (props: FormikCheckboxGroupProps<FieldName, ErrorType>) => JSX.Element;
     CheckboxPanelGroup: (props: FormikCheckboxPanelGroupProps<FieldName, ErrorType>) => JSX.Element;
     ConfirmationCheckbox: (props: FormikConfirmationCheckboxPanelProps<FieldName, ErrorType>) => JSX.Element;
     CountrySelect: (props: FormikCountrySelectProps<FieldName, ErrorType>) => JSX.Element;
@@ -57,6 +59,9 @@ export function getTypedFormComponents<FieldName, FormValues, ErrorType = string
     return {
         Checkbox: (props: FormikCheckboxProps<FieldName, ErrorType>) => (
             <FormikCheckbox<FieldName, ErrorType> {...props} />
+        ),
+        CheckboxGroup: (props: FormikCheckboxGroupProps<FieldName, ErrorType>) => (
+            <FormikCheckboxGroup<FieldName, ErrorType> {...props} />
         ),
         CheckboxPanelGroup: (props: FormikCheckboxPanelGroupProps<FieldName, ErrorType>) => (
             <FormikCheckboxPanelGroup<FieldName, ErrorType> {...props} />
