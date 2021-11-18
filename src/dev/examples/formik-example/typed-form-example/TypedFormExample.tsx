@@ -54,7 +54,11 @@ const TypedFormExample = () => {
                     maxDate={dayjs().add(1, 'year').toDate()}
                 />
             </Question>
-
+            <Form.Checkbox name={'checkGruppe' as any} label="a" value="a" />
+            <Form.Checkbox name={'checkGruppe' as any} label="b" value="b" />
+            <Form.Checkbox name={'checkGruppe' as any} label="c" value="c" />
+            <br />
+            <br /> <Form.Checkbox name={'lala' as any} label="bool" />
             {1 + 1 === 2 && (
                 <>
                     <Question>

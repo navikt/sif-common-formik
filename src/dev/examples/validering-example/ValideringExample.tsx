@@ -672,6 +672,7 @@ const error = getCheckedValidator()(value);
                                         name={FormFields.checked}
                                         label="Kryss av for at du bare må krysse av denne checkboxen"
                                         validate={getCheckedValidator()}
+                                        value="abc"
                                     />
                                 </Panel>
                                 <ValidationErrorList

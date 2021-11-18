@@ -4,11 +4,13 @@ describe(`validateChecked`, () => {
     it(`returns undefined when value is ${true}`, () => {
         expect(getCheckedValidator()(true)).toBeUndefined();
     });
-    it(`returns ${ValidateCheckedError.notChecked} when value is other than ${true}`, () => {
+    it(`returns undefined when value is an array with items`, () => {
+        expect(getCheckedValidator()(['a'])).toBeUndefined();
+    });
+    it(`returns ${ValidateCheckedError.notChecked} when value is not defined`, () => {
         expect(getCheckedValidator()(undefined)).toBe(ValidateCheckedError.notChecked);
-        expect(getCheckedValidator()('')).toBe(ValidateCheckedError.notChecked);
-        expect(getCheckedValidator()(null)).toBe(ValidateCheckedError.notChecked);
-        expect(getCheckedValidator()(123)).toBe(ValidateCheckedError.notChecked);
+    });
+    it(`returns ${ValidateCheckedError.notChecked} when value is an empty array`, () => {
         expect(getCheckedValidator()([])).toBe(ValidateCheckedError.notChecked);
     });
 });

@@ -5,18 +5,30 @@ import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
-interface OwnProps<FieldName> extends Omit<CheckboxProps, 'name'> {
+interface OwnProps<FieldName> extends Omit<CheckboxProps, 'name' | 'value'> {
     name: FieldName;
-    afterOnChange?: (newValue: boolean) => void;
+    value?: string;
+    afterOnChange?: (value: boolean | string[]) => void;
 }
 
 export type FormikCheckboxProps<FieldName, ErrorType> = OwnProps<FieldName> &
     TypedFormInputValidationProps<FieldName, ErrorType> &
     UseFastFieldProps;
 
+const getFieldValueArray = (value: any): string[] => {
+    if (value === undefined) {
+        return [];
+    }
+    if (typeof value === 'string') {
+        return [value];
+    }
+    return value;
+};
+
 function FormikCheckbox<FieldName, ErrorType>({
     name,
     validate,
+    value,
     afterOnChange,
     feil,
     useFastField,
@@ -32,13 +44,25 @@ function FormikCheckbox<FieldName, ErrorType>({
                         {...restProps}
                         {...field}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
-                        checked={field.value === true}
                         autoComplete="off"
                         onChange={(evt) => {
-                            const newValue = evt.target.checked;
-                            form.setFieldValue(field.name, newValue);
-                            if (afterOnChange) {
-                                afterOnChange(newValue);
+                            const isChecked = evt.target.checked;
+                            if (value) {
+                                // Håndter checkbox som en del av en input gruppe med samme navn
+                                const fieldValueArray = getFieldValueArray(field.value);
+                                const newFieldValue = isChecked
+                                    ? [...fieldValueArray, value]
+                                    : fieldValueArray.filter((v) => v !== value);
+                                form.setFieldValue(field.name, newFieldValue);
+                                if (afterOnChange) {
+                                    afterOnChange(newFieldValue);
+                                }
+                            } else {
+                                // Håndter checkbox som en selvstendig checkox med boolsk verdi
+                                form.setFieldValue(field.name, isChecked);
+                                if (afterOnChange) {
+                                    afterOnChange(isChecked);
+                                }
                             }
                             if (context) {
                                 context.onAfterFieldValueSet();

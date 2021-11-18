@@ -16,9 +16,9 @@ export type FormikCheckboxPanelGroupProps<FieldName, ErrorType> = OwnProps<Field
     TypedFormInputValidationProps<FieldName, ErrorType> &
     UseFastFieldProps;
 
-const removeElementFromArray = (element: any, array: any[], keyProp?: string) =>
+const removeElementFromArray = (element: any, array: any[]) =>
     array.filter((el) => {
-        return keyProp ? el[keyProp] !== element[keyProp] : el !== element;
+        return el !== element;
     });
 
 const isCheckboxChecked = (fieldValues: any[], value: any): boolean => {

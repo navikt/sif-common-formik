@@ -7,7 +7,7 @@ export enum ValidateCheckedError {
 type CheckedValidationResult = ValidateCheckedError | undefined;
 
 const getCheckedValidator = (): ValidationFunction<CheckedValidationResult> => (value: any) => {
-    if (value !== true) {
+    if (value === undefined || (Array.isArray(value) && value.length === 0)) {
         return ValidateCheckedError.notChecked;
     }
     return undefined;
