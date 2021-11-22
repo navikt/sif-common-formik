@@ -4,10 +4,11 @@ import { Element } from 'nav-frontend-typografi';
 import { guid } from 'nav-frontend-js-utils';
 
 const SkjemagruppeQuestion = forwardRef(function SkjemagruppeQuestion(props: SkjemaGruppeProps, ref: React.Ref<any>) {
-    const { legend, feil, tag, children, className, id, ...rest } = props;
+    const { legend, feil, tag, children, className, id, description, ...rest } = props;
 
     const isFieldsetTag = tag === undefined || tag === 'fieldset';
     const titleId = `${id || guid()}__title`;
+    const renderLabelDirectly = isFieldsetTag === false && legend;
 
     return (
         <SkjemaGruppe
@@ -18,13 +19,16 @@ const SkjemagruppeQuestion = forwardRef(function SkjemagruppeQuestion(props: Skj
             tag={tag ? tag : legend ? 'fieldset' : 'div'}
             feil={feil}
             role={isFieldsetTag ? undefined : 'group'}
-            aria-labelledby={isFieldsetTag && legend ? undefined : titleId}
             legend={isFieldsetTag ? legend ? <Element tag="div">{legend}</Element> : undefined : undefined}
-            {...rest}>
-            {isFieldsetTag === false && legend && (
-                <div className="skjemaelement__label divLegend" id={titleId}>
-                    {legend}
-                </div>
+            {...rest}
+            {...(renderLabelDirectly === false ? { description } : undefined)}>
+            {renderLabelDirectly && (
+                <>
+                    <div className="skjemaelement__label divLegend" id={titleId}>
+                        {legend}
+                    </div>
+                    {description && <div className="skjemagruppe__description">{description}</div>}
+                </>
             )}
             {children}
         </SkjemaGruppe>

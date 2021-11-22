@@ -4,7 +4,12 @@ import dayjs from 'dayjs';
 import { useFormikContext } from 'formik';
 import { Knapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
-import { FormikDateIntervalPicker, FormikFileInput, ISOStringToDate } from '../../../../typed-formik-form';
+import {
+    FormikDateIntervalPicker,
+    FormikFileInput,
+    FormikTimeInput,
+    ISOStringToDate,
+} from '../../../../typed-formik-form';
 import FormikDateRangePicker from '../../../../typed-formik-form/components/formik-date-range-picker/FormikDateRangePicker';
 import { getTypedFormComponents } from '../../../../typed-formik-form/components/getTypedFormComponents';
 import {
@@ -54,6 +59,9 @@ const TypedFormExample = () => {
                     maxDate={dayjs().add(1, 'year').toDate()}
                 />
             </Question>
+            <Question>
+                <FormikTimeInput name={FormFields.ferieuttak} label="Hvor mye tid" description={<>whao</>} />
+            </Question>
             <Form.CheckboxGroup
                 name={'cbGruppe' as any}
                 checkboxes={[
@@ -102,6 +110,7 @@ const TypedFormExample = () => {
                             disableWeekend={true}
                             minDate={minDate}
                             maxDate={maxDate}
+                            description="Whoa"
                             fromInputProps={{
                                 name: FormFields.daterange_from,
                                 label: 'Fra',

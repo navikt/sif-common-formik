@@ -131,7 +131,7 @@ function ModalFormAndInfo<DataType>({
                 </DialogFormWrapper>
             </Modal>
             {wrapInfoInFieldset === true ? (
-                <SkjemagruppeQuestion feil={error} tag="div" legend={labels.infoTitle}>
+                <SkjemagruppeQuestion feil={error} legend={labels.infoTitle}>
                     {content}
                 </SkjemagruppeQuestion>
             ) : (

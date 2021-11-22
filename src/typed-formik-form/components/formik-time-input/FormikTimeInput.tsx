@@ -3,14 +3,13 @@ import { FastField, Field, FieldProps } from 'formik';
 import { InputProps } from 'nav-frontend-skjema';
 import { Time, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
-
-import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import TimeInput, { TimeInputLayoutProps, TimeInputRefProps } from './TimeInput';
 import { focusFirstElement } from '../../utils/focusUtils';
 import bemUtils from '../../utils/bemUtils';
+import { SkjemagruppeQuestion } from '../..';
 
-interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange' | 'description'> {
+interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange'> {
     name: FieldName;
     maxHours?: number;
     maxMinutes?: number;
@@ -31,6 +30,7 @@ function FormikTimeInput<FieldName, ErrorType>({
     feil,
     timeInputLayout,
     useFastField,
+    description,
     ...restProps
 }: FormikTimeInputProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -41,7 +41,6 @@ function FormikTimeInput<FieldName, ErrorType>({
             {({ field, form }: FieldProps) => {
                 return (
                     <SkjemagruppeQuestion
-                        tag={'div'}
                         className={bem.classNames(
                             bem.block,
                             bem.modifierConditional(
@@ -57,7 +56,8 @@ function FormikTimeInput<FieldName, ErrorType>({
                                 focusFirstElement(evt.target);
                             }
                         }}
-                        legend={label}>
+                        legend={label}
+                        description={description}>
                         <TimeInput
                             {...restProps}
                             {...field}
