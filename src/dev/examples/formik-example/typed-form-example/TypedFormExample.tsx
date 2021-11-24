@@ -250,7 +250,23 @@ const TypedFormExample = () => {
                                 return error;
                             }}
                         />
-                    </Question>{' '}
+                    </Question>
+                    <Question>
+                        <Form.RadioPanelGroup
+                            name={FormFields.hvilketBarnGjelderDet}
+                            radios={[
+                                { label: 'Barn 1', value: '1' },
+                                { label: 'Barn 2', value: '2' },
+                                { label: 'Barn 3', value: '3' },
+                                { label: 'Barn 4', value: '4' },
+                                { label: 'Barn 5', value: '5' },
+                                { label: 'Barn 6', value: '6' },
+                                { label: 'Barn 7', value: '7' },
+                            ]}
+                            legend="Eksempel på en radio panel gruppe med flere enn to alternativer med useTwoColumns={true}"
+                            useTwoColumns={true}
+                        />
+                    </Question>
                 </>
             )}
         </Form.Form>
