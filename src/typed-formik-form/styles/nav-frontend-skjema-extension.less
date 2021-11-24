@@ -6,20 +6,21 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-items: stretch;
+        margin-left: -0.25rem;
+        margin-right: -0.25rem;
 
         .inputPanel {
-            margin-bottom: 0.25rem;
-            min-width: 50% - 0.25rem;
-            max-width: 50% - 0.25rem;
             flex: 1 1 0;
-            &:nth-child(odd) {
-                margin-right: 0.25rem;
-            }
+            margin-left: 0.25rem;
+            margin-right: 0.25rem;
+            min-width: calc(50% - 0.5rem);
+            max-width: calc(50% - 0.5rem);
         }
         @media screen and (max-width: @mobile-breakpoint) {
             flex-direction: column !important;
             .inputPanel {
                 max-width: initial !important;
+                min-width: initial !important;
                 margin: 0 0 0.5rem 0 !important;
             }
         }
