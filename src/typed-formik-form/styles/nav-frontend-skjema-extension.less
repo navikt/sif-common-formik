@@ -4,18 +4,16 @@
     .inputPanelGruppe__inner {
         display: flex;
         flex-direction: row;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
         justify-items: stretch;
 
         .inputPanel {
-            margin-bottom: 0;
-            max-width: 50%;
+            margin-bottom: 0.25rem;
+            min-width: 50% - 0.25rem;
+            max-width: 50% - 0.25rem;
             flex: 1 1 0;
-            &:first-child {
+            &:nth-child(odd) {
                 margin-right: 0.25rem;
-            }
-            &:last-child {
-                margin-left: 0.25rem;
             }
         }
         @media screen and (max-width: @mobile-breakpoint) {

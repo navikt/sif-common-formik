@@ -24,6 +24,7 @@ export enum FormFields {
     'barnetsFødselsnummer' = 'barnetsFødselsnummer',
     'friends' = 'friends',
     'tilsynstimer' = 'tilsynstimer',
+    'hvilketBarnGjelderDet' = 'hvilketBarnGjelderDet',
 }
 
 export interface CompletedFormValues {
@@ -49,6 +50,7 @@ export interface CompletedFormValues {
         navn: string;
     };
     [FormFields.barnetsFødselsnummer]: string;
+    [FormFields.hvilketBarnGjelderDet]: string;
 }
 export interface Person {
     name: string;

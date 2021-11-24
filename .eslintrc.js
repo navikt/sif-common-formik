@@ -26,6 +26,12 @@ module.exports = {
         ],
         'react/display-name': 'off',
         'react/prop-types': 'off',
+        'prettier/prettier': [
+            'error',
+            {
+                endOfLine: 'auto',
+            },
+        ],
     },
     plugins: ['jsx-a11y', 'react-hooks'],
     settings: {
