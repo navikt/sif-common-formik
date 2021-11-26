@@ -1,7 +1,7 @@
 import React, { RefObject, useState } from 'react';
 import { guid } from 'nav-frontend-js-utils';
 import { Input } from 'nav-frontend-skjema';
-import { Time } from '../../types';
+import { InputTime } from '../../types';
 import bemUtils from '../../utils/bemUtils';
 import { getNumberFromNumberInputValue } from '../../utils/numberInputUtils';
 import { hasValue } from '../../validation/validationUtils';
@@ -10,7 +10,7 @@ import './timeInput.less';
 const MAX_HOURS = 23;
 const MAX_MINUTES = 59;
 
-type TimeInputChangeFunc = (time: Partial<Time> | undefined, isValidTime: boolean) => void;
+type TimeInputChangeFunc = (time: Partial<InputTime> | undefined, isValidTime: boolean) => void;
 
 export type TimeInputLayout = 'vertical' | 'horizontal';
 export interface TimeInputRefProps {
@@ -30,7 +30,7 @@ export interface TimeInputLayoutProps {
 }
 
 interface TimeInputProps extends TimeInputLayoutProps, TimeInputRefProps {
-    time?: Time | Partial<Time> | undefined;
+    time?: InputTime | Partial<InputTime> | undefined;
     maxHours?: number;
     maxMinutes?: number;
     className?: string;
@@ -40,13 +40,13 @@ interface TimeInputProps extends TimeInputLayoutProps, TimeInputRefProps {
 
 const bem = bemUtils('timeInput');
 
-export const isValidTime = (time: Partial<Time>): time is Time => {
+export const isValidTime = (time: Partial<InputTime>): time is InputTime => {
     const hours = getNumberFromNumberInputValue(time.hours || '0');
     const minutes = getNumberFromNumberInputValue(time.minutes || '0');
     return hours !== undefined && minutes !== undefined;
 };
 
-const handleTimeChange = (time: Partial<Time>, onChange: TimeInputChangeFunc) => {
+const handleTimeChange = (time: Partial<InputTime>, onChange: TimeInputChangeFunc) => {
     onChange(time, isValidTime(time));
 };
 
@@ -63,7 +63,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     refs,
     className,
 }) => {
-    const [stateTime, setStateTime] = useState<Partial<Time> | undefined>(time);
+    const [stateTime, setStateTime] = useState<Partial<InputTime> | undefined>(time);
     const id = guid();
     const hoursLabelId = `${id}-hours`;
     const minutesLabelId = `${id}-minutes`;

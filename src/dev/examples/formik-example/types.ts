@@ -1,4 +1,4 @@
-import { Time, YesOrNo } from '../../../typed-formik-form/types';
+import { InputTime, YesOrNo } from '../../../typed-formik-form/types';
 import { Ferieuttak } from './ferieuttak-example';
 
 export enum FormFields {
@@ -37,7 +37,7 @@ export interface CompletedFormValues {
     [FormFields.numberOfKids]?: number;
     [FormFields.hasBeenAbroadWithKids]?: YesOrNo;
     [FormFields.countries]: string[];
-    [FormFields.time]?: Time;
+    [FormFields.time]?: InputTime;
     [FormFields.daterange_from]?: string;
     [FormFields.daterange_to]?: string;
     [FormFields.files]?: any;

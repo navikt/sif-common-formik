@@ -5,7 +5,7 @@ export enum YesOrNo {
     'DO_NOT_KNOW' = 'doNotKnow',
 }
 
-export interface Time {
+export interface InputTime {
     hours: string;
     minutes: string;
 }

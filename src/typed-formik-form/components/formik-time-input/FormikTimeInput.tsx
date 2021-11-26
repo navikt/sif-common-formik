@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { FastField, Field, FieldProps } from 'formik';
 import { InputProps } from 'nav-frontend-skjema';
-import { Time, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
+import { InputTime, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import TimeInput, { TimeInputLayoutProps, TimeInputRefProps } from './TimeInput';
@@ -64,7 +64,7 @@ function FormikTimeInput<FieldName, ErrorType>({
                             {...timeInputLayout}
                             justifyContent="left"
                             time={field.value || undefined}
-                            onChange={(time: Partial<Time> | undefined) => {
+                            onChange={(time: Partial<InputTime> | undefined) => {
                                 form.setFieldValue(field.name, time);
                                 if (context) {
                                     context.onAfterFieldValueSet();

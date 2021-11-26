@@ -1,4 +1,4 @@
-import { Time } from '../types';
+import { InputTime } from '../types';
 import { ValidationFunction } from './types';
 import { getNumberFromStringInput, hasValue } from './validationUtils';
 
@@ -48,7 +48,7 @@ const valueIsValidNumber = (value: string | undefined): boolean => {
 
 const getTimeValidator =
     (options: Options = {}): ValidationFunction<TimeValidationResult> =>
-    (value: Partial<Time>) => {
+    (value: Partial<InputTime>) => {
         const { required, max, min } = options;
         const { hours: inputHours, minutes: inputMinutes } = value || {};
 
