@@ -34,6 +34,7 @@ interface TimeInputProps extends TimeInputLayoutProps, TimeInputRefProps {
     maxHours?: number;
     maxMinutes?: number;
     className?: string;
+    disabled?: boolean;
     description?: React.ReactNode;
     onChange: TimeInputChangeFunc;
 }
@@ -59,6 +60,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     justifyContent = 'center',
     placeholders,
     description,
+    disabled,
     onChange,
     refs,
     className,
@@ -97,6 +99,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                         max={maxHours}
                         maxLength={2}
                         value={stateTime?.hours || ''}
+                        disabled={disabled}
                         onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
                             const newTime = { ...stateTime, hours: evt.target.value };
                             setStateTime(newTime);
@@ -121,6 +124,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                         maxLength={2}
                         max={maxMinutes}
                         value={stateTime?.minutes || ''}
+                        disabled={disabled}
                         onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
                             const newTime = { ...stateTime, minutes: evt.target.value };
                             setStateTime(newTime);
