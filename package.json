@@ -36,7 +36,7 @@
         "@types/react-responsive": "^8.0.2",
         "@types/react-router-dom": "^5.1.7",
         "@typescript-eslint/eslint-plugin": "4.28.0",
-        "@typescript-eslint/parser": "4.28.0",
+        "@typescript-eslint/parser": "5.8.0",
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
         "axios": "^0.21.1",
         "canvas": "^2.8.0",
