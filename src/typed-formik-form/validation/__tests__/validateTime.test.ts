@@ -26,6 +26,9 @@ describe(`validateTime`, () => {
             })
         ).toBeUndefined();
     });
+    it(`returns ${ValidateTimeError.timeHasNoValue} when required and time is undefined`, () => {
+        expect(getTimeValidator({ required: true })(undefined)).toEqual(ValidateTimeError.timeHasNoValue);
+    });
     it(`returns ${ValidateTimeError.timeHasNoValue} when required and hours and minutes are empty values`, () => {
         expect(getTimeValidator({ required: true })({ hours: '', minutes: '' })).toEqual(
             ValidateTimeError.timeHasNoValue
