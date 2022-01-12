@@ -41,7 +41,10 @@ const getMinutes = (hours: number, minutes: number): number => hours * 60 + minu
 
 const valueIsValidNumber = (value: string | undefined): boolean => {
     if (value) {
-        return value.match(/^[\-0-9]+$/) !== null; // Tillatt - for å kunne gi feil på negative verdier
+        const containsNumbers = value.match(/^[\-0-9]+$/) !== null; // Tillatt - for å kunne gi feil på negative verdier
+        if (containsNumbers) {
+            return getNumberFromStringInput(value) !== undefined;
+        }
     }
     return false;
 };
@@ -59,36 +62,37 @@ const getTimeValidator =
             return ValidateTimeError.minutesAreInvalid;
         }
 
-        const hours = getNumberFromStringInput(inputHours || '0');
-        const minutes = getNumberFromStringInput(inputMinutes || '0');
+        const hours = getNumberFromStringInput(inputHours);
+        const minutes = getNumberFromStringInput(inputMinutes);
 
-        if (hours === undefined) {
-            return ValidateTimeError.hoursAreInvalid;
-        } else if (hours > 24) {
-            return ValidateTimeError.tooManyHours;
-        } else if (hours < 0) {
-            return ValidateTimeError.hoursAreNegative;
-        }
-        if (minutes === undefined) {
-            return ValidateTimeError.minutesAreInvalid;
-        } else if (minutes > 59) {
-            return ValidateTimeError.tooManyMinutes;
-        } else if (minutes < 0) {
-            return ValidateTimeError.minutesAreNegative;
-        }
-
-        if (required && hours === 0 && minutes === 0) {
+        if (hours === undefined && minutes === undefined && required) {
             return ValidateTimeError.timeHasNoValue;
+        }
+        if (hours !== undefined) {
+            if (hours > 24) {
+                return ValidateTimeError.tooManyHours;
+            }
+            if (hours < 0) {
+                return ValidateTimeError.hoursAreNegative;
+            }
+        }
+        if (minutes !== undefined) {
+            if (minutes > 59) {
+                return ValidateTimeError.tooManyMinutes;
+            }
+            if (minutes < 0) {
+                return ValidateTimeError.minutesAreNegative;
+            }
         }
 
         if (max) {
-            if (getMinutes(hours, minutes) > getMinutes(max.hours, max.minutes)) {
+            if (getMinutes(hours || 0, minutes || 0) > getMinutes(max.hours, max.minutes)) {
                 return ValidateTimeError.durationIsTooLong;
             }
         }
 
         if (min) {
-            if (getMinutes(hours, minutes) < getMinutes(min.hours, min.minutes)) {
+            if (getMinutes(hours || 0, minutes || 0) < getMinutes(min.hours, min.minutes)) {
                 return ValidateTimeError.durationIsTooShort;
             }
         }
