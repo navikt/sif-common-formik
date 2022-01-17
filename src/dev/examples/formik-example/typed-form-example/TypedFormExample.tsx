@@ -254,6 +254,9 @@ const TypedFormExample = () => {
                     <Question>
                         <Form.RadioPanelGroup
                             name={FormFields.hvilketBarnGjelderDet}
+                            afterOnChange={(value) => {
+                                console.log(value);
+                            }}
                             radios={[
                                 { label: 'Barn 1', value: '1' },
                                 { label: 'Barn 2', value: '2' },

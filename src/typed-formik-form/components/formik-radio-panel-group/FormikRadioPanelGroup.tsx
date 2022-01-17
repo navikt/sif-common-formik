@@ -9,6 +9,7 @@ import '../../styles/nav-frontend-skjema-extension.less';
 interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onChange'> {
     name: FieldName;
     useTwoColumns?: boolean;
+    afterOnChange?: (newValue: boolean) => void;
 }
 
 export type FormikRadioPanelGroupProps<FieldName, ErrorType> = OwnProps<FieldName> &
@@ -22,6 +23,7 @@ function FormikRadioPanelGroup<FieldName, ErrorType>({
     feil,
     useTwoColumns,
     useFastField,
+    afterOnChange,
     ...restProps
 }: FormikRadioPanelGroupProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
@@ -38,6 +40,9 @@ function FormikRadioPanelGroup<FieldName, ErrorType>({
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         onChange={(_evt, value) => {
                             form.setFieldValue(field.name, value);
+                            if (afterOnChange) {
+                                afterOnChange(value);
+                            }
                             if (context) {
                                 context.onAfterFieldValueSet();
                             }
