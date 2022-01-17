@@ -9,7 +9,7 @@ import '../../styles/nav-frontend-skjema-extension.less';
 interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onChange'> {
     name: FieldName;
     useTwoColumns?: boolean;
-    afterOnChange?: (newValue: boolean) => void;
+    afterOnChange?: (newValue: string) => void;
 }
 
 export type FormikRadioPanelGroupProps<FieldName, ErrorType> = OwnProps<FieldName> &
