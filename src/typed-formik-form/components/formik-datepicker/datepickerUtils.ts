@@ -32,7 +32,7 @@ const getDateStringFromValue = (value?: Date | string): string | undefined => {
             return value;
         }
         if (dayjs(value, isoStringFormat, true).isValid()) {
-            date = dayjs(value).toDate();
+            date = new Date(value);
         }
     } else if (typeof value === 'object') {
         date = value;
@@ -45,7 +45,7 @@ const getDateFromDateString = (dateString: string | undefined): Date | undefined
         return undefined;
     }
     if (isISODateString(dateString) && dayjs(dateString, 'YYYY-MM-DD', true).isValid()) {
-        return dayjs(dateString, 'YYYY-MM-DD').toDate();
+        return new Date(dateString);
     }
     return undefined;
 };

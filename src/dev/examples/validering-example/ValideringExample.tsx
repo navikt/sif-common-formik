@@ -34,7 +34,6 @@ import PageIntro from '../../components/page-intro/PageIntro';
 import ValidationErrorList from '../../components/validation-errors/ValidationErrorList';
 import { FormFields, FormValues } from './types';
 import ValideringPanel from './ValideringPanel';
-import { dateToday } from '../../utils/dateUtils';
 import { prettifyDate } from '@navikt/sif-common-core/lib/utils/dateUtils';
 import getTimeValidator, { ValidateTimeError } from '../../../typed-formik-form/validation/getTimeValidator';
 
@@ -260,7 +259,7 @@ const error = getDateValidator(options)(value);
                                         validate={getDateValidator({
                                             required: true,
                                             min: new Date(2015, 0, 1),
-                                            max: dateToday,
+                                            max: new Date(),
                                             onlyWeekdays: true,
                                         })}
                                     />
@@ -335,7 +334,7 @@ const errorToDate = getDateRangeValidator(options).validateToDate(value);
                                             dayPickerProps: { initialMonth: new Date(2021, 11, 31) },
                                             validate: getDateRangeValidator({
                                                 min: new Date(2000, 0, 1),
-                                                max: dateToday,
+                                                max: new Date(),
                                                 fromDate,
                                                 required: true,
                                                 onlyWeekdays: true,
