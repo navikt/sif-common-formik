@@ -19,11 +19,11 @@ export const formatDateToApiFormat = (date: Date): ApiStringDate => {
 };
 export const prettifyDate = (date: Date): string => dayjs(date).format(prettyDateFormat);
 export const prettifyDateExtended = (date: Date) => dayjs(date).format(prettyDateFormatExtended);
-export const apiStringDateToDate = (date: ApiStringDate): Date => dayjs(date, apiDateFormat).toDate();
+export const apiStringDateToDate = (apiStringDate: ApiStringDate): Date => new Date(apiStringDate);
 
 export const isMoreThan3YearsAgo = (date: Date) => dayjs(date).isBefore(date3YearsAgo);
 
-export const dateToISOFormattedDateString = (date?: Date) => (date ? dayjs.utc(date).format(apiDateFormat) : undefined);
+export const dateToISOFormattedDateString = (date?: Date) => (date ? dayjs(date).format(apiDateFormat) : undefined);
 
 export const date10MonthsAgo = dayjs().subtract(10, 'month').startOf('day').toDate();
 
@@ -37,7 +37,7 @@ export const date4WeeksAgo = dayjs().subtract(4, 'week').startOf('day').toDate()
 
 export const date1YearFromNow = dayjs().add(1, 'year').endOf('day').toDate();
 
-export const dateToday = dayjs().toDate();
+export const dateToday = new Date();
 
 export const sortDateRange = (d1: DateRange, d2: DateRange): number => {
     if (dayjs(d1.from).isSameOrBefore(d2.from)) {
