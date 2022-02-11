@@ -38,8 +38,8 @@ const TypedFormExample = () => {
     const { values } = useFormikContext<FormValues>();
     const { setFieldValue } = useFormikContext<FormValues>();
     const intl = useIntl();
-    const minDate = dayjs().subtract(2, 'month').toDate();
-    const maxDate = dayjs().add(1, 'month').toDate();
+    const minDate = dayjs().utc().subtract(2, 'month').toDate();
+    const maxDate = dayjs().utc().add(1, 'month').toDate();
 
     return (
         <Form.Form
@@ -55,8 +55,8 @@ const TypedFormExample = () => {
                         modalTitle: 'Ferieuttak',
                         listTitle: 'Ferieuttak',
                     }}
-                    minDate={dayjs().subtract(1, 'year').toDate()}
-                    maxDate={dayjs().add(1, 'year').toDate()}
+                    minDate={dayjs().utc().subtract(1, 'year').toDate()}
+                    maxDate={dayjs().utc().add(1, 'year').toDate()}
                 />
             </Question>
             <Question>

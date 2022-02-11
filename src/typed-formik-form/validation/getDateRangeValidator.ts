@@ -37,7 +37,7 @@ const getFromDateValidator =
             return undefined;
         }
 
-        if (dayjs(date).isAfter(toDate, 'day')) {
+        if (dayjs.utc(date).isAfter(toDate, 'day')) {
             return ValidateDateRangeError.fromDateIsAfterToDate;
         }
         return undefined;
@@ -55,7 +55,7 @@ const getToDateValidator =
         if (!date || !fromDate) {
             return undefined;
         }
-        if (dayjs(date).isBefore(fromDate, 'day')) {
+        if (dayjs.utc(date).isBefore(fromDate, 'day')) {
             return ValidateDateRangeError.toDateIsBeforeFromDate;
         }
         return undefined;

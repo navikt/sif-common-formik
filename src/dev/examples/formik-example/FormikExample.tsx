@@ -12,13 +12,13 @@ const initialValues: FormValues = {
         {
             id: '1',
             fom: new Date(),
-            tom: dayjs().add(1, 'month').toDate(),
+            tom: dayjs().utc().add(1, 'month').toDate(),
             land: [],
         },
         {
             id: '2',
-            fom: dayjs().add(1, 'month').toDate(),
-            tom: dayjs().add(2, 'month').toDate(),
+            fom: dayjs().utc().add(1, 'month').toDate(),
+            tom: dayjs().utc().add(2, 'month').toDate(),
             land: [],
         },
     ],

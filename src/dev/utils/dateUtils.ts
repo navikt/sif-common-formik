@@ -14,39 +14,39 @@ const prettyDateFormat = 'DD.MM.YYYY';
 const prettyDateFormatExtended = 'DD. MMM YYYY';
 
 export const formatDateToApiFormat = (date: Date): ApiStringDate => {
-    const apiFormattedDate = dayjs(date).format(apiDateFormat);
+    const apiFormattedDate = dayjs.utc(date).format(apiDateFormat);
     return apiFormattedDate;
 };
-export const prettifyDate = (date: Date): string => dayjs(date).format(prettyDateFormat);
-export const prettifyDateExtended = (date: Date) => dayjs(date).format(prettyDateFormatExtended);
-export const apiStringDateToDate = (date: ApiStringDate): Date => dayjs(date, apiDateFormat).toDate();
+export const prettifyDate = (date: Date): string => dayjs.utc(date).format(prettyDateFormat);
+export const prettifyDateExtended = (date: Date) => dayjs.utc(date).format(prettyDateFormatExtended);
+export const apiStringDateToDate = (date: ApiStringDate): Date => dayjs.utc(date, apiDateFormat).toDate();
 
-export const isMoreThan3YearsAgo = (date: Date) => dayjs(date).isBefore(date3YearsAgo);
+export const isMoreThan3YearsAgo = (date: Date) => dayjs.utc(date).isBefore(date3YearsAgo);
 
 export const dateToISOFormattedDateString = (date?: Date) => (date ? dayjs.utc(date).format(apiDateFormat) : undefined);
 
-export const date10MonthsAgo = dayjs().subtract(10, 'month').startOf('day').toDate();
+export const date10MonthsAgo = dayjs().utc().subtract(10, 'month').startOf('day').toDate();
 
-export const date1YearAgo = dayjs().subtract(1, 'year').startOf('day').toDate();
+export const date1YearAgo = dayjs().utc().subtract(1, 'year').startOf('day').toDate();
 
-export const date4YearsAgo = dayjs().subtract(4, 'year').startOf('day').toDate();
+export const date4YearsAgo = dayjs().utc().subtract(4, 'year').startOf('day').toDate();
 
-export const date3YearsAgo = dayjs().subtract(3, 'year').startOf('day').toDate();
+export const date3YearsAgo = dayjs().utc().subtract(3, 'year').startOf('day').toDate();
 
-export const date4WeeksAgo = dayjs().subtract(4, 'week').startOf('day').toDate();
+export const date4WeeksAgo = dayjs().utc().subtract(4, 'week').startOf('day').toDate();
 
-export const date1YearFromNow = dayjs().add(1, 'year').endOf('day').toDate();
+export const date1YearFromNow = dayjs().utc().add(1, 'year').endOf('day').toDate();
 
-export const dateToday = dayjs().toDate();
+export const dateToday = dayjs().utc().toDate();
 
 export const sortDateRange = (d1: DateRange, d2: DateRange): number => {
-    if (dayjs(d1.from).isSameOrBefore(d2.from)) {
+    if (dayjs.utc(d1.from).isSameOrBefore(d2.from)) {
         return -1;
     }
     return 1;
 };
 export const sortOpenDateRange = (d1: OpenDateRange, d2: OpenDateRange): number => {
-    if (dayjs(d1.from).isSameOrBefore(d2.from)) {
+    if (dayjs.utc(d1.from).isSameOrBefore(d2.from)) {
         return -1;
     }
     return 1;
@@ -67,7 +67,7 @@ export const dateRangesCollide = (ranges: DateRange[]): boolean => {
         const sortedDates = ranges.sort(sortDateRange);
         const hasOverlap = ranges.find((d, idx) => {
             if (idx < sortedDates.length - 1) {
-                return dayjs(d.to).isAfter(sortedDates[idx + 1].from);
+                return dayjs.utc(d.to).isAfter(sortedDates[idx + 1].from);
             }
             return false;
         });
@@ -85,8 +85,8 @@ export const dateRangesExceedsRange = (ranges: DateRange[], allowedRange: DateRa
     const to = sortedRanges[sortedRanges.length - 1].to;
 
     if (
-        !dayjs(from).isBetween(allowedRange.from, allowedRange.to, 'day', '[]') ||
-        !dayjs(to).isBetween(allowedRange.from, allowedRange.to, 'day', '[]')
+        !dayjs.utc(from).isBetween(allowedRange.from, allowedRange.to, 'day', '[]') ||
+        !dayjs.utc(to).isBetween(allowedRange.from, allowedRange.to, 'day', '[]')
     ) {
         return true;
     }

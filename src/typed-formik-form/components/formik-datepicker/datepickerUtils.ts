@@ -4,7 +4,7 @@ import { DatepickerLimitiations } from './FormikDatepicker';
 
 const isoStringFormat = 'YYYY-MM-DD';
 
-export const dateToISOString = (date?: Date) => (date ? dayjs(date).format(isoStringFormat) : '');
+export const dateToISOString = (date?: Date) => (date ? dayjs.utc(date).format(isoStringFormat) : '');
 export const ISOStringToDate = (dateString = ''): Date | undefined => getDateFromDateString(dateString);
 
 const parseDateLimitations = ({
@@ -31,8 +31,8 @@ const getDateStringFromValue = (value?: Date | string): string | undefined => {
         if (isISODateString(value) === false) {
             return value;
         }
-        if (dayjs(value, isoStringFormat, true).isValid()) {
-            date = dayjs(value).toDate();
+        if (dayjs.utc(value, isoStringFormat, true).isValid()) {
+            date = dayjs.utc(value).toDate();
         }
     } else if (typeof value === 'object') {
         date = value;
@@ -44,8 +44,8 @@ const getDateFromDateString = (dateString: string | undefined): Date | undefined
     if (dateString === undefined) {
         return undefined;
     }
-    if (isISODateString(dateString) && dayjs(dateString, 'YYYY-MM-DD', true).isValid()) {
-        return dayjs(dateString, 'YYYY-MM-DD').toDate();
+    if (isISODateString(dateString) && dayjs.utc(dateString, 'YYYY-MM-DD', true).isValid()) {
+        return dayjs.utc(dateString, 'YYYY-MM-DD').toDate();
     }
     return undefined;
 };

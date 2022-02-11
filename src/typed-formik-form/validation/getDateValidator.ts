@@ -45,13 +45,13 @@ const getDateValidator =
             if (date === undefined) {
                 return ValidateDateError.dateHasInvalidFormat;
             }
-            if (min && dayjs(date).isBefore(min, 'day')) {
+            if (min && dayjs.utc(date).isBefore(min, 'day')) {
                 return ValidateDateError.dateIsBeforeMin;
             }
-            if (max && dayjs(date).isAfter(max, 'day')) {
+            if (max && dayjs.utc(date).isAfter(max, 'day')) {
                 return ValidateDateError.dateIsAfterMax;
             }
-            if (onlyWeekdays && dayjs(date).isoWeekday() > 5) {
+            if (onlyWeekdays && dayjs.utc(date).isoWeekday() > 5) {
                 return ValidateDateError.dateIsNotWeekday;
             }
         }
