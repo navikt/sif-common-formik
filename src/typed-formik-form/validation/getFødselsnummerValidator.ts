@@ -35,7 +35,7 @@ const getFødselsnummerValidator =
             const result = fnrvalidator.fnr(value);
             if (result.status === 'invalid') {
                 /** Errors from @navikt/fnrvalidator */
-                const LENGTH_ERROR = 'fnr or dnr must consist of 11 digits';
+                const LENGTH_ERROR = 'fnr, dnr or hnr must consist of 11 digits';
                 const { reasons } = result;
                 if (reasons.includes(LENGTH_ERROR)) {
                     return ValidateFødselsnummerError.fødselsnummerIsNot11Chars;

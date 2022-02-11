@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import utc from 'dayjs/plugin/utc';
 import datepickerUtils from '../components/formik-datepicker/datepickerUtils';
 import { ValidationFunction } from './types';
 import { hasValue } from './validationUtils';
@@ -9,6 +10,7 @@ import { hasValue } from './validationUtils';
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isoWeek);
+dayjs.extend(utc);
 
 export enum ValidateDateError {
     dateHasNoValue = 'dateHasNoValue',
