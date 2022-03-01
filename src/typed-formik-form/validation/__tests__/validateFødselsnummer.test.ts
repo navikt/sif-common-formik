@@ -3,9 +3,18 @@ import getFødselsnummerValidator, { ValidateFødselsnummerError } from '../getF
 describe(`validateFødselsnummer`, () => {
     const generatedFnr = '24090014427';
     const generatedFnr2 = '19035114443';
+    const hnr = '13527248013';
 
-    it('returns undefined when the fødselsnummer is valid', () => {
+    it.only('returns undefined when the fødselsnummer is valid', () => {
         expect(getFødselsnummerValidator()(generatedFnr)).toBeUndefined();
+    });
+
+    it.only('returns error when the fødselsnummer is a hnr and hnr is not allowed', () => {
+        expect(getFødselsnummerValidator()(hnr)).toEqual(ValidateFødselsnummerError.fødselsnummerAsHnrIsNotAllowed);
+    });
+
+    it.only('returns undefined when the fødselsnummer is a hnr and hnr is allowed', () => {
+        expect(getFødselsnummerValidator({ allowHnr: true })(hnr)).toBeUndefined();
     });
 
     it('returns undefined when the fødselsnummer is not required and ha noe value', () => {
