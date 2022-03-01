@@ -5,15 +5,15 @@ describe(`validateFødselsnummer`, () => {
     const generatedFnr2 = '19035114443';
     const hnr = '13527248013';
 
-    it.only('returns undefined when the fødselsnummer is valid', () => {
+    it('returns undefined when the fødselsnummer is valid', () => {
         expect(getFødselsnummerValidator()(generatedFnr)).toBeUndefined();
     });
 
-    it.only('returns error when the fødselsnummer is a hnr and hnr is not allowed', () => {
+    it('returns error when the fødselsnummer is a hnr and hnr is not allowed', () => {
         expect(getFødselsnummerValidator()(hnr)).toEqual(ValidateFødselsnummerError.fødselsnummerAsHnrIsNotAllowed);
     });
 
-    it.only('returns undefined when the fødselsnummer is a hnr and hnr is allowed', () => {
+    it('returns undefined when the fødselsnummer is a hnr and hnr is allowed', () => {
         expect(getFødselsnummerValidator({ allowHnr: true })(hnr)).toBeUndefined();
     });
 
