@@ -56,7 +56,7 @@ function FormikCheckboxPanelGroup<FieldName, ErrorType>({
                                 form.setFieldValue(`${name}`, removeElementFromArray(value, field.value));
                             } else {
                                 if (field.value) {
-                                    field.value.push(value);
+                                    field.value = [...field.value, value];
                                 } else {
                                     field.value = [value];
                                 }
