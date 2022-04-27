@@ -1,20 +1,22 @@
 import React from 'react';
 import { FastField, Field, FieldProps } from 'formik';
-import { RadioPanelGruppe, RadioPanelGruppeProps } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
+import { RadioPanelGruppe, RadioPanelGruppeProps, RadioPanelProps } from 'nav-frontend-skjema';
+import { TestProps, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import '../../styles/nav-frontend-skjema-extension.less';
 
-interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'name' | 'onChange'> {
+interface OwnProps<FieldName> extends Omit<RadioPanelGruppeProps, 'radios' | 'name' | 'onChange'> {
     name: FieldName;
     useTwoColumns?: boolean;
+    radios: Array<RadioPanelProps & TestProps>;
     afterOnChange?: (newValue: string) => void;
 }
 
 export type FormikRadioPanelGroupProps<FieldName, ErrorType> = OwnProps<FieldName> &
     TypedFormInputValidationProps<FieldName, ErrorType> &
-    UseFastFieldProps;
+    UseFastFieldProps &
+    TestProps;
 
 function FormikRadioPanelGroup<FieldName, ErrorType>({
     name,

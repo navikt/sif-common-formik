@@ -1,7 +1,7 @@
 import React from 'react';
 import { FastField, Field, FieldProps } from 'formik';
 import { Input, InputProps, Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
+import { TestProps, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import { guid } from 'nav-frontend-js-utils';
@@ -19,7 +19,8 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name'> {
 export type FormikInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
     TypedFormInputValidationProps<FieldName, ErrorType> &
     InputWithSuffix &
-    UseFastFieldProps;
+    UseFastFieldProps &
+    TestProps;
 
 const bem = bemUtils('formikInput');
 

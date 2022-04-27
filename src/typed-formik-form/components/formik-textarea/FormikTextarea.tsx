@@ -1,7 +1,7 @@
 import React from 'react';
 import { FastField, Field, FieldProps } from 'formik';
 import { Textarea, TextareaControlledProps } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
+import { TestProps, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -11,7 +11,8 @@ interface OwnProps<FieldName> extends Omit<TextareaControlledProps, 'name' | 'de
 
 export type FormikTextareaProps<FieldName, ErrorType> = OwnProps<FieldName> &
     TypedFormInputValidationProps<FieldName, ErrorType> &
-    UseFastFieldProps;
+    UseFastFieldProps &
+    TestProps;
 
 function FormikTextarea<FieldName, ErrorType>({
     name,

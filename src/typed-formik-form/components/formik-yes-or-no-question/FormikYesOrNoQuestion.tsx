@@ -1,9 +1,10 @@
 import React from 'react';
-import { TypedFormInputValidationProps, YesOrNo } from '../../types';
+import { TestProps, TypedFormInputValidationProps, YesOrNo } from '../../types';
 import FormikRadioPanelGroup, { FormikRadioPanelGroupProps } from '../formik-radio-panel-group/FormikRadioPanelGroup';
 
 export interface FormikYesOrNoQuestionProps<FieldName, ErrorType>
-    extends Omit<FormikRadioPanelGroupProps<FieldName, ErrorType>, 'radios'> {
+    extends TestProps,
+        Omit<FormikRadioPanelGroupProps<FieldName, ErrorType>, 'radios'> {
     includeDoNotKnowOption?: boolean;
     useTwoColumns?: boolean;
     labels?: {
@@ -21,11 +22,15 @@ function FormikYesOrNoQuestion<FieldName, ErrorType>({
     ...restProps
 }: FormikYesOrNoQuestionProps<FieldName, ErrorType> & TypedFormInputValidationProps<FieldName, ErrorType>) {
     const { yes: yesLabel = 'Ja', no: noLabel = 'Nei', doNotKnow: doNotKnowLabel = 'Vet ikke' } = labels || {};
+    const testKey = restProps['data-testkey'];
+    delete restProps['data-testkey'];
+
     return (
         <FormikRadioPanelGroup<FieldName, ErrorType>
+            data-testkey={testKey}
             radios={[
-                { label: yesLabel, value: YesOrNo.YES },
-                { label: noLabel, value: YesOrNo.NO },
+                { label: yesLabel, value: YesOrNo.YES, ['data-testkey']: testKey ? `${testKey}_yes` : undefined },
+                { label: noLabel, value: YesOrNo.NO, ['data-testkey']: testKey ? `${testKey}_no` : undefined },
                 ...(includeDoNotKnowOption ? [{ label: doNotKnowLabel, value: YesOrNo.DO_NOT_KNOW }] : []),
             ]}
             {...restProps}

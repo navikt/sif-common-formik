@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { BekreftCheckboksPanel, BekreftCheckboksPanelProps } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps } from '../../types';
+import { TestProps, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
@@ -10,7 +10,8 @@ interface OwnProps<FieldName> extends Omit<BekreftCheckboksPanelProps, 'onChange
 }
 
 export type FormikConfirmationCheckboxPanelProps<FieldName, ErrorType> = OwnProps<FieldName> &
-    Omit<TypedFormInputValidationProps<FieldName, ErrorType>, 'info'>;
+    Omit<TypedFormInputValidationProps<FieldName, ErrorType>, 'info'> &
+    TestProps;
 
 function FormikConfirmationCheckboxPanel<FieldName, ErrorType>({
     children,

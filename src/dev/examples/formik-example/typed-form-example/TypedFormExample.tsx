@@ -60,7 +60,12 @@ const TypedFormExample = () => {
                 />
             </Question>
             <Question>
-                <FormikTimeInput name={FormFields.ferieuttak} label="Hvor mye tid" description={<>whao</>} />
+                <FormikTimeInput
+                    name={FormFields.ferieuttak}
+                    label="Hvor mye tid"
+                    description={<>whao</>}
+                    data-testkey="time-input-key"
+                />
             </Question>
             <Form.CheckboxGroup
                 name={'cbGruppe' as any}
@@ -68,18 +73,21 @@ const TypedFormExample = () => {
                     {
                         label: 'En',
                         value: '1',
+                        'data-testkey': 'cb1',
                     },
                     {
                         label: 'To',
                         value: '2',
+                        'data-testkey': 'cb2',
                     },
                     {
                         label: 'Tre',
                         value: '3',
+                        'data-testkey': 'cb3',
                     },
                 ]}
             />
-            <Form.Checkbox name={'checkGruppe' as any} label="a" value="a" />
+            <Form.Checkbox name={'checkGruppe' as any} label="a" value="a" data-testkey="cbg_a" />
             <Form.Checkbox name={'checkGruppe' as any} label="b" value="b" />
             <Form.Checkbox name={'checkGruppe' as any} label="c" value="c" />
             <br />
@@ -87,11 +95,11 @@ const TypedFormExample = () => {
             {1 + 1 === 2 && (
                 <>
                     <Question>
-                        <Form.TimeInput label="Tid" name={'a' as any} />
+                        <Form.TimeInput label="Tid" name={'a' as any} data-testkey="timeinput-2" />
                         <Form.YesOrNoQuestion
                             legend={'Har du kids'}
                             name={FormFields.hasKids}
-                            description="abs"
+                            data-testkey="har_kids"
                             validate={(value) => {
                                 const err = getYesOrNoValidator()(value);
                                 if (err) {
@@ -110,14 +118,16 @@ const TypedFormExample = () => {
                             disableWeekend={true}
                             minDate={minDate}
                             maxDate={maxDate}
-                            description="Whoa"
+                            data-what="fdrp"
                             fromInputProps={{
                                 name: FormFields.daterange_from,
                                 label: 'Fra',
+                                'data-testkey': 'from',
                             }}
                             toInputProps={{
                                 name: FormFields.daterange_to,
                                 label: 'Til',
+                                'data-testkey': 'to',
                             }}
                         />
                     </Question>
@@ -125,6 +135,7 @@ const TypedFormExample = () => {
                         <Form.Input
                             name={FormFields.fødselsnummer}
                             label="Fødselsnummer"
+                            data-testkey="fnr-key"
                             validate={(value) =>
                                 validateAll<ValidationError>([
                                     () => getStringValidator({ minLength: 2 })(value),
@@ -167,6 +178,7 @@ const TypedFormExample = () => {
                             name={FormFields.birthdate}
                             label="Fødselsdato"
                             validate={getDateValidator({ required: true })}
+                            data-testkey="datepicker-fdato"
                         />
                         {1 + 1 === 3 && (
                             <Knapp
@@ -232,6 +244,7 @@ const TypedFormExample = () => {
                             suffixStyle="text"
                             suffix="Timer"
                             bredde="S"
+                            data-testkey="input-test"
                             maxLength={5}
                             validate={(value) => {
                                 const error = getNumberValidator({ min: 0, max: 20000 })(value);
@@ -258,7 +271,7 @@ const TypedFormExample = () => {
                                 console.log(value);
                             }}
                             radios={[
-                                { label: 'Barn 1', value: '1' },
+                                { label: 'Barn 1', value: '1', 'data-testkey': 'barn-1' },
                                 { label: 'Barn 2', value: '2' },
                                 { label: 'Barn 3', value: '3' },
                                 { label: 'Barn 4', value: '4' },

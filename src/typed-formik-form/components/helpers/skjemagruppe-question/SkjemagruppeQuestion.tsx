@@ -2,8 +2,12 @@ import React, { forwardRef } from 'react';
 import { SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import { guid } from 'nav-frontend-js-utils';
+import { TestProps } from '../../../types';
 
-const SkjemagruppeQuestion = forwardRef(function SkjemagruppeQuestion(props: SkjemaGruppeProps, ref: React.Ref<any>) {
+const SkjemagruppeQuestion = forwardRef(function SkjemagruppeQuestion(
+    props: SkjemaGruppeProps & TestProps,
+    ref: React.Ref<any>
+) {
     const { legend, feil, tag, children, className, id, description, ...rest } = props;
 
     const isFieldsetTag = tag === undefined || tag === 'fieldset';
