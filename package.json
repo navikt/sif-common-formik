@@ -93,7 +93,7 @@
         "classnames": "^2.3.1",
         "formik": "^2.2.9",
         "intl": "^1.2.5",
-        "nav-datovelger": ">= 12.1",
+        "nav-datovelger": ">= 12.4",
         "nav-frontend-alertstriper": "^4.x",
         "nav-frontend-core": "^6.x",
         "nav-frontend-hjelpetekst": "^3.x",
