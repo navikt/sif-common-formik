@@ -12,6 +12,7 @@ const parseDateLimitations = ({
     maxDate,
     disabledDateRanges = [],
     disableWeekend,
+    disabledDaysOfWeek,
 }: DatepickerLimitiations): DatepickerLimitations => {
     const invalidDateRanges: DatepickerDateRange[] = disabledDateRanges.map((d) => ({
         from: dateToISOString(d.from),
@@ -22,6 +23,7 @@ const parseDateLimitations = ({
         maxDate: maxDate ? dateToISOString(maxDate) : undefined,
         weekendsNotSelectable: disableWeekend,
         invalidDateRanges,
+        disabledDaysOfWeek: disabledDaysOfWeek ? { daysOfWeek: disabledDaysOfWeek } : undefined,
     };
 };
 

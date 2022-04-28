@@ -179,7 +179,8 @@ const TypedFormExample = () => {
                             label="Fødselsdato"
                             validate={getDateValidator({ required: true })}
                             data-testkey="datepicker-fdato"
-                            minDate={dayjs().subtract(2, 'days').toDate()}
+                            minDate={dayjs().subtract(12, 'days').toDate()}
+                            disabledDaysOfWeek={[1, 2, 4]}
                         />
                         {1 + 1 === 3 && (
                             <Knapp

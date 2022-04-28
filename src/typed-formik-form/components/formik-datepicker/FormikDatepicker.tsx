@@ -24,6 +24,7 @@ export interface DatepickerLimitiations {
     maxDate?: Date;
     disabledDateRanges?: DateRange[];
     disableWeekend?: boolean;
+    disabledDaysOfWeek?: number[];
 }
 
 export interface DatePickerBaseProps<FieldName, ErrorType>
@@ -35,7 +36,7 @@ export interface DatePickerBaseProps<FieldName, ErrorType>
     feil?: NavFrontendSkjemaFeil;
     inputTitle?: string;
     placeholder?: string;
-    dayPickerProps?: DayPickerProps;
+    dayPickerProps?: Omit<DayPickerProps, 'disabledDays'>;
     invalidFormatError?: string;
     locale?: 'nb' | 'nn' | 'en';
     onChange?: (date: string) => void;
@@ -81,6 +82,7 @@ function FormikDatepicker<FieldName, ErrorType>({
     maxDate,
     disableWeekend,
     disabledDateRanges,
+    disabledDaysOfWeek,
     inputTitle,
     onChange,
     description,
@@ -136,6 +138,7 @@ function FormikDatepicker<FieldName, ErrorType>({
                                 maxDate,
                                 disableWeekend,
                                 disabledDateRanges,
+                                disabledDaysOfWeek,
                             })}
                             showYearSelector={showYearSelector}
                             calendarSettings={{
