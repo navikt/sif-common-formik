@@ -38,7 +38,7 @@ const TypedFormExample = () => {
     const { values } = useFormikContext<FormValues>();
     const { setFieldValue } = useFormikContext<FormValues>();
     const intl = useIntl();
-    const minDate = dayjs().subtract(2, 'month').toDate();
+    const minDate = dayjs().subtract(2, 'days').toDate();
     const maxDate = dayjs().add(1, 'month').toDate();
 
     return (
@@ -179,6 +179,7 @@ const TypedFormExample = () => {
                             label="Fødselsdato"
                             validate={getDateValidator({ required: true })}
                             data-testkey="datepicker-fdato"
+                            minDate={dayjs().subtract(2, 'days').toDate()}
                         />
                         {1 + 1 === 3 && (
                             <Knapp
@@ -218,13 +219,14 @@ const TypedFormExample = () => {
                             fromDatepickerProps={{
                                 name: FormFields.dateinterval_from,
                                 label: 'Fra',
-                                maxDate: ISOStringToDate(values.daterange_to),
+                                minDate,
+                                maxDate: ISOStringToDate(values.dateinterval_to),
                                 validate: getRequiredFieldValidator(),
                             }}
                             toDatepickerProps={{
                                 name: FormFields.dateinterval_to,
                                 label: 'Til',
-                                minDate: ISOStringToDate(values.daterange_from),
+                                minDate: ISOStringToDate(values.dateinterval_from) || minDate,
                                 validate: getRequiredFieldValidator(),
                             }}
                         />

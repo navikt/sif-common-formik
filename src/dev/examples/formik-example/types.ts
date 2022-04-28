@@ -40,6 +40,8 @@ export interface CompletedFormValues {
     [FormFields.time]?: InputTime;
     [FormFields.daterange_from]?: string;
     [FormFields.daterange_to]?: string;
+    [FormFields.dateinterval_from]?: string;
+    [FormFields.dateinterval_to]?: string;
     [FormFields.files]?: any;
     [FormFields.ferieuttak]?: Ferieuttak[];
     [FormFields.letters]?: string[];
