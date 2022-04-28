@@ -1,20 +1,22 @@
 import React from 'react';
 import { FastField, Field, FieldProps } from 'formik';
-import { CheckboksPanelGruppe, CheckboksPanelGruppeProps } from 'nav-frontend-skjema';
+import { CheckboksPanelGruppe, CheckboksPanelGruppeProps, CheckboksPanelProps } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
+import { TestProps, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import '../../styles/nav-frontend-skjema-extension.less';
 
-interface OwnProps<FieldName> extends Omit<CheckboksPanelGruppeProps, 'onChange'> {
+interface OwnProps<FieldName> extends Omit<CheckboksPanelGruppeProps, 'onChange' | 'checkboxes'> {
     name: FieldName;
     useTwoColumns?: boolean;
+    checkboxes: Array<CheckboksPanelProps & TestProps>;
 }
 
 export type FormikCheckboxPanelGroupProps<FieldName, ErrorType> = OwnProps<FieldName> &
     TypedFormInputValidationProps<FieldName, ErrorType> &
-    UseFastFieldProps;
+    UseFastFieldProps &
+    TestProps;
 
 const removeElementFromArray = (element: any, array: any[]) =>
     array.filter((el) => {

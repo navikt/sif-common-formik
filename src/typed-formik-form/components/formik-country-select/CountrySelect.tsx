@@ -1,8 +1,9 @@
 import React from 'react';
 import { Select, SelectProps } from 'nav-frontend-skjema';
 import { getCountries } from '../../utils/countryUtils';
+import { TestProps } from '../../types';
 
-interface Props extends Omit<SelectProps, 'onChange' | 'children'> {
+interface Props extends TestProps, Omit<SelectProps, 'onChange' | 'children'> {
     label: React.ReactNode;
     name: string;
     defaultValue?: string;

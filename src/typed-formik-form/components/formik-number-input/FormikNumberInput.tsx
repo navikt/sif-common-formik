@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { InputProps } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps } from '../../types';
+import { TestProps, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import FormikInput, { InputWithSuffix } from '../formik-input/FormikInput';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
@@ -13,7 +13,8 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'type' | 'patter
 
 export type FormikNumberInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
     TypedFormInputValidationProps<FieldName, ErrorType> &
-    InputWithSuffix;
+    InputWithSuffix &
+    TestProps;
 
 function FormikNumberInput<FieldName, ErrorType>({
     name,

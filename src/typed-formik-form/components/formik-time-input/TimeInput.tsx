@@ -1,7 +1,7 @@
 import React, { RefObject, useState } from 'react';
 import { guid } from 'nav-frontend-js-utils';
 import { Input } from 'nav-frontend-skjema';
-import { InputTime } from '../../types';
+import { InputTime, TestProps } from '../../types';
 import bemUtils from '../../utils/bemUtils';
 import { getNumberFromNumberInputValue } from '../../utils/numberInputUtils';
 import { hasValue } from '../../validation/validationUtils';
@@ -29,7 +29,7 @@ export interface TimeInputLayoutProps {
     };
 }
 
-interface TimeInputProps extends TimeInputLayoutProps, TimeInputRefProps {
+interface TimeInputProps extends TimeInputLayoutProps, TestProps, TimeInputRefProps {
     time?: InputTime | Partial<InputTime> | undefined;
     maxHours?: number;
     maxMinutes?: number;
@@ -64,13 +64,16 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     onChange,
     refs,
     className,
+    ...restProps
 }) => {
     const [stateTime, setStateTime] = useState<Partial<InputTime> | undefined>(time);
     const id = guid();
     const hoursLabelId = `${id}-hours`;
     const minutesLabelId = `${id}-minutes`;
+    const testKey = restProps['data-testkey'];
     return (
         <div
+            data-testkey={testKey}
             className={bem.classNames(
                 bem.block,
                 bem.modifier(layout),
@@ -105,6 +108,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                             setStateTime(newTime);
                             handleTimeChange(newTime, onChange);
                         }}
+                        data-testkey={testKey ? `${testKey}_hours` : undefined}
                     />
                 </div>
                 <div className={bem.element('inputWrapper')}>
@@ -130,6 +134,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                             setStateTime(newTime);
                             handleTimeChange(newTime, onChange);
                         }}
+                        data-testkey={testKey ? `${testKey}_minutes` : undefined}
                     />
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { SelectProps } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps } from '../../types';
+import { TestProps, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import CountrySelect from './CountrySelect';
@@ -13,7 +13,8 @@ interface OwnProps<FieldName> extends Omit<SelectProps, 'name' | 'children'> {
 }
 
 export type FormikCountrySelectProps<FieldName, ErrorType> = OwnProps<FieldName> &
-    TypedFormInputValidationProps<FieldName, ErrorType>;
+    TypedFormInputValidationProps<FieldName, ErrorType> &
+    TestProps;
 
 function FormikCountrySelect<FieldName, ErrorType>({
     name,
@@ -22,14 +23,17 @@ function FormikCountrySelect<FieldName, ErrorType>({
     label,
     useAlpha3Code = true,
     showOnlyEuAndEftaCountries,
+    ...restProps
 }: FormikCountrySelectProps<FieldName, ErrorType>) {
     const context = React.useContext(TypedFormikFormContext);
+    const testKey = restProps['data-testkey'];
     return (
         <Field validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {
                 return (
                     <CountrySelect
                         {...field}
+                        data-testkey={testKey}
                         label={label}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}
                         onChange={(value) => {

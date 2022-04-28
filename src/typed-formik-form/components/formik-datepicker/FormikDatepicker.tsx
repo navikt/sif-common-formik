@@ -6,7 +6,13 @@ import { FastField, Field, FieldProps } from 'formik';
 import { CalendarPlacement, Datepicker, DatepickerChange } from 'nav-datovelger';
 import { guid } from 'nav-frontend-js-utils';
 import { Label } from 'nav-frontend-skjema';
-import { DateRange, NavFrontendSkjemaFeil, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
+import {
+    DateRange,
+    NavFrontendSkjemaFeil,
+    TestProps,
+    TypedFormInputValidationProps,
+    UseFastFieldProps,
+} from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQuestion';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
@@ -20,7 +26,9 @@ export interface DatepickerLimitiations {
     disableWeekend?: boolean;
 }
 
-export interface DatePickerBaseProps<FieldName, ErrorType> extends TypedFormInputValidationProps<FieldName, ErrorType> {
+export interface DatePickerBaseProps<FieldName, ErrorType>
+    extends TestProps,
+        TypedFormInputValidationProps<FieldName, ErrorType> {
     name: FieldName;
     label: string;
     disabled?: boolean;

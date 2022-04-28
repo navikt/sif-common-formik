@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { FnrInput, FnrInputProps } from 'nav-frontend-skjema';
-import { TypedFormInputValidationProps } from '../../types';
+import { TestProps, TypedFormInputValidationProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
@@ -10,7 +10,7 @@ type InputMode = 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decima
 
 interface OwnProps<FieldName> extends Omit<FnrInputProps, 'name' | 'onValidate'> {
     name: FieldName;
-    inputmode?: InputMode;
+    inputmode?: InputMode & TestProps;
 }
 
 const getPatternForInputMode = (inputMode?: InputMode): string | undefined => {

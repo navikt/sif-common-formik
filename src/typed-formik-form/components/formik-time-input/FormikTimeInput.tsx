@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { FastField, Field, FieldProps } from 'formik';
 import { InputProps } from 'nav-frontend-skjema';
-import { InputTime, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
+import { InputTime, TestProps, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import TimeInput, { TimeInputLayoutProps, TimeInputRefProps } from './TimeInput';
@@ -19,7 +19,8 @@ interface OwnProps<FieldName> extends Omit<InputProps, 'name' | 'onChange'> {
 export type FormikTimeInputProps<FieldName, ErrorType> = OwnProps<FieldName> &
     TypedFormInputValidationProps<FieldName, ErrorType> &
     UseFastFieldProps &
-    TimeInputRefProps;
+    TimeInputRefProps &
+    TestProps;
 
 const bem = bemUtils('formikTimeInput');
 
@@ -36,6 +37,7 @@ function FormikTimeInput<FieldName, ErrorType>({
     const context = React.useContext(TypedFormikFormContext);
     const ref = useRef<any>();
     const FieldComponent = useFastField ? FastField : Field;
+
     return (
         <FieldComponent validate={validate ? (value: any) => validate(value, name) : undefined} name={name}>
             {({ field, form }: FieldProps) => {

@@ -2,14 +2,14 @@ import React from 'react';
 import { FastField, Field, FieldProps } from 'formik';
 import { Checkbox, CheckboxProps, SkjemaGruppe, SkjemaGruppeProps } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
-import { TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
+import { TestProps, TypedFormInputValidationProps, UseFastFieldProps } from '../../types';
 import { getFeilPropForFormikInput } from '../../utils/typedFormErrorUtils';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import '../../styles/nav-frontend-skjema-extension.less';
 
-interface LocalCheckboxProps extends Omit<CheckboxProps, 'value'> {
+type LocalCheckboxProps = Omit<CheckboxProps, 'value'> & {
     value: string;
-}
+} & TestProps;
 
 interface OwnProps<FieldName> extends Omit<SkjemaGruppeProps, 'onChange' | 'value' | 'children'> {
     name: FieldName;
@@ -19,7 +19,8 @@ interface OwnProps<FieldName> extends Omit<SkjemaGruppeProps, 'onChange' | 'valu
 
 export type FormikCheckboxGroupProps<FieldName, ErrorType> = OwnProps<FieldName> &
     TypedFormInputValidationProps<FieldName, ErrorType> &
-    UseFastFieldProps;
+    UseFastFieldProps &
+    TestProps;
 
 const getFieldValueArray = (value: any): string[] => {
     if (value === undefined) {
@@ -52,18 +53,19 @@ function FormikCheckboxGroup<FieldName, ErrorType>({
                         {...field}
                         legend={legend ? <Element tag="div">{legend}</Element> : undefined}
                         feil={getFeilPropForFormikInput({ field, form, context, feil })}>
-                        {checkboxes.map((cb, index) => (
+                        {checkboxes.map(({ value, label, name, ...cbRestProps }, index) => (
                             <Checkbox
-                                key={`${name}_${cb.value || index}`}
-                                label={cb.label}
+                                key={`${name}_${value || index}`}
+                                {...cbRestProps}
+                                label={label}
                                 name={name as any}
-                                value={cb.value}
+                                value={value}
                                 onChange={(evt) => {
                                     const isChecked = evt.target.checked;
                                     const fieldValueArray = getFieldValueArray(field.value);
                                     const newFieldValue = isChecked
-                                        ? [...fieldValueArray, cb.value]
-                                        : fieldValueArray.filter((v) => v !== cb.value);
+                                        ? [...fieldValueArray, value]
+                                        : fieldValueArray.filter((v) => v !== value);
                                     form.setFieldValue(field.name, newFieldValue);
                                     if (afterOnChange) {
                                         afterOnChange(newFieldValue);
