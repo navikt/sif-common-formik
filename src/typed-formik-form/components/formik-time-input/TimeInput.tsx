@@ -70,10 +70,10 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
     const id = guid();
     const hoursLabelId = `${id}-hours`;
     const minutesLabelId = `${id}-minutes`;
-    const testKey = restProps['data-testkey'];
+    const testKey = restProps['data-testid'];
     return (
         <div
-            data-testkey={testKey}
+            data-testid={testKey}
             className={bem.classNames(
                 bem.block,
                 bem.modifier(layout),
@@ -108,7 +108,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                             setStateTime(newTime);
                             handleTimeChange(newTime, onChange);
                         }}
-                        data-testkey={testKey ? `${testKey}_hours` : undefined}
+                        data-testid={testKey ? `${testKey}_hours` : undefined}
                     />
                 </div>
                 <div className={bem.element('inputWrapper')}>
@@ -134,7 +134,7 @@ const TimeInput: React.FunctionComponent<TimeInputProps> = ({
                             setStateTime(newTime);
                             handleTimeChange(newTime, onChange);
                         }}
-                        data-testkey={testKey ? `${testKey}_minutes` : undefined}
+                        data-testid={testKey ? `${testKey}_minutes` : undefined}
                     />
                 </div>
             </div>

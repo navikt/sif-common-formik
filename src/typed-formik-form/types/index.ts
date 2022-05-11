@@ -19,7 +19,7 @@ export type CancelButtonTypes = 'standard' | 'hoved' | 'fare' | 'flat';
 export type NavFrontendSkjemaFeil = React.ReactNode | boolean;
 
 export interface TestProps {
-    'data-testkey'?: string;
+    'data-testid'?: string;
 }
 
 export interface TypedFormInputValidationProps<FieldName, ErrorType> {

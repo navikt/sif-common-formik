@@ -1,20 +1,19 @@
 module.exports = {
-    parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+    parser: '@typescript-eslint/parser',
     extends: [
-        'plugin:react/recommended', // Uses the recommended rules from @eslint-plugin-react
+        'plugin:react/recommended',
         'plugin:@typescript-eslint/recommended',
-        'prettier', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-        'plugin:prettier/recommended', // Uses the recommended rules from @typescript-eslint/eslint-plugin,
+        'prettier',
+        'plugin:prettier/recommended',
         'plugin:jsx-a11y/recommended',
     ],
     parserOptions: {
         ecmaFeatures: {
-            jsx: true, // Allows for the parsing of JSX
+            jsx: true,
         },
     },
     rules: {
-        // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
-        '@typescript-eslint/explicit-function-return-type': ['off'],
+        '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
