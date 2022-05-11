@@ -222,6 +222,7 @@ const TypedFormExample = () => {
                                 label: 'Fra',
                                 minDate,
                                 maxDate: ISOStringToDate(values.dateinterval_to),
+                                'data-testkey': 'intervalFrom',
                                 validate: getRequiredFieldValidator(),
                             }}
                             toDatepickerProps={{
