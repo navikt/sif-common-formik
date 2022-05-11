@@ -85,7 +85,7 @@ function FormikDatepicker<FieldName, ErrorType>({
     disabledDaysOfWeek,
     inputTitle,
     onChange,
-    'data-testkey': dataTestkey,
+    'data-testid': dataTestID,
     description,
     placeholder,
     locale,
@@ -129,8 +129,8 @@ function FormikDatepicker<FieldName, ErrorType>({
                                 name: inputName,
                                 placeholder,
                                 'aria-invalid': isInvalid,
+                                'data-testid': dataTestID,
                                 title: inputTitle,
-                                'data-testkey': dataTestkey,
                             }}
                             value={field.value}
                             calendarDateStringFilter={(value) => {
