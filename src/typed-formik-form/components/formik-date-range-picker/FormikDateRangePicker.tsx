@@ -2,6 +2,8 @@ import React from 'react';
 import { useFormikContext } from 'formik';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
+import { UseFastFieldProps } from '../..';
+import { getLocaleToUse } from '../../utils/localeUtils';
 import { ISOStringToDate } from '../formik-datepicker/datepickerUtils';
 import FormikDatepicker, {
     DatePickerBaseProps,
@@ -10,7 +12,6 @@ import FormikDatepicker, {
 } from '../formik-datepicker/FormikDatepicker';
 import { getDateRangePickerLimitations } from './dateRangePickerUtils';
 import './dateRangePicker.less';
-import { UseFastFieldProps } from '../..';
 
 interface OwnProps<FieldName, ErrorType> {
     legend?: string;
@@ -67,14 +68,14 @@ function FormikDateRangePicker<FieldName, ErrorType>({
                     {...fromInputProps}
                     {...{ fullscreenOverlay, fullScreenOnMobile, showYearSelector }}
                     {...fromDateLimitations}
-                    {...locale}
+                    locale={getLocaleToUse(locale)}
                     useFastField={useFastField}
                 />
                 <FormikDatepicker<FieldName, ErrorType>
                     {...toInputProps}
                     {...{ fullscreenOverlay, fullScreenOnMobile, showYearSelector }}
                     {...toDateLimitations}
-                    {...locale}
+                    locale={getLocaleToUse(locale)}
                     useFastField={useFastField}
                 />
             </div>

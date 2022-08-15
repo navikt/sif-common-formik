@@ -18,6 +18,7 @@ import SkjemagruppeQuestion from '../helpers/skjemagruppe-question/SkjemagruppeQ
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 import datepickerUtils from './datepickerUtils';
 import './datepicker.less';
+import { getLocaleToUse } from '../../utils/localeUtils';
 
 export interface DatepickerLimitiations {
     minDate?: Date;
@@ -55,19 +56,6 @@ export type FormikDatepickerProps<FieldName, ErrorType> = OwnProps<FieldName, Er
     DatePickerPresentationProps &
     DatepickerLimitiations &
     UseFastFieldProps;
-
-const getLocaleToUse = (locale: string): 'nb' | 'nn' | 'en' | undefined => {
-    switch (locale) {
-        case 'nb':
-            return 'nb';
-        case 'nn':
-            return 'nn';
-        case 'en':
-            return 'en';
-        default:
-            return undefined;
-    }
-};
 
 function FormikDatepicker<FieldName, ErrorType>({
     validate,
