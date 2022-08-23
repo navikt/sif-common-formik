@@ -131,6 +131,7 @@ const error = getStringValidator(options)(value);
                                             required: true,
                                             maxLength: 20,
                                             minLength: 5,
+                                            disallowUnicodeCharacters: true,
                                         })}></Form.Input>
                                 </Panel>
                                 <ValidationErrorList
@@ -151,6 +152,10 @@ const error = getStringValidator(options)(value);
                                         [ValidateStringError.stringIsTooShort]: {
                                             info: 'for kort tekst',
                                             example: 'Navnet på dagen i dag må inneholde minst 5 tegn',
+                                        },
+                                        [ValidateStringError.stringContainsUnicodeChacters]: {
+                                            info: 'ugyldig tegn',
+                                            example: 'Feltet inneholder ett eller flere ugyldige tegn',
                                         },
                                     }}
                                 />
