@@ -4,6 +4,7 @@ import { Formik, FormikProps, FormikConfig } from 'formik';
 export interface TypedFormikWrapperProps<FormValues> extends Omit<Partial<FormikProps<FormValues>>, 'initialValues'> {
     initialValues: Partial<FormValues>;
     renderForm: (formik: FormikProps<FormValues>) => React.ReactNode;
+    innerRef?: any;
     onSubmit: (values: Partial<FormValues>) => void;
 }
 
