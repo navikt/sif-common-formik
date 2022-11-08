@@ -2,7 +2,7 @@ import React from 'react';
 
 function NAVLogo(props) {
     return (
-        <svg className="prefix__navLogo" width={90} viewBox="0 0 269 169" {...props}>
+        <svg className="prefix__navLogo" width={90} viewBox="0 0 269 169" {...props} role="presentation">
             <g fill="none" fillRule="evenodd">
                 <path
                     fill="#C30000"
