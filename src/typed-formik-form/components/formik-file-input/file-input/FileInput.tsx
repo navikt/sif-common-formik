@@ -74,7 +74,7 @@ export default class FileInput extends React.Component<FileInputProps> {
                     onDrop={this.onFileDropHandler}
                     onKeyPress={this.onKeyPress}
                     onClick={onClick}>
-                    <div className="attachmentButton__icon">
+                    <div className="attachmentButton__icon" role="presentation" aria-hidden="true">
                         <UploadSvg />
                     </div>
                     <Element className="attachmentButton__label">{label}</Element>
