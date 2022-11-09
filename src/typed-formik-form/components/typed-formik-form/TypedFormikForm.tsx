@@ -70,8 +70,10 @@ function TypedFormikForm<FormValues, ErrorType>({
 }: TypedFormikFormProps<FormValues, ErrorType>) {
     const formik = useFormikContext<FormValues>();
     const { handleSubmit, submitCount, setStatus, resetForm, isSubmitting, isValid } = formik;
-    const [formSubmitCount, setFormSubmitCout] = useState(submitCount);
+    const [formSubmitCount, setFormSubmitCount] = useState(submitCount);
     const [cleanupState, setCleanupState] = useState({ hasCleanedUp: false, counter: 0 });
+
+    const summaryInputRef = useRef<HTMLDivElement>(null);
 
     const ref = useRef<any>({ isSubmitting, isValid });
     const showErrors = formik?.status?.showErrors === true;
@@ -83,9 +85,12 @@ function TypedFormikForm<FormValues, ErrorType>({
         if (!isSubmitting) {
             if (submitCount > formSubmitCount) {
                 if (isValid) {
-                    setFormSubmitCout(submitCount);
+                    setFormSubmitCount(submitCount);
                 } else {
                     setStatus({ showErrors: true });
+                    if (summaryInputRef.current) {
+                        summaryInputRef.current.focus();
+                    }
                 }
             } else {
                 if (showErrors) {
@@ -96,7 +101,9 @@ function TypedFormikForm<FormValues, ErrorType>({
     }, [submitCount, showErrors, setStatus, formSubmitCount, isSubmitting, isValid]);
 
     useEffect(() => {
-        cleanupState.hasCleanedUp && handleSubmit();
+        if (cleanupState.hasCleanedUp) {
+            handleSubmit();
+        }
     }, [cleanupState, handleSubmit]);
 
     if (userHasSubmittedValidForm(ref.current, { isValid, isSubmitting })) {
@@ -154,7 +161,7 @@ function TypedFormikForm<FormValues, ErrorType>({
                 {children}
                 {includeValidationSummary && !formik.isValid && isValidationErrorsVisible(formik) && (
                     <div style={{ marginTop: '2rem' }}>
-                        <FormikValidationErrorSummary />
+                        <FormikValidationErrorSummary summaryRef={summaryInputRef} />
                     </div>
                 )}
                 {includeButtons && (

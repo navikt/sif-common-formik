@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import { useFormikContext } from 'formik';
 import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { getAllFieldsWithErrors, getErrorForField } from '../../utils/typedFormErrorUtils';
 import ValidationSummary from '../helpers/ValidationSummary';
 import { TypedFormikFormContext } from '../typed-formik-form/TypedFormikForm';
 
-function FormikValidationErrorSummary() {
+function FormikValidationErrorSummary({ summaryRef }: { summaryRef?: RefObject<HTMLDivElement> }) {
     const context = React.useContext(TypedFormikFormContext);
     const formik = useFormikContext();
+
     if (formik && context && context.showErrors) {
         const fieldsWithErrors =
             !formik.isValid && getAllFieldsWithErrors(formik.errors, context.isHandledErrorTypeChecker);
@@ -23,7 +24,7 @@ function FormikValidationErrorSummary() {
             : undefined;
 
         if (errorMessages) {
-            return <ValidationSummary errorMessages={errorMessages} />;
+            return <ValidationSummary errorMessages={errorMessages} summaryRef={summaryRef} />;
         }
     }
 
