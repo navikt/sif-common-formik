@@ -54,4 +54,12 @@ describe(`validateNumber`, () => {
         expect(getNumberValidator({ max: 2 })('1,3')).toBeUndefined();
         expect(getNumberValidator({ max: 2 })(1.3)).toBeUndefined();
     });
+    it(`returns ${ValidateNumberError.numberHasInvalidCharacters} if value contains invalid characters set in props`, () => {
+        expect(getNumberValidator({ invalidCharacters: ['+', '-'] })('+47')).toEqual(
+            ValidateNumberError.numberHasInvalidCharacters
+        );
+    });
+    it(`returns undefined if number is valid and value does not contain invalid characters set in props`, () => {
+        expect(getNumberValidator({ invalidCharacters: ['+', '-'] })('47')).toBeUndefined();
+    });
 });

@@ -1,4 +1,4 @@
-import { getNumberFromStringInput, hasValue } from './validationUtils';
+import { getNumberFromStringInput, hasValue, stringContainsCharacters } from './validationUtils';
 import { ValidationFunction } from './types';
 
 export enum ValidateNumberError {
@@ -7,6 +7,7 @@ export enum ValidateNumberError {
     numberIsTooSmall = 'numberIsTooSmall',
     numberIsTooLarge = 'numberIsTooLarge',
     numberHasDecimals = 'numberHasDecimals',
+    numberHasInvalidCharacters = 'numberHasInvalidCharacters',
 }
 
 type NumberValidationResult =
@@ -15,19 +16,21 @@ type NumberValidationResult =
     | ValidateNumberError.numberHasInvalidFormat
     | ValidateNumberError.numberIsTooLarge
     | ValidateNumberError.numberIsTooSmall
-    | ValidateNumberError.numberHasDecimals;
+    | ValidateNumberError.numberHasDecimals
+    | ValidateNumberError.numberHasInvalidCharacters;
 
 interface Options {
     required?: boolean;
     min?: number;
     max?: number;
     allowDecimals?: boolean;
+    invalidCharacters?: string[];
 }
 
 const getNumberValidator =
     (options: Options = {}): ValidationFunction<NumberValidationResult> =>
     (value: any) => {
-        const { required, min, max, allowDecimals = true } = options;
+        const { required, min, max, allowDecimals = true, invalidCharacters } = options;
         const numberValue = getNumberFromStringInput(value);
 
         if (required) {
@@ -39,6 +42,9 @@ const getNumberValidator =
         if (hasValue(value)) {
             if (numberValue === undefined) {
                 return ValidateNumberError.numberHasInvalidFormat;
+            }
+            if (numberValue && invalidCharacters && stringContainsCharacters(value, invalidCharacters)) {
+                return ValidateNumberError.numberHasInvalidCharacters;
             }
             if (allowDecimals === false && Math.round(numberValue) !== numberValue) {
                 return ValidateNumberError.numberHasDecimals;

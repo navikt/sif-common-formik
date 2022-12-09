@@ -31,3 +31,7 @@ export const getNumberFromStringInput = (inputValue: string | undefined): number
     }
     return numValue;
 };
+
+export const stringContainsCharacters = (value: string, characters: string[]): boolean => {
+    return characters.some((c) => value.indexOf(c) >= 0);
+};
