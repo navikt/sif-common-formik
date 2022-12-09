@@ -7,6 +7,7 @@ export enum ValidateNumberError {
     numberIsTooSmall = 'numberIsTooSmall',
     numberIsTooLarge = 'numberIsTooLarge',
     numberHasDecimals = 'numberHasDecimals',
+    numberHasInvalidCharacters = 'numberHasInvalidCharacters',
 }
 
 type NumberValidationResult =
@@ -15,7 +16,8 @@ type NumberValidationResult =
     | ValidateNumberError.numberHasInvalidFormat
     | ValidateNumberError.numberIsTooLarge
     | ValidateNumberError.numberIsTooSmall
-    | ValidateNumberError.numberHasDecimals;
+    | ValidateNumberError.numberHasDecimals
+    | ValidateNumberError.numberHasInvalidCharacters;
 
 interface Options {
     required?: boolean;
@@ -42,7 +44,7 @@ const getNumberValidator =
                 return ValidateNumberError.numberHasInvalidFormat;
             }
             if (numberValue && invalidCharacters && stringContainsCharacters(value, invalidCharacters)) {
-                return ValidateNumberError.numberHasInvalidFormat;
+                return ValidateNumberError.numberHasInvalidCharacters;
             }
             if (allowDecimals === false && Math.round(numberValue) !== numberValue) {
                 return ValidateNumberError.numberHasDecimals;
