@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select, SelectProps } from 'nav-frontend-skjema';
-import { getCountries } from '../../utils/countryUtils';
+import { getAlpha3Code, getCountries } from '../../utils/countryUtils';
 import { TestProps } from '../../types';
 
 interface Props extends TestProps, Omit<SelectProps, 'onChange' | 'children'> {
@@ -81,7 +81,7 @@ const createCountryOptions = (
         .map((countryOptionValue: string[]) => (
             <option
                 key={countryOptionValue[0]}
-                value={useAlpha3Code ? countries.alpha2ToAlpha3(countryOptionValue[0]) : countryOptionValue[0]}>
+                value={useAlpha3Code ? getAlpha3Code(countryOptionValue[0]) : countryOptionValue[0]}>
                 {countryOptionValue[1]}
             </option>
         ));
