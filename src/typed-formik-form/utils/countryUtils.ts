@@ -74,9 +74,7 @@ export const getAlpha3Code = (alpha2Code: string) => {
     return countryAlpha3Code === 'XKX' ? 'XXK' : countryAlpha3Code;
 };
 
-// Samme funksjon finnes i sif-common-core og brukes i applikasjoner
-// Funksjonen her fikser Kosovo bug og skal brukes i applikasjoner
-export const countryIsMemberOfEøsOrEftaNew = (isoCode: string) => {
+export const countryIsMemberOfEøsOrEfta = (isoCode: string) => {
     let isoCodeToUse = isoCode.toUpperCase();
     if (isoCodeToUse === 'XXK') {
         isoCodeToUse = 'XKX';
