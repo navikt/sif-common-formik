@@ -3,40 +3,43 @@ import * as countries from 'i18n-iso-countries';
 countries.registerLocale(require('i18n-iso-countries/langs/nb.json'));
 countries.registerLocale(require('i18n-iso-countries/langs/nn.json'));
 
+/** Kilde:
+ * https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-utlandet/relatert-informasjon/eos-landene
+ */
 export const filteredListEØSCountries = (countryOptionValue: string, shouldFilter?: boolean) => {
     if (shouldFilter) {
         switch (countryOptionValue) {
-            case 'BE':
-            case 'BG':
-            case 'DK':
-            case 'EE':
-            case 'FI':
-            case 'FR':
-            case 'GR':
-            case 'IE':
-            case 'IS':
-            case 'IT':
-            case 'HR':
-            case 'CY':
-            case 'LV':
-            case 'LI':
-            case 'LT':
-            case 'LU':
-            case 'MT':
-            case 'NL':
-            case 'PL':
-            case 'PT':
-            case 'RO':
-            case 'SK':
-            case 'SI':
-            case 'ES':
-            case 'GB':
-            case 'SE':
-            case 'CZ':
-            case 'DE':
-            case 'HU':
-            case 'AT':
-            case 'CH':
+            case 'BE': // Belgia
+            case 'BG': // Bulgaria
+            case 'DK': // Danmark
+            case 'EE': // Estland
+            case 'FI': // Finland
+            case 'FR': // Frankrike
+            case 'GR': // Hellas
+            case 'IE': // Irland
+            case 'IS': // Island
+            case 'IT': // Italia
+            case 'HR': // Kroatia
+            case 'CY': // Kypros
+            case 'LV': // Latvia
+            case 'LI': // Liechtenstein
+            case 'LT': // Litauen
+            case 'LU': // Luxembourg
+            case 'MT': // Malta
+            case 'NL': // Nederland
+            case 'GB': // Norge
+            case 'PL': // Polen
+            case 'PT': // Portugal
+            case 'RO': // Romania
+            case 'SK': // Slovakia
+            case 'SI': // Slovenia
+            case 'ES': // Spania
+            case 'CH': // Sveits
+            case 'SE': // Sverige
+            case 'CZ': // Tsjekkia
+            case 'DE': // Tyskland
+            case 'HU': // Ungarn
+            case 'AT': // Østerrike
                 return true;
             default:
                 return false;
