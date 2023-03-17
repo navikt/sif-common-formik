@@ -27,7 +27,7 @@ export const filteredListEØSCountries = (countryOptionValue: string, shouldFilt
             case 'LU': // Luxembourg
             case 'MT': // Malta
             case 'NL': // Nederland
-            case 'GB': // Norge
+            case 'NO': // Norge
             case 'PL': // Polen
             case 'PT': // Portugal
             case 'RO': // Romania
